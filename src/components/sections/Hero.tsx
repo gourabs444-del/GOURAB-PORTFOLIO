@@ -95,53 +95,53 @@ export function Hero({ isLoaded }: HeroProps) {
     <section
       id="hero"
       ref={containerRef}
-      className="relative min-h-[96vh] sm:min-h-screen w-full flex flex-col justify-between pt-28 sm:pt-32 pb-10 px-6 sm:px-12 md:px-16 overflow-hidden bg-white text-[#111111] select-none"
+      className="relative min-h-[92vh] sm:min-h-screen w-full flex flex-col justify-between pt-20 sm:pt-24 md:pt-28 pb-8 sm:pb-10 px-4 sm:px-8 md:px-16 overflow-hidden bg-white text-[#111111] select-none"
     >
       {/* Top Greeting Headline */}
       <div
         ref={introGreetingRef}
-        className="relative z-30 flex items-center justify-center gap-2 text-center text-sm sm:text-base md:text-lg font-sans text-neutral-600 font-normal mt-2 sm:mt-4 mb-1"
+        className="relative z-30 text-center text-xs xs:text-sm sm:text-base md:text-lg font-sans text-neutral-600 font-normal mt-2 sm:mt-3 mb-1 px-2 leading-relaxed"
       >
-        <span className="text-xl sm:text-2xl">👋</span>
-        <span>, my name is</span>
+        <span className="inline-block mr-1 text-sm sm:text-lg">👋</span>
+        <span>, my name is </span>
         <strong className="text-[#111111] font-semibold underline decoration-amber-400 decoration-2 underline-offset-4 font-sans">
           Gourab
         </strong>
-        <span>and I am a freelance</span>
+        <span> and I am a freelance</span>
       </div>
 
       {/* Main 2-Line Layered Typography & Centered Cutout Portrait Scene (Exact Bazil Reference Match) */}
-      <div className="relative my-auto w-full max-w-7xl mx-auto flex flex-col items-center justify-center py-4 sm:py-6 min-h-[460px] sm:min-h-[520px] md:min-h-[580px]">
+      <div className="relative my-auto w-full max-w-7xl mx-auto flex flex-col items-center justify-center py-2 sm:py-4 min-h-[320px] xs:min-h-[360px] sm:min-h-[440px] md:min-h-[500px] lg:min-h-[540px]">
         {/* Background Typography Container (z-10, strictly behind the foreground portrait) */}
-        <div className="relative z-10 w-full flex flex-col items-center justify-center text-center select-none">
+        <div className="relative z-10 w-full flex flex-col items-center justify-center text-center select-none -translate-y-4 xs:-translate-y-6 sm:-translate-y-12 md:-translate-y-20 lg:-translate-y-24">
           {/* Line 1 (Solid Bold Black): Web Developer */}
           <div
             ref={headlineTopRef}
-            className="w-full flex items-center justify-center gap-2 sm:gap-3.5 relative z-10 whitespace-nowrap"
+            className="w-full flex items-center justify-center gap-1.5 xs:gap-2 sm:gap-3.5 relative z-10"
           >
-            <h1 className="font-oswald font-bold text-[13vw] sm:text-[11vw] md:text-[9.2vw] lg:text-[8.2vw] xl:text-[7.6vw] leading-[0.84] tracking-tight text-[#111111] whitespace-nowrap">
+            <h1 className="font-oswald font-bold text-[8.8vw] xs:text-[9.2vw] sm:text-[8.5vw] md:text-[7.8vw] lg:text-[7.2vw] xl:text-[6.8vw] leading-[0.88] tracking-tight text-[#111111] whitespace-nowrap">
               Web Developer
             </h1>
             {/* Embedded Circular Arrow Accent Button */}
             <button
               type="button"
               onClick={() => scrollToSection("work")}
-              className="inline-flex items-center justify-center w-7 h-7 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full border border-neutral-300 bg-white text-[#111111] hover:bg-[#111111] hover:text-white transition-all duration-300 shadow-sm cursor-pointer transform hover:scale-110 align-middle ml-1"
+              className="inline-flex items-center justify-center w-6 h-6 xs:w-7 xs:h-7 sm:w-9 sm:h-9 md:w-11 md:h-11 rounded-full border border-neutral-300 bg-white text-[#111111] hover:bg-[#111111] hover:text-white transition-all duration-300 shadow-sm cursor-pointer transform hover:scale-110 align-middle shrink-0 ml-0.5"
               title="Explore selected work"
             >
-              <ArrowUpRight className="w-3.5 h-3.5 sm:w-5 sm:h-5 md:w-6 md:h-6" />
+              <ArrowUpRight className="w-3 h-3 xs:w-3.5 xs:h-3.5 sm:w-4.5 sm:h-4.5 md:w-5 md:h-5" />
             </button>
           </div>
 
           {/* Line 2 (Outlined Stroked Text Layered Behind Portrait): & Designer */}
           <div
             ref={headlineBottomRef}
-            className="w-full text-center relative z-10 whitespace-nowrap mt-[-2.5vw] sm:mt-[-1.8vw] md:mt-[-1.5vw]"
+            className="w-full text-center relative z-10 mt-1 xs:mt-1.5 sm:mt-2.5 md:mt-3"
           >
             <h2
-              className="font-oswald font-bold text-[13vw] sm:text-[11vw] md:text-[9.2vw] lg:text-[8.2vw] xl:text-[7.6vw] leading-[0.84] tracking-tight select-none text-transparent whitespace-nowrap"
+              className="font-oswald font-bold text-[8.8vw] xs:text-[9.2vw] sm:text-[8.5vw] md:text-[7.8vw] lg:text-[7.2vw] xl:text-[6.8vw] leading-[0.88] tracking-tight select-none text-transparent whitespace-nowrap"
               style={{
-                WebkitTextStroke: "1.5px #111111",
+                WebkitTextStroke: "1.2px #111111",
               }}
             >
               &amp; Designer
@@ -149,10 +149,10 @@ export function Hero({ isLoaded }: HeroProps) {
           </div>
         </div>
 
-        {/* Foreground Layer: Gourab's Cutout Portrait (Strictly z-20 IN FRONT of & Designer, Head at Line 1 Baseline) */}
+        {/* Foreground Layer: Gourab's Cutout Portrait (Strictly z-20 IN FRONT of & Designer) */}
         <div
           ref={portraitRef}
-          className="absolute bottom-[-10px] sm:bottom-[-15px] md:bottom-[-20px] left-1/2 -translate-x-1/2 z-20 w-[270px] sm:w-[360px] md:w-[430px] lg:w-[480px] xl:w-[520px] aspect-[3/4] pointer-events-none flex items-end justify-center"
+          className="absolute bottom-[-10px] sm:bottom-[-15px] md:bottom-[-20px] left-1/2 -translate-x-1/2 z-20 w-[210px] xs:w-[240px] sm:w-[320px] md:w-[390px] lg:w-[440px] xl:w-[480px] aspect-[3/4] pointer-events-none flex items-end justify-center"
         >
           <div className="relative w-full h-full">
             <Image
@@ -193,25 +193,25 @@ export function Hero({ isLoaded }: HeroProps) {
       {/* Bottom Dual Action Buttons: "You need a designer" / "You need a developer" */}
       <div
         ref={ctaGroupRef}
-        className="relative z-30 flex flex-row items-center justify-center gap-3 pt-2 mt-1"
+        className="relative z-30 flex flex-col xs:flex-row items-center justify-center gap-2.5 sm:gap-3.5 pt-2 mt-1 w-full max-w-md mx-auto sm:max-w-none"
       >
         <button
           onClick={() => scrollToSection("work")}
-          className="px-6 sm:px-8 py-3 rounded-md bg-[#111111] text-white hover:bg-black text-xs sm:text-sm font-sans font-medium tracking-tight shadow-md transition-all duration-200 active:scale-95 min-w-[160px] sm:min-w-[180px]"
+          className="w-full xs:w-auto px-5 sm:px-8 py-2.5 sm:py-3 rounded-md bg-[#111111] text-white hover:bg-black text-xs sm:text-sm font-sans font-medium tracking-tight shadow-md transition-all duration-200 active:scale-95 text-center sm:min-w-[170px]"
         >
           You need a developer
         </button>
 
         <button
           onClick={() => scrollToSection("contact")}
-          className="px-6 sm:px-8 py-3 rounded-md bg-white/90 hover:bg-white text-[#111111] border border-[#111111]/30 hover:border-[#111111] text-xs sm:text-sm font-sans font-medium tracking-tight shadow-sm backdrop-blur-sm transition-all duration-200 active:scale-95 min-w-[160px] sm:min-w-[180px]"
+          className="w-full xs:w-auto px-5 sm:px-8 py-2.5 sm:py-3 rounded-md bg-white/90 hover:bg-white text-[#111111] border border-[#111111]/30 hover:border-[#111111] text-xs sm:text-sm font-sans font-medium tracking-tight shadow-sm backdrop-blur-sm transition-all duration-200 active:scale-95 text-center sm:min-w-[170px]"
         >
           You need a designer
         </button>
       </div>
 
       {/* Mobile Location text */}
-      <div className="lg:hidden text-center mt-3 text-xs font-sans text-neutral-500 flex items-center justify-center gap-1.5">
+      <div className="lg:hidden text-center mt-2.5 text-xs font-sans text-neutral-500 flex items-center justify-center gap-1.5">
         <MapPin className="w-3 h-3 text-neutral-700" />
         <span>based in India • Available Worldwide</span>
       </div>

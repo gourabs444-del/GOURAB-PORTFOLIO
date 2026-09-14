@@ -36,8 +36,8 @@ export function Header() {
     <>
       <header
         className={cn(
-          "fixed top-0 left-0 right-0 z-[900] px-6 md:px-16 py-6 transition-all duration-300 flex items-center justify-between bg-white/90 backdrop-blur-md border-b border-black/[0.04]",
-          isScrolled ? "py-4 shadow-sm" : "py-6"
+          "fixed top-0 left-0 right-0 z-[900] px-4 sm:px-8 md:px-16 transition-all duration-300 flex items-center justify-between bg-white/90 backdrop-blur-md border-b border-black/[0.04]",
+          isScrolled ? "py-3 sm:py-4 shadow-sm" : "py-3.5 sm:py-5 md:py-6"
         )}
       >
         {/* Left: Brand Monogram / Logo */}
