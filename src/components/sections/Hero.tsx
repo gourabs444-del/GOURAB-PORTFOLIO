@@ -113,53 +113,35 @@ export function Hero({ isLoaded }: HeroProps) {
       {/* Main 2-Line Layered Typography & Centered Cutout Portrait Scene (Exact Bazil Reference Match) */}
       <div className="relative my-auto w-full max-w-7xl mx-auto flex flex-col items-center justify-center py-2 sm:py-4 min-h-[320px] xs:min-h-[360px] sm:min-h-[440px] md:min-h-[500px] lg:min-h-[540px]">
         {/* Background Typography Container (z-10, strictly behind the foreground portrait) */}
-        <div className="relative z-10 w-full max-w-5xl lg:max-w-6xl mx-auto flex flex-col items-center justify-center text-center select-none -translate-y-14 xs:-translate-y-18 sm:-translate-y-28 md:-translate-y-36 lg:-translate-y-40 px-2 sm:px-4">
-          {/* Line 1 (Solid Bold Black): WEB DEVELOPER (Luxury Editorial Serif Font, 1 Inch Above 2nd Line) */}
+        <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center text-center select-none -translate-y-8 sm:-translate-y-14 md:-translate-y-20 lg:-translate-y-24 px-2 sm:px-4">
+          {/* Line 1 (Solid Bold Black): WEB DEVELOPER (Editorial Serif Font, Elevated Above & DESIGNER) */}
           <div
             ref={headlineTopRef}
-            className="w-full relative z-10 -translate-y-8 xs:-translate-y-10 sm:-translate-y-14 md:-translate-y-18 lg:-translate-y-20"
+            className="w-full relative z-10 mb-3 sm:mb-6 md:mb-8 lg:mb-10"
           >
-            <svg viewBox="0 0 1000 85" className="w-full h-auto overflow-visible" preserveAspectRatio="none">
-              <text
-                x="0"
-                y="72"
-                textLength="1000"
-                lengthAdjust="spacingAndGlyphs"
-                className="font-luxury font-bold uppercase fill-[#111111]"
-                style={{
-                  fontFamily: "var(--font-luxury), var(--font-serif), serif",
-                  fontSize: "96px",
-                  fontWeight: "700",
-                  letterSpacing: "0.04em",
-                }}
-              >
-                WEB DEVELOPER
-              </text>
-            </svg>
+            <h1
+              className="font-serif uppercase font-normal text-[8vw] sm:text-[7.2vw] md:text-[6.2vw] lg:text-[5.6vw] xl:text-[5.2vw] tracking-[0.06em] sm:tracking-[0.1em] text-[#111111] leading-none whitespace-nowrap"
+              style={{
+                fontFamily: "var(--font-serif), var(--font-luxury), 'Instrument Serif', Georgia, serif",
+              }}
+            >
+              WEB DEVELOPER
+            </h1>
           </div>
 
-          {/* Line 2 (Outlined Stroked Text Behind Portrait): & DESIGNER (Extra Tall Vertical Stretch, Same Start & End) */}
+          {/* Line 2 (Outlined Stroked Text Behind Portrait): & DESIGNER (Tall Bold Outlined) */}
           <div
             ref={headlineBottomRef}
-            className="w-full relative z-10 mt-1 sm:mt-2 transform scale-y-[1.75] sm:scale-y-[1.9] md:scale-y-[2.05] lg:scale-y-[2.15] origin-top"
+            className="w-full relative z-10"
           >
-            <svg viewBox="0 0 1000 120" className="w-full h-auto overflow-visible" preserveAspectRatio="none">
-              <text
-                x="0"
-                y="102"
-                textLength="1000"
-                lengthAdjust="spacingAndGlyphs"
-                className="font-oswald font-black uppercase fill-transparent"
-                style={{
-                  fontSize: "135px",
-                  fontWeight: "900",
-                  stroke: "#111111",
-                  strokeWidth: "2.2px",
-                }}
-              >
-                &amp; DESIGNER
-              </text>
-            </svg>
+            <h2
+              className="font-oswald uppercase font-black text-[12vw] sm:text-[11vw] md:text-[10vw] lg:text-[9.2vw] xl:text-[8.5vw] leading-none tracking-tight select-none text-transparent whitespace-nowrap"
+              style={{
+                WebkitTextStroke: "1.8px #111111",
+              }}
+            >
+              &amp; DESIGNER
+            </h2>
           </div>
         </div>
 
