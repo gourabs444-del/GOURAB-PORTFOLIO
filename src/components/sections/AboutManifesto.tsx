@@ -24,25 +24,29 @@ export function AboutManifesto() {
       const words = containerRef.current?.querySelectorAll(".manifesto-word");
       if (!words || words.length === 0) return;
 
-      // Smooth progressive word lighting on scroll
+      // Dynamic Pop-Up kinetic word animation scrubbed directly to scroll
       gsap.fromTo(
         words,
         {
-          opacity: 0.2,
-          color: "#52525b",
-          y: 4,
+          opacity: 0.08,
+          y: 28,
+          scale: 0.84,
+          filter: "blur(6px)",
+          color: "#3f3f46",
         },
         {
           opacity: 1,
-          color: "#ffffff",
           y: 0,
-          stagger: 0.05,
-          ease: "none",
+          scale: 1.0,
+          filter: "blur(0px)",
+          color: "#ffffff",
+          stagger: 0.035,
+          ease: "power2.out",
           scrollTrigger: {
             trigger: contentRef.current,
-            start: "top 70%",
-            end: "bottom 30%",
-            scrub: 1,
+            start: "top 72%",
+            end: "bottom 38%",
+            scrub: 1.2,
           },
         }
       );

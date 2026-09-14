@@ -137,7 +137,7 @@ export function Hero({ isLoaded }: HeroProps) {
             </svg>
           </div>
 
-          {/* Line 2 (Outlined Stroked Text Behind Portrait): & DESIGNER (Original Oswald Font, Locked Start & End Point, Tall Stretch) */}
+          {/* Line 2 (Outlined Stroked Text Behind Portrait): & DESIGNER (White Fill, White-Greyish Outline) */}
           <div
             ref={headlineBottomRef}
             className="w-full relative z-10 -translate-y-2 xs:-translate-y-3 sm:-translate-y-4 md:-translate-y-5 transform scale-y-[1.75] sm:scale-y-[1.9] md:scale-y-[2.05] lg:scale-y-[2.15] origin-top"
@@ -148,12 +148,13 @@ export function Hero({ isLoaded }: HeroProps) {
                 y="102"
                 textLength="1000"
                 lengthAdjust="spacingAndGlyphs"
-                className="font-oswald font-black uppercase fill-transparent"
+                className="font-oswald font-black uppercase"
                 style={{
                   fontFamily: "var(--font-oswald), sans-serif",
                   fontSize: "135px",
                   fontWeight: "900",
-                  stroke: "#111111",
+                  fill: "#FFFFFF",
+                  stroke: "#C4C4CC",
                   strokeWidth: "2.2px",
                 }}
               >
