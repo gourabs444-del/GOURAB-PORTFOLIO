@@ -114,7 +114,7 @@ export function Hero({ isLoaded }: HeroProps) {
       <div className="relative my-auto w-full max-w-7xl mx-auto flex flex-col items-center justify-center py-2 sm:py-4 min-h-[320px] xs:min-h-[360px] sm:min-h-[440px] md:min-h-[500px] lg:min-h-[540px]">
         {/* Background Typography Container (z-10, strictly behind the foreground portrait) */}
         <div className="relative z-10 w-full max-w-5xl lg:max-w-6xl mx-auto flex flex-col items-center justify-center text-center select-none -translate-y-14 xs:-translate-y-18 sm:-translate-y-28 md:-translate-y-36 lg:-translate-y-40 px-2 sm:px-4">
-          {/* Line 1 (Solid Bold Black): WEB DEVELOPER (1 Inch Higher Above Head) */}
+          {/* Line 1 (Solid Bold Black): WEB DEVELOPER (Luxury Editorial Serif Font, 1 Inch Above 2nd Line) */}
           <div
             ref={headlineTopRef}
             className="w-full relative z-10 -translate-y-8 xs:-translate-y-10 sm:-translate-y-14 md:-translate-y-18 lg:-translate-y-20"
@@ -122,13 +122,15 @@ export function Hero({ isLoaded }: HeroProps) {
             <svg viewBox="0 0 1000 85" className="w-full h-auto overflow-visible" preserveAspectRatio="none">
               <text
                 x="0"
-                y="74"
+                y="72"
                 textLength="1000"
                 lengthAdjust="spacingAndGlyphs"
-                className="font-oswald font-bold uppercase fill-[#111111]"
+                className="font-luxury font-bold uppercase fill-[#111111]"
                 style={{
-                  fontSize: "98px",
+                  fontFamily: "var(--font-luxury), var(--font-serif), serif",
+                  fontSize: "96px",
                   fontWeight: "700",
+                  letterSpacing: "0.04em",
                 }}
               >
                 WEB DEVELOPER
@@ -161,12 +163,12 @@ export function Hero({ isLoaded }: HeroProps) {
           </div>
         </div>
 
-        {/* Foreground Layer: Gourab's Cutout Portrait (Strictly z-20 IN FRONT of & Designer, 100% Solid Over Head/Neck/Jacket) */}
+        {/* Foreground Layer: Gourab's Cutout Portrait (Strictly z-20 IN FRONT of & Designer, 100% Solid Body + Ultra Smooth Feathered Blur Bottom) */}
         <div
           ref={portraitRef}
           className="absolute bottom-[-10px] sm:bottom-[-15px] md:bottom-[-20px] left-1/2 -translate-x-1/2 z-20 w-[210px] xs:w-[240px] sm:w-[320px] md:w-[390px] lg:w-[440px] xl:w-[480px] aspect-[3/4] pointer-events-none flex items-end justify-center"
         >
-          <div className="relative w-full h-full [mask-image:linear-gradient(to_bottom,black_86%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_86%,transparent_100%)]">
+          <div className="relative w-full h-full [mask-image:linear-gradient(to_bottom,black_0%,black_76%,rgba(0,0,0,0.7)_86%,rgba(0,0,0,0.2)_94%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_0%,black_76%,rgba(0,0,0,0.7)_86%,rgba(0,0,0,0.2)_94%,transparent_100%)]">
             <Image
               src="/assets/gourab.png"
               alt="Gourab — Web Developer & Designer"
@@ -175,8 +177,8 @@ export function Hero({ isLoaded }: HeroProps) {
               className="object-contain object-bottom filter contrast-105 brightness-100"
             />
           </div>
-          {/* Smooth bottom feather blend overlay at very bottom edge only */}
-          <div className="absolute -bottom-2 left-0 right-0 h-10 bg-gradient-to-t from-white via-white/80 to-transparent pointer-events-none" />
+          {/* Ultra-smooth multi-stop feathered gradient blur overlay */}
+          <div className="absolute -bottom-2 left-0 right-0 h-16 bg-gradient-to-t from-white via-white/80 to-transparent pointer-events-none backdrop-blur-[1.5px]" />
         </div>
 
         {/* Left Side Metadata: Based in India */}

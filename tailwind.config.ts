@@ -33,9 +33,11 @@ const config: Config = {
       },
       fontFamily: {
         oswald: ["var(--font-oswald)", "sans-serif"],
+        luxury: ["var(--font-luxury)", "var(--font-serif)", "serif"],
+        cinzel: ["var(--font-cinzel)", "serif"],
         inter: ["var(--font-inter)", "sans-serif"],
         display: ["var(--font-oswald)", "var(--font-syne)", "sans-serif"],
-        serif: ["var(--font-serif)", "serif"],
+        serif: ["var(--font-serif)", "var(--font-luxury)", "serif"],
         editorial: ["var(--font-space-grotesk)", "sans-serif"],
         sans: ["var(--font-inter)", "var(--font-plus-jakarta)", "sans-serif"],
         mono: ["var(--font-jetbrains-mono)", "monospace"],

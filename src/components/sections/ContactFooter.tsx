@@ -166,68 +166,72 @@ export function ContactFooter() {
       className="relative w-full overflow-hidden bg-black text-white selection:bg-purple-600 selection:text-white"
     >
       {/* ========================================================= */}
-      {/* 100% FULL-SCREEN PURE BLACK & AMBIENT PURPLE HERO SECTION */}
+      {/* 100% FULL-SCREEN ABSOLUTE BLACK & LUMINOUS GLOWING PURPLE */}
       {/* ========================================================= */}
       <div
         ref={fullScreenHeroRef}
         className="relative w-full min-h-screen flex flex-col items-center justify-center text-center px-4 sm:px-8 md:px-12 py-20 overflow-hidden bg-black"
       >
-        {/* Normal Clean Ambient Purple Glow (Smooth, Natural, Non-distorted) */}
-        <div className="pointer-events-none absolute inset-0 w-full h-full flex items-center justify-center overflow-hidden" aria-hidden="true">
-          {/* Broad subtle ambient back-glow */}
+        {/* Intense Luminous Electric Purple Glow (Vibrant, Neon, Non-Glassy) */}
+        <div className="pointer-events-none absolute inset-0 w-full h-full flex items-center justify-center overflow-hidden bg-black" aria-hidden="true">
+          {/* Broad outer atmospheric purple halo */}
           <div
             ref={flareSvgRef as any}
-            className="absolute w-[600px] sm:w-[900px] md:w-[1200px] h-[350px] sm:h-[500px] rounded-full bg-gradient-to-tr from-purple-700/20 via-violet-600/25 to-fuchsia-600/15 blur-[120px] pointer-events-none"
+            className="absolute w-[800px] sm:w-[1200px] lg:w-[1500px] h-[500px] sm:h-[700px] rounded-full bg-[radial-gradient(circle_at_center,_rgba(147,51,234,0.55)_0%,_rgba(107,33,168,0.3)_40%,_rgba(88,28,135,0.12)_60%,_transparent_75%)] blur-[90px] pointer-events-none"
           />
-          {/* Core concentrated ambient glow */}
-          <div className="absolute w-[300px] sm:w-[500px] h-[180px] sm:h-[260px] rounded-full bg-purple-600/20 blur-[80px] pointer-events-none" />
+          
+          {/* Intense hot core neon purple glow */}
+          <div className="absolute w-[400px] sm:w-[650px] lg:w-[850px] h-[250px] sm:h-[380px] rounded-full bg-[radial-gradient(ellipse_at_center,_rgba(192,132,252,0.85)_0%,_rgba(168,85,247,0.6)_35%,_rgba(126,34,206,0.25)_65%,_transparent_80%)] blur-[60px] pointer-events-none" />
+
+          {/* Center bright electric violet bloom directly behind text */}
+          <div className="absolute w-[250px] sm:w-[450px] h-[150px] sm:h-[220px] rounded-full bg-[#A855F7] opacity-40 blur-[45px] pointer-events-none" />
         </div>
 
-        {/* Foreground Content with Clean Modern Typography */}
+        {/* Foreground Content with Clean Glowing Modern Typography */}
         <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center gap-5 sm:gap-7 my-auto px-4">
-          {/* Scroll-Animated Clean Solid Headline */}
-          <h2 className="font-sans font-bold text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-white tracking-tight leading-[1.05] select-none text-center">
-            <span ref={line1Ref} className="block text-white">
+          {/* Scroll-Animated Luminous Headline */}
+          <h2 className="font-sans font-black text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-white tracking-tight leading-[1.04] select-none text-center drop-shadow-[0_0_35px_rgba(168,85,247,0.5)]">
+            <span ref={line1Ref} className="block text-white drop-shadow-[0_2px_20px_rgba(0,0,0,0.9)]">
               Let&apos;s Build
             </span>
-            <span ref={line2Ref} className="block text-purple-200">
+            <span ref={line2Ref} className="block text-[#F3E8FF] drop-shadow-[0_0_30px_rgba(192,132,252,0.7)]">
               Something
             </span>
             <span
               ref={line3Ref}
-              className="block text-white"
+              className="block text-white drop-shadow-[0_0_40px_rgba(168,85,247,0.9)]"
             >
               Worth Remembering.
             </span>
           </h2>
 
-          {/* Subtitle with clean neutral typography */}
+          {/* Subtitle with clean readable typography */}
           <p
             ref={subTextRef}
-            className="font-sans text-sm sm:text-base md:text-lg text-neutral-400 font-normal max-w-2xl mx-auto leading-relaxed"
+            className="font-sans text-sm sm:text-base md:text-lg text-purple-100/80 font-normal max-w-2xl mx-auto leading-relaxed drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]"
           >
             Available for select digital architecture commissions, bespoke creative tech direction, and high-performance WebGL &amp; full-stack systems.
           </p>
 
-          {/* Clean Modern Pill CTA Button */}
+          {/* Glowing Luminous Pill CTA Button */}
           <div ref={ctaBtnRef} className="pt-3">
             <a
               href="#terminal-inquiry"
               onClick={() => playClick()}
               onMouseEnter={() => playHover()}
-              className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full bg-purple-600 hover:bg-purple-500 text-white font-sans font-semibold text-sm sm:text-base transition-all duration-300 shadow-[0_0_30px_rgba(147,51,234,0.35)] hover:shadow-[0_0_45px_rgba(147,51,234,0.6)] hover:scale-[1.03] active:scale-[0.98] group cursor-pointer"
+              className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full bg-purple-500 hover:bg-purple-400 text-white font-sans font-bold text-sm sm:text-base transition-all duration-300 shadow-[0_0_35px_rgba(168,85,247,0.8)] hover:shadow-[0_0_55px_rgba(192,132,252,1)] border border-purple-300/60 hover:scale-[1.04] active:scale-[0.98] group cursor-pointer"
             >
               <span>Get In Touch</span>
-              <ArrowUpRight className="w-4 h-4 text-purple-200 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              <ArrowUpRight className="w-4 h-4 text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </a>
           </div>
         </div>
 
         {/* Floating scroll indicator at bottom of full-screen view */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-neutral-500 font-mono text-[11px] uppercase tracking-widest pointer-events-none animate-bounce">
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-purple-300/80 font-mono text-[11px] uppercase tracking-widest pointer-events-none animate-bounce">
           <span>SCROLL TO CONTACT</span>
-          <div className="w-4 h-7 rounded-full border border-neutral-700 flex justify-center pt-1">
-            <div className="w-1 h-1.5 bg-neutral-400 rounded-full animate-pulse" />
+          <div className="w-4 h-7 rounded-full border border-purple-400/50 flex justify-center pt-1 shadow-[0_0_15px_rgba(168,85,247,0.4)]">
+            <div className="w-1 h-1.5 bg-purple-300 rounded-full animate-pulse" />
           </div>
         </div>
       </div>
