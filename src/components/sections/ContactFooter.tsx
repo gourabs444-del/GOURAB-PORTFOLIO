@@ -31,7 +31,6 @@ export function ContactFooter() {
   const containerRef = useRef<HTMLElement | null>(null);
   const fullScreenHeroRef = useRef<HTMLDivElement | null>(null);
   const flareSvgRef = useRef<SVGSVGElement | null>(null);
-  const badgeRef = useRef<HTMLDivElement | null>(null);
   const line1Ref = useRef<HTMLSpanElement | null>(null);
   const line2Ref = useRef<HTMLSpanElement | null>(null);
   const line3Ref = useRef<HTMLSpanElement | null>(null);
@@ -61,52 +60,44 @@ export function ContactFooter() {
         0
       );
 
-      // 2. Badge entrance
-      tl.fromTo(
-        badgeRef.current,
-        { y: 35, opacity: 0, scale: 0.88 },
-        { y: 0, opacity: 1, scale: 1, ease: "power3.out" },
-        0.05
-      );
-
-      // 3. Line 1: "Let's Build"
+      // 2. Line 1: "Let's Build"
       tl.fromTo(
         line1Ref.current,
         { y: 70, opacity: 0, filter: "blur(10px)" },
         { y: 0, opacity: 1, filter: "blur(0px)", ease: "power3.out" },
-        0.15
+        0.1
       );
 
-      // 4. Line 2: "Something"
+      // 3. Line 2: "Something"
       tl.fromTo(
         line2Ref.current,
         { y: 70, opacity: 0, filter: "blur(10px)" },
         { y: 0, opacity: 1, filter: "blur(0px)", ease: "power3.out" },
-        0.3
+        0.25
       );
 
-      // 5. Line 3: "Worth Remembering." with luminous bloom
+      // 4. Line 3: "Worth Remembering." with luminous bloom
       tl.fromTo(
         line3Ref.current,
         { y: 80, opacity: 0, filter: "blur(14px)", scale: 0.94 },
         { y: 0, opacity: 1, filter: "blur(0px)", scale: 1, ease: "power3.out" },
-        0.45
+        0.4
       );
 
-      // 6. Subtitle
+      // 5. Subtitle
       tl.fromTo(
         subTextRef.current,
         { y: 35, opacity: 0 },
         { y: 0, opacity: 1, ease: "power2.out" },
-        0.6
+        0.55
       );
 
-      // 7. Pill CTA Button
+      // 6. Pill CTA Button
       tl.fromTo(
         ctaBtnRef.current,
         { y: 30, opacity: 0, scale: 0.9 },
         { y: 0, opacity: 1, scale: 1, ease: "back.out(1.4)" },
-        0.7
+        0.65
       );
 
       // Form Cards Scroll Entrance
@@ -232,42 +223,13 @@ export function ContactFooter() {
               filter="blur(65px)"
             />
 
-            {/* Razor-Sharp Edge-to-Edge Horizon Light Beam */}
-            <line
-              x1="0"
-              y1="540"
-              x2="1920"
-              y2="540"
-              stroke="url(#fsHorizontalBeam)"
-              strokeWidth="12"
-              filter="blur(7px)"
-              opacity="0.9"
-            />
-            <line
-              x1="0"
-              y1="540"
-              x2="1920"
-              y2="540"
-              stroke="#FFFFFF"
-              strokeWidth="3.5"
-              filter="blur(1px)"
-              opacity="0.98"
-            />
+            {/* Smooth Glowing Horizon Core Bloom */}
             <ellipse cx="960" cy="540" rx="550" ry="45" fill="#FFFFFF" opacity="0.65" filter="blur(20px)" />
           </svg>
         </div>
 
         {/* Foreground Content with Scroll-Animated Typography */}
         <div className="relative z-10 max-w-5xl mx-auto flex flex-col items-center gap-6 sm:gap-8 my-auto">
-          {/* Top Pill Badge */}
-          <div
-            ref={badgeRef}
-            className="inline-flex items-center justify-center gap-2 px-4 py-1.5 rounded-full border border-purple-500/40 bg-purple-950/60 backdrop-blur-md font-mono text-xs uppercase tracking-widest text-purple-200 shadow-[0_0_25px_rgba(168,85,247,0.3)]"
-          >
-            <Sparkles className="w-3.5 h-3.5 text-purple-300" />
-            <span>COMMISSION INITIATION // 2026</span>
-          </div>
-
           {/* Scroll-Animated Large Impactful Headline */}
           <h2 className="font-inter font-black text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl text-white tracking-[-0.04em] leading-[1.02] sm:leading-[0.98] drop-shadow-[0_4px_30px_rgba(0,0,0,0.9)] select-none">
             <span ref={line1Ref} className="block">

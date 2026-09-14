@@ -113,35 +113,35 @@ export function Hero({ isLoaded }: HeroProps) {
       {/* Main 2-Line Layered Typography & Centered Cutout Portrait Scene (Exact Bazil Reference Match) */}
       <div className="relative my-auto w-full max-w-7xl mx-auto flex flex-col items-center justify-center py-2 sm:py-4 min-h-[320px] xs:min-h-[360px] sm:min-h-[440px] md:min-h-[500px] lg:min-h-[540px]">
         {/* Background Typography Container (z-10, strictly behind the foreground portrait) */}
-        <div className="relative z-10 w-full flex flex-col items-center justify-center text-center select-none -translate-y-4 xs:-translate-y-6 sm:-translate-y-12 md:-translate-y-20 lg:-translate-y-24">
-          {/* Line 1 (Solid Bold Black): Web Developer */}
+        <div className="relative z-10 w-full flex flex-col items-center justify-center text-center select-none -translate-y-8 xs:-translate-y-12 sm:-translate-y-16 md:-translate-y-24 lg:-translate-y-28">
+          {/* Line 1 (Solid Bold Black): WEB DEVELOPER (Compact Height, Full Matching Span) */}
           <div
             ref={headlineTopRef}
-            className="w-full flex items-center justify-center gap-1.5 xs:gap-2 sm:gap-3.5 relative z-10"
+            className="w-full flex items-center justify-center gap-1.5 xs:gap-2 sm:gap-3 relative z-10"
           >
-            <h1 className="font-oswald font-bold text-[8.8vw] xs:text-[9.2vw] sm:text-[8.5vw] md:text-[7.8vw] lg:text-[7.2vw] xl:text-[6.8vw] leading-[0.88] tracking-tight text-[#111111] whitespace-nowrap">
+            <h1 className="font-oswald font-bold uppercase tracking-[0.07em] text-[7.4vw] xs:text-[7.6vw] sm:text-[6.6vw] md:text-[5.8vw] lg:text-[5.1vw] xl:text-[4.7vw] leading-none text-[#111111] whitespace-nowrap">
               Web Developer
             </h1>
             {/* Embedded Circular Arrow Accent Button */}
             <button
               type="button"
               onClick={() => scrollToSection("work")}
-              className="inline-flex items-center justify-center w-6 h-6 xs:w-7 xs:h-7 sm:w-9 sm:h-9 md:w-11 md:h-11 rounded-full border border-neutral-300 bg-white text-[#111111] hover:bg-[#111111] hover:text-white transition-all duration-300 shadow-sm cursor-pointer transform hover:scale-110 align-middle shrink-0 ml-0.5"
+              className="inline-flex items-center justify-center w-6 h-6 xs:w-7 xs:h-7 sm:w-8 sm:h-8 md:w-9 md:h-9 rounded-full border border-neutral-300 bg-white text-[#111111] hover:bg-[#111111] hover:text-white transition-all duration-300 shadow-sm cursor-pointer transform hover:scale-110 align-middle shrink-0 ml-0.5"
               title="Explore selected work"
             >
-              <ArrowUpRight className="w-3 h-3 xs:w-3.5 xs:h-3.5 sm:w-4.5 sm:h-4.5 md:w-5 md:h-5" />
+              <ArrowUpRight className="w-3 h-3 xs:w-3.5 xs:h-3.5 sm:w-4 sm:h-4 md:w-4.5 md:h-4.5" />
             </button>
           </div>
 
-          {/* Line 2 (Outlined Stroked Text Layered Behind Portrait): & Designer */}
+          {/* Line 2 (Outlined Stroked Text Behind Portrait): & DESIGNER (Same Horizontal Length, Taller Vertical Height / Stroke) */}
           <div
             ref={headlineBottomRef}
-            className="w-full text-center relative z-10 mt-1 xs:mt-1.5 sm:mt-2.5 md:mt-3"
+            className="w-full text-center relative z-10 mt-1.5 sm:mt-2.5 md:mt-3 transform scale-y-125 sm:scale-y-130 md:scale-y-135 origin-top"
           >
             <h2
-              className="font-oswald font-bold text-[8.8vw] xs:text-[9.2vw] sm:text-[8.5vw] md:text-[7.8vw] lg:text-[7.2vw] xl:text-[6.8vw] leading-[0.88] tracking-tight select-none text-transparent whitespace-nowrap"
+              className="font-oswald font-black uppercase text-[10.5vw] xs:text-[10.8vw] sm:text-[9.5vw] md:text-[8.4vw] lg:text-[7.5vw] xl:text-[6.9vw] leading-[0.84] tracking-[0.14em] select-none text-transparent whitespace-nowrap"
               style={{
-                WebkitTextStroke: "1.2px #111111",
+                WebkitTextStroke: "1.8px #111111",
               }}
             >
               &amp; Designer
