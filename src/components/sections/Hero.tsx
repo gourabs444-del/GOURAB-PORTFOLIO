@@ -12,6 +12,7 @@ interface HeroProps {
 
 export function Hero({ isLoaded }: HeroProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const mainSceneRef = useRef<HTMLDivElement | null>(null);
   const portraitRef = useRef<HTMLDivElement | null>(null);
   const headlineTopRef = useRef<HTMLHeadingElement | null>(null);
   const headlineBottomRef = useRef<HTMLHeadingElement | null>(null);
@@ -22,63 +23,35 @@ export function Hero({ isLoaded }: HeroProps) {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Elements remain rock-solid in place when isLoaded triggers (no jump or bobbing)
-      if (isLoaded) {
-        gsap.to([headlineTopRef.current, headlineBottomRef.current], {
-          opacity: 1,
-          duration: 0.4,
-          ease: "power2.out",
-        });
-      }
-
-      // Scroll-driven fade-out ONLY for text (Image does NOT fade on scroll)
-      gsap.to(headlineTopRef.current, {
+      // 2-Stage Cinematic Scroll Experience:
+      // 1. Initial view shows the clean centered greeting: "👋 , my name is Gourab..."
+      // 2. On scroll, greeting ascends to top and the full 2nd scene (WEB DEV & DESIGNER + portrait) rises into view.
+      const scrollTl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top top",
-          end: "55% top",
-          scrub: 1,
-        },
-        y: -60,
-        opacity: 0,
-        ease: "none",
-      });
-
-      gsap.to(headlineBottomRef.current, {
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top top",
-          end: "55% top",
-          scrub: 1,
-        },
-        y: -40,
-        opacity: 0,
-        ease: "none",
-      });
-
-      gsap.to(introGreetingRef.current, {
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top top",
-          end: "35% top",
-          scrub: 1,
-        },
-        y: -20,
-        opacity: 0,
-        ease: "none",
-      });
-
-      // Subtle parallax for portrait only (opacity stays 100% solid, NO FADE)
-      gsap.to(portraitRef.current, {
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top top",
-          end: "bottom top",
+          end: "+=100%",
+          pin: true,
           scrub: 0.8,
+          anticipatePin: 1,
         },
-        y: 40,
-        ease: "none",
       });
+
+      scrollTl
+        // Step 1: Greeting moves from center towards top
+        .fromTo(
+          introGreetingRef.current,
+          { y: "30vh", scale: 1.15 },
+          { y: "0vh", scale: 1, ease: "power2.inOut", duration: 1 },
+          0
+        )
+        // Step 2: Main 2-Line typography + portrait scene emerges and rises up into full frame
+        .fromTo(
+          mainSceneRef.current,
+          { y: "60vh", opacity: 0 },
+          { y: "0vh", opacity: 1, ease: "power2.out", duration: 1 },
+          0
+        );
     }, containerRef);
 
     return () => ctx.revert();
@@ -97,21 +70,23 @@ export function Hero({ isLoaded }: HeroProps) {
       ref={containerRef}
       className="relative min-h-[92vh] sm:min-h-screen w-full flex flex-col justify-between pt-20 sm:pt-24 md:pt-28 pb-8 sm:pb-10 px-4 sm:px-8 md:px-16 overflow-hidden bg-white text-[#111111] select-none"
     >
-      {/* Top Greeting Headline */}
+      {/* Top Greeting Headline (Written in Actual Words, No Emoji, Clean Editorial Font) */}
       <div
         ref={introGreetingRef}
-        className="relative z-30 text-center text-xs xs:text-sm sm:text-base md:text-lg font-sans text-neutral-600 font-normal mt-2 sm:mt-3 mb-1 px-2 leading-relaxed"
+        className="relative z-30 text-center text-sm xs:text-base sm:text-lg md:text-xl font-sans text-neutral-600 font-normal mt-2 sm:mt-4 mb-1 px-2 leading-relaxed origin-center will-change-transform tracking-tight"
       >
-        <span className="inline-block mr-1 text-sm sm:text-lg">👋</span>
-        <span>, my name is </span>
+        <span className="text-neutral-600">Hi, my name is </span>
         <strong className="text-[#111111] font-semibold underline decoration-amber-400 decoration-2 underline-offset-4 font-sans">
           Gourab
         </strong>
-        <span> and I am a freelance</span>
+        <span className="text-neutral-600"> and I am a freelance</span>
       </div>
 
-      {/* Main 2-Line Layered Typography & Centered Cutout Portrait Scene (Exact Bazil Reference Match) */}
-      <div className="relative my-auto w-full max-w-7xl mx-auto flex flex-col items-center justify-center py-2 sm:py-4 min-h-[320px] xs:min-h-[360px] sm:min-h-[440px] md:min-h-[500px] lg:min-h-[540px]">
+      {/* Main 2-Line Layered Typography & Centered Cutout Portrait Scene (Emerges on Scroll) */}
+      <div
+        ref={mainSceneRef}
+        className="relative my-auto w-full max-w-7xl mx-auto flex flex-col items-center justify-center py-2 sm:py-4 min-h-[320px] xs:min-h-[360px] sm:min-h-[440px] md:min-h-[500px] lg:min-h-[540px] will-change-transform"
+      >
         {/* Background Typography Container (z-10, strictly behind the foreground portrait) */}
         <div className="relative z-10 w-full max-w-5xl lg:max-w-6xl mx-auto flex flex-col items-center justify-center text-center select-none -translate-y-10 xs:-translate-y-14 sm:-translate-y-20 md:-translate-y-28 lg:-translate-y-32 px-2 sm:px-4">
           {/* Line 1 (Solid Bold Black): WEB DEVELOPER (Original Oswald Font, Perfectly Spaced Above 2nd Line) */}
@@ -164,12 +139,12 @@ export function Hero({ isLoaded }: HeroProps) {
           </div>
         </div>
 
-        {/* Foreground Layer: Gourab's Cutout Portrait (Strictly z-20 IN FRONT of & Designer, 100% Solid Body + Ultra Smooth Feathered Blur Bottom) */}
+        {/* Foreground Layer: Gourab's Cutout Portrait (Strictly z-20 IN FRONT of & Designer, 100% Solid Body + Ultra Smooth Pure Gradient Fade) */}
         <div
           ref={portraitRef}
           className="absolute bottom-[-10px] sm:bottom-[-15px] md:bottom-[-20px] left-1/2 -translate-x-1/2 z-20 w-[210px] xs:w-[240px] sm:w-[320px] md:w-[390px] lg:w-[440px] xl:w-[480px] aspect-[3/4] pointer-events-none flex items-end justify-center"
         >
-          <div className="relative w-full h-full [mask-image:linear-gradient(to_bottom,black_0%,black_76%,rgba(0,0,0,0.7)_86%,rgba(0,0,0,0.2)_94%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_0%,black_76%,rgba(0,0,0,0.7)_86%,rgba(0,0,0,0.2)_94%,transparent_100%)]">
+          <div className="relative w-full h-full [mask-image:linear-gradient(to_bottom,black_0%,black_60%,rgba(0,0,0,0.85)_72%,rgba(0,0,0,0.5)_82%,rgba(0,0,0,0.2)_90%,rgba(0,0,0,0.05)_96%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_0%,black_60%,rgba(0,0,0,0.85)_72%,rgba(0,0,0,0.5)_82%,rgba(0,0,0,0.2)_90%,rgba(0,0,0,0.05)_96%,transparent_100%)]">
             <Image
               src="/assets/gourab.png"
               alt="Gourab — Web Developer & Designer"
@@ -178,8 +153,6 @@ export function Hero({ isLoaded }: HeroProps) {
               className="object-contain object-bottom filter contrast-105 brightness-100"
             />
           </div>
-          {/* Ultra-smooth multi-stop feathered gradient blur overlay */}
-          <div className="absolute -bottom-2 left-0 right-0 h-16 bg-gradient-to-t from-white via-white/80 to-transparent pointer-events-none backdrop-blur-[1.5px]" />
         </div>
 
         {/* Left Side Metadata: Based in India */}
