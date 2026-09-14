@@ -1,7 +1,15 @@
 import type { Metadata, Viewport } from "next";
-import { Syne, Space_Grotesk, Plus_Jakarta_Sans, JetBrains_Mono, Instrument_Serif, Inter, Oswald, Cormorant_Garamond, Cinzel } from "next/font/google";
+import { Syne, Space_Grotesk, Plus_Jakarta_Sans, JetBrains_Mono, Instrument_Serif, Inter, Oswald, Cormorant_Garamond, Cinzel, Bodoni_Moda } from "next/font/google";
 import "./globals.css";
 import { siteConfig } from "@/data/siteConfig";
+
+const fontBodoni = Bodoni_Moda({
+  subsets: ["latin"],
+  variable: "--font-bodoni",
+  weight: ["500", "600", "700", "800", "900"],
+  style: ["normal", "italic"],
+  display: "swap",
+});
 
 const fontLuxury = Cormorant_Garamond({
   subsets: ["latin"],
@@ -129,7 +137,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${fontOswald.variable} ${fontLuxury.variable} ${fontCinzel.variable} ${fontInter.variable} ${fontSyne.variable} ${fontSerif.variable} ${fontSpaceGrotesk.variable} ${fontPlusJakarta.variable} ${fontJetBrainsMono.variable}`}
+      className={`${fontBodoni.variable} ${fontOswald.variable} ${fontLuxury.variable} ${fontCinzel.variable} ${fontInter.variable} ${fontSyne.variable} ${fontSerif.variable} ${fontSpaceGrotesk.variable} ${fontPlusJakarta.variable} ${fontJetBrainsMono.variable}`}
     >
       <body className="bg-white text-[#111111] antialiased selection:bg-[#111111] selection:text-white min-h-screen relative">
         {children}

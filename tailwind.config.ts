@@ -32,6 +32,7 @@ const config: Config = {
         borderLight: "rgba(255, 255, 255, 0.16)",
       },
       fontFamily: {
+        bodoni: ["var(--font-bodoni)", "serif"],
         oswald: ["var(--font-oswald)", "sans-serif"],
         luxury: ["var(--font-luxury)", "var(--font-serif)", "serif"],
         cinzel: ["var(--font-cinzel)", "serif"],

@@ -114,15 +114,16 @@ export function Hero({ isLoaded }: HeroProps) {
       <div className="relative my-auto w-full max-w-7xl mx-auto flex flex-col items-center justify-center py-2 sm:py-4 min-h-[320px] xs:min-h-[360px] sm:min-h-[440px] md:min-h-[500px] lg:min-h-[540px]">
         {/* Background Typography Container (z-10, strictly behind the foreground portrait) */}
         <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center text-center select-none -translate-y-8 sm:-translate-y-14 md:-translate-y-20 lg:-translate-y-24 px-2 sm:px-4">
-          {/* Line 1 (Solid Bold Black): WEB DEVELOPER (Editorial Serif Font, Elevated Above & DESIGNER) */}
+          {/* Line 1 (Solid Bold Black): WEB DEVELOPER (Bodoni Moda Luxury Editorial Serif) */}
           <div
             ref={headlineTopRef}
-            className="w-full relative z-10 mb-3 sm:mb-6 md:mb-8 lg:mb-10"
+            className="w-full relative z-10 mb-4 sm:mb-7 md:mb-9 lg:mb-11"
           >
             <h1
-              className="font-serif uppercase font-normal text-[8vw] sm:text-[7.2vw] md:text-[6.2vw] lg:text-[5.6vw] xl:text-[5.2vw] tracking-[0.06em] sm:tracking-[0.1em] text-[#111111] leading-none whitespace-nowrap"
+              className="font-bodoni uppercase font-bold text-[8.2vw] sm:text-[7.4vw] md:text-[6.4vw] lg:text-[5.8vw] xl:text-[5.3vw] tracking-[0.05em] sm:tracking-[0.09em] md:tracking-[0.11em] text-[#111111] leading-none whitespace-nowrap"
               style={{
-                fontFamily: "var(--font-serif), var(--font-luxury), 'Instrument Serif', Georgia, serif",
+                fontFamily: "var(--font-bodoni), 'Bodoni Moda', Georgia, serif",
+                fontWeight: "700",
               }}
             >
               WEB DEVELOPER
