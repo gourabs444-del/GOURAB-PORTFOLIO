@@ -229,18 +229,18 @@ export function ContactFooter() {
         </div>
 
         {/* Foreground Content with Scroll-Animated Typography */}
-        <div className="relative z-10 max-w-5xl mx-auto flex flex-col items-center gap-6 sm:gap-8 my-auto">
-          {/* Scroll-Animated Large Impactful Headline */}
-          <h2 className="font-inter font-black text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl text-white tracking-[-0.04em] leading-[1.02] sm:leading-[0.98] drop-shadow-[0_4px_30px_rgba(0,0,0,0.9)] select-none">
-            <span ref={line1Ref} className="block">
+        <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center gap-5 sm:gap-7 my-auto px-4">
+          {/* Scroll-Animated Refined Headline */}
+          <h2 className="font-display font-bold text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5rem] text-white tracking-tight leading-[1.05] sm:leading-[1.0] drop-shadow-[0_4px_24px_rgba(0,0,0,0.85)] select-none text-center">
+            <span ref={line1Ref} className="block text-white">
               Let&apos;s Build
             </span>
-            <span ref={line2Ref} className="block text-purple-100">
+            <span ref={line2Ref} className="block text-purple-100 font-light italic font-serif my-0.5 sm:my-1">
               Something
             </span>
             <span
               ref={line3Ref}
-              className="block text-white drop-shadow-[0_0_45px_rgba(255,255,255,0.6)] text-transparent bg-clip-text bg-gradient-to-r from-white via-purple-100 to-purple-300"
+              className="block text-white drop-shadow-[0_0_35px_rgba(255,255,255,0.7)] text-transparent bg-clip-text bg-gradient-to-r from-white via-purple-100 to-purple-200"
             >
               Worth Remembering.
             </span>
