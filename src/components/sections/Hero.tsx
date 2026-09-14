@@ -22,13 +22,13 @@ export function Hero({ isLoaded }: HeroProps) {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Gentle initial entrance if isLoaded, ensuring final state is 100% visible
+      // Elements remain rock-solid in place when isLoaded triggers (no jump or bobbing)
       if (isLoaded) {
-        gsap.fromTo(
-          [headlineTopRef.current, headlineBottomRef.current],
-          { y: 15, opacity: 0.8 },
-          { y: 0, opacity: 1, duration: 0.7, ease: "power3.out", stagger: 0.06 }
-        );
+        gsap.to([headlineTopRef.current, headlineBottomRef.current], {
+          opacity: 1,
+          duration: 0.4,
+          ease: "power2.out",
+        });
       }
 
       // Scroll-driven fade-out ONLY for text (Image does NOT fade on scroll)
@@ -114,10 +114,10 @@ export function Hero({ isLoaded }: HeroProps) {
       <div className="relative my-auto w-full max-w-7xl mx-auto flex flex-col items-center justify-center py-2 sm:py-4 min-h-[320px] xs:min-h-[360px] sm:min-h-[440px] md:min-h-[500px] lg:min-h-[540px]">
         {/* Background Typography Container (z-10, strictly behind the foreground portrait) */}
         <div className="relative z-10 w-full max-w-5xl lg:max-w-6xl mx-auto flex flex-col items-center justify-center text-center select-none -translate-y-10 xs:-translate-y-14 sm:-translate-y-20 md:-translate-y-28 lg:-translate-y-32 px-2 sm:px-4">
-          {/* Line 1 (Solid Bold Black): WEB DEVELOPER (Original Oswald Font, 1 Inch Above 2nd Line) */}
+          {/* Line 1 (Solid Bold Black): WEB DEVELOPER (Original Oswald Font, Perfectly Spaced Above 2nd Line) */}
           <div
             ref={headlineTopRef}
-            className="w-full relative z-10 -translate-y-8 xs:-translate-y-12 sm:-translate-y-16 md:-translate-y-20 lg:-translate-y-24 mb-2 sm:mb-3"
+            className="w-full relative z-10 -translate-y-5 xs:-translate-y-7 sm:-translate-y-10 md:-translate-y-13 lg:-translate-y-16 mb-1 sm:mb-2"
           >
             <svg viewBox="0 0 1000 85" className="w-full h-auto overflow-visible" preserveAspectRatio="none">
               <text
@@ -140,7 +140,7 @@ export function Hero({ isLoaded }: HeroProps) {
           {/* Line 2 (Outlined Stroked Text Behind Portrait): & DESIGNER (Original Oswald Font, Locked Start & End Point, Tall Stretch) */}
           <div
             ref={headlineBottomRef}
-            className="w-full relative z-10 mt-1 sm:mt-2 transform scale-y-[1.75] sm:scale-y-[1.9] md:scale-y-[2.05] lg:scale-y-[2.15] origin-top"
+            className="w-full relative z-10 -translate-y-2 xs:-translate-y-3 sm:-translate-y-4 md:-translate-y-5 transform scale-y-[1.75] sm:scale-y-[1.9] md:scale-y-[2.05] lg:scale-y-[2.15] origin-top"
           >
             <svg viewBox="0 0 1000 120" className="w-full h-auto overflow-visible" preserveAspectRatio="none">
               <text
