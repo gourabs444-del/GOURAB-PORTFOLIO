@@ -32,8 +32,9 @@ const config: Config = {
         borderLight: "rgba(255, 255, 255, 0.16)",
       },
       fontFamily: {
+        oswald: ["var(--font-oswald)", "sans-serif"],
         inter: ["var(--font-inter)", "sans-serif"],
-        display: ["var(--font-syne)", "sans-serif"],
+        display: ["var(--font-oswald)", "var(--font-syne)", "sans-serif"],
         serif: ["var(--font-serif)", "serif"],
         editorial: ["var(--font-space-grotesk)", "sans-serif"],
         sans: ["var(--font-inter)", "var(--font-plus-jakarta)", "sans-serif"],

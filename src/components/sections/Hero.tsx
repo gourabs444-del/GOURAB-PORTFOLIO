@@ -110,46 +110,49 @@ export function Hero({ isLoaded }: HeroProps) {
         <span>and I am a freelance</span>
       </div>
 
-      {/* Main 2-Line Layered Typography & Centered Cutout Portrait Scene */}
-      <div className="relative my-auto w-full max-w-7xl mx-auto flex flex-col items-center justify-between pt-2 pb-6 sm:pb-8 min-h-[520px] sm:min-h-[600px] md:min-h-[660px]">
-        {/* Top Line 1 (Solid Bold Black): Web Developer (Strictly Above the Head) */}
-        <div
-          ref={headlineTopRef}
-          className="w-full flex items-center justify-center gap-2 sm:gap-3.5 relative z-10 whitespace-nowrap pt-2 sm:pt-4"
-        >
-          <h1 className="font-display font-extrabold text-[8vw] sm:text-[6.5vw] md:text-[5.2vw] lg:text-[4.5vw] xl:text-[4.1vw] leading-none tracking-tight text-[#111111] whitespace-nowrap">
-            Web Developer
-          </h1>
-          {/* Embedded Circular Arrow Accent Button */}
-          <button
-            type="button"
-            onClick={() => scrollToSection("work")}
-            className="inline-flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 md:w-9 md:h-9 rounded-full border border-neutral-300 bg-white text-[#111111] hover:bg-[#111111] hover:text-white transition-all duration-300 shadow-sm cursor-pointer transform hover:scale-110 align-middle"
-            title="Explore selected work"
+      {/* Main 2-Line Layered Typography & Centered Cutout Portrait Scene (Exact Bazil Reference Match) */}
+      <div className="relative my-auto w-full max-w-7xl mx-auto flex flex-col items-center justify-center py-4 sm:py-6 min-h-[460px] sm:min-h-[520px] md:min-h-[580px]">
+        {/* Background Typography Container (z-10, strictly behind the foreground portrait) */}
+        <div className="relative z-10 w-full flex flex-col items-center justify-center text-center select-none">
+          {/* Line 1 (Solid Bold Black): Web Developer */}
+          <div
+            ref={headlineTopRef}
+            className="w-full flex items-center justify-center gap-2 sm:gap-3.5 relative z-10 whitespace-nowrap"
           >
-            <ArrowUpRight className="w-3 h-3 sm:w-4 sm:h-4 md:w-4.5 md:h-4.5" />
-          </button>
+            <h1 className="font-oswald font-bold text-[13vw] sm:text-[11vw] md:text-[9.2vw] lg:text-[8.2vw] xl:text-[7.6vw] leading-[0.84] tracking-tight text-[#111111] whitespace-nowrap">
+              Web Developer
+            </h1>
+            {/* Embedded Circular Arrow Accent Button */}
+            <button
+              type="button"
+              onClick={() => scrollToSection("work")}
+              className="inline-flex items-center justify-center w-7 h-7 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full border border-neutral-300 bg-white text-[#111111] hover:bg-[#111111] hover:text-white transition-all duration-300 shadow-sm cursor-pointer transform hover:scale-110 align-middle ml-1"
+              title="Explore selected work"
+            >
+              <ArrowUpRight className="w-3.5 h-3.5 sm:w-5 sm:h-5 md:w-6 md:h-6" />
+            </button>
+          </div>
+
+          {/* Line 2 (Outlined Stroked Text Layered Behind Portrait): & Designer */}
+          <div
+            ref={headlineBottomRef}
+            className="w-full text-center relative z-10 whitespace-nowrap mt-[-2.5vw] sm:mt-[-1.8vw] md:mt-[-1.5vw]"
+          >
+            <h2
+              className="font-oswald font-bold text-[13vw] sm:text-[11vw] md:text-[9.2vw] lg:text-[8.2vw] xl:text-[7.6vw] leading-[0.84] tracking-tight select-none text-transparent whitespace-nowrap"
+              style={{
+                WebkitTextStroke: "1.5px #111111",
+              }}
+            >
+              &amp; Designer
+            </h2>
+          </div>
         </div>
 
-        {/* Bottom Line 2 (Outlined Stroked Text Layered Behind Portrait): & Designer (Behind Chest/Torso) */}
-        <div
-          ref={headlineBottomRef}
-          className="w-full text-center relative z-10 whitespace-nowrap my-auto pb-4 sm:pb-8"
-        >
-          <h2
-            className="font-display font-extrabold text-[8vw] sm:text-[6.5vw] md:text-[5.2vw] lg:text-[4.5vw] xl:text-[4.1vw] leading-none tracking-tight select-none text-transparent whitespace-nowrap"
-            style={{
-              WebkitTextStroke: "1.5px #111111",
-            }}
-          >
-            &amp; Designer
-          </h2>
-        </div>
-
-        {/* Foreground Layer: Gourab's Cutout Portrait (Strictly z-20 IN FRONT of & Designer, Head Below Line 1) */}
+        {/* Foreground Layer: Gourab's Cutout Portrait (Strictly z-20 IN FRONT of & Designer, Head at Line 1 Baseline) */}
         <div
           ref={portraitRef}
-          className="absolute bottom-0 left-1/2 -translate-x-1/2 z-20 w-[220px] sm:w-[290px] md:w-[350px] lg:w-[400px] xl:w-[430px] aspect-[3/4] pointer-events-none flex items-end justify-center"
+          className="absolute bottom-[-10px] sm:bottom-[-15px] md:bottom-[-20px] left-1/2 -translate-x-1/2 z-20 w-[270px] sm:w-[360px] md:w-[430px] lg:w-[480px] xl:w-[520px] aspect-[3/4] pointer-events-none flex items-end justify-center"
         >
           <div className="relative w-full h-full">
             <Image

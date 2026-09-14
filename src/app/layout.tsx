@@ -1,7 +1,14 @@
 import type { Metadata, Viewport } from "next";
-import { Syne, Space_Grotesk, Plus_Jakarta_Sans, JetBrains_Mono, Instrument_Serif, Inter } from "next/font/google";
+import { Syne, Space_Grotesk, Plus_Jakarta_Sans, JetBrains_Mono, Instrument_Serif, Inter, Oswald } from "next/font/google";
 import "./globals.css";
 import { siteConfig } from "@/data/siteConfig";
+
+const fontOswald = Oswald({
+  subsets: ["latin"],
+  variable: "--font-oswald",
+  weight: ["600", "700"],
+  display: "swap",
+});
 
 const fontInter = Inter({
   subsets: ["latin"],
@@ -107,7 +114,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${fontInter.variable} ${fontSyne.variable} ${fontSerif.variable} ${fontSpaceGrotesk.variable} ${fontPlusJakarta.variable} ${fontJetBrainsMono.variable}`}
+      className={`${fontOswald.variable} ${fontInter.variable} ${fontSyne.variable} ${fontSerif.variable} ${fontSpaceGrotesk.variable} ${fontPlusJakarta.variable} ${fontJetBrainsMono.variable}`}
     >
       <body className="bg-white text-[#111111] antialiased selection:bg-[#111111] selection:text-white min-h-screen relative">
         {children}
