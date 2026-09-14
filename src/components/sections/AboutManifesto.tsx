@@ -41,7 +41,7 @@ export function AboutManifesto() {
     <section
       id="about"
       ref={containerRef}
-      className="relative min-h-[90vh] sm:min-h-screen w-full flex flex-col justify-center py-28 sm:py-36 md:py-44 px-6 sm:px-12 md:px-20 lg:px-28 bg-[#050507] text-[#F4F4F6] overflow-hidden select-none"
+      className="relative min-h-screen w-full flex flex-col justify-center py-32 sm:py-44 md:py-52 px-6 sm:px-12 md:px-20 lg:px-28 bg-[#050507] text-[#F4F4F6] overflow-hidden select-none"
     >
       {/* Soft Ambient Radial Backlight */}
       <div
@@ -49,7 +49,7 @@ export function AboutManifesto() {
         aria-hidden="true"
       />
 
-      <div className="max-w-5xl mx-auto w-full flex flex-col gap-12 sm:gap-16">
+      <div className="max-w-4xl mx-auto w-full flex flex-col gap-14 sm:gap-20">
         {/* Minimal Clean Top Tag */}
         <div className="flex items-center gap-3 text-xs font-mono text-neutral-500 tracking-widest uppercase">
           <span className="w-1.5 h-1.5 rounded-full bg-neutral-400" />
@@ -58,44 +58,47 @@ export function AboutManifesto() {
           <span>THE PHILOSOPHY</span>
         </div>
 
-        {/* Clean, Cohesive, Minimalist Editorial Statement */}
-        <div ref={textContainerRef} className="w-full">
-          <p className="font-sans text-2xl sm:text-3xl md:text-4xl lg:text-[2.75rem] leading-[1.38] sm:leading-[1.35] tracking-tight font-normal text-neutral-400">
-            <span className="scrub-word inline-block mr-2 sm:mr-3 text-white font-medium">
+        {/* Minimal, Easy-to-Read, Well-Spaced Statement */}
+        <div ref={textContainerRef} className="w-full flex flex-col gap-8 sm:gap-12">
+          <p className="font-sans text-xl sm:text-2xl md:text-3xl lg:text-[2.25rem] leading-[1.65] sm:leading-[1.6] tracking-tight font-normal text-neutral-400">
+            <span className="scrub-word inline-block mr-2 sm:mr-2.5 text-white font-semibold">
               Hey, I&apos;m Gourab.
             </span>
-            <span className="scrub-word inline-block mr-2 sm:mr-3 text-neutral-400">
+            <span className="scrub-word inline-block mr-2 sm:mr-2.5 text-neutral-300">
               I operate at the frontier where
             </span>
-            <span className="scrub-word inline-block mr-2 sm:mr-3 text-white font-medium">
+            <span className="scrub-word inline-block mr-2 sm:mr-2.5 text-white font-medium">
               high-throughput architecture
             </span>
-            <span className="scrub-word inline-block mr-2 sm:mr-3 text-neutral-400">
+            <span className="scrub-word inline-block mr-2 sm:mr-2.5 text-neutral-300">
               converges with
             </span>
-            <span className="scrub-word inline-block mr-2 sm:mr-3 font-serif italic text-white font-normal text-[1.1em]">
+            <span className="scrub-word inline-block mr-2 sm:mr-2.5 text-white font-medium">
               cinematic art direction.
             </span>
-            <span className="scrub-word inline-block mr-2 sm:mr-3 text-neutral-400">
+          </p>
+
+          <p className="font-sans text-xl sm:text-2xl md:text-3xl lg:text-[2.25rem] leading-[1.65] sm:leading-[1.6] tracking-tight font-normal text-neutral-400">
+            <span className="scrub-word inline-block mr-2 sm:mr-2.5 text-neutral-300">
               I engineer bespoke digital experiences,
             </span>
-            <span className="scrub-word inline-block mr-2 sm:mr-3 text-white font-medium">
+            <span className="scrub-word inline-block mr-2 sm:mr-2.5 text-white font-medium">
               interactive shaders,
             </span>
-            <span className="scrub-word inline-block mr-2 sm:mr-3 text-neutral-400">
+            <span className="scrub-word inline-block mr-2 sm:mr-2.5 text-neutral-300">
               editorial motion, and
             </span>
-            <span className="scrub-word inline-block mr-2 sm:mr-3 font-serif italic text-white font-normal text-[1.1em]">
+            <span className="scrub-word inline-block mr-2 sm:mr-2.5 text-white font-medium">
               intelligent AI systems
             </span>
-            <span className="scrub-word inline-block text-neutral-400">
+            <span className="scrub-word inline-block text-neutral-300">
               designed to leave an indelible impression.
             </span>
           </p>
         </div>
 
         {/* Minimal Clean Bottom Meta */}
-        <div className="pt-8 border-t border-white/[0.08] flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs font-mono text-neutral-500 uppercase tracking-widest">
+        <div className="pt-10 border-t border-white/[0.08] flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs font-mono text-neutral-500 uppercase tracking-widest">
           <div className="flex items-center gap-3">
             <span>FULL-STACK ARCHITECTURE</span>
             <span className="text-neutral-700">•</span>
