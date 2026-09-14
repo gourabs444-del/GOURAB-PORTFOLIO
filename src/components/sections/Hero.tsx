@@ -113,53 +113,36 @@ export function Hero({ isLoaded }: HeroProps) {
       {/* Main 2-Line Layered Typography & Centered Cutout Portrait Scene (Exact Bazil Reference Match) */}
       <div className="relative my-auto w-full max-w-7xl mx-auto flex flex-col items-center justify-center py-2 sm:py-4 min-h-[320px] xs:min-h-[360px] sm:min-h-[440px] md:min-h-[500px] lg:min-h-[540px]">
         {/* Background Typography Container (z-10, strictly behind the foreground portrait) */}
-        <div className="relative z-10 w-full max-w-5xl lg:max-w-6xl mx-auto flex flex-col items-center justify-center text-center select-none -translate-y-6 xs:-translate-y-10 sm:-translate-y-16 md:-translate-y-22 lg:-translate-y-26 px-2 sm:px-4">
-          {/* Line 1 (Solid Bold Black): WEB DEVELOPER (Identical Start & End Point) */}
+        <div className="relative z-10 w-full max-w-6xl mx-auto flex flex-col items-center justify-center text-center select-none -translate-y-8 sm:-translate-y-14 md:-translate-y-20 lg:-translate-y-24 px-2 sm:px-4">
+          {/* Line 1 (Solid Bold Black): WEB DEVELOPER (Bodoni Moda Luxury Editorial Serif) */}
           <div
             ref={headlineTopRef}
-            className="w-full relative z-10 mb-1.5 sm:mb-3 md:mb-4"
+            className="w-full relative z-10 mb-4 sm:mb-7 md:mb-9 lg:mb-11"
           >
-            <svg viewBox="0 0 1000 80" className="w-full h-auto overflow-visible" preserveAspectRatio="none">
-              <text
-                x="0"
-                y="68"
-                textLength="1000"
-                lengthAdjust="spacing"
-                className="font-oswald uppercase fill-[#111111]"
-                style={{
-                  fontFamily: "var(--font-oswald), sans-serif",
-                  fontSize: "82px",
-                  fontWeight: "700",
-                }}
-              >
-                WEB DEVELOPER
-              </text>
-            </svg>
+            <h1
+              className="font-bodoni uppercase font-bold text-[8.2vw] sm:text-[7.4vw] md:text-[6.4vw] lg:text-[5.8vw] xl:text-[5.3vw] tracking-[0.05em] sm:tracking-[0.09em] md:tracking-[0.11em] text-[#111111] leading-none whitespace-nowrap"
+              style={{
+                fontFamily: "var(--font-bodoni), 'Bodoni Moda', Georgia, serif",
+                fontWeight: "700",
+              }}
+            >
+              WEB DEVELOPER
+            </h1>
           </div>
 
-          {/* Line 2 (Outlined Stroked Text Behind Portrait): & DESIGNER (Identical Start & End Point) */}
+          {/* Line 2 (Outlined Stroked Text Behind Portrait): & DESIGNER (Tall Bold Outlined) */}
           <div
             ref={headlineBottomRef}
             className="w-full relative z-10"
           >
-            <svg viewBox="0 0 1000 110" className="w-full h-auto overflow-visible" preserveAspectRatio="none">
-              <text
-                x="0"
-                y="94"
-                textLength="1000"
-                lengthAdjust="spacing"
-                className="font-oswald uppercase fill-transparent"
-                style={{
-                  fontFamily: "var(--font-oswald), sans-serif",
-                  fontSize: "115px",
-                  fontWeight: "700",
-                  stroke: "#111111",
-                  strokeWidth: "2.2px",
-                }}
-              >
-                &amp; DESIGNER
-              </text>
-            </svg>
+            <h2
+              className="font-oswald uppercase font-black text-[12vw] sm:text-[11vw] md:text-[10vw] lg:text-[9.2vw] xl:text-[8.5vw] leading-none tracking-tight select-none text-transparent whitespace-nowrap"
+              style={{
+                WebkitTextStroke: "1.8px #111111",
+              }}
+            >
+              &amp; DESIGNER
+            </h2>
           </div>
         </div>
 
