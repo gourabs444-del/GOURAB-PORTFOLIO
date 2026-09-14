@@ -114,10 +114,10 @@ export function Hero({ isLoaded }: HeroProps) {
       <div className="relative my-auto w-full max-w-7xl mx-auto flex flex-col items-center justify-center py-2 sm:py-4 min-h-[320px] xs:min-h-[360px] sm:min-h-[440px] md:min-h-[500px] lg:min-h-[540px]">
         {/* Background Typography Container (z-10, strictly behind the foreground portrait) */}
         <div className="relative z-10 w-full max-w-5xl lg:max-w-6xl mx-auto flex flex-col items-center justify-center text-center select-none -translate-y-14 xs:-translate-y-18 sm:-translate-y-28 md:-translate-y-36 lg:-translate-y-40 px-2 sm:px-4">
-          {/* Line 1 (Solid Bold Black): WEB DEVELOPER (Completely Above Head, 100% Visible, Normal Kerning) */}
+          {/* Line 1 (Solid Bold Black): WEB DEVELOPER (1 Inch Higher Above Head) */}
           <div
             ref={headlineTopRef}
-            className="w-full relative z-10"
+            className="w-full relative z-10 -translate-y-8 xs:-translate-y-10 sm:-translate-y-14 md:-translate-y-18 lg:-translate-y-20"
           >
             <svg viewBox="0 0 1000 85" className="w-full h-auto overflow-visible" preserveAspectRatio="none">
               <text
@@ -136,23 +136,23 @@ export function Hero({ isLoaded }: HeroProps) {
             </svg>
           </div>
 
-          {/* Line 2 (Outlined Stroked Text Behind Portrait): & DESIGNER (Stretched Glyphs, Same Start & End, Tall Outline) */}
+          {/* Line 2 (Outlined Stroked Text Behind Portrait): & DESIGNER (Extra Tall Vertical Stretch, Same Start & End) */}
           <div
             ref={headlineBottomRef}
-            className="w-full relative z-10 mt-1 sm:mt-2 transform scale-y-140 sm:scale-y-150 md:scale-y-160 origin-top"
+            className="w-full relative z-10 mt-1 sm:mt-2 transform scale-y-[1.75] sm:scale-y-[1.9] md:scale-y-[2.05] lg:scale-y-[2.15] origin-top"
           >
-            <svg viewBox="0 0 1000 115" className="w-full h-auto overflow-visible" preserveAspectRatio="none">
+            <svg viewBox="0 0 1000 120" className="w-full h-auto overflow-visible" preserveAspectRatio="none">
               <text
                 x="0"
-                y="100"
+                y="102"
                 textLength="1000"
                 lengthAdjust="spacingAndGlyphs"
                 className="font-oswald font-black uppercase fill-transparent"
                 style={{
-                  fontSize: "128px",
+                  fontSize: "135px",
                   fontWeight: "900",
                   stroke: "#111111",
-                  strokeWidth: "2.4px",
+                  strokeWidth: "2.2px",
                 }}
               >
                 &amp; DESIGNER
@@ -161,20 +161,22 @@ export function Hero({ isLoaded }: HeroProps) {
           </div>
         </div>
 
-        {/* Foreground Layer: Gourab's Cutout Portrait (Strictly z-20 IN FRONT of & Designer) */}
+        {/* Foreground Layer: Gourab's Cutout Portrait (Strictly z-20 IN FRONT of & Designer, 100% Solid Over Head/Neck/Jacket) */}
         <div
           ref={portraitRef}
           className="absolute bottom-[-10px] sm:bottom-[-15px] md:bottom-[-20px] left-1/2 -translate-x-1/2 z-20 w-[210px] xs:w-[240px] sm:w-[320px] md:w-[390px] lg:w-[440px] xl:w-[480px] aspect-[3/4] pointer-events-none flex items-end justify-center"
         >
-          <div className="relative w-full h-full">
+          <div className="relative w-full h-full [mask-image:linear-gradient(to_bottom,black_86%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_86%,transparent_100%)]">
             <Image
               src="/assets/gourab.png"
               alt="Gourab — Web Developer & Designer"
               fill
               priority
-              className="object-contain object-bottom filter contrast-105 brightness-100 drop-shadow-2xl"
+              className="object-contain object-bottom filter contrast-105 brightness-100"
             />
           </div>
+          {/* Smooth bottom feather blend overlay at very bottom edge only */}
+          <div className="absolute -bottom-2 left-0 right-0 h-10 bg-gradient-to-t from-white via-white/80 to-transparent pointer-events-none" />
         </div>
 
         {/* Left Side Metadata: Based in India */}

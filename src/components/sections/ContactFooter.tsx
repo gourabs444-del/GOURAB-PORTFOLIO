@@ -163,116 +163,71 @@ export function ContactFooter() {
     <footer
       id="contact"
       ref={containerRef}
-      className="relative w-full overflow-hidden bg-[#06040C] text-white selection:bg-purple-600 selection:text-white"
+      className="relative w-full overflow-hidden bg-black text-white selection:bg-purple-600 selection:text-white"
     >
       {/* ========================================================= */}
-      {/* 100% FULL-SCREEN PURPLE GLOWING HORIZON HERO SECTION     */}
+      {/* 100% FULL-SCREEN PURE BLACK & AMBIENT PURPLE HERO SECTION */}
       {/* ========================================================= */}
       <div
         ref={fullScreenHeroRef}
-        className="relative w-full min-h-screen flex flex-col items-center justify-center text-center px-4 sm:px-8 md:px-12 py-20 overflow-hidden"
+        className="relative w-full min-h-screen flex flex-col items-center justify-center text-center px-4 sm:px-8 md:px-12 py-20 overflow-hidden bg-black"
       >
-        {/* Edge-to-Edge Full-Screen Glowing Aurora & Light Beam */}
+        {/* Normal Clean Ambient Purple Glow (Smooth, Natural, Non-distorted) */}
         <div className="pointer-events-none absolute inset-0 w-full h-full flex items-center justify-center overflow-hidden" aria-hidden="true">
-          {/* Ambient soft glow backdrop */}
-          <div className="absolute inset-0 w-full h-full bg-[radial-gradient(ellipse_90%_70%_at_50%_50%,_rgba(147,51,234,0.38),_rgba(88,28,135,0.18)_40%,_transparent_75%)] blur-[90px]" />
-          <div className="absolute inset-0 w-full h-full bg-[radial-gradient(ellipse_60%_35%_at_50%_50%,_rgba(192,132,252,0.45),_rgba(126,34,206,0.22)_45%,_transparent_75%)] blur-[50px]" />
-
-          {/* Symmetrical Hourglass Purple Wings & Light Ray (Full-Screen 100% Vector) */}
-          <svg
-            ref={flareSvgRef}
-            className="absolute inset-0 w-full h-full min-w-full min-h-full object-fill opacity-95 origin-center"
-            viewBox="0 0 1920 1080"
-            preserveAspectRatio="none"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <defs>
-              <radialGradient id="fsCorePurpleGlow" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stopColor="#FFFFFF" stopOpacity="1" />
-                <stop offset="10%" stopColor="#F3E8FF" stopOpacity="0.95" />
-                <stop offset="25%" stopColor="#C084FC" stopOpacity="0.88" />
-                <stop offset="50%" stopColor="#7E22CE" stopOpacity="0.6" />
-                <stop offset="80%" stopColor="#3B0764" stopOpacity="0.25" />
-                <stop offset="100%" stopColor="#06040C" stopOpacity="0" />
-              </radialGradient>
-
-              <linearGradient id="fsHorizontalBeam" x1="0%" y1="50%" x2="100%" y2="50%">
-                <stop offset="0%" stopColor="#9333EA" stopOpacity="0" />
-                <stop offset="12%" stopColor="#A855F7" stopOpacity="0.35" />
-                <stop offset="30%" stopColor="#E9D5FF" stopOpacity="0.9" />
-                <stop offset="50%" stopColor="#FFFFFF" stopOpacity="1" />
-                <stop offset="70%" stopColor="#E9D5FF" stopOpacity="0.9" />
-                <stop offset="88%" stopColor="#A855F7" stopOpacity="0.35" />
-                <stop offset="100%" stopColor="#9333EA" stopOpacity="0" />
-              </linearGradient>
-            </defs>
-
-            {/* Symmetrical Purple Aurora Wings (Curving to screen corners) */}
-            <path
-              d="M0,0 C500,380 800,530 960,540 C1120,530 1420,380 1920,0 L1920,1080 C1420,700 1120,550 960,540 C800,550 500,700 0,1080 Z"
-              fill="url(#fsCorePurpleGlow)"
-              opacity="0.92"
-              filter="blur(45px)"
-            />
-
-            <path
-              d="M0,-20 C500,390 820,545 960,550 C1100,545 1420,390 1920,-20 L1920,1100 C1420,690 1100,535 960,550 C820,535 500,690 0,1100 Z"
-              fill="#A855F7"
-              opacity="0.55"
-              filter="blur(65px)"
-            />
-
-            {/* Smooth Glowing Horizon Core Bloom */}
-            <ellipse cx="960" cy="540" rx="550" ry="45" fill="#FFFFFF" opacity="0.65" filter="blur(20px)" />
-          </svg>
+          {/* Broad subtle ambient back-glow */}
+          <div
+            ref={flareSvgRef as any}
+            className="absolute w-[600px] sm:w-[900px] md:w-[1200px] h-[350px] sm:h-[500px] rounded-full bg-gradient-to-tr from-purple-700/20 via-violet-600/25 to-fuchsia-600/15 blur-[120px] pointer-events-none"
+          />
+          {/* Core concentrated ambient glow */}
+          <div className="absolute w-[300px] sm:w-[500px] h-[180px] sm:h-[260px] rounded-full bg-purple-600/20 blur-[80px] pointer-events-none" />
         </div>
 
-        {/* Foreground Content with Scroll-Animated Typography */}
+        {/* Foreground Content with Clean Modern Typography */}
         <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center gap-5 sm:gap-7 my-auto px-4">
-          {/* Scroll-Animated Refined Headline */}
-          <h2 className="font-display font-bold text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5rem] text-white tracking-tight leading-[1.05] sm:leading-[1.0] drop-shadow-[0_4px_24px_rgba(0,0,0,0.85)] select-none text-center">
+          {/* Scroll-Animated Clean Solid Headline */}
+          <h2 className="font-sans font-bold text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-white tracking-tight leading-[1.05] select-none text-center">
             <span ref={line1Ref} className="block text-white">
               Let&apos;s Build
             </span>
-            <span ref={line2Ref} className="block text-purple-100 font-light italic font-serif my-0.5 sm:my-1">
+            <span ref={line2Ref} className="block text-purple-200">
               Something
             </span>
             <span
               ref={line3Ref}
-              className="block text-white drop-shadow-[0_0_35px_rgba(255,255,255,0.7)] text-transparent bg-clip-text bg-gradient-to-r from-white via-purple-100 to-purple-200"
+              className="block text-white"
             >
               Worth Remembering.
             </span>
           </h2>
 
-          {/* Subtitle with soft lavender typography */}
+          {/* Subtitle with clean neutral typography */}
           <p
             ref={subTextRef}
-            className="font-sans text-sm sm:text-base md:text-lg lg:text-xl text-purple-200/80 font-normal max-w-2xl mx-auto leading-relaxed drop-shadow-[0_2px_16px_rgba(0,0,0,0.9)]"
+            className="font-sans text-sm sm:text-base md:text-lg text-neutral-400 font-normal max-w-2xl mx-auto leading-relaxed"
           >
             Available for select digital architecture commissions, bespoke creative tech direction, and high-performance WebGL &amp; full-stack systems.
           </p>
 
-          {/* Glowing Purple Glass Pill CTA Button */}
-          <div ref={ctaBtnRef} className="pt-2">
+          {/* Clean Modern Pill CTA Button */}
+          <div ref={ctaBtnRef} className="pt-3">
             <a
               href="#terminal-inquiry"
               onClick={() => playClick()}
               onMouseEnter={() => playHover()}
-              className="inline-flex items-center gap-2.5 px-9 py-4 rounded-full bg-white/10 hover:bg-white/20 text-white border border-purple-400/50 backdrop-blur-xl font-sans font-semibold text-sm sm:text-base transition-all duration-300 shadow-[0_0_35px_rgba(168,85,247,0.4)] hover:shadow-[0_0_55px_rgba(168,85,247,0.7)] hover:scale-[1.04] active:scale-[0.98] group cursor-pointer"
+              className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full bg-purple-600 hover:bg-purple-500 text-white font-sans font-semibold text-sm sm:text-base transition-all duration-300 shadow-[0_0_30px_rgba(147,51,234,0.35)] hover:shadow-[0_0_45px_rgba(147,51,234,0.6)] hover:scale-[1.03] active:scale-[0.98] group cursor-pointer"
             >
               <span>Get In Touch</span>
-              <ArrowUpRight className="w-4 h-4 text-purple-300 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              <ArrowUpRight className="w-4 h-4 text-purple-200 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </a>
           </div>
         </div>
 
         {/* Floating scroll indicator at bottom of full-screen view */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-purple-300/60 font-mono text-[11px] uppercase tracking-widest pointer-events-none animate-bounce">
-          <span>SCROLL TO INITIATE DISPATCH</span>
-          <div className="w-4 h-7 rounded-full border border-purple-400/40 flex justify-center pt-1">
-            <div className="w-1 h-1.5 bg-purple-300 rounded-full animate-pulse" />
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-neutral-500 font-mono text-[11px] uppercase tracking-widest pointer-events-none animate-bounce">
+          <span>SCROLL TO CONTACT</span>
+          <div className="w-4 h-7 rounded-full border border-neutral-700 flex justify-center pt-1">
+            <div className="w-1 h-1.5 bg-neutral-400 rounded-full animate-pulse" />
           </div>
         </div>
       </div>
