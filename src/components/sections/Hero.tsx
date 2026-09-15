@@ -158,21 +158,21 @@ export function Hero({ isLoaded }: HeroProps) {
         </div>
       </div>
 
-      {/* Bottom Dual Action Buttons: Positioned Just Below Where the Portrait Ends */}
+      {/* Bottom Dual Action Buttons: Positioned Right at Cursor Location on Portrait Base */}
       <div
         ref={ctaGroupRef}
-        className="relative z-30 flex flex-row items-center justify-center gap-2.5 sm:gap-4 mt-3 sm:mt-5 md:mt-6 mb-2 w-full mx-auto"
+        className="relative z-30 flex flex-row items-center justify-center gap-2.5 sm:gap-4 -mt-12 xs:-mt-16 sm:-mt-20 md:-mt-24 lg:-mt-28 mb-2 w-full mx-auto"
       >
         <button
           onClick={() => scrollToSection("work")}
-          className="px-4 xs:px-6 sm:px-8 py-2.5 sm:py-3 rounded-full bg-[#111111] text-white hover:bg-black text-xs sm:text-sm font-sans font-medium tracking-tight shadow-sm transition-all duration-200 hover:scale-105 active:scale-95 whitespace-nowrap cursor-pointer"
+          className="px-4 xs:px-6 sm:px-8 py-2.5 sm:py-3 rounded-full bg-[#111111] text-white hover:bg-black text-xs sm:text-sm font-sans font-medium tracking-tight shadow-md transition-all duration-200 hover:scale-105 active:scale-95 whitespace-nowrap cursor-pointer"
         >
           You need a developer
         </button>
 
         <button
           onClick={() => scrollToSection("contact")}
-          className="px-4 xs:px-6 sm:px-8 py-2.5 sm:py-3 rounded-full bg-white text-[#111111] border border-neutral-300 hover:border-[#111111] hover:bg-neutral-50 text-xs sm:text-sm font-sans font-medium tracking-tight shadow-sm transition-all duration-200 hover:scale-105 active:scale-95 whitespace-nowrap cursor-pointer"
+          className="px-4 xs:px-6 sm:px-8 py-2.5 sm:py-3 rounded-full bg-white/95 hover:bg-white text-[#111111] border border-neutral-300 hover:border-[#111111] text-xs sm:text-sm font-sans font-medium tracking-tight shadow-md backdrop-blur-sm transition-all duration-200 hover:scale-105 active:scale-95 whitespace-nowrap cursor-pointer"
         >
           You need a designer
         </button>
