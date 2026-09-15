@@ -23,35 +23,59 @@ export function Hero({ isLoaded }: HeroProps) {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // 2-Stage Cinematic Scroll Experience:
-      // 1. Initial view shows the clean centered greeting: "👋 , my name is Gourab..."
-      // 2. On scroll, greeting ascends to top and the full 2nd scene (WEB DEV & DESIGNER + portrait) rises into view.
-      const scrollTl = gsap.timeline({
+      // Entrance reveal when preloader finishes
+      if (isLoaded) {
+        const entranceTl = gsap.timeline();
+        entranceTl
+          .fromTo(
+            portraitRef.current,
+            { y: 50, opacity: 0, scale: 0.95 },
+            { y: 0, opacity: 1, scale: 1, duration: 1, ease: "power3.out" },
+            0.1
+          )
+          .fromTo(
+            [headlineTopRef.current, headlineBottomRef.current],
+            { y: 30, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: "power3.out" },
+            0.2
+          )
+          .fromTo(
+            introGreetingRef.current,
+            { y: 20, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.7, ease: "power2.out" },
+            0.3
+          )
+          .fromTo(
+            [ctaGroupRef.current, sideMetaLeftRef.current, sideMetaRightRef.current],
+            { y: 15, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.6, stagger: 0.08, ease: "power2.out" },
+            0.4
+          );
+      }
+
+      // Parallax scroll motion
+      gsap.to(portraitRef.current, {
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top top",
-          end: "+=100%",
-          pin: true,
-          scrub: 0.8,
-          anticipatePin: 1,
+          end: "bottom top",
+          scrub: 1,
         },
+        y: 60,
+        ease: "none",
       });
 
-      scrollTl
-        // Step 1: Greeting moves from center towards top
-        .fromTo(
-          introGreetingRef.current,
-          { y: "30vh", scale: 1.15 },
-          { y: "0vh", scale: 1, ease: "power2.inOut", duration: 1 },
-          0
-        )
-        // Step 2: Main 2-Line typography + portrait scene emerges and rises up into full frame
-        .fromTo(
-          mainSceneRef.current,
-          { y: "60vh", opacity: 0 },
-          { y: "0vh", opacity: 1, ease: "power2.out", duration: 1 },
-          0
-        );
+      gsap.to([headlineTopRef.current, headlineBottomRef.current], {
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top top",
+          end: "60% top",
+          scrub: 1,
+        },
+        y: -40,
+        opacity: 0.2,
+        ease: "none",
+      });
     }, containerRef);
 
     return () => ctx.revert();
@@ -112,10 +136,10 @@ export function Hero({ isLoaded }: HeroProps) {
             </svg>
           </div>
 
-          {/* Line 2 (Outlined Stroked Text Behind Portrait): & DESIGNER (White Fill, White-Greyish Outline) */}
+          {/* Line 2 (Outlined Stroked Text Behind Portrait): & DESIGNER (White Fill, White-Greyish Outline, Stretched Downward) */}
           <div
             ref={headlineBottomRef}
-            className="w-full relative z-10 -translate-y-2 xs:-translate-y-3 sm:-translate-y-4 md:-translate-y-5 transform scale-y-[1.75] sm:scale-y-[1.9] md:scale-y-[2.05] lg:scale-y-[2.15] origin-top"
+            className="w-full relative z-10 -translate-y-2 xs:-translate-y-3 sm:-translate-y-4 md:-translate-y-5 transform scale-y-[2.1] sm:scale-y-[2.3] md:scale-y-[2.5] lg:scale-y-[2.65] origin-top"
           >
             <svg viewBox="0 0 1000 120" className="w-full h-auto overflow-visible" preserveAspectRatio="none">
               <text
