@@ -59,7 +59,7 @@ export function ProcessPipeline() {
                 className="w-2 h-2 rounded-full transition-colors duration-500 animate-pulse"
                 style={{ backgroundColor: currentAccent.color }}
               />
-              <span className="text-neutral-300 font-semibold">05 // METHODOLOGY</span>
+              <span className="text-neutral-300 font-semibold">04 // METHODOLOGY</span>
               <span className="text-neutral-600">/</span>
               <span>PRECISION PIPELINE</span>
             </div>

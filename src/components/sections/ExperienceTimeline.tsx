@@ -108,7 +108,7 @@ export function ExperienceTimeline() {
           <div className="flex flex-col gap-3">
             <div className="flow-header-reveal flex items-center gap-3">
               <span className="font-mono text-xs text-amber-400 font-semibold tracking-widest uppercase">
-                06 // CAREER CHRONOLOGY
+                05 // CAREER CHRONOLOGY
               </span>
               <span className="text-white/20">/</span>
               <span className="font-mono text-xs uppercase tracking-widest text-neutral-400">

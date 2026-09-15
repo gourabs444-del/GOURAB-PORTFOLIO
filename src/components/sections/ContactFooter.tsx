@@ -265,7 +265,7 @@ export function ContactFooter() {
           <div className="overflow-hidden mb-6">
             <div className="mask-reveal-inner flex items-center justify-center gap-2.5 text-xs font-mono text-neutral-400 uppercase tracking-widest">
               <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
-              <span className="font-semibold text-neutral-200">07 // COLLABORATION</span>
+              <span className="font-semibold text-neutral-200">06 // COLLABORATION</span>
               <span className="text-neutral-600">/</span>
               <span>GET IN TOUCH</span>
             </div>
