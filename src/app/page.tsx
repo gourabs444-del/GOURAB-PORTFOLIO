@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { useLenis } from "@/hooks/useLenis";
 import { Preloader } from "@/components/sections/Preloader";
 import { Header } from "@/components/navigation/Header";
@@ -21,10 +21,14 @@ export default function Home() {
   // Initialize Lenis Smooth Scroll with GSAP Ticker sync
   useLenis();
 
+  const handleLoaded = useCallback(() => {
+    setIsLoaded(true);
+  }, []);
+
   return (
     <main className="relative min-h-screen w-full bg-background text-foreground overflow-x-hidden">
       {/* Cinematic Intro Preloader */}
-      <Preloader onComplete={() => setIsLoaded(true)} />
+      <Preloader onComplete={handleLoaded} />
 
       {/* Atmospheric Ambience Layers */}
       <FilmGrain />

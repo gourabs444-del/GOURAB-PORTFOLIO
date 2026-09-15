@@ -17,13 +17,18 @@ export function Preloader({ onComplete }: PreloaderProps) {
   const introNameRef = useRef<HTMLHeadingElement | null>(null);
   const introRoleRef = useRef<HTMLDivElement | null>(null);
   const contentRef = useRef<HTMLDivElement | null>(null);
-  const { playShutter, playHover } = useAudioFeedback();
+  const onCompleteRef = useRef(onComplete);
+  onCompleteRef.current = onComplete;
+
+  const { playShutter } = useAudioFeedback();
+  const playShutterRef = useRef(playShutter);
+  playShutterRef.current = playShutter;
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
         onComplete: () => {
-          onComplete();
+          onCompleteRef.current();
         },
       });
 
@@ -75,7 +80,7 @@ export function Preloader({ onComplete }: PreloaderProps) {
           ease: "power3.in",
           onStart: () => {
             try {
-              playShutter();
+              playShutterRef.current();
             } catch (e) {
               // audio fallback
             }
@@ -109,7 +114,7 @@ export function Preloader({ onComplete }: PreloaderProps) {
     }, containerRef);
 
     return () => ctx.revert();
-  }, [onComplete, playShutter]);
+  }, []);
 
   return (
     <div
