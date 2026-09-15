@@ -158,10 +158,10 @@ export function Hero({ isLoaded }: HeroProps) {
         </div>
       </div>
 
-      {/* Bottom Dual Action Buttons: Positioned Right at Cursor Location on Portrait Base */}
+      {/* Bottom Dual Action Buttons: Positioned higher up over the portrait base */}
       <div
         ref={ctaGroupRef}
-        className="relative z-30 flex flex-row items-center justify-center gap-2.5 sm:gap-4 -mt-12 xs:-mt-16 sm:-mt-20 md:-mt-24 lg:-mt-28 mb-2 w-full mx-auto"
+        className="relative z-30 flex flex-row items-center justify-center gap-2.5 sm:gap-4 -mt-20 xs:-mt-28 sm:-mt-36 md:-mt-44 lg:-mt-52 mb-2 w-full mx-auto"
       >
         <button
           onClick={() => scrollToSection("work")}
