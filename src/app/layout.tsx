@@ -1,7 +1,21 @@
 import type { Metadata, Viewport } from "next";
-import { Syne, Space_Grotesk, Plus_Jakarta_Sans, JetBrains_Mono, Instrument_Serif, Inter, Oswald, Cormorant_Garamond, Cinzel, Bodoni_Moda } from "next/font/google";
+import { Syne, Space_Grotesk, Plus_Jakarta_Sans, JetBrains_Mono, Instrument_Serif, Inter, Oswald, Cormorant_Garamond, Cinzel, Bodoni_Moda, Bebas_Neue, Anton } from "next/font/google";
 import "./globals.css";
 import { siteConfig } from "@/data/siteConfig";
+
+const fontBebas = Bebas_Neue({
+  subsets: ["latin"],
+  variable: "--font-bebas",
+  weight: ["400"],
+  display: "swap",
+});
+
+const fontAnton = Anton({
+  subsets: ["latin"],
+  variable: "--font-anton",
+  weight: ["400"],
+  display: "swap",
+});
 
 const fontBodoni = Bodoni_Moda({
   subsets: ["latin"],
@@ -137,7 +151,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${fontBodoni.variable} ${fontOswald.variable} ${fontLuxury.variable} ${fontCinzel.variable} ${fontInter.variable} ${fontSyne.variable} ${fontSerif.variable} ${fontSpaceGrotesk.variable} ${fontPlusJakarta.variable} ${fontJetBrainsMono.variable}`}
+      className={`${fontBebas.variable} ${fontAnton.variable} ${fontBodoni.variable} ${fontOswald.variable} ${fontLuxury.variable} ${fontCinzel.variable} ${fontInter.variable} ${fontSyne.variable} ${fontSerif.variable} ${fontSpaceGrotesk.variable} ${fontPlusJakarta.variable} ${fontJetBrainsMono.variable}`}
     >
       <body className="bg-white text-[#111111] antialiased selection:bg-[#111111] selection:text-white min-h-screen relative">
         {children}
