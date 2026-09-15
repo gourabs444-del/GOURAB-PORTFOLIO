@@ -16,28 +16,28 @@ export function ExperienceTimeline() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // 1. Header entrance
+      // 1. Header entrance - triggers earlier and smoothly
       if (headerRef.current) {
         gsap.fromTo(
           headerRef.current.querySelectorAll(".flow-header-reveal"),
-          { opacity: 0, y: 35, filter: "blur(8px)" },
+          { opacity: 0, y: 24, filter: "blur(4px)" },
           {
             opacity: 1,
             y: 0,
             filter: "blur(0px)",
-            duration: 1.0,
-            stagger: 0.12,
-            ease: "power3.out",
+            duration: 0.7,
+            stagger: 0.08,
+            ease: "power2.out",
             scrollTrigger: {
               trigger: headerRef.current,
-              start: "top 85%",
-              toggleActions: "play none none reverse",
+              start: "top 94%",
+              toggleActions: "play none none none",
             },
           }
         );
       }
 
-      // 2. Vertical Spine Progress Fill on Lenis Scroll
+      // 2. Vertical Spine Progress Fill on Lenis Scroll - responsive & smooth
       if (spineRef.current) {
         gsap.fromTo(
           spineRef.current,
@@ -48,30 +48,30 @@ export function ExperienceTimeline() {
             transformOrigin: "top center",
             scrollTrigger: {
               trigger: sectionRef.current,
-              start: "top 70%",
-              end: "bottom 85%",
-              scrub: 1.2,
+              start: "top 85%",
+              end: "bottom 90%",
+              scrub: 0.5,
             },
           }
         );
       }
 
-      // 3. Staggered Flow Items Reveal on Scroll
+      // 3. Snappy & Early Staggered Flow Items Reveal on Scroll
       const items = sectionRef.current?.querySelectorAll(".flow-item");
       items?.forEach((item) => {
         gsap.fromTo(
           item,
-          { opacity: 0, y: 50, filter: "blur(6px)" },
+          { opacity: 0, y: 28, filter: "blur(3px)" },
           {
             opacity: 1,
             y: 0,
             filter: "blur(0px)",
-            duration: 1.0,
-            ease: "power3.out",
+            duration: 0.6,
+            ease: "power2.out",
             scrollTrigger: {
               trigger: item,
-              start: "top 85%",
-              toggleActions: "play none none reverse",
+              start: "top 92%",
+              toggleActions: "play none none none",
             },
           }
         );
