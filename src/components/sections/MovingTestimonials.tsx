@@ -5,7 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "@/lib/gsap";
 import { testimonials, Testimonial } from "@/data/testimonials";
 import { useAudioFeedback } from "@/hooks/useAudioFeedback";
-import { Star, ArrowUpRight } from "lucide-react";
+import { Star, Heart } from "lucide-react";
 
 export function MovingTestimonials() {
   const containerRef = useRef<HTMLElement | null>(null);
@@ -80,49 +80,79 @@ export function MovingTestimonials() {
       <div
         key={`${t.id}-${idx}`}
         onMouseEnter={() => playHover()}
-        className="group relative w-[340px] sm:w-[400px] md:w-[440px] shrink-0 p-6 sm:p-8 rounded-2xl border border-white/[0.1] hover:border-white/25 bg-[#0b0c12]/95 backdrop-blur-md shadow-xl transition-all duration-300 hover:-translate-y-1 select-none flex flex-col justify-between gap-5"
+        className="group relative w-[340px] sm:w-[400px] md:w-[440px] shrink-0 p-6 sm:p-7 rounded-2xl border border-white/[0.08] hover:border-white/20 bg-[#0c0e14]/95 backdrop-blur-md shadow-xl transition-all duration-300 hover:-translate-y-1 select-none flex flex-col justify-between gap-4"
       >
         {/* Subtle Card Glow on Hover */}
         <div
           className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"
           style={{
-            background: `radial-gradient(circle at 50% 0%, ${accent}15 0%, transparent 70%)`,
+            background: `radial-gradient(circle at 50% 0%, ${accent}12 0%, transparent 70%)`,
           }}
           aria-hidden="true"
         />
 
-        {/* Top Header: 5 Stars & Company */}
-        <div className="flex items-center justify-between relative z-10">
-          <div className="flex items-center gap-1 text-amber-400">
-            {[...Array(t.rating)].map((_, i) => (
-              <Star key={i} className="w-3.5 h-3.5 fill-amber-400 stroke-none" />
-            ))}
+        {/* Letterboxd Top Bar: Avatar, "Review by Author", Green Stars & Year, Company Badge */}
+        <div className="flex items-start justify-between relative z-10 gap-3">
+          <div className="flex items-center gap-3 min-w-0">
+            {/* Reviewer Monogram Avatar */}
+            <div className="w-9 h-9 rounded-full bg-white/[0.06] border border-white/10 flex items-center justify-center font-mono text-xs font-semibold text-white/90 shrink-0 group-hover:border-emerald-500/40 transition-colors shadow-inner">
+              {t.avatar}
+            </div>
+
+            {/* Author Name + Rating */}
+            <div className="flex flex-col min-w-0">
+              <div className="flex items-center gap-1.5 text-xs text-neutral-400">
+                <span className="font-normal text-neutral-400">Review by</span>
+                <span className="font-semibold text-white group-hover:text-emerald-300 transition-colors truncate">
+                  {t.author}
+                </span>
+              </div>
+
+              {/* Letterboxd Signature Green Stars & Year */}
+              <div className="flex items-center gap-2 mt-0.5">
+                <div className="flex items-center gap-0.5 text-[#00e054]">
+                  {[...Array(t.rating)].map((_, i) => (
+                    <Star key={i} className="w-3.5 h-3.5 fill-[#00e054] stroke-none" />
+                  ))}
+                </div>
+                <span className="text-[10px] font-mono text-neutral-600">•</span>
+                <span className="text-[11px] font-mono text-neutral-400 font-medium">
+                  {t.year}
+                </span>
+              </div>
+            </div>
           </div>
-          <span className="font-mono text-xs font-semibold text-neutral-400 tracking-wider uppercase">
+
+          {/* Project / Company Pill */}
+          <span className="shrink-0 font-mono text-[10.5px] font-medium tracking-wider text-neutral-400 uppercase bg-white/[0.03] px-2.5 py-1 rounded-md border border-white/[0.06]">
             {t.company}
           </span>
         </div>
 
-        {/* Direct Clean Quote Text (No Unwanted Headline Duplication) */}
-        <p className="relative z-10 font-sans text-xs sm:text-sm text-neutral-200 leading-relaxed font-normal">
-          &ldquo;{t.quote}&rdquo;
+        {/* Letterboxd Review Body: High Legibility, Crisp Text */}
+        <p className="relative z-10 font-sans text-[13px] sm:text-[13.5px] text-neutral-300 leading-relaxed font-normal">
+          {t.quote}
         </p>
 
-        {/* Author Footer */}
-        <div className="pt-3 border-t border-white/[0.08] flex items-center justify-between relative z-10">
-          <div className="flex flex-col">
-            <span className="font-sans font-bold text-sm text-white group-hover:text-amber-200 transition-colors">
-              {t.author}
-            </span>
-            <span className="font-sans text-xs text-neutral-400">
-              {t.role}
-            </span>
-          </div>
+        {/* Letterboxd Footer: Role & Letterboxd Like Counter */}
+        <div className="pt-3 border-t border-white/[0.06] flex items-center justify-between relative z-10 text-xs">
+          <span className="font-sans text-[11px] text-neutral-400 truncate">
+            {t.role}
+          </span>
 
-          <span
-            className="w-2 h-2 rounded-full"
-            style={{ backgroundColor: accent }}
-          />
+          <div className="flex items-center gap-3 shrink-0">
+            <div className="flex items-center gap-1.5 font-mono text-[11px] text-neutral-400 group-hover:text-rose-300 transition-colors">
+              <Heart className="w-3.5 h-3.5 fill-rose-500/70 text-rose-500/70" />
+              <span>{t.likes}</span>
+            </div>
+            <span
+              className="w-1.5 h-1.5 rounded-full"
+              style={{
+                backgroundColor: accent,
+                boxShadow: `0 0 8px ${accent}`,
+              }}
+            />
+          </div>
         </div>
       </div>
     );

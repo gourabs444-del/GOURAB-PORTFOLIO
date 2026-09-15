@@ -131,7 +131,7 @@ export function ContactFooter() {
   // Entrance animations & Marquee Parallax
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Ambient Background Kinetic Marquee
+      // Ambient Background Kinetic Marquee sliding with mouse scroll
       if (marqueeTrackRef.current) {
         gsap.fromTo(
           marqueeTrackRef.current,
