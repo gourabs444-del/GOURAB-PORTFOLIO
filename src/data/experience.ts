@@ -18,13 +18,12 @@ export const experiences: ExperienceItem[] = [
     role: "Principal Systems Architect & Creative Director",
     company: "Autonomous Studio / Bespoke Engagements",
     location: "Global / Remote",
-    summary: "Leading high-end digital architecture, custom WebGL experiences, and generative AI systems for tier-1 tech startups, luxury brands, and venture studios.",
+    summary: "Leading high-end digital architecture, bespoke WebGL experiences, and generative AI systems for tier-1 tech startups and venture studios.",
     highlights: [
-      "Engineered real-time AI node workspace supporting 50,000+ nodes at 60 FPS.",
-      "Directed motion and front-end execution for award-winning digital campaigns.",
-      "Mentored engineering teams on performance profiling, GPU shaders, and Next.js optimization."
+      "Engineered real-time AI node workspace supporting 50,000+ active nodes at 60 FPS.",
+      "Architected Next.js 15 & GPU shader pipelines delivering 99+ Lighthouse scores."
     ],
-    techStack: ["Next.js 15", "TypeScript", "Three.js / Shaders", "GSAP", "Rust / WASM", "Tailwind CSS"]
+    techStack: ["Next.js 15", "TypeScript", "Three.js", "GSAP", "Rust / WASM", "Tailwind CSS"]
   },
   {
     id: "senior-fullstack-engineer",
@@ -33,13 +32,12 @@ export const experiences: ExperienceItem[] = [
     role: "Senior Full-Stack & Creative Developer",
     company: "Nexus Interactive Technologies",
     location: "San Francisco, CA",
-    summary: "Built high-frequency trading terminals, real-time telemetry dashboards, and interactive brand platforms.",
+    summary: "Engineered high-frequency trading terminals, real-time telemetry dashboards, and interactive platforms.",
     highlights: [
-      "Cut frontend state latency by 72% via custom OffscreenCanvas and Web Worker pipelines.",
-      "Architected core design token system and motion component library used across 12 product lines.",
-      "Led migration from legacy architectures to Next.js App Router with 99+ Lighthouse scores."
+      "Cut frontend state latency by 72% via custom OffscreenCanvas & Web Worker pipelines.",
+      "Built core design token & motion library standardized across 12 product lines."
     ],
-    techStack: ["React", "TypeScript", "Node.js", "WebSockets", "GraphQL", "PostgreSQL", "Docker"]
+    techStack: ["React", "TypeScript", "Node.js", "WebSockets", "GraphQL", "PostgreSQL"]
   },
   {
     id: "creative-developer-video",
@@ -48,13 +46,12 @@ export const experiences: ExperienceItem[] = [
     role: "Creative Developer & Motion Director",
     company: "Vanguard Media Lab",
     location: "New York, NY",
-    summary: "Designed and delivered bespoke multimedia web experiences, commercial film trailers, and interactive editorial pieces.",
+    summary: "Crafted bespoke multimedia experiences, commercial trailers, and interactive editorial storytelling.",
     highlights: [
-      "Directed DaVinci Resolve color pipelines and post-production for high-profile client launches.",
-      "Engineered kinetic typography engines and smooth scroll interactions.",
-      "Achieved multiple digital design nominations and site-of-the-day recognitions."
+      "Directed cinematic post-production and motion systems for high-profile client launches.",
+      "Multiple Awwwards & Site of the Day recognitions for creative frontend innovation."
     ],
-    techStack: ["JavaScript", "GSAP", "WebGL", "DaVinci Resolve", "Premiere Pro", "After Effects"]
+    techStack: ["JavaScript", "GSAP", "WebGL", "DaVinci Resolve", "After Effects"]
   },
   {
     id: "foundation-engineer",
@@ -63,12 +60,12 @@ export const experiences: ExperienceItem[] = [
     role: "Full-Stack Software Engineer",
     company: "Apex Digital Solutions",
     location: "Remote",
-    summary: "Developed scalable web applications, REST API gateways, and distributed cloud microservices.",
+    summary: "Developed scalable cloud microservices, REST API gateways, and distributed data systems.",
     highlights: [
-      "Constructed secure authentication systems, automated CI/CD pipelines, and relational database migrations.",
-      "Developed custom frontend widgets and responsive interfaces for enterprise clients."
+      "Engineered zero-downtime CI/CD deployment pipelines and automated database migrations.",
+      "Implemented high-throughput authentication and caching layers."
     ],
-    techStack: ["JavaScript", "Node.js", "Express", "React", "PostgreSQL", "AWS"]
+    techStack: ["Node.js", "React", "PostgreSQL", "Express", "Docker", "AWS"]
   }
 ];
 
