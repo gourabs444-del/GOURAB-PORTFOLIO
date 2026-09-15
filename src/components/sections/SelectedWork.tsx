@@ -9,6 +9,8 @@ import { useAudioFeedback } from "@/hooks/useAudioFeedback";
 import { ArrowUpRight, ExternalLink } from "lucide-react";
 import Image from "next/image";
 
+import { TextHoverEffect } from "@/components/ui/text-hover-effect";
+
 export function SelectedWork() {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const listRef = useRef<HTMLDivElement | null>(null);
@@ -71,28 +73,38 @@ export function SelectedWork() {
     <section
       id="work"
       ref={containerRef}
-      className="relative py-24 sm:py-32 md:py-40 px-6 sm:px-12 md:px-20 lg:px-28 bg-[#050507] text-[#F4F4F6] overflow-hidden select-none"
+      className="relative py-28 sm:py-36 md:py-44 px-6 sm:px-12 md:px-20 lg:px-28 bg-[#050507] text-[#F4F4F6] overflow-hidden select-none border-t border-white/[0.08]"
     >
-      {/* Subtle ambient lighting */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-white/[0.015] blur-[160px] pointer-events-none rounded-full" />
+      {/* Distinct Ambient Radial Lighting for Section Transition */}
+      <div className="absolute top-12 left-1/2 -translate-x-1/2 w-[700px] md:w-[1000px] h-[400px] bg-[radial-gradient(circle_at_center,_rgba(245,158,11,0.06)_0%,_rgba(59,130,246,0.03)_40%,_transparent_70%)] blur-[140px] pointer-events-none rounded-full" />
 
       <div className="max-w-7xl mx-auto flex flex-col gap-16 md:gap-24 relative z-10">
-        {/* Editorial Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-10 border-b border-white/[0.08]">
-          <div className="max-w-xl">
-            <div className="flex items-center gap-2.5 text-xs font-mono text-neutral-500 uppercase tracking-widest mb-3">
-              <span className="w-2 h-2 rounded-full bg-amber-400" />
-              <span className="text-neutral-300 font-semibold">02 // SELECTED WORK</span>
-              <span className="text-neutral-600">/</span>
-              <span>2024 — 2026</span>
-            </div>
-            <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-white tracking-tight leading-none">
-              FEATURED PROJECTS
-            </h2>
+        {/* Centered Editorial Section Header */}
+        <div className="flex flex-col items-center justify-center text-center pb-12 border-b border-white/[0.08]">
+          {/* Section Indicator Tag */}
+          <div className="flex items-center justify-center gap-2.5 text-xs font-mono text-neutral-400 uppercase tracking-widest mb-4">
+            <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
+            <span className="text-neutral-200 font-semibold">02 // SELECTED WORK</span>
+            <span className="text-neutral-600">/</span>
+            <span>2024 — 2026 ARCHIVE</span>
           </div>
 
-          {/* Clean Typography Filter Tabs (No Clunky Capsules) */}
-          <div className="flex items-center flex-wrap gap-6 sm:gap-8 text-xs font-mono tracking-wider">
+          {/* Centered Large Text Hover Effect Title */}
+          <div className="w-full max-w-4xl h-24 sm:h-32 md:h-36 flex items-center justify-center my-2">
+            <TextHoverEffect
+              text="FEATURED PROJECTS"
+              colors={{
+                stop0: "#F59E0B",
+                stop25: "#FBBF24",
+                stop50: "#FDE68A",
+                stop75: "#38BDF8",
+                stop100: "#FFFFFF",
+              }}
+            />
+          </div>
+
+          {/* Centered Filter Tabs */}
+          <div className="flex items-center justify-center flex-wrap gap-6 sm:gap-10 text-xs font-mono tracking-wider mt-4">
             {categories.map((cat) => (
               <button
                 key={cat}
@@ -101,7 +113,7 @@ export function SelectedWork() {
                   setSelectedCategory(cat);
                 }}
                 onMouseEnter={() => playHover()}
-                className={`relative py-1 transition-all duration-300 cursor-pointer ${
+                className={`relative py-1.5 transition-all duration-300 cursor-pointer ${
                   selectedCategory === cat
                     ? "text-white font-bold"
                     : "text-neutral-500 hover:text-neutral-300"
@@ -109,7 +121,7 @@ export function SelectedWork() {
               >
                 <span>{cat}</span>
                 {selectedCategory === cat && (
-                  <span className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-white" />
+                  <span className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-amber-400 to-amber-200" />
                 )}
               </button>
             ))}

@@ -116,10 +116,10 @@ export function ExperienceTimeline() {
               </span>
             </div>
 
-            <h2 className="flow-header-reveal font-display font-black text-4xl sm:text-5xl md:text-6xl text-white tracking-tight leading-[1.08]">
-              EXPERIENCE &amp; <br className="hidden sm:inline" />
-              <span className="bg-gradient-to-r from-amber-200 via-amber-400 to-amber-500 bg-clip-text text-transparent">
-                MILESTONES
+            <h2 className="flow-header-reveal font-bodoni font-medium text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white tracking-tight leading-[1.08]">
+              Experience &amp; <br className="hidden sm:inline" />
+              <span className="font-bodoni italic font-normal bg-gradient-to-r from-amber-200 via-amber-400 to-amber-500 bg-clip-text text-transparent">
+                Milestones
               </span>
             </h2>
           </div>

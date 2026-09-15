@@ -66,8 +66,8 @@ export function ExpertiseMatrix() {
                 TECHNICAL DISCIPLINES & MASTERY
               </span>
             </div>
-            <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-white tracking-tight">
-              SKILLS & EXPERTISE
+            <h2 className="font-bodoni font-medium text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white tracking-tight">
+              Skills &amp; Expertise
             </h2>
           </div>
           <p className="font-editorial text-sm text-mist max-w-md">
