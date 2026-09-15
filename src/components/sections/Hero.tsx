@@ -12,48 +12,16 @@ interface HeroProps {
 
 export function Hero({ isLoaded }: HeroProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const mainSceneRef = useRef<HTMLDivElement | null>(null);
   const portraitRef = useRef<HTMLDivElement | null>(null);
   const headlineTopRef = useRef<HTMLHeadingElement | null>(null);
   const headlineBottomRef = useRef<HTMLHeadingElement | null>(null);
-  const introGreetingRef = useRef<HTMLDivElement | null>(null);
   const sideMetaLeftRef = useRef<HTMLDivElement | null>(null);
   const sideMetaRightRef = useRef<HTMLDivElement | null>(null);
   const ctaGroupRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Entrance reveal when preloader finishes
-      if (isLoaded) {
-        const entranceTl = gsap.timeline();
-        entranceTl
-          .fromTo(
-            portraitRef.current,
-            { y: 50, opacity: 0, scale: 0.95 },
-            { y: 0, opacity: 1, scale: 1, duration: 1, ease: "power3.out" },
-            0.1
-          )
-          .fromTo(
-            [headlineTopRef.current, headlineBottomRef.current],
-            { y: 30, opacity: 0 },
-            { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: "power3.out" },
-            0.2
-          )
-          .fromTo(
-            introGreetingRef.current,
-            { y: 20, opacity: 0 },
-            { y: 0, opacity: 1, duration: 0.7, ease: "power2.out" },
-            0.3
-          )
-          .fromTo(
-            [ctaGroupRef.current, sideMetaLeftRef.current, sideMetaRightRef.current],
-            { y: 15, opacity: 0 },
-            { y: 0, opacity: 1, duration: 0.6, stagger: 0.08, ease: "power2.out" },
-            0.4
-          );
-      }
-
-      // Parallax scroll motion
+      // Subtle scroll parallax
       gsap.to(portraitRef.current, {
         scrollTrigger: {
           trigger: containerRef.current,
@@ -61,7 +29,7 @@ export function Hero({ isLoaded }: HeroProps) {
           end: "bottom top",
           scrub: 1,
         },
-        y: 60,
+        y: 50,
         ease: "none",
       });
 
@@ -73,7 +41,7 @@ export function Hero({ isLoaded }: HeroProps) {
           scrub: 1,
         },
         y: -40,
-        opacity: 0.2,
+        opacity: 0.3,
         ease: "none",
       });
     }, containerRef);
@@ -92,24 +60,11 @@ export function Hero({ isLoaded }: HeroProps) {
     <section
       id="hero"
       ref={containerRef}
-      className="relative min-h-[92vh] sm:min-h-screen w-full flex flex-col justify-between pt-20 sm:pt-24 md:pt-28 pb-8 sm:pb-10 px-4 sm:px-8 md:px-16 overflow-hidden bg-white text-[#111111] select-none"
+      className="relative min-h-[92vh] sm:min-h-screen w-full flex flex-col justify-between pt-24 sm:pt-28 md:pt-32 pb-8 sm:pb-10 px-4 sm:px-8 md:px-16 overflow-hidden bg-white text-[#111111] select-none"
     >
-      {/* Top Greeting Headline (Written in Actual Words, No Emoji, Clean Editorial Font) */}
+      {/* Main 2-Line Layered Typography & Centered Cutout Portrait Scene */}
       <div
-        ref={introGreetingRef}
-        className="relative z-30 text-center text-sm xs:text-base sm:text-lg md:text-xl font-sans text-neutral-600 font-normal mt-2 sm:mt-4 mb-1 px-2 leading-relaxed origin-center will-change-transform tracking-tight"
-      >
-        <span className="text-neutral-600">Hi, my name is </span>
-        <strong className="text-[#111111] font-semibold underline decoration-amber-400 decoration-2 underline-offset-4 font-sans">
-          Gourab
-        </strong>
-        <span className="text-neutral-600"> and I am a freelance</span>
-      </div>
-
-      {/* Main 2-Line Layered Typography & Centered Cutout Portrait Scene (Emerges on Scroll) */}
-      <div
-        ref={mainSceneRef}
-        className="relative my-auto w-full max-w-7xl mx-auto flex flex-col items-center justify-center py-2 sm:py-4 min-h-[320px] xs:min-h-[360px] sm:min-h-[440px] md:min-h-[500px] lg:min-h-[540px] will-change-transform"
+        className="relative my-auto w-full max-w-7xl mx-auto flex flex-col items-center justify-center py-2 sm:py-4 min-h-[320px] xs:min-h-[360px] sm:min-h-[440px] md:min-h-[500px] lg:min-h-[540px]"
       >
         {/* Background Typography Container (z-10, strictly behind the foreground portrait) */}
         <div className="relative z-10 w-full max-w-5xl lg:max-w-6xl mx-auto flex flex-col items-center justify-center text-center select-none -translate-y-10 xs:-translate-y-14 sm:-translate-y-20 md:-translate-y-28 lg:-translate-y-32 px-2 sm:px-4">
@@ -168,7 +123,7 @@ export function Hero({ isLoaded }: HeroProps) {
           ref={portraitRef}
           className="absolute bottom-[-10px] sm:bottom-[-15px] md:bottom-[-20px] left-1/2 -translate-x-1/2 z-20 w-[210px] xs:w-[240px] sm:w-[320px] md:w-[390px] lg:w-[440px] xl:w-[480px] aspect-[3/4] pointer-events-none flex items-end justify-center"
         >
-          <div className="relative w-full h-full [mask-image:linear-gradient(to_bottom,black_0%,black_60%,rgba(0,0,0,0.85)_72%,rgba(0,0,0,0.5)_82%,rgba(0,0,0,0.2)_90%,rgba(0,0,0,0.05)_96%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_0%,black_60%,rgba(0,0,0,0.85)_72%,rgba(0,0,0,0.5)_82%,rgba(0,0,0,0.2)_90%,rgba(0,0,0,0.05)_96%,transparent_100%)]">
+          <div className="relative w-full h-full [mask-image:linear-gradient(to_bottom,black_0%,black_82%,rgba(0,0,0,0.7)_88%,rgba(0,0,0,0.3)_94%,rgba(0,0,0,0.05)_98%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_0%,black_82%,rgba(0,0,0,0.7)_88%,rgba(0,0,0,0.3)_94%,rgba(0,0,0,0.05)_98%,transparent_100%)]">
             <Image
               src="/assets/gourab.png"
               alt="Gourab — Web Developer & Designer"
@@ -204,21 +159,21 @@ export function Hero({ isLoaded }: HeroProps) {
         </div>
       </div>
 
-      {/* Bottom Dual Action Buttons: "You need a designer" / "You need a developer" */}
+      {/* Bottom Dual Action Buttons: Single Row Centered */}
       <div
         ref={ctaGroupRef}
-        className="relative z-30 flex flex-col xs:flex-row items-center justify-center gap-2.5 sm:gap-3.5 pt-2 mt-1 w-full max-w-md mx-auto sm:max-w-none"
+        className="relative z-30 flex flex-row items-center justify-center gap-2.5 sm:gap-4 pt-2 mt-2 w-full mx-auto"
       >
         <button
           onClick={() => scrollToSection("work")}
-          className="w-full xs:w-auto px-5 sm:px-8 py-2.5 sm:py-3 rounded-md bg-[#111111] text-white hover:bg-black text-xs sm:text-sm font-sans font-medium tracking-tight shadow-md transition-all duration-200 active:scale-95 text-center sm:min-w-[170px]"
+          className="px-4 xs:px-6 sm:px-8 py-2.5 sm:py-3 rounded-full bg-[#111111] text-white hover:bg-black text-xs sm:text-sm font-sans font-medium tracking-tight shadow-sm transition-all duration-200 hover:scale-105 active:scale-95 whitespace-nowrap cursor-pointer"
         >
           You need a developer
         </button>
 
         <button
           onClick={() => scrollToSection("contact")}
-          className="w-full xs:w-auto px-5 sm:px-8 py-2.5 sm:py-3 rounded-md bg-white/90 hover:bg-white text-[#111111] border border-[#111111]/30 hover:border-[#111111] text-xs sm:text-sm font-sans font-medium tracking-tight shadow-sm backdrop-blur-sm transition-all duration-200 active:scale-95 text-center sm:min-w-[170px]"
+          className="px-4 xs:px-6 sm:px-8 py-2.5 sm:py-3 rounded-full bg-white text-[#111111] border border-neutral-300 hover:border-[#111111] hover:bg-neutral-50 text-xs sm:text-sm font-sans font-medium tracking-tight shadow-sm transition-all duration-200 hover:scale-105 active:scale-95 whitespace-nowrap cursor-pointer"
         >
           You need a designer
         </button>
