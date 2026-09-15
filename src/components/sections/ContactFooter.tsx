@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "@/lib/gsap";
 import { siteConfig } from "@/data/siteConfig";
 import { useAudioFeedback } from "@/hooks/useAudioFeedback";
 import {
@@ -12,25 +11,28 @@ import {
   ArrowUp,
   ArrowUpRight,
   Mail,
+  Clock,
+  MapPin,
   Sparkles,
 } from "lucide-react";
 import confetti from "canvas-confetti";
 
 export function ContactFooter() {
   const [copied, setCopied] = useState(false);
+  const [selectedScope, setSelectedScope] = useState("01 // FULLSTACK ARCHITECTURE");
   const [formState, setFormState] = useState({
     name: "",
     email: "",
-    scope: "full-stack",
+    budget: "",
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [focusedField, setFocusedField] = useState<string | null>(null);
+  const [currentTime, setCurrentTime] = useState<string>("");
 
   const containerRef = useRef<HTMLElement | null>(null);
   const heroRef = useRef<HTMLDivElement | null>(null);
-  const marqueeTrackRef = useRef<HTMLDivElement | null>(null);
   const headlineRef = useRef<HTMLHeadingElement | null>(null);
   const lightAuraRef = useRef<HTMLDivElement | null>(null);
   const emailPillRef = useRef<HTMLAnchorElement | null>(null);
@@ -39,88 +41,66 @@ export function ContactFooter() {
 
   const { playClick, playHover } = useAudioFeedback();
 
-  // 1. High-Grade Lenis ScrollTrigger Sync & Parallax
+  // Live Local Time in IST / User location
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      const timeString = now.toLocaleTimeString("en-US", {
+        timeZone: "Asia/Kolkata",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true,
+      });
+      setCurrentTime(timeString);
+    };
+
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // 1. GSAP Scroll Animations
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // (a) Background Lenis Scroll-Scrub Marquee Track
-      if (marqueeTrackRef.current) {
-        gsap.fromTo(
-          marqueeTrackRef.current,
-          { xPercent: 0 },
-          {
-            xPercent: -25,
-            ease: "none",
-            scrollTrigger: {
-              trigger: containerRef.current,
-              start: "top bottom",
-              end: "bottom bottom",
-              scrub: 1.2,
-            },
-          }
-        );
-      }
-
-      // (b) Masked Text Lines High-Grade Reveal on Lenis Scroll
+      // Header entrance on scroll
       const maskLines = containerRef.current?.querySelectorAll(".mask-reveal-inner");
       if (maskLines && maskLines.length > 0) {
         gsap.fromTo(
           maskLines,
           {
-            yPercent: 120,
-            rotateZ: 4,
+            y: 35,
             opacity: 0,
-            filter: "blur(8px)",
           },
           {
-            yPercent: 0,
-            rotateZ: 0,
+            y: 0,
             opacity: 1,
-            filter: "blur(0px)",
-            duration: 1.2,
-            stagger: 0.12,
-            ease: "power4.out",
+            duration: 0.9,
+            stagger: 0.08,
+            ease: "power3.out",
             scrollTrigger: {
               trigger: heroRef.current,
-              start: "top 80%",
-              toggleActions: "play none none reverse",
+              start: "top 85%",
+              toggleActions: "play none none none",
             },
           }
         );
       }
 
-      // (c) Parallax scrub on headline depth
-      if (headlineRef.current) {
-        gsap.fromTo(
-          headlineRef.current,
-          { y: 30 },
-          {
-            y: -25,
-            ease: "none",
-            scrollTrigger: {
-              trigger: containerRef.current,
-              start: "top bottom",
-              end: "bottom bottom",
-              scrub: 1.5,
-            },
-          }
-        );
-      }
-
-      // (d) Form & Actions Entrance on Scroll
+      // Form entrance on scroll
       if (formRef.current) {
         gsap.fromTo(
           formRef.current,
-          { opacity: 0, y: 50, filter: "blur(6px)" },
+          { opacity: 0, y: 30 },
           {
             opacity: 1,
             y: 0,
-            filter: "blur(0px)",
-            duration: 1.1,
-            ease: "power3.out",
+            duration: 0.8,
+            ease: "power2.out",
             scrollTrigger: {
               trigger: formRef.current,
-              start: "top 85%",
-              toggleActions: "play none none reverse",
+              start: "top 88%",
+              toggleActions: "play none none none",
             },
           }
         );
@@ -130,7 +110,7 @@ export function ContactFooter() {
     return () => ctx.revert();
   }, []);
 
-  // 2. Interactive Cursor Spotlight / Light Follower + 3D Tilt
+  // 2. Interactive Spotlight Follower
   useEffect(() => {
     const container = containerRef.current;
     const aura = lightAuraRef.current;
@@ -144,62 +124,29 @@ export function ContactFooter() {
       gsap.to(aura, {
         x: x,
         y: y,
-        duration: 0.7,
+        duration: 0.8,
         ease: "power2.out",
       });
-
-      // 3D Perspective Tilt on Headline
-      if (headlineRef.current) {
-        const hRect = headlineRef.current.getBoundingClientRect();
-        const centerX = hRect.left + hRect.width / 2;
-        const centerY = hRect.top + hRect.height / 2;
-        const deltaX = (e.clientX - centerX) / (window.innerWidth / 2);
-        const deltaY = (e.clientY - centerY) / (window.innerHeight / 2);
-
-        gsap.to(headlineRef.current, {
-          rotateY: deltaX * 7,
-          rotateX: -deltaY * 7,
-          duration: 0.5,
-          ease: "power1.out",
-          transformPerspective: 1000,
-        });
-      }
-    };
-
-    const handleMouseLeave = () => {
-      if (headlineRef.current) {
-        gsap.to(headlineRef.current, {
-          rotateX: 0,
-          rotateY: 0,
-          duration: 0.8,
-          ease: "power2.out",
-        });
-      }
     };
 
     container.addEventListener("mousemove", handleMouseMove);
-    container.addEventListener("mouseleave", handleMouseLeave);
-
-    return () => {
-      container.removeEventListener("mousemove", handleMouseMove);
-      container.removeEventListener("mouseleave", handleMouseLeave);
-    };
+    return () => container.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  // 3. Magnetic Pill Button Physics
+  // Magnetic Button Physics
   const handleMagneticMove = (e: React.MouseEvent<HTMLElement>, targetRef: React.RefObject<HTMLElement | null>) => {
     const el = targetRef.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();
     const x = e.clientX - (rect.left + rect.width / 2);
     const y = e.clientY - (rect.top + rect.height / 2);
-    gsap.to(el, { x: x * 0.35, y: y * 0.35, duration: 0.3, ease: "power2.out" });
+    gsap.to(el, { x: x * 0.25, y: y * 0.25, duration: 0.3, ease: "power2.out" });
   };
 
   const handleMagneticLeave = (targetRef: React.RefObject<HTMLElement | null>) => {
     const el = targetRef.current;
     if (!el) return;
-    gsap.to(el, { x: 0, y: 0, duration: 0.5, ease: "elastic.out(1.1, 0.4)" });
+    gsap.to(el, { x: 0, y: 0, duration: 0.45, ease: "elastic.out(1.1, 0.4)" });
   };
 
   const handleCopyEmail = () => {
@@ -222,13 +169,13 @@ export function ContactFooter() {
 
       try {
         confetti({
-          particleCount: 90,
-          spread: 75,
-          origin: { y: 0.75 },
-          colors: ["#F59E0B", "#FFFFFF", "#38BDF8", "#A855F7"],
+          particleCount: 80,
+          spread: 70,
+          origin: { y: 0.8 },
+          colors: ["#F59E0B", "#FFFFFF", "#38BDF8", "#10B981"],
         });
       } catch {}
-    }, 900);
+    }, 800);
   };
 
   const scrollToTop = () => {
@@ -236,133 +183,143 @@ export function ContactFooter() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const projectScopes = [
+    "01 // FULLSTACK ARCHITECTURE",
+    "02 // WEBGL & CREATIVE TECH",
+    "03 // AI SYSTEMS & AGENTS",
+    "04 // BRAND & PRODUCT DESIGN",
+  ];
+
   return (
     <footer
       id="contact"
       ref={containerRef}
       className="relative w-full overflow-hidden bg-[#050507] text-[#F4F4F6] border-t border-white/[0.08] select-none"
     >
-      {/* Background Lenis Scroll-Tied Typographic Watermark Marquee */}
-      <div className="pointer-events-none absolute top-12 left-0 w-full overflow-hidden whitespace-nowrap opacity-[0.03] select-none z-0">
-        <div ref={marqueeTrackRef} className="inline-block text-[14vw] font-display font-black tracking-tighter uppercase will-change-transform">
-          LET&apos;S TALK &bull; GET IN TOUCH &bull; START A PROJECT &bull; CREATE &bull; AVAILABLE 2026 &bull; LET&apos;S TALK &bull; GET IN TOUCH &bull;
-        </div>
-      </div>
-
       {/* Dynamic Cursor Light Aura Follower */}
       <div
         ref={lightAuraRef}
-        className="pointer-events-none absolute -top-[250px] -left-[250px] w-[500px] h-[500px] rounded-full bg-[radial-gradient(circle_at_center,_rgba(245,158,11,0.15)_0%,_rgba(168,85,247,0.06)_45%,_transparent_70%)] blur-[90px] opacity-80 will-change-transform z-0"
+        className="pointer-events-none absolute -top-[250px] -left-[250px] w-[550px] h-[550px] rounded-full bg-[radial-gradient(circle_at_center,_rgba(245,158,11,0.12)_0%,_rgba(56,189,248,0.04)_45%,_transparent_70%)] blur-[100px] opacity-80 will-change-transform z-0"
         aria-hidden="true"
       />
 
-      <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8 md:px-12 pt-20 sm:pt-28 md:pt-36 pb-16 flex flex-col items-center text-center">
-        {/* ========================================================= */}
-        {/* 1. INTERACTIVE HERO HEADLINE & INVITATION                  */}
-        {/* ========================================================= */}
-        <div ref={heroRef} className="flex flex-col items-center w-full max-w-4xl mx-auto">
-          {/* Top Monospace Tag with Mask Reveal */}
-          <div className="overflow-hidden mb-6">
-            <div className="mask-reveal-inner flex items-center justify-center gap-2.5 text-xs font-mono text-neutral-400 uppercase tracking-widest">
-              <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
-              <span className="font-semibold text-neutral-200">06 // COLLABORATION</span>
-              <span className="text-neutral-600">/</span>
-              <span>GET IN TOUCH</span>
-            </div>
+      {/* Top HUD Telemetry Bar */}
+      <div className="w-full border-b border-white/[0.06] py-3.5 px-6 sm:px-12 md:px-20 text-xs font-mono text-neutral-400">
+        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="text-white font-medium">CAPACITY: OPEN FOR COMMISSIONS (Q3/Q4 2026)</span>
           </div>
 
-          {/* 3D Magnetic Parallax Headline with Masked Line Elevation */}
+          <div className="flex items-center gap-6 text-neutral-500">
+            <div className="flex items-center gap-1.5">
+              <MapPin className="w-3.5 h-3.5 text-amber-400" />
+              <span className="text-neutral-300">INDIA // GLOBAL REMOTE</span>
+            </div>
+            {currentTime && (
+              <div className="flex items-center gap-1.5 text-neutral-300 hidden sm:flex">
+                <Clock className="w-3.5 h-3.5 text-sky-400" />
+                <span>{currentTime} IST</span>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <div className="relative z-10 max-w-6xl mx-auto px-6 sm:px-12 md:px-20 pt-24 sm:pt-32 md:pt-40 pb-20 flex flex-col items-center text-center">
+        {/* ========================================================= */}
+        {/* 1. HERO INVITATION & LUXURY TYPOGRAPHY                    */}
+        {/* ========================================================= */}
+        <div ref={heroRef} className="flex flex-col items-center w-full max-w-4xl mx-auto">
+          {/* Top Tag */}
+          <div className="mask-reveal-inner flex items-center justify-center gap-2.5 text-xs font-mono text-neutral-400 uppercase tracking-widest mb-6">
+            <span className="w-2 h-2 rounded-full bg-amber-400" />
+            <span className="font-semibold text-white">07 // COLLABORATION</span>
+            <span className="text-neutral-600">/</span>
+            <span>INITIATE TRANSMISSION</span>
+          </div>
+
+          {/* Masterpiece Editorial Heading */}
           <h2
             ref={headlineRef}
-            className="font-display font-black text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight leading-[1.08] text-white my-2 will-change-transform"
-            style={{ transformStyle: "preserve-3d" }}
+            className="font-bodoni font-medium text-5xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight leading-[1.05] text-white my-3"
           >
-            <div className="overflow-hidden py-1">
-              <span className="mask-reveal-inner block drop-shadow-[0_4px_25px_rgba(0,0,0,0.8)]">
-                Let&apos;s Build
-              </span>
+            <div className="mask-reveal-inner block">
+              Let&apos;s Build Something
             </div>
-            <div className="overflow-hidden py-1">
-              <span className="mask-reveal-inner inline-block bg-gradient-to-r from-amber-200 via-amber-300 to-amber-500 bg-clip-text text-transparent font-black drop-shadow-[0_0_35px_rgba(245,158,11,0.3)]">
-                Something Worth
-              </span>{" "}
-              <span className="mask-reveal-inner font-serif italic font-normal text-white relative inline-block group/rem">
-                Remembering.
-                <span className="absolute -bottom-1 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-amber-400 to-transparent scale-x-0 group-hover/rem:scale-x-100 transition-transform duration-500 origin-center" />
+            <div className="mask-reveal-inner block">
+              <span className="font-bodoni italic font-normal bg-gradient-to-r from-amber-200 via-amber-400 to-amber-500 bg-clip-text text-transparent">
+                Iconic Together.
               </span>
             </div>
           </h2>
 
-          {/* Subtitle with Mask Reveal */}
-          <div className="overflow-hidden max-w-2xl mx-auto mt-6 mb-10">
-            <p className="mask-reveal-inner font-sans text-sm sm:text-base md:text-lg text-neutral-300 font-normal leading-relaxed">
-              Have an ambitious project or design vision? Available worldwide for bespoke web development, creative tech, and scalable full-stack applications.
-            </p>
-          </div>
+          {/* Narrative Subtitle */}
+          <p className="mask-reveal-inner font-sans text-sm sm:text-base md:text-lg text-neutral-300 max-w-2xl mx-auto mt-6 mb-12 font-normal leading-relaxed">
+            Have an ambitious digital product, 3D experience, or scalable AI architecture? I collaborate worldwide with forward-thinking founders and creative brands.
+          </p>
 
-          {/* Direct Email Actions with Magnetic Physics & Rolling Text */}
-          <div className="overflow-hidden w-full flex justify-center mb-16">
-            <div className="mask-reveal-inner flex flex-wrap items-center justify-center gap-3 sm:gap-4">
-              {/* Magnetic Primary Email Pill */}
-              <a
-                ref={emailPillRef}
-                href={`mailto:${siteConfig.contact.email}`}
-                onMouseMove={(e) => handleMagneticMove(e, emailPillRef)}
-                onMouseLeave={() => handleMagneticLeave(emailPillRef)}
-                onMouseEnter={() => playHover()}
-                onClick={() => playClick()}
-                className="group/btn relative inline-flex items-center gap-2.5 px-7 sm:px-9 py-3.5 rounded-full bg-white text-black hover:bg-amber-300 font-sans font-bold text-xs sm:text-sm tracking-tight transition-all duration-200 shadow-xl shadow-white/10 active:scale-95 cursor-pointer overflow-hidden"
-              >
-                <Mail className="w-4 h-4 transition-transform group-hover/btn:scale-110" />
-                <span className="relative z-10 flex flex-col overflow-hidden h-[1.2em]">
-                  <span className="transition-transform duration-300 group-hover/btn:-translate-y-full">
-                    {siteConfig.contact.email}
-                  </span>
-                  <span className="absolute top-full transition-transform duration-300 group-hover/btn:-translate-y-full">
-                    {siteConfig.contact.email}
-                  </span>
+          {/* Direct Email Actions with Magnetic Physics */}
+          <div className="mask-reveal-inner flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-20">
+            {/* Magnetic Primary Email Pill */}
+            <a
+              ref={emailPillRef}
+              href={`mailto:${siteConfig.contact.email}`}
+              onMouseMove={(e) => handleMagneticMove(e, emailPillRef)}
+              onMouseLeave={() => handleMagneticLeave(emailPillRef)}
+              onMouseEnter={() => playHover()}
+              onClick={() => playClick()}
+              className="group/btn relative inline-flex items-center gap-3 px-8 sm:px-10 py-4 rounded-full bg-white text-black hover:bg-amber-300 font-sans font-bold text-xs sm:text-sm tracking-tight transition-all duration-200 shadow-xl shadow-white/10 active:scale-95 cursor-pointer overflow-hidden"
+            >
+              <Mail className="w-4 h-4 transition-transform group-hover/btn:scale-110" />
+              <span className="relative z-10 flex flex-col overflow-hidden h-[1.2em]">
+                <span className="transition-transform duration-300 group-hover/btn:-translate-y-full">
+                  {siteConfig.contact.email}
                 </span>
-                <ArrowUpRight className="w-4 h-4 stroke-[2.5] transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
-              </a>
+                <span className="absolute top-full transition-transform duration-300 group-hover/btn:-translate-y-full font-bold">
+                  {siteConfig.contact.email}
+                </span>
+              </span>
+              <ArrowUpRight className="w-4 h-4 stroke-[2.5] transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
+            </a>
 
-              {/* Magnetic Copy Address Pill */}
-              <button
-                ref={copyPillRef}
-                onClick={handleCopyEmail}
-                onMouseMove={(e) => handleMagneticMove(e, copyPillRef)}
-                onMouseLeave={() => handleMagneticLeave(copyPillRef)}
-                onMouseEnter={() => playHover()}
-                className="inline-flex items-center gap-2 px-5 py-3.5 rounded-full border border-white/20 hover:border-white/50 bg-white/[0.04] hover:bg-white/[0.08] text-neutral-200 hover:text-white font-mono text-xs transition-all duration-200 cursor-pointer"
-              >
-                {copied ? (
-                  <>
-                    <Check className="w-3.5 h-3.5 text-emerald-400" />
-                    <span className="text-emerald-400 font-sans font-medium">Copied to clipboard</span>
-                  </>
-                ) : (
-                  <>
-                    <Copy className="w-3.5 h-3.5 text-neutral-400" />
-                    <span>Copy Address</span>
-                  </>
-                )}
-              </button>
-            </div>
+            {/* Magnetic Copy Address Pill */}
+            <button
+              ref={copyPillRef}
+              onClick={handleCopyEmail}
+              onMouseMove={(e) => handleMagneticMove(e, copyPillRef)}
+              onMouseLeave={() => handleMagneticLeave(copyPillRef)}
+              onMouseEnter={() => playHover()}
+              className="inline-flex items-center gap-2.5 px-6 py-4 rounded-full border border-white/20 hover:border-amber-400 bg-white/[0.03] hover:bg-white/[0.08] text-neutral-200 hover:text-white font-mono text-xs transition-all duration-200 cursor-pointer"
+            >
+              {copied ? (
+                <>
+                  <Check className="w-4 h-4 text-emerald-400" />
+                  <span className="text-emerald-400 font-sans font-medium">Copied to Clipboard</span>
+                </>
+              ) : (
+                <>
+                  <Copy className="w-4 h-4 text-neutral-400" />
+                  <span>Copy Address</span>
+                </>
+              )}
+            </button>
           </div>
         </div>
 
         {/* ========================================================= */}
-        {/* 2. MINIMALIST INQUIRY DISPATCH (Clean Underlined Form)     */}
+        {/* 2. EDITORIAL DIRECT BRIEF TRANSMISSION FORM               */}
         {/* ========================================================= */}
         <div
           ref={formRef}
-          className="w-full max-w-2xl mx-auto pt-12 border-t border-white/[0.08] text-left"
+          className="w-full max-w-2xl mx-auto pt-14 border-t border-white/[0.08] text-left"
         >
-          <div className="text-center mb-8">
-            <span className="text-xs font-mono uppercase tracking-widest text-amber-400 font-semibold block mb-1">
-              OR TRANSMIT A DIRECT BRIEF
+          <div className="text-center mb-10">
+            <span className="text-xs font-mono uppercase tracking-widest text-amber-400 font-semibold block mb-2">
+              PROJECT BRIEF &amp; DIRECT INQUIRY
             </span>
-            <h3 className="font-display font-bold text-2xl sm:text-3xl text-white tracking-tight">
-              Tell me about your goals.
+            <h3 className="font-bodoni font-medium text-2xl sm:text-3xl text-white tracking-tight">
+              Tell me about your project vision.
             </h3>
           </div>
 
@@ -371,25 +328,55 @@ export function ContactFooter() {
               <div className="w-12 h-12 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
                 <Check className="w-6 h-6" />
               </div>
-              <h4 className="font-display font-bold text-2xl text-white">
-                Message Dispatched Successfully
+              <h4 className="font-bodoni font-medium text-2xl text-white">
+                Transmission Dispatched Successfully
               </h4>
               <p className="font-sans text-sm text-neutral-400 max-w-md">
-                Thank you for reaching out, Gourab will review your transmission and respond within 24 hours.
+                Thank you for reaching out. Gourab will review your brief and follow up with you within 24 hours.
               </p>
               <button
                 onClick={() => {
                   setIsSubmitted(false);
-                  setFormState({ name: "", email: "", scope: "full-stack", message: "" });
+                  setFormState({ name: "", email: "", budget: "", message: "" });
                 }}
-                className="mt-2 text-xs font-mono text-amber-400 hover:text-amber-300 underline underline-offset-4"
+                className="mt-2 text-xs font-mono text-amber-400 hover:text-amber-300 underline underline-offset-4 cursor-pointer"
               >
-                Send another message &rarr;
+                Transmit another brief &rarr;
               </button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <form onSubmit={handleSubmit} className="flex flex-col gap-8">
+              {/* Interactive Scope Selection Chips */}
+              <div className="flex flex-col gap-3">
+                <label className="text-xs font-mono uppercase tracking-wider text-neutral-400 font-semibold">
+                  SELECT PROJECT SCOPE
+                </label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  {projectScopes.map((scope) => {
+                    const isSelected = selectedScope === scope;
+                    return (
+                      <button
+                        key={scope}
+                        type="button"
+                        onClick={() => {
+                          setSelectedScope(scope);
+                          playClick();
+                        }}
+                        onMouseEnter={() => playHover()}
+                        className={`text-left px-4 py-3 rounded-xl border text-xs font-mono transition-all duration-200 cursor-pointer ${
+                          isSelected
+                            ? "border-amber-400 bg-amber-400/10 text-amber-300 font-bold shadow-[0_0_15px_rgba(245,158,11,0.2)]"
+                            : "border-white/[0.08] bg-white/[0.02] text-neutral-400 hover:border-white/20 hover:text-white"
+                        }`}
+                      >
+                        {scope}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                 {/* Name Field */}
                 <div className="flex flex-col gap-2 relative">
                   <label className={`text-xs font-mono uppercase tracking-wider transition-colors duration-200 ${
@@ -404,7 +391,7 @@ export function ContactFooter() {
                     onFocus={() => setFocusedField("name")}
                     onBlur={() => setFocusedField(null)}
                     onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                    placeholder="e.g. Elena Rostova"
+                    placeholder="e.g. Alexander Vance"
                     className="w-full py-3 bg-transparent border-b border-white/20 focus:border-amber-400 text-white placeholder-neutral-600 text-sm focus:outline-none transition-colors font-sans rounded-none"
                   />
                   <div className={`absolute bottom-0 left-0 right-0 h-[1.5px] bg-amber-400 origin-left transition-transform duration-300 ${
@@ -426,7 +413,7 @@ export function ContactFooter() {
                     onFocus={() => setFocusedField("email")}
                     onBlur={() => setFocusedField(null)}
                     onChange={(e) => setFormState({ ...formState, email: e.target.value })}
-                    placeholder="e.g. elena@brand.com"
+                    placeholder="e.g. alexander@aether.ai"
                     className="w-full py-3 bg-transparent border-b border-white/20 focus:border-amber-400 text-white placeholder-neutral-600 text-sm focus:outline-none transition-colors font-sans rounded-none"
                   />
                   <div className={`absolute bottom-0 left-0 right-0 h-[1.5px] bg-amber-400 origin-left transition-transform duration-300 ${
@@ -435,37 +422,12 @@ export function ContactFooter() {
                 </div>
               </div>
 
-              {/* Scope Selection */}
-              <div className="flex flex-col gap-2 relative">
-                <label className={`text-xs font-mono uppercase tracking-wider transition-colors duration-200 ${
-                  focusedField === "scope" ? "text-amber-400 font-bold" : "text-neutral-400"
-                }`}>
-                  Scope of Work
-                </label>
-                <select
-                  value={formState.scope}
-                  onFocus={() => setFocusedField("scope")}
-                  onBlur={() => setFocusedField(null)}
-                  onChange={(e) => setFormState({ ...formState, scope: e.target.value })}
-                  className="w-full py-3 bg-transparent border-b border-white/20 focus:border-amber-400 text-white text-sm focus:outline-none transition-colors font-sans rounded-none cursor-pointer"
-                >
-                  <option value="full-stack" className="bg-[#070709] text-white">Full-Stack Web Architecture &amp; App</option>
-                  <option value="creative-tech" className="bg-[#070709] text-white">Creative Development / WebGL &amp; Motion</option>
-                  <option value="design-dev" className="bg-[#070709] text-white">Complete Brand Design &amp; Development</option>
-                  <option value="ai-systems" className="bg-[#070709] text-white">Generative AI &amp; Intelligent Workspaces</option>
-                  <option value="other" className="bg-[#070709] text-white">Bespoke Advisory / Exploration</option>
-                </select>
-                <div className={`absolute bottom-0 left-0 right-0 h-[1.5px] bg-amber-400 origin-left transition-transform duration-300 ${
-                  focusedField === "scope" ? "scale-x-100" : "scale-x-0"
-                }`} />
-              </div>
-
-              {/* Narrative Textarea */}
+              {/* Message / Brief */}
               <div className="flex flex-col gap-2 relative">
                 <label className={`text-xs font-mono uppercase tracking-wider transition-colors duration-200 ${
                   focusedField === "message" ? "text-amber-400 font-bold" : "text-neutral-400"
                 }`}>
-                  Project Narrative
+                  Project Narrative &amp; Timeline
                 </label>
                 <textarea
                   rows={4}
@@ -473,7 +435,7 @@ export function ContactFooter() {
                   onFocus={() => setFocusedField("message")}
                   onBlur={() => setFocusedField(null)}
                   onChange={(e) => setFormState({ ...formState, message: e.target.value })}
-                  placeholder="Tell me about your timeline, expectations, and vision..."
+                  placeholder="Describe your vision, target launch timeframe, and goals..."
                   className="w-full py-3 bg-transparent border-b border-white/20 focus:border-amber-400 text-white placeholder-neutral-600 text-sm focus:outline-none transition-colors resize-none font-sans rounded-none"
                 />
                 <div className={`absolute bottom-0 left-0 right-0 h-[1.5px] bg-amber-400 origin-left transition-transform duration-300 ${
@@ -481,10 +443,11 @@ export function ContactFooter() {
                 }`} />
               </div>
 
-              {/* Submit Button */}
-              <div className="pt-4 flex items-center justify-between">
-                <span className="text-[11px] font-mono text-neutral-500">
-                  Response within 24–48 hours.
+              {/* Submit Button & Response Time */}
+              <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <span className="text-xs font-mono text-neutral-500 flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                  Estimated reply within 24 business hours
                 </span>
 
                 <button
@@ -492,7 +455,7 @@ export function ContactFooter() {
                   disabled={isSubmitting}
                   onMouseEnter={() => playHover()}
                   onClick={() => playClick()}
-                  className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-white text-black hover:bg-amber-300 font-sans text-xs sm:text-sm font-bold tracking-tight transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer disabled:opacity-50 shadow-lg"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-full bg-white text-black hover:bg-amber-300 font-sans text-xs sm:text-sm font-bold tracking-tight transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer disabled:opacity-50 shadow-lg"
                 >
                   <span>{isSubmitting ? "Transmitting..." : "Send Transmission"}</span>
                   <Send className="w-3.5 h-3.5" />
@@ -503,10 +466,9 @@ export function ContactFooter() {
         </div>
 
         {/* ========================================================= */}
-        {/* 3. SOCIAL NETWORKS (Brand Logos & Direct Links)           */}
+        {/* 3. SOCIAL BRAND NETWORKS (Frosted Discs)                  */}
         {/* ========================================================= */}
-        <div className="w-full pt-16 mt-16 border-t border-white/[0.08] flex flex-col items-center gap-8">
-          {/* Social Logo Icons Grid */}
+        <div className="w-full pt-16 mt-16 border-t border-white/[0.08] flex flex-col items-center gap-10">
           <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
             {siteConfig.socials.map((soc) => {
               const socialIcons: Record<string, React.ReactNode> = {
@@ -571,8 +533,15 @@ export function ContactFooter() {
             })}
           </div>
 
+          {/* Giant Ambient Monogram Watermark */}
+          <div className="w-full text-center overflow-hidden select-none pointer-events-none opacity-[0.04] -my-6">
+            <span className="font-bodoni italic font-bold text-[18vw] leading-none tracking-tighter text-white block">
+              Gourab.
+            </span>
+          </div>
+
           {/* Bottom Colophon Bar */}
-          <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-neutral-500 pt-6 border-t border-white/[0.04]">
+          <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-neutral-500 pt-6 border-t border-white/[0.06]">
             <div className="flex items-center gap-3">
               <span className="text-white font-bold">{siteConfig.name}</span>
               <span className="text-neutral-700">/</span>
@@ -597,3 +566,4 @@ export function ContactFooter() {
     </footer>
   );
 }
+
