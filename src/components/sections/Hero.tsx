@@ -3,47 +3,79 @@
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "@/lib/gsap";
-import { ArrowUpRight, MapPin } from "lucide-react";
+import {
+  Monitor,
+  Palette,
+  Zap,
+  Layers,
+  Linkedin,
+  Github,
+  Instagram,
+  Mail,
+  ArrowUpRight,
+  MousePointer,
+} from "lucide-react";
 import Image from "next/image";
 
 interface HeroProps {
   isLoaded: boolean;
 }
 
+const serviceCards = [
+  {
+    icon: Monitor,
+    title: "Web Development",
+    description: "Modern, responsive and high-performance websites.",
+  },
+  {
+    icon: Palette,
+    title: "UI/UX Design",
+    description: "Clean and engaging designs that convert.",
+  },
+  {
+    icon: Zap,
+    title: "Automation",
+    description: "Smart solutions to save time and scale faster.",
+  },
+  {
+    icon: Layers,
+    title: "Creative Solutions",
+    description: "Ideas tailored to your goals and vision.",
+  },
+];
+
 export function Hero({ isLoaded }: HeroProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const portraitRef = useRef<HTMLDivElement | null>(null);
-  const headlineTopRef = useRef<HTMLHeadingElement | null>(null);
-  const headlineBottomRef = useRef<HTMLHeadingElement | null>(null);
-  const sideMetaLeftRef = useRef<HTMLDivElement | null>(null);
-  const sideMetaRightRef = useRef<HTMLDivElement | null>(null);
-  const ctaGroupRef = useRef<HTMLDivElement | null>(null);
+  const leftContentRef = useRef<HTMLDivElement | null>(null);
+  const portraitContainerRef = useRef<HTMLDivElement | null>(null);
+  const servicesRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Subtle scroll parallax
-      gsap.to(portraitRef.current, {
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: 1,
-        },
-        y: 50,
-        ease: "none",
-      });
+      // Entrance animation
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-      gsap.to([headlineTopRef.current, headlineBottomRef.current], {
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top top",
-          end: "60% top",
-          scrub: 1,
-        },
-        y: -40,
-        opacity: 0.3,
-        ease: "none",
-      });
+      tl.fromTo(
+        ".hero-reveal",
+        { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.9, stagger: 0.08 }
+      );
+
+      if (portraitContainerRef.current) {
+        tl.fromTo(
+          portraitContainerRef.current,
+          { opacity: 0, scale: 0.96 },
+          { opacity: 1, scale: 1, duration: 1.1, ease: "power2.out" },
+          "-=0.7"
+        );
+      }
+
+      tl.fromTo(
+        ".service-card",
+        { opacity: 0, y: 25 },
+        { opacity: 1, y: 0, duration: 0.7, stagger: 0.06 },
+        "-=0.5"
+      );
     }, containerRef);
 
     return () => ctx.revert();
@@ -60,130 +92,172 @@ export function Hero({ isLoaded }: HeroProps) {
     <section
       id="hero"
       ref={containerRef}
-      className="relative min-h-[92vh] sm:min-h-screen w-full flex flex-col justify-between pt-24 sm:pt-28 md:pt-32 pb-8 sm:pb-10 px-4 sm:px-8 md:px-16 overflow-hidden bg-white text-[#111111] select-none"
+      className="relative min-h-screen w-full flex flex-col justify-between pt-28 sm:pt-32 md:pt-36 pb-12 px-6 sm:px-10 md:px-16 lg:px-20 bg-[#06040A] text-[#F4F4F6] overflow-hidden select-none"
     >
-      {/* Main 2-Line Layered Typography & Centered Cutout Portrait Scene */}
+      {/* Ambient Purple/Violet Atmospheric Glow */}
       <div
-        className="relative my-auto w-full max-w-7xl mx-auto flex flex-col items-center justify-center py-2 sm:py-4 min-h-[320px] xs:min-h-[360px] sm:min-h-[440px] md:min-h-[500px] lg:min-h-[540px]"
-      >
-        {/* Background Typography Container (z-10, strictly behind the foreground portrait) */}
-        <div className="relative z-10 w-full max-w-5xl lg:max-w-6xl mx-auto flex flex-col items-center justify-center text-center select-none -translate-y-10 xs:-translate-y-14 sm:-translate-y-20 md:-translate-y-28 lg:-translate-y-32 px-2 sm:px-4">
-          {/* Line 1: WEB DEVELOPER (Solid Black, Vertically Stretched / Taller with Same Endpoints) */}
-          <div
-            ref={headlineTopRef}
-            className="w-full relative z-10 -translate-y-6 xs:-translate-y-8 sm:-translate-y-12 md:-translate-y-16 lg:-translate-y-20 mb-1 sm:mb-2 transform scale-y-[1.35] sm:scale-y-[1.45] md:scale-y-[1.55] lg:scale-y-[1.65] origin-bottom"
-          >
-            <svg viewBox="0 0 1000 90" className="w-full h-auto overflow-visible" preserveAspectRatio="none">
-              <text
-                x="0"
-                y="80"
-                textLength="1000"
-                lengthAdjust="spacingAndGlyphs"
-                className="font-oswald font-black uppercase"
-                style={{
-                  fontFamily: "var(--font-oswald), sans-serif",
-                  fontSize: "105px",
-                  fontWeight: "800",
-                  fill: "#111111",
-                }}
-              >
-                WEB DEVELOPER
-              </text>
-            </svg>
+        className="pointer-events-none absolute top-1/4 right-10 w-[700px] h-[700px] rounded-full bg-[radial-gradient(circle,_rgba(168,85,247,0.14)_0%,_rgba(99,102,241,0.06)_40%,_transparent_70%)] blur-[140px] z-0"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute bottom-1/4 left-10 w-[500px] h-[500px] rounded-full bg-[radial-gradient(circle,_rgba(56,189,248,0.05)_0%,_transparent_70%)] blur-[140px] z-0"
+        aria-hidden="true"
+      />
+
+      {/* Main Hero Split: Left Typography + Right Portrait with Orbital Glow */}
+      <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center relative z-10 my-auto">
+        {/* Left Column: Heading, Subtitle, CTAs & Socials (6 cols) */}
+        <div ref={leftContentRef} className="lg:col-span-6 flex flex-col gap-6 sm:gap-7">
+          {/* Tag */}
+          <div className="hero-reveal flex items-center gap-2 text-xs font-mono tracking-widest uppercase text-neutral-400">
+            <span className="w-4 h-[1px] bg-purple-400" />
+            <span>CREATIVE DEVELOPER</span>
           </div>
 
-          {/* Line 2 (Outlined Stroked Text Behind Portrait): & DESIGNER (White Fill, White-Greyish Outline, Stretched Downward) */}
-          <div
-            ref={headlineBottomRef}
-            className="w-full relative z-10 -translate-y-2 xs:-translate-y-3 sm:-translate-y-4 md:-translate-y-5 transform scale-y-[2.1] sm:scale-y-[2.3] md:scale-y-[2.5] lg:scale-y-[2.65] origin-top"
-          >
-            <svg viewBox="0 0 1000 120" className="w-full h-auto overflow-visible" preserveAspectRatio="none">
-              <text
-                x="0"
-                y="102"
-                textLength="1000"
-                lengthAdjust="spacingAndGlyphs"
-                className="font-oswald font-black uppercase"
-                style={{
-                  fontFamily: "var(--font-oswald), sans-serif",
-                  fontSize: "135px",
-                  fontWeight: "900",
-                  fill: "#FFFFFF",
-                  stroke: "#C4C4CC",
-                  strokeWidth: "2.2px",
-                }}
-              >
-                &amp; DESIGNER
-              </text>
-            </svg>
+          {/* Headline */}
+          <h1 className="hero-reveal font-display font-black text-5xl sm:text-6xl md:text-7xl lg:text-[5.2rem] text-white tracking-tight leading-[1.05]">
+            Ideas into <br />
+            <span className="bg-gradient-to-r from-purple-400 via-indigo-300 to-sky-300 bg-clip-text text-transparent">
+              Impact
+            </span>
+          </h1>
+
+          {/* Subtitle */}
+          <p className="hero-reveal font-sans text-base sm:text-lg text-neutral-300 font-light leading-relaxed max-w-lg">
+            I design and build digital experiences that look good, work flawlessly, and make a difference.
+          </p>
+
+          {/* CTA Buttons */}
+          <div className="hero-reveal flex flex-wrap items-center gap-4 pt-2">
+            <button
+              onClick={() => scrollToSection("work")}
+              className="px-7 py-3.5 rounded-full bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-500 hover:from-purple-500 hover:to-indigo-500 text-white font-sans text-sm font-semibold tracking-wide flex items-center gap-2 shadow-[0_0_25px_rgba(168,85,247,0.4)] hover:shadow-[0_0_35px_rgba(168,85,247,0.6)] transition-all duration-300 hover:scale-[1.02] active:scale-95 cursor-pointer"
+            >
+              <span>View My Work</span>
+              <ArrowUpRight className="w-4 h-4" />
+            </button>
+
+            <button
+              onClick={() => scrollToSection("contact")}
+              className="px-7 py-3.5 rounded-full bg-white/[0.04] hover:bg-white/[0.08] text-white border border-purple-400/40 hover:border-purple-400 font-sans text-sm font-semibold tracking-wide transition-all duration-300 hover:scale-[1.02] active:scale-95 cursor-pointer"
+            >
+              Get In Touch
+            </button>
+          </div>
+
+          {/* Status Badge */}
+          <div className="hero-reveal flex items-center gap-2.5 font-mono text-xs uppercase tracking-widest text-neutral-400 pt-1">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)] animate-pulse" />
+            <span>AVAILABLE FOR FREELANCE &amp; COMMISSIONS</span>
+          </div>
+
+          {/* Connect With Me Socials */}
+          <div className="hero-reveal flex flex-col gap-3 pt-4 border-t border-white/[0.08]">
+            <span className="text-[11px] font-mono tracking-widest uppercase text-neutral-500">
+              — CONNECT WITH ME
+            </span>
+            <div className="flex items-center gap-3">
+              {[
+                { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
+                { icon: Github, href: "https://github.com", label: "GitHub" },
+                { icon: Instagram, href: "https://instagram.com", label: "Instagram" },
+                { icon: Mail, href: "mailto:contact@gourab.dev", label: "Email" },
+              ].map((social, idx) => {
+                const Icon = social.icon;
+                return (
+                  <a
+                    key={idx}
+                    href={social.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={social.label}
+                    className="w-10 h-10 rounded-xl bg-white/[0.03] hover:bg-purple-500/15 border border-white/[0.08] hover:border-purple-400/50 flex items-center justify-center text-neutral-400 hover:text-white transition-all duration-200 shadow-sm"
+                  >
+                    <Icon className="w-4 h-4" />
+                  </a>
+                );
+              })}
+            </div>
           </div>
         </div>
 
-        {/* Foreground Layer: Gourab's Cutout Portrait (Strictly z-20 IN FRONT of & Designer, 100% Solid Body + Ultra Smooth Pure Gradient Fade) */}
+        {/* Right Column: High-Res Portrait with Orbital Glowing Ring (6 cols) */}
         <div
-          ref={portraitRef}
-          className="absolute bottom-[-10px] sm:bottom-[-15px] md:bottom-[-20px] left-1/2 -translate-x-1/2 z-20 w-[210px] xs:w-[240px] sm:w-[320px] md:w-[390px] lg:w-[440px] xl:w-[480px] aspect-[3/4] pointer-events-none flex items-end justify-center"
+          ref={portraitContainerRef}
+          className="lg:col-span-6 relative flex items-center justify-center pointer-events-none"
         >
-          <div className="relative w-full h-full [mask-image:linear-gradient(to_bottom,black_0%,black_82%,rgba(0,0,0,0.7)_88%,rgba(0,0,0,0.3)_94%,rgba(0,0,0,0.05)_98%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_0%,black_82%,rgba(0,0,0,0.7)_88%,rgba(0,0,0,0.3)_94%,rgba(0,0,0,0.05)_98%,transparent_100%)]">
-            <Image
-              src="/assets/gourab.png"
-              alt="Gourab — Web Developer & Designer"
-              fill
-              priority
-              className="object-contain object-bottom filter contrast-105 brightness-100"
-            />
+          {/* Orbital Neon Ring behind Portrait */}
+          <div className="absolute w-[360px] sm:w-[460px] md:w-[540px] lg:w-[580px] aspect-square rounded-full border border-purple-500/30 shadow-[0_0_50px_rgba(168,85,247,0.15)] flex items-center justify-center pointer-events-none">
+            {/* Orbiting Planet Dot */}
+            <div className="absolute right-3 top-1/3 w-3 h-3 rounded-full bg-purple-300 shadow-[0_0_12px_rgba(216,180,254,1)] animate-pulse" />
           </div>
-        </div>
 
-        {/* Left Side Metadata: Based in India */}
-        <div
-          ref={sideMetaLeftRef}
-          className="absolute left-2 sm:left-4 bottom-8 z-30 hidden lg:flex flex-col items-start text-left font-sans text-sm text-neutral-700 max-w-[200px]"
-        >
-          <span className="font-medium text-[#111111]">based in India.</span>
-          <span className="text-xs text-neutral-400 mt-0.5">Available for global projects</span>
-        </div>
+          {/* Neon Handwritten Floating Text on Upper Right */}
+          <div className="absolute top-2 right-4 sm:right-10 z-30 transform rotate-[12deg] pointer-events-none select-none text-right">
+            <span className="font-serif italic text-purple-300/90 text-lg sm:text-xl md:text-2xl drop-shadow-[0_0_15px_rgba(192,132,252,0.6)]">
+              Same Person <br />
+              <span className="text-purple-200 font-normal">Better Ideas</span>
+            </span>
+          </div>
 
-        {/* Right Side Metadata: Partner/client tags */}
-        <div
-          ref={sideMetaRightRef}
-          className="absolute right-2 sm:right-4 bottom-8 z-30 hidden lg:flex items-center gap-6 font-serif italic text-xs text-neutral-400 select-none"
-        >
-          <span className="font-sans text-[11px] font-semibold text-neutral-500 tracking-wider uppercase">
-            Audible
-          </span>
-          <span className="font-serif italic text-neutral-500">Ballantine&apos;s</span>
-          <span className="font-mono text-[10px] uppercase text-neutral-500 font-bold">
-            OLYMPUS
-          </span>
+          {/* High-Resolution Portrait with Soft Gradient Dark Base Fade */}
+          <div className="relative z-20 w-[300px] sm:w-[400px] md:w-[480px] lg:w-[540px] aspect-[4/5] flex items-end justify-center">
+            <div className="relative w-full h-full [mask-image:linear-gradient(to_bottom,black_0%,black_75%,rgba(0,0,0,0.6)_88%,rgba(0,0,0,0.15)_95%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_0%,black_75%,rgba(0,0,0,0.6)_88%,rgba(0,0,0,0.15)_95%,transparent_100%)]">
+              <Image
+                src="/assets/gourab.png"
+                alt="Gourab — Creative Developer"
+                fill
+                priority
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-contain object-bottom filter contrast-105 brightness-100 drop-shadow-[0_20px_40px_rgba(0,0,0,0.9)]"
+              />
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Bottom Dual Action Buttons: Positioned higher up over the portrait base */}
+      {/* Bottom 4 Bento Service Cards */}
       <div
-        ref={ctaGroupRef}
-        className="relative z-30 flex flex-row items-center justify-center gap-2.5 sm:gap-4 -mt-20 xs:-mt-28 sm:-mt-36 md:-mt-44 lg:-mt-52 mb-2 w-full mx-auto"
+        ref={servicesRef}
+        className="max-w-7xl mx-auto w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 mt-16 sm:mt-20 relative z-10"
       >
-        <button
-          onClick={() => scrollToSection("work")}
-          className="px-4 xs:px-6 sm:px-8 py-2.5 sm:py-3 rounded-full bg-[#111111] text-white hover:bg-black text-xs sm:text-sm font-sans font-medium tracking-tight shadow-md transition-all duration-200 hover:scale-105 active:scale-95 whitespace-nowrap cursor-pointer"
-        >
-          You need a developer
-        </button>
+        {serviceCards.map((card, idx) => {
+          const Icon = card.icon;
+          return (
+            <div
+              key={idx}
+              className="service-card p-6 rounded-2xl bg-gradient-to-b from-white/[0.04] to-white/[0.015] border border-white/[0.08] hover:border-purple-400/40 hover:bg-white/[0.06] transition-all duration-300 flex flex-col gap-3 group"
+            >
+              <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-400/20 flex items-center justify-center text-purple-300 group-hover:text-white group-hover:bg-purple-500/25 transition-colors">
+                <Icon className="w-5 h-5" />
+              </div>
 
-        <button
-          onClick={() => scrollToSection("contact")}
-          className="px-4 xs:px-6 sm:px-8 py-2.5 sm:py-3 rounded-full bg-white/95 hover:bg-white text-[#111111] border border-neutral-300 hover:border-[#111111] text-xs sm:text-sm font-sans font-medium tracking-tight shadow-md backdrop-blur-sm transition-all duration-200 hover:scale-105 active:scale-95 whitespace-nowrap cursor-pointer"
-        >
-          You need a designer
-        </button>
+              <h3 className="font-display font-bold text-lg text-white group-hover:text-purple-200 transition-colors">
+                {card.title}
+              </h3>
+
+              <p className="font-sans text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
+                {card.description}
+              </p>
+            </div>
+          );
+        })}
       </div>
 
-      {/* Mobile Location text */}
-      <div className="lg:hidden text-center mt-2 text-xs font-sans text-neutral-500 flex items-center justify-center gap-1.5">
-        <MapPin className="w-3 h-3 text-neutral-700" />
-        <span>based in India • Available Worldwide</span>
+      {/* Bottom Scroll to Explore Indicator */}
+      <div className="max-w-7xl mx-auto w-full pt-12 mt-4 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-[11px] text-neutral-400 uppercase tracking-widest relative z-10">
+        <span className="hidden sm:inline">BUILDING A BRIGHTER WEB</span>
+
+        <div className="flex flex-col items-center gap-2 text-neutral-300">
+          <div className="w-4 h-7 rounded-full border border-neutral-400 flex items-start justify-center p-1">
+            <span className="w-1 h-1.5 rounded-full bg-purple-400 animate-bounce" />
+          </div>
+          <span>SCROLL TO EXPLORE</span>
+        </div>
+
+        <span className="hidden sm:inline">✦ IDEAS // CODE // IMPACT</span>
       </div>
     </section>
   );
 }
+
