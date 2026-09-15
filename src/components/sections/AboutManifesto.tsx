@@ -77,13 +77,13 @@ export function AboutManifesto() {
       </div>
 
       {/* Main Centered Spacious Manifesto Statement */}
-      <div ref={contentRef} className="max-w-5xl mx-auto w-full my-auto py-12 sm:py-16 flex flex-col gap-10 sm:gap-14 text-left sm:text-center">
+      <div ref={contentRef} className="max-w-5xl mx-auto w-full my-auto py-12 sm:py-16 flex flex-col gap-12 sm:gap-16 md:gap-20 text-left sm:text-center">
         {manifestoParagraphs.map((paragraph, pIdx) => {
           const wordsList = paragraph.text.split(" ");
           return (
             <p
               key={pIdx}
-              className="font-sans text-2xl sm:text-3xl md:text-4xl lg:text-[2.65rem] leading-[1.55] sm:leading-[1.5] tracking-tight font-normal"
+              className="font-sans text-2xl sm:text-3xl md:text-4xl lg:text-[2.65rem] leading-[1.85] sm:leading-[1.8] md:leading-[1.85] lg:leading-[1.9] tracking-tight font-normal"
             >
               {wordsList.map((word, wIdx) => {
                 const isHighlight = paragraph.highlight.includes(word);

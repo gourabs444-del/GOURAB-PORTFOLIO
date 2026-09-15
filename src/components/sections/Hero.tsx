@@ -159,10 +159,10 @@ export function Hero({ isLoaded }: HeroProps) {
         </div>
       </div>
 
-      {/* Bottom Dual Action Buttons: Single Row Centered */}
+      {/* Bottom Dual Action Buttons: Positioned 2 Inches Higher Right Over Image Endpoint */}
       <div
         ref={ctaGroupRef}
-        className="relative z-30 flex flex-row items-center justify-center gap-2.5 sm:gap-4 pt-2 mt-2 w-full mx-auto"
+        className="relative z-30 flex flex-row items-center justify-center gap-2.5 sm:gap-4 -mt-16 xs:-mt-20 sm:-mt-24 md:-mt-28 lg:-mt-32 mb-2 w-full mx-auto"
       >
         <button
           onClick={() => scrollToSection("work")}
