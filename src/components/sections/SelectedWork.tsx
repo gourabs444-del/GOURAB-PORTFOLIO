@@ -16,6 +16,8 @@ export function SelectedWork() {
   const [activeProject, setActiveProject] = useState<Project | null>(null);
   const { playHover, playClick } = useAudioFeedback();
 
+  const headerRef = useRef<HTMLDivElement | null>(null);
+
   const categories = ["ALL", "AI Systems", "Creative Dev", "Full-Stack", "Motion & Film"];
 
   const filteredProjects =
@@ -23,23 +25,65 @@ export function SelectedWork() {
       ? projects
       : projects.filter((p) => p.category === selectedCategory);
 
-  // Smooth Elegant Scroll Reveal (Zero 3D Distortion)
+  // Sequential Choreography: Header text animates first, then cards assemble from left/right on scroll
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const items = listRef.current?.querySelectorAll(".project-editorial-card");
-
-      items?.forEach((item) => {
+      // 1. Header Text Animation (Staggered Entrance)
+      if (headerRef.current) {
         gsap.fromTo(
-          item,
-          { opacity: 0, y: 50 },
+          headerRef.current.querySelectorAll(".header-reveal"),
+          { opacity: 0, y: 30 },
           {
             opacity: 1,
             y: 0,
-            duration: 0.9,
+            duration: 0.8,
+            stagger: 0.1,
             ease: "power3.out",
             scrollTrigger: {
-              trigger: item,
-              start: "top 88%",
+              trigger: headerRef.current,
+              start: "top 80%",
+              toggleActions: "play none none reverse",
+            },
+          }
+        );
+      }
+
+      // 2. Project Cards Assembling from Both Sides on Scroll
+      const leftCards = listRef.current?.querySelectorAll(".project-card-left");
+      const rightCards = listRef.current?.querySelectorAll(".project-card-right");
+
+      leftCards?.forEach((card) => {
+        gsap.fromTo(
+          card,
+          { opacity: 0, x: -90, y: 30 },
+          {
+            opacity: 1,
+            x: 0,
+            y: 0,
+            duration: 0.95,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 85%",
+              toggleActions: "play none none reverse",
+            },
+          }
+        );
+      });
+
+      rightCards?.forEach((card) => {
+        gsap.fromTo(
+          card,
+          { opacity: 0, x: 90, y: 30 },
+          {
+            opacity: 1,
+            x: 0,
+            y: 0,
+            duration: 0.95,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 85%",
               toggleActions: "play none none reverse",
             },
           }
@@ -64,31 +108,34 @@ export function SelectedWork() {
 
       <div className="max-w-7xl mx-auto flex flex-col gap-16 md:gap-24 relative z-10">
         {/* ========================================================= */}
-        {/* 1. EDITORIAL SECTION HEADER                               */}
+        {/* 1. EDITORIAL SECTION HEADER (Choreographed Entrance)      */}
         {/* ========================================================= */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-10 border-b border-white/[0.08]">
+        <div
+          ref={headerRef}
+          className="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-10 border-b border-white/[0.08]"
+        >
           <div className="flex flex-col gap-4 max-w-2xl">
-            <div className="flex items-center gap-2.5 text-xs font-mono tracking-widest uppercase text-neutral-400">
+            <div className="header-reveal flex items-center gap-2.5 text-xs font-mono tracking-widest uppercase text-neutral-400">
               <span className="w-2 h-2 rounded-full bg-amber-400 shadow-[0_0_10px_#F59E0B]" />
               <span className="text-white font-medium">02 // SELECTED WORK</span>
               <span className="text-white/20">/</span>
               <span className="text-neutral-400">2024 &mdash; 2026 ARCHIVE</span>
             </div>
 
-            <h2 className="font-display font-black text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white tracking-tight leading-[1.05]">
+            <h2 className="header-reveal font-display font-black text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white tracking-tight leading-[1.05]">
               SELECTED <br />
               <span className="font-serif italic font-normal bg-gradient-to-r from-amber-400 via-amber-200 to-sky-400 bg-clip-text text-transparent">
                 WORKS &amp; ARTIFACTS
               </span>
             </h2>
 
-            <p className="font-sans text-sm sm:text-base text-neutral-300 leading-relaxed max-w-xl font-light">
+            <p className="header-reveal font-sans text-sm sm:text-base text-neutral-300 leading-relaxed max-w-xl font-light">
               High-end digital platforms, spatial WebGL graphics, and autonomous generative AI architectures.
             </p>
           </div>
 
-          {/* Minimal Filter Tabs (Clean text & active line) */}
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-xs text-neutral-400">
+          {/* Minimal Filter Tabs */}
+          <div className="header-reveal flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-xs text-neutral-400">
             {categories.map((cat) => (
               <button
                 key={cat}
@@ -120,7 +167,7 @@ export function SelectedWork() {
           className="grid grid-cols-1 md:grid-cols-2 gap-12 sm:gap-16 lg:gap-20"
         >
           {filteredProjects.map((project, index) => {
-            const isOffset = index % 2 === 1;
+            const isRightSide = index % 2 === 1;
 
             return (
               <article
@@ -130,8 +177,8 @@ export function SelectedWork() {
                   setActiveProject(project);
                 }}
                 onMouseEnter={() => playHover()}
-                className={`project-editorial-card group relative flex flex-col gap-6 cursor-pointer ${
-                  isOffset ? "md:mt-16" : ""
+                className={`group relative flex flex-col gap-6 cursor-pointer will-change-transform ${
+                  isRightSide ? "project-card-right md:mt-16" : "project-card-left"
                 }`}
               >
                 {/* Large Pinterest Visual Frame with Silky Smooth Zoom */}
