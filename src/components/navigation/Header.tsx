@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { siteConfig } from "@/data/siteConfig";
 import { FullscreenMenu } from "./FullscreenMenu";
 import { useAudioFeedback } from "@/hooks/useAudioFeedback";
-import { Menu, ArrowUpRight } from "lucide-react";
+import { Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function Header() {
@@ -44,52 +44,64 @@ export function Header() {
         <div className="flex items-center gap-2">
           <button
             onClick={() => scrollToSection("hero")}
-            className="flex items-center gap-1.5 text-left group cursor-pointer"
+            onMouseEnter={() => playHover()}
+            data-cursor="pointer"
+            className="flex items-center gap-1 text-left group"
           >
-            <span className="font-display font-black text-2xl tracking-tight text-white">
-              Gourab<span className="text-purple-400">.</span>
+            <span className="w-2.5 h-2.5 rounded-full bg-amber-400 group-hover:scale-125 transition-transform" />
+            <span className="font-display font-extrabold text-2xl tracking-tighter text-white">
+              Gourab<span className="text-amber-400">.</span>
             </span>
           </button>
         </div>
 
-        {/* Center: Navigation Links matching Reference */}
-        <nav className="hidden md:flex items-center gap-8 text-sm font-sans text-neutral-300 font-medium">
-          <button
-            onClick={() => scrollToSection("hero")}
-            className="text-white flex flex-col items-center gap-1 cursor-pointer"
-          >
-            <span>Home</span>
-            <span className="w-1.5 h-1.5 rounded-full bg-purple-400 shadow-[0_0_6px_rgba(192,132,252,1)]" />
-          </button>
-
+        {/* Center: Minimal Navigation Links */}
+        <nav className="hidden md:flex items-center gap-8 text-sm font-sans text-neutral-400 font-medium">
           {[
+            { label: "Design", id: "work" },
+            { label: "Experience", id: "experience" },
             { label: "About", id: "about" },
-            { label: "Work", id: "work" },
-            { label: "Services", id: "what-i-do" },
-            { label: "Contact", id: "contact" },
           ].map((item) => (
             <button
               key={item.id}
-              onClick={() => scrollToSection(item.id)}
-              className="text-neutral-400 hover:text-white transition-colors cursor-pointer"
+              onClick={() => {
+                playClick();
+                scrollToSection(item.id);
+              }}
+              onMouseEnter={() => playHover()}
+              className="hover:text-white transition-colors cursor-pointer"
             >
               {item.label}
             </button>
           ))}
+
+          {/* Language Toggle */}
+          <div className="flex items-center gap-1.5 text-xs font-sans text-neutral-500 pl-4 border-l border-white/10">
+            <span className="hover:text-neutral-300 cursor-pointer">FR</span>
+            <span className="text-white font-bold underline underline-offset-4 cursor-pointer">
+              EN
+            </span>
+          </div>
         </nav>
 
-        {/* Right: Let's Talk Pill Button & Mobile Menu */}
+        {/* Right: Black Pill Email Button & Mobile Menu */}
         <div className="flex items-center gap-3">
-          <button
-            onClick={() => scrollToSection("contact")}
-            className="hidden sm:inline-flex items-center justify-center gap-1.5 px-5 py-2 rounded-full border border-purple-400/40 hover:border-purple-400 bg-white/[0.04] hover:bg-white/[0.08] text-white text-xs font-sans font-medium tracking-wide transition-all duration-200 shadow-sm active:scale-95 cursor-pointer"
+          <a
+            href={`mailto:${siteConfig.contact.email}`}
+            onClick={() => playClick()}
+            onMouseEnter={() => playHover()}
+            className="hidden sm:inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-white text-black hover:bg-amber-300 text-xs font-sans font-semibold tracking-tight transition-all duration-200 shadow-sm active:scale-95"
           >
-            <span>Let&apos;s Talk</span>
-            <ArrowUpRight className="w-3.5 h-3.5 text-purple-300" />
-          </button>
+            <span>{siteConfig.contact.email}</span>
+          </a>
 
           <button
-            onClick={() => setIsMenuOpen(true)}
+            onClick={() => {
+              playClick();
+              setIsMenuOpen(true);
+            }}
+            onMouseEnter={() => playHover()}
+            data-cursor="pointer"
             className="md:hidden flex items-center justify-center p-2 rounded-lg border border-white/10 text-white hover:bg-white/10 transition-colors"
             aria-label="Open Navigation Menu"
           >

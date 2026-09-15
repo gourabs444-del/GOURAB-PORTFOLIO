@@ -6,7 +6,6 @@ import { Preloader } from "@/components/sections/Preloader";
 import { Header } from "@/components/navigation/Header";
 import { Hero } from "@/components/sections/Hero";
 import { AboutManifesto } from "@/components/sections/AboutManifesto";
-import { WhatIDo } from "@/components/sections/WhatIDo";
 import { SelectedWork } from "@/components/sections/SelectedWork";
 import { Showreel } from "@/components/sections/Showreel";
 import { ProcessPipeline } from "@/components/sections/ProcessPipeline";
@@ -41,7 +40,6 @@ export default function Home() {
       {/* Editorial Content Sections */}
       <Hero isLoaded={isLoaded} />
       <AboutManifesto />
-      <WhatIDo />
       <SelectedWork />
       <Showreel />
       <ProcessPipeline />

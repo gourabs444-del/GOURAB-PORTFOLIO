@@ -145,33 +145,31 @@ export function SelectedWork() {
 
       <div className="max-w-7xl mx-auto flex flex-col gap-16 md:gap-24 relative z-10">
         {/* ========================================================= */}
-        {/* 1. CENTERED EDITORIAL SECTION HEADER                      */}
+        {/* 1. EDITORIAL SECTION HEADER (Clean Typography)            */}
         {/* ========================================================= */}
-        <div className="flex flex-col items-center justify-center text-center pb-12 border-b border-white/[0.08]">
-          {/* Section Indicator Tag */}
-          <div className="flex items-center justify-center gap-2.5 text-xs font-mono text-neutral-400 uppercase tracking-widest mb-4">
-            <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
-            <span className="text-neutral-200 font-semibold">02 // SELECTED WORK</span>
-            <span className="text-neutral-600">/</span>
-            <span>2024 — 2026 ARCHIVE</span>
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-10 border-b border-white/[0.08]">
+          <div className="flex flex-col gap-4 max-w-2xl">
+            <div className="flex items-center gap-2.5 text-xs font-mono tracking-widest uppercase text-neutral-400">
+              <span className="w-2 h-2 rounded-full bg-amber-400 shadow-[0_0_10px_#F59E0B]" />
+              <span className="text-white font-medium">02 // SELECTED WORK</span>
+              <span className="text-white/20">/</span>
+              <span className="text-neutral-400">2024 &mdash; 2026 ARCHIVE</span>
+            </div>
+
+            <h2 className="font-display font-black text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white tracking-tight leading-[1.05]">
+              SELECTED <br />
+              <span className="font-serif italic font-normal bg-gradient-to-r from-amber-400 via-amber-200 to-sky-400 bg-clip-text text-transparent">
+                WORKS &amp; ARTIFACTS
+              </span>
+            </h2>
+
+            <p className="font-sans text-sm sm:text-base text-neutral-300 leading-relaxed max-w-xl font-light">
+              Bespoke digital experiences, high-throughput distributed systems, WebGL viewports, and award-winning cinematic storytelling.
+            </p>
           </div>
 
-          {/* Large Text Hover Effect Title */}
-          <div className="w-full max-w-4xl h-24 sm:h-32 md:h-36 flex items-center justify-center my-2">
-            <TextHoverEffect
-              text="FEATURED PROJECTS"
-              colors={{
-                stop0: "#F59E0B",
-                stop25: "#FBBF24",
-                stop50: "#FDE68A",
-                stop75: "#38BDF8",
-                stop100: "#FFFFFF",
-              }}
-            />
-          </div>
-
-          {/* Centered Filter Tabs (Clean Underline - Zero Pills) */}
-          <div className="flex items-center justify-center flex-wrap gap-6 sm:gap-10 text-xs font-mono tracking-wider mt-4">
+          {/* Minimal Filter Tabs (Zero Bulky Boxes, Minimal Text Links) */}
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-xs text-neutral-400">
             {categories.map((cat) => (
               <button
                 key={cat}
@@ -180,15 +178,15 @@ export function SelectedWork() {
                   setSelectedCategory(cat);
                 }}
                 onMouseEnter={() => playHover()}
-                className={`relative py-1.5 transition-all duration-300 cursor-pointer ${
+                className={`transition-all duration-300 relative py-1 cursor-pointer ${
                   selectedCategory === cat
-                    ? "text-white font-bold"
+                    ? "text-white font-semibold"
                     : "text-neutral-500 hover:text-neutral-300"
                 }`}
               >
                 <span>{cat}</span>
                 {selectedCategory === cat && (
-                  <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-amber-400 to-amber-200" />
+                  <span className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-amber-400 shadow-[0_0_8px_#F59E0B]" />
                 )}
               </button>
             ))}
@@ -196,36 +194,36 @@ export function SelectedWork() {
         </div>
 
         {/* ========================================================= */}
-        {/* 2. 3D SPATIAL PERSPECTIVE SHOWCASE (Zero Boxes / Zero Pills) */}
+        {/* 2. CINEMATIC WORK SHOWCASE (Zero Boxes / Zero Capsules)   */}
         {/* ========================================================= */}
-        <div ref={listRef} className="flex flex-col gap-16 sm:gap-24 md:gap-32">
+        <div ref={listRef} className="flex flex-col gap-20 sm:gap-28 md:gap-36">
           {filteredProjects.map((project, index) => {
             const isReversed = index % 2 === 1;
 
             return (
               <div
                 key={project.id}
-                className="project-3d-row group relative grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center pb-16 border-b border-white/[0.08]"
+                className="project-3d-row group relative grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center pb-20 border-b border-white/[0.08]"
                 style={{ perspective: "1200px" }}
               >
-                {/* Column A: Editorial Typography & Systems Breakdown */}
+                {/* Column A: Editorial Narrative & Metrics */}
                 <div
                   className={`project-3d-text lg:col-span-5 flex flex-col justify-between h-full gap-8 ${
                     isReversed ? "lg:order-2" : "lg:order-1"
                   }`}
                 >
-                  <div>
+                  <div className="flex flex-col gap-4">
                     {/* Index, Client & Year */}
-                    <div className="flex items-center gap-3 text-xs font-mono text-neutral-500 tracking-wider mb-4">
+                    <div className="flex items-center gap-3 text-xs font-mono tracking-widest text-neutral-400">
                       <span className="text-amber-400 font-bold font-mono text-sm">
-                        {project.number}
+                        // {project.number}
                       </span>
-                      <span className="text-neutral-700">/</span>
-                      <span className="text-neutral-300 font-medium uppercase">
+                      <span className="text-neutral-600">/</span>
+                      <span className="text-white font-medium uppercase">
                         {project.client}
                       </span>
-                      <span className="text-neutral-700">•</span>
-                      <span className="text-neutral-500">{project.year}</span>
+                      <span className="text-neutral-600">•</span>
+                      <span className="text-neutral-400">{project.year}</span>
                     </div>
 
                     {/* High-Impact Project Title */}
@@ -234,47 +232,59 @@ export function SelectedWork() {
                         playClick();
                         setActiveProject(project);
                       }}
-                      className="font-display font-black text-3xl sm:text-4xl md:text-5xl text-white tracking-tight leading-tight cursor-pointer group-hover:text-amber-400 transition-colors duration-300"
+                      className="font-display font-black text-3xl sm:text-4xl md:text-5xl text-white tracking-tight leading-[1.08] cursor-pointer group-hover:text-amber-300 transition-colors duration-300"
                     >
                       {project.title}
                     </h3>
 
                     {/* Concise Narrative */}
-                    <p className="font-sans text-sm sm:text-base text-neutral-300 mt-5 leading-relaxed font-normal">
+                    <p className="font-sans text-sm sm:text-base text-neutral-300 leading-relaxed font-light mt-1">
                       {project.description}
                     </p>
                   </div>
 
-                  {/* Clean Technical Metrics & Stack (No Pill Capsules) */}
-                  <div className="space-y-4 pt-2">
-                    <div className="flex items-center gap-8 text-xs font-mono">
-                      <div>
-                        <span className="text-neutral-500 block uppercase tracking-wider text-[10px]">
-                          Key Benchmark
+                  {/* Clean Technical Metrics & Stack (Zero Boxes / Zero Pills) */}
+                  <div className="flex flex-col gap-5 pt-2">
+                    {/* Free-Floating Metrics */}
+                    <div className="grid grid-cols-2 gap-6 py-3 border-y border-white/[0.06]">
+                      <div className="flex flex-col gap-0.5">
+                        <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-400">
+                          KEY BENCHMARK
                         </span>
-                        <span className="text-white font-bold text-sm sm:text-base">
+                        <span className="font-display font-bold text-xl sm:text-2xl text-amber-300 tracking-tight">
                           {project.metrics[0]?.value}
                         </span>
                       </div>
-                      <div className="w-[1px] h-8 bg-white/[0.1]" />
-                      <div>
-                        <span className="text-neutral-500 block uppercase tracking-wider text-[10px]">
-                          Discipline
+
+                      <div className="flex flex-col gap-0.5">
+                        <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-400">
+                          DISCIPLINE
                         </span>
-                        <span className="text-neutral-300 font-medium text-xs sm:text-sm">
+                        <span className="font-display font-bold text-xl sm:text-2xl text-white tracking-tight">
                           {project.category}
                         </span>
                       </div>
                     </div>
 
-                    {/* Typographic Stack (Separated by middle dots) */}
-                    <div className="text-xs font-mono text-neutral-400 leading-relaxed pt-1">
-                      <span className="text-neutral-500 mr-2 uppercase font-semibold text-[10px]">Stack:</span>
-                      {project.technologies.slice(0, 6).join("  •  ")}
+                    {/* Editorial Slash-Separated Stack */}
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs font-mono text-neutral-300">
+                      <span className="text-neutral-400 uppercase tracking-widest text-[10px] font-semibold mr-1">
+                        STACK:
+                      </span>
+                      {project.technologies.slice(0, 6).map((tech, tIdx, arr) => (
+                        <React.Fragment key={tIdx}>
+                          <span className="hover:text-white transition-colors cursor-default">
+                            {tech}
+                          </span>
+                          {tIdx < arr.length - 1 && (
+                            <span className="text-neutral-500 select-none">/</span>
+                          )}
+                        </React.Fragment>
+                      ))}
                     </div>
 
-                    {/* Clean Action Trigger */}
-                    <div className="flex items-center gap-6 pt-4">
+                    {/* Clean Action Links */}
+                    <div className="flex items-center gap-6 pt-2">
                       <button
                         onClick={() => {
                           playClick();
@@ -284,7 +294,7 @@ export function SelectedWork() {
                         className="inline-flex items-center gap-2 text-sm font-sans font-semibold text-white hover:text-amber-400 transition-colors cursor-pointer group/btn"
                       >
                         <span className="underline underline-offset-4 decoration-white/30 group-hover/btn:decoration-amber-400">
-                          Inspect Architecture
+                          Inspect Case Study
                         </span>
                         <ArrowUpRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
                       </button>
@@ -298,14 +308,14 @@ export function SelectedWork() {
                           className="inline-flex items-center gap-1.5 text-xs font-mono text-neutral-400 hover:text-white transition-colors py-1"
                         >
                           <span>Live System</span>
-                          <ExternalLink className="w-3.5 h-3.5 text-neutral-500" />
+                          <ExternalLink className="w-3.5 h-3.5 text-neutral-400" />
                         </a>
                       )}
                     </div>
                   </div>
                 </div>
 
-                {/* Column B: Interactive 3D Spatial Canvas Viewport */}
+                {/* Column B: Cinematic Visual Viewport (Seamless Depth) */}
                 <div
                   onMouseMove={handleCardMouseMove}
                   onMouseLeave={handleCardMouseLeave}
@@ -313,7 +323,7 @@ export function SelectedWork() {
                     playClick();
                     setActiveProject(project);
                   }}
-                  className={`project-3d-visual lg:col-span-7 relative aspect-[16/10] w-full rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer bg-[#0A0A0E] border border-white/[0.1] group-hover:border-amber-400/40 transition-shadow duration-500 shadow-[0_20px_60px_rgba(0,0,0,0.8)] group-hover:shadow-[0_25px_80px_rgba(245,158,11,0.15)] will-change-transform ${
+                  className={`project-3d-visual lg:col-span-7 relative aspect-[16/10] w-full rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer bg-[#07070A] border border-white/[0.08] group-hover:border-amber-400/40 transition-all duration-500 shadow-[0_20px_60px_rgba(0,0,0,0.9)] group-hover:shadow-[0_25px_80px_rgba(245,158,11,0.12)] will-change-transform ${
                     isReversed ? "lg:order-1" : "lg:order-2"
                   }`}
                   style={{ transformStyle: "preserve-3d" }}
@@ -328,16 +338,16 @@ export function SelectedWork() {
                     />
                   </div>
 
-                  {/* 3D Atmospheric Sheen on Hover */}
+                  {/* Ambient Lighting Sheen on Hover */}
                   <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-amber-500/[0.08] via-transparent to-white/[0.04] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                   {/* Subtle Vignette Gradient */}
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/20" />
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
 
-                  {/* Floating Action Badge */}
-                  <div className="absolute bottom-6 right-6 z-20 flex items-center gap-2 px-4 py-2 rounded-full bg-black/80 backdrop-blur-md border border-white/20 text-white font-mono text-xs uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 shadow-xl">
-                    <span>Explore Project</span>
-                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  {/* Free-Floating Editorial Micro Label */}
+                  <div className="absolute bottom-6 right-6 z-20 flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-white/90 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-1 group-hover:translate-y-0">
+                    <span className="underline underline-offset-4 decoration-amber-400">View Project</span>
+                    <ArrowUpRight className="w-4 h-4 text-amber-400" />
                   </div>
                 </div>
               </div>
