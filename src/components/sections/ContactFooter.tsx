@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import gsap from "gsap";
 import { siteConfig } from "@/data/siteConfig";
-import { useAudioFeedback } from "@/hooks/useAudioFeedback";
 import {
   Send,
   Copy,
@@ -13,14 +12,30 @@ import {
   Mail,
   Clock,
   MapPin,
+  Sparkles,
+  Github,
+  Linkedin,
+  Twitter,
+  Globe,
+  Layers,
 } from "lucide-react";
 import confetti from "canvas-confetti";
 
+const projectScopes = [
+  "Web Development",
+  "UI/UX Design",
+  "3D & WebGL",
+  "Full-Stack Product",
+  "AI & Automation",
+];
+
 export function ContactFooter() {
   const [copied, setCopied] = useState(false);
+  const [selectedScopes, setSelectedScopes] = useState<string[]>(["Web Development"]);
   const [formState, setFormState] = useState({
     name: "",
     email: "",
+    budget: "$5k - $15k",
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -31,8 +46,6 @@ export function ContactFooter() {
   const containerRef = useRef<HTMLElement | null>(null);
   const heroRef = useRef<HTMLDivElement | null>(null);
   const formRef = useRef<HTMLDivElement | null>(null);
-
-  const { playClick, playHover } = useAudioFeedback();
 
   // Live Local Time in IST
   useEffect(() => {
@@ -98,8 +111,15 @@ export function ContactFooter() {
     return () => ctx.revert();
   }, []);
 
+  const toggleScope = (scope: string) => {
+    if (selectedScopes.includes(scope)) {
+      setSelectedScopes(selectedScopes.filter((s) => s !== scope));
+    } else {
+      setSelectedScopes([...selectedScopes, scope]);
+    }
+  };
+
   const handleCopyEmail = () => {
-    playClick();
     navigator.clipboard.writeText(siteConfig.contact.email);
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
@@ -109,7 +129,6 @@ export function ContactFooter() {
     e.preventDefault();
     if (!formState.name || !formState.email) return;
 
-    playClick();
     setIsSubmitting(true);
 
     setTimeout(() => {
@@ -118,9 +137,9 @@ export function ContactFooter() {
 
       try {
         confetti({
-          particleCount: 80,
-          spread: 70,
-          origin: { y: 0.8 },
+          particleCount: 90,
+          spread: 80,
+          origin: { y: 0.85 },
           colors: ["#F59E0B", "#FFFFFF", "#38BDF8", "#10B981"],
         });
       } catch {}
@@ -128,7 +147,6 @@ export function ContactFooter() {
   };
 
   const scrollToTop = () => {
-    playClick();
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -136,29 +154,31 @@ export function ContactFooter() {
     <footer
       id="contact"
       ref={containerRef}
-      className="relative w-full overflow-hidden bg-[#050507] text-[#F4F4F6] border-t border-white/[0.08] select-none"
+      className="relative w-full overflow-hidden bg-[#040306] text-[#F4F4F6] border-t border-white/[0.08] select-none"
     >
-      {/* Subtle Background Glow */}
+      {/* Dynamic Ambient Background Glows */}
       <div
-        className="pointer-events-none absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[400px] rounded-full bg-[radial-gradient(circle_at_center,_rgba(245,158,11,0.06)_0%,_transparent_70%)] pointer-events-none"
+        className="pointer-events-none absolute top-1/4 left-1/2 -translate-x-1/2 w-[750px] sm:w-[1000px] h-[450px] rounded-full bg-[radial-gradient(circle_at_center,_rgba(245,158,11,0.07)_0%,_rgba(56,189,248,0.03)_50%,_transparent_75%)] blur-[120px]"
         aria-hidden="true"
       />
 
-      {/* Top Telemetry Bar */}
-      <div className="w-full border-b border-white/[0.06] py-3.5 px-6 sm:px-12 md:px-20 text-xs font-mono text-neutral-400">
-        <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-4">
+      {/* Top Live Telemetry Status Bar */}
+      <div className="w-full border-b border-white/[0.06] py-3.5 px-6 sm:px-12 md:px-20 text-xs font-mono text-neutral-400 bg-white/[0.01]">
+        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-2.5">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="text-white font-medium">OPEN FOR COMMISSIONS &amp; ROLES (2026)</span>
+            <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)] animate-pulse" />
+            <span className="text-white font-medium tracking-wider uppercase">
+              STATUS: ACCEPTING SELECT COMMISSIONS (2026)
+            </span>
           </div>
 
-          <div className="flex items-center gap-6 text-neutral-500">
+          <div className="flex items-center gap-6 text-neutral-400">
             <div className="flex items-center gap-1.5">
               <MapPin className="w-3.5 h-3.5 text-amber-400" />
               <span className="text-neutral-300">INDIA // GLOBAL REMOTE</span>
             </div>
             {currentTime && (
-              <div className="flex items-center gap-1.5 text-neutral-300 hidden sm:flex">
+              <div className="hidden sm:flex items-center gap-1.5 text-neutral-300">
                 <Clock className="w-3.5 h-3.5 text-sky-400" />
                 <span>{currentTime} IST</span>
               </div>
@@ -167,58 +187,56 @@ export function ContactFooter() {
         </div>
       </div>
 
-      <div className="relative z-10 max-w-5xl mx-auto px-6 sm:px-10 md:px-16 pt-20 sm:pt-28 md:pt-36 pb-12 flex flex-col items-center text-center">
+      <div className="relative z-10 max-w-6xl mx-auto px-6 sm:px-10 md:px-16 pt-20 sm:pt-28 md:pt-36 pb-12 flex flex-col items-center text-center">
         {/* ========================================================= */}
         {/* 1. HERO INVITATION & MASSIVE EDITORIAL TYPOGRAPHY         */}
         {/* ========================================================= */}
         <div ref={heroRef} className="flex flex-col items-center w-full max-w-4xl mx-auto">
           {/* Top Tag */}
-          <div className="footer-reveal flex items-center justify-center gap-2.5 text-xs font-mono text-neutral-400 uppercase tracking-widest mb-6">
-            <span className="w-2 h-2 rounded-full bg-amber-400" />
-            <span className="font-semibold text-white">07 // INITIATE TRANSMISSION</span>
+          <div className="footer-reveal flex items-center justify-center gap-2.5 text-xs font-mono text-amber-400/90 uppercase tracking-widest mb-6">
+            <Sparkles className="w-3.5 h-3.5" />
+            <span className="font-semibold">06 // INITIATE TRANSMISSION</span>
             <span className="text-neutral-600">/</span>
-            <span>GET IN TOUCH</span>
+            <span className="text-neutral-400">LET&apos;S TALK</span>
           </div>
 
           {/* Masterpiece Editorial Heading */}
           <h2 className="footer-reveal font-bodoni font-medium text-4xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight leading-[1.08] text-white my-2">
-            Let&apos;s Build Something <br />
-            <span className="font-bodoni italic font-normal bg-gradient-to-r from-amber-200 via-amber-400 to-amber-500 bg-clip-text text-transparent">
-              Iconic Together.
+            Have an ambitious idea? <br />
+            <span className="font-bodoni italic font-normal bg-gradient-to-r from-amber-200 via-amber-400 to-amber-500 bg-clip-text text-transparent drop-shadow-[0_0_35px_rgba(245,158,11,0.25)]">
+              Let&apos;s Make It Iconic.
             </span>
           </h2>
 
           {/* Subtitle */}
-          <p className="footer-reveal font-sans text-sm sm:text-base md:text-lg text-neutral-300 max-w-2xl mx-auto mt-6 mb-10 font-normal leading-relaxed">
-            Have an ambitious vision, 3D interactive experience, or fullstack product? Let&apos;s turn bold ideas into high-performance digital realities.
+          <p className="footer-reveal font-sans text-sm sm:text-base md:text-lg text-neutral-300 max-w-2xl mx-auto mt-6 mb-10 font-light leading-relaxed">
+            Whether you need a high-performance web platform, interactive 3D spatial experience, or bespoke fullstack product — let&apos;s build something that commands attention.
           </p>
 
-          {/* Clean Editorial Email Link (Zero Capsule Pills) */}
-          <div className="footer-reveal flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 mb-16 sm:mb-20">
+          {/* Pro Direct Email Button & Copy Action */}
+          <div className="footer-reveal flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mb-16 sm:mb-20">
             <a
               href={`mailto:${siteConfig.contact.email}`}
-              onMouseEnter={() => playHover()}
-              onClick={() => playClick()}
-              className="group flex items-center gap-2.5 text-xl sm:text-2xl md:text-3xl font-mono font-medium text-white hover:text-amber-300 transition-colors border-b border-white/20 hover:border-amber-400 pb-1"
+              className="group inline-flex items-center gap-3 px-8 py-4 rounded-full bg-white text-black hover:bg-amber-300 font-sans font-bold text-sm sm:text-base tracking-tight shadow-[0_0_30px_rgba(255,255,255,0.15)] transition-all duration-300 hover:scale-105 active:scale-95"
             >
+              <Mail className="w-4 h-4 text-black" />
               <span>{siteConfig.contact.email}</span>
-              <ArrowUpRight className="w-6 h-6 stroke-[2] transition-transform group-hover:translate-x-1 group-hover:-translate-y-1 text-amber-400" />
+              <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
             </a>
 
             <button
               onClick={handleCopyEmail}
-              onMouseEnter={() => playHover()}
-              className="flex items-center gap-2 text-xs font-mono text-neutral-400 hover:text-white transition-colors cursor-pointer"
+              className="inline-flex items-center gap-2 px-6 py-4 rounded-full border border-white/20 hover:border-amber-400 bg-white/[0.03] hover:bg-white/[0.08] text-white font-mono text-xs tracking-wider transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
             >
               {copied ? (
                 <>
-                  <Check className="w-3.5 h-3.5 text-emerald-400" />
-                  <span className="text-emerald-400">Copied Address</span>
+                  <Check className="w-4 h-4 text-emerald-400" />
+                  <span className="text-emerald-400">COPIED ADDRESS</span>
                 </>
               ) : (
                 <>
-                  <Copy className="w-3.5 h-3.5" />
-                  <span>Copy Email</span>
+                  <Copy className="w-4 h-4 text-neutral-400" />
+                  <span>COPY EMAIL</span>
                 </>
               )}
             </button>
@@ -226,40 +244,70 @@ export function ContactFooter() {
         </div>
 
         {/* ========================================================= */}
-        {/* 2. MINIMALIST INQUIRY DISPATCH (Clean Underlines Only)     */}
+        {/* 2. PRO INQUIRY BRIEF FORM WITH INTERACTIVE SCOPE SELECTOR  */}
         {/* ========================================================= */}
         <div
           ref={formRef}
-          className="w-full max-w-2xl mx-auto pt-12 border-t border-white/[0.08] text-left"
+          className="w-full max-w-3xl mx-auto pt-14 border-t border-white/[0.08] text-left"
         >
           <div className="text-center mb-10">
             <span className="text-xs font-mono uppercase tracking-widest text-amber-400 font-semibold block mb-2">
-              DIRECT INQUIRY &amp; BRIEF
+              PROJECT BRIEF &amp; ESTIMATE
             </span>
-            <h3 className="font-bodoni font-medium text-2xl sm:text-3xl text-white tracking-tight">
-              Tell me about your goals.
+            <h3 className="font-bodoni font-medium text-2xl sm:text-4xl text-white tracking-tight">
+              Tell me about your project.
             </h3>
+            <p className="text-neutral-400 font-sans text-xs sm:text-sm mt-2">
+              Select your required disciplines and describe your timeline.
+            </p>
+          </div>
+
+          {/* Interactive Project Scope Chips */}
+          <div className="mb-10">
+            <span className="text-xs font-mono uppercase tracking-wider text-neutral-400 block mb-3">
+              I am looking for:
+            </span>
+            <div className="flex flex-wrap gap-2.5">
+              {projectScopes.map((scope) => {
+                const isSelected = selectedScopes.includes(scope);
+                return (
+                  <button
+                    key={scope}
+                    type="button"
+                    onClick={() => toggleScope(scope)}
+                    className={`px-4 py-2 rounded-xl text-xs font-mono transition-all duration-200 cursor-pointer ${
+                      isSelected
+                        ? "bg-amber-400 text-black font-semibold shadow-[0_0_15px_rgba(245,158,11,0.4)]"
+                        : "bg-white/[0.04] text-neutral-400 border border-white/10 hover:border-white/30 hover:text-white"
+                    }`}
+                  >
+                    {isSelected ? "✓ " : "+ "}
+                    {scope}
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
           {isSubmitted ? (
-            <div className="py-12 flex flex-col items-center text-center gap-3 border-y border-white/[0.08] p-6">
-              <div className="w-10 h-10 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
-                <Check className="w-5 h-5" />
+            <div className="py-14 flex flex-col items-center text-center gap-3 border border-white/[0.08] rounded-2xl bg-white/[0.02] p-8">
+              <div className="w-12 h-12 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+                <Check className="w-6 h-6" />
               </div>
-              <h4 className="font-bodoni font-medium text-2xl text-white">
-                Transmission Dispatched
+              <h4 className="font-bodoni font-medium text-2xl sm:text-3xl text-white mt-2">
+                Transmission Received
               </h4>
               <p className="font-sans text-sm text-neutral-400 max-w-md">
-                Thank you for reaching out. Gourab will review your brief and follow up with you within 24 hours.
+                Thank you for the brief. Gourab will review the specifications and follow up directly within 24 business hours.
               </p>
               <button
                 onClick={() => {
                   setIsSubmitted(false);
-                  setFormState({ name: "", email: "", message: "" });
+                  setFormState({ name: "", email: "", budget: "$5k - $15k", message: "" });
                 }}
-                className="mt-2 text-xs font-mono text-amber-400 hover:text-amber-300 underline underline-offset-4 cursor-pointer"
+                className="mt-4 text-xs font-mono text-amber-400 hover:text-amber-300 underline underline-offset-4 cursor-pointer"
               >
-                Transmit another brief &rarr;
+                Send another message &rarr;
               </button>
             </div>
           ) : (
@@ -267,10 +315,12 @@ export function ContactFooter() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                 {/* Name */}
                 <div className="flex flex-col gap-2 relative">
-                  <label className={`text-xs font-mono uppercase tracking-wider transition-colors duration-200 ${
-                    focusedField === "name" ? "text-amber-400 font-bold" : "text-neutral-400"
-                  }`}>
-                    Your Name / Company *
+                  <label
+                    className={`text-xs font-mono uppercase tracking-wider transition-colors duration-200 ${
+                      focusedField === "name" ? "text-amber-400 font-semibold" : "text-neutral-400"
+                    }`}
+                  >
+                    Your Name / Organization *
                   </label>
                   <input
                     type="text"
@@ -279,20 +329,24 @@ export function ContactFooter() {
                     onFocus={() => setFocusedField("name")}
                     onBlur={() => setFocusedField(null)}
                     onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                    placeholder="e.g. Alexander Vance"
+                    placeholder="e.g. Elena Rostova"
                     className="w-full py-3 bg-transparent border-b border-white/20 focus:border-amber-400 text-white placeholder-neutral-600 text-sm focus:outline-none transition-colors font-sans rounded-none"
                   />
-                  <div className={`absolute bottom-0 left-0 right-0 h-[1.5px] bg-amber-400 origin-left transition-transform duration-300 ${
-                    focusedField === "name" ? "scale-x-100" : "scale-x-0"
-                  }`} />
+                  <div
+                    className={`absolute bottom-0 left-0 right-0 h-[1.5px] bg-amber-400 origin-left transition-transform duration-300 ${
+                      focusedField === "name" ? "scale-x-100" : "scale-x-0"
+                    }`}
+                  />
                 </div>
 
                 {/* Email */}
                 <div className="flex flex-col gap-2 relative">
-                  <label className={`text-xs font-mono uppercase tracking-wider transition-colors duration-200 ${
-                    focusedField === "email" ? "text-amber-400 font-bold" : "text-neutral-400"
-                  }`}>
-                    Your Email *
+                  <label
+                    className={`text-xs font-mono uppercase tracking-wider transition-colors duration-200 ${
+                      focusedField === "email" ? "text-amber-400 font-semibold" : "text-neutral-400"
+                    }`}
+                  >
+                    Your Email Address *
                   </label>
                   <input
                     type="email"
@@ -301,21 +355,25 @@ export function ContactFooter() {
                     onFocus={() => setFocusedField("email")}
                     onBlur={() => setFocusedField(null)}
                     onChange={(e) => setFormState({ ...formState, email: e.target.value })}
-                    placeholder="e.g. alexander@aether.ai"
+                    placeholder="e.g. elena@nexus.com"
                     className="w-full py-3 bg-transparent border-b border-white/20 focus:border-amber-400 text-white placeholder-neutral-600 text-sm focus:outline-none transition-colors font-sans rounded-none"
                   />
-                  <div className={`absolute bottom-0 left-0 right-0 h-[1.5px] bg-amber-400 origin-left transition-transform duration-300 ${
-                    focusedField === "email" ? "scale-x-100" : "scale-x-0"
-                  }`} />
+                  <div
+                    className={`absolute bottom-0 left-0 right-0 h-[1.5px] bg-amber-400 origin-left transition-transform duration-300 ${
+                      focusedField === "email" ? "scale-x-100" : "scale-x-0"
+                    }`}
+                  />
                 </div>
               </div>
 
-              {/* Message */}
+              {/* Message / Brief */}
               <div className="flex flex-col gap-2 relative">
-                <label className={`text-xs font-mono uppercase tracking-wider transition-colors duration-200 ${
-                  focusedField === "message" ? "text-amber-400 font-bold" : "text-neutral-400"
-                }`}>
-                  Project Narrative &amp; Timeline
+                <label
+                  className={`text-xs font-mono uppercase tracking-wider transition-colors duration-200 ${
+                    focusedField === "message" ? "text-amber-400 font-semibold" : "text-neutral-400"
+                  }`}
+                >
+                  Project Vision &amp; Goals
                 </label>
                 <textarea
                   rows={4}
@@ -323,30 +381,30 @@ export function ContactFooter() {
                   onFocus={() => setFocusedField("message")}
                   onBlur={() => setFocusedField(null)}
                   onChange={(e) => setFormState({ ...formState, message: e.target.value })}
-                  placeholder="Describe your vision, scope, and timeline goals..."
+                  placeholder="Tell me about your product, timeline, aesthetic direction, and objectives..."
                   className="w-full py-3 bg-transparent border-b border-white/20 focus:border-amber-400 text-white placeholder-neutral-600 text-sm focus:outline-none transition-colors resize-none font-sans rounded-none"
                 />
-                <div className={`absolute bottom-0 left-0 right-0 h-[1.5px] bg-amber-400 origin-left transition-transform duration-300 ${
-                  focusedField === "message" ? "scale-x-100" : "scale-x-0"
-                }`} />
+                <div
+                  className={`absolute bottom-0 left-0 right-0 h-[1.5px] bg-amber-400 origin-left transition-transform duration-300 ${
+                    focusedField === "message" ? "scale-x-100" : "scale-x-0"
+                  }`}
+                />
               </div>
 
               {/* Submit Line */}
               <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
-                <span className="text-xs font-mono text-neutral-500 flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                  Estimated reply within 24 business hours
+                <span className="text-xs font-mono text-neutral-400 flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  Fast response guaranteed within 24 business hours
                 </span>
 
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  onMouseEnter={() => playHover()}
-                  onClick={() => playClick()}
-                  className="group flex items-center gap-2 text-sm font-mono font-bold text-white hover:text-amber-300 transition-colors border-b border-white/30 hover:border-amber-400 pb-1 cursor-pointer disabled:opacity-50"
+                  className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black font-sans font-bold text-xs sm:text-sm tracking-tight shadow-[0_0_25px_rgba(245,158,11,0.35)] transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer disabled:opacity-50"
                 >
-                  <span>{isSubmitting ? "Transmitting..." : "Send Transmission"}</span>
-                  <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                  <span>{isSubmitting ? "Dispatching..." : "Send Transmission"}</span>
+                  <Send className="w-3.5 h-3.5" />
                 </button>
               </div>
             </form>
@@ -354,22 +412,20 @@ export function ContactFooter() {
         </div>
 
         {/* ========================================================= */}
-        {/* 3. SOCIAL BRAND LINKS (Clean Typographic Links)           */}
+        {/* 3. SOCIAL BRAND NETWORK                                   */}
         {/* ========================================================= */}
         <div className="w-full pt-16 mt-16 border-t border-white/[0.08] flex flex-col items-center gap-10">
-          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs font-mono text-neutral-400 uppercase tracking-wider">
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs font-mono">
             {siteConfig.socials.map((soc) => (
               <a
                 key={soc.name}
                 href={soc.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                onMouseEnter={() => playHover()}
-                onClick={() => playClick()}
-                className="hover:text-amber-300 transition-colors flex items-center gap-1 group cursor-pointer"
+                className="px-4 py-2.5 rounded-xl bg-white/[0.02] hover:bg-white/[0.06] border border-white/[0.08] hover:border-amber-400/50 text-neutral-300 hover:text-white transition-all duration-200 flex items-center gap-2 group cursor-pointer"
               >
                 <span>{soc.name}</span>
-                <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 text-neutral-500 group-hover:text-amber-300" />
+                <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 text-neutral-500 group-hover:text-amber-400" />
               </a>
             ))}
           </div>
@@ -377,7 +433,7 @@ export function ContactFooter() {
           {/* ========================================================= */}
           {/* 4. FULL NAME WATERMARK (100% Edge-to-Edge SVG, NO CUTOFF)  */}
           {/* ========================================================= */}
-          <div className="w-full max-w-5xl mx-auto px-2 overflow-visible select-none pointer-events-none opacity-[0.07] hover:opacity-[0.14] transition-opacity duration-500 my-2">
+          <div className="w-full max-w-5xl mx-auto px-2 overflow-visible select-none pointer-events-none opacity-[0.06] hover:opacity-[0.12] transition-opacity duration-500 my-4">
             <svg
               viewBox="0 0 1000 170"
               className="w-full h-auto overflow-visible"
@@ -412,7 +468,6 @@ export function ContactFooter() {
               <span>DESIGN &bull; CODE &bull; MOTION</span>
               <button
                 onClick={scrollToTop}
-                onMouseEnter={() => playHover()}
                 className="flex items-center gap-1.5 text-neutral-400 hover:text-white transition-colors cursor-pointer"
                 aria-label="Back to top"
               >
@@ -426,5 +481,6 @@ export function ContactFooter() {
     </footer>
   );
 }
+
 
 
