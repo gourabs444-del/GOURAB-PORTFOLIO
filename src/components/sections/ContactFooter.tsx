@@ -181,19 +181,6 @@ export function ContactFooter() {
         aria-hidden="true"
       />
 
-      {/* Background Kinetic Typographic Watermark Marquee */}
-      <div
-        className="pointer-events-none absolute top-24 sm:top-32 left-0 w-full overflow-hidden whitespace-nowrap opacity-[0.035] sm:opacity-[0.045] select-none z-0"
-        aria-hidden="true"
-      >
-        <div
-          ref={marqueeTrackRef}
-          className="inline-block text-[14vw] sm:text-[12vw] font-display font-black tracking-tighter uppercase will-change-transform"
-        >
-          LET&apos;S TALK &bull; GET IN TOUCH &bull; START A PROJECT &bull; CREATE &bull; AVAILABLE 2026 &bull; LET&apos;S TALK &bull; GET IN TOUCH &bull; COLLABORATE &bull;
-        </div>
-      </div>
-
       {/* Top Live Telemetry Status Bar */}
       <div className="w-full border-b border-white/[0.06] py-3.5 px-6 sm:px-12 md:px-20 text-xs font-mono text-neutral-400 bg-white/[0.01]">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
@@ -223,7 +210,20 @@ export function ContactFooter() {
         {/* ========================================================= */}
         {/* 1. HERO INVITATION & MASSIVE EDITORIAL TYPOGRAPHY         */}
         {/* ========================================================= */}
-        <div ref={heroRef} className="flex flex-col items-center w-full max-w-4xl mx-auto">
+        <div ref={heroRef} className="relative flex flex-col items-center w-full max-w-4xl mx-auto">
+          {/* Ambient Kinetic Marquee Watermark Directly Behind Heading */}
+          <div
+            className="pointer-events-none absolute top-1/2 -translate-y-[62%] left-1/2 -translate-x-1/2 w-screen overflow-hidden whitespace-nowrap opacity-[0.06] sm:opacity-[0.08] select-none z-0"
+            aria-hidden="true"
+          >
+            <div
+              ref={marqueeTrackRef}
+              className="inline-block text-[14vw] sm:text-[13vw] font-display font-black tracking-tighter uppercase leading-none will-change-transform text-white"
+            >
+              GET IN TOUCH &bull; START A PROJECT &bull; LET&apos;S TALK &bull; CREATE &bull; AVAILABLE 2026 &bull; GET IN TOUCH &bull; START A PROJECT &bull; LET&apos;S TALK &bull;
+            </div>
+          </div>
+
           {/* Top Tag */}
           <div className="footer-reveal flex items-center justify-center gap-2.5 text-xs font-mono text-amber-400/90 uppercase tracking-widest mb-6">
             <Sparkles className="w-3.5 h-3.5" />
