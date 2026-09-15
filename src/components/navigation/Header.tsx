@@ -36,8 +36,8 @@ export function Header() {
     <>
       <header
         className={cn(
-          "fixed top-0 left-0 right-0 z-[900] px-4 sm:px-8 md:px-16 transition-all duration-300 flex items-center justify-between bg-white/90 backdrop-blur-md border-b border-black/[0.04]",
-          isScrolled ? "py-3 sm:py-4 shadow-sm" : "py-3.5 sm:py-5 md:py-6"
+          "fixed top-0 left-0 right-0 z-[900] px-4 sm:px-8 md:px-16 transition-all duration-300 flex items-center justify-between bg-[#050507]/75 backdrop-blur-xl border-b border-white/[0.06]",
+          isScrolled ? "py-3 sm:py-4 shadow-lg shadow-black/40" : "py-3.5 sm:py-5 md:py-6"
         )}
       >
         {/* Left: Brand Monogram / Logo */}
@@ -49,14 +49,14 @@ export function Header() {
             className="flex items-center gap-1 text-left group"
           >
             <span className="w-2.5 h-2.5 rounded-full bg-amber-400 group-hover:scale-125 transition-transform" />
-            <span className="font-display font-extrabold text-2xl tracking-tighter text-[#111111]">
-              Gourab<span className="text-rose-500">.</span>
+            <span className="font-display font-extrabold text-2xl tracking-tighter text-white">
+              Gourab<span className="text-amber-400">.</span>
             </span>
           </button>
         </div>
 
         {/* Center: Minimal Navigation Links */}
-        <nav className="hidden md:flex items-center gap-8 text-sm font-sans text-neutral-600 font-medium">
+        <nav className="hidden md:flex items-center gap-8 text-sm font-sans text-neutral-400 font-medium">
           {[
             { label: "Design", id: "work" },
             { label: "Experience", id: "experience" },
@@ -69,16 +69,16 @@ export function Header() {
                 scrollToSection(item.id);
               }}
               onMouseEnter={() => playHover()}
-              className="hover:text-[#111111] transition-colors"
+              className="hover:text-white transition-colors cursor-pointer"
             >
               {item.label}
             </button>
           ))}
 
           {/* Language Toggle */}
-          <div className="flex items-center gap-1.5 text-xs font-sans text-neutral-400 pl-4 border-l border-neutral-200">
-            <span className="hover:text-neutral-700 cursor-pointer">FR</span>
-            <span className="text-[#111111] font-bold underline underline-offset-4 cursor-pointer">
+          <div className="flex items-center gap-1.5 text-xs font-sans text-neutral-500 pl-4 border-l border-white/10">
+            <span className="hover:text-neutral-300 cursor-pointer">FR</span>
+            <span className="text-white font-bold underline underline-offset-4 cursor-pointer">
               EN
             </span>
           </div>
@@ -90,7 +90,7 @@ export function Header() {
             href={`mailto:${siteConfig.contact.email}`}
             onClick={() => playClick()}
             onMouseEnter={() => playHover()}
-            className="hidden sm:inline-flex items-center justify-center px-5 py-2.5 rounded-lg bg-[#111111] text-white hover:bg-black text-xs font-sans font-medium tracking-tight transition-all duration-200 shadow-sm active:scale-95"
+            className="hidden sm:inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-white text-black hover:bg-amber-300 text-xs font-sans font-semibold tracking-tight transition-all duration-200 shadow-sm active:scale-95"
           >
             <span>{siteConfig.contact.email}</span>
           </a>
@@ -102,7 +102,7 @@ export function Header() {
             }}
             onMouseEnter={() => playHover()}
             data-cursor="pointer"
-            className="md:hidden flex items-center justify-center p-2 rounded-lg border border-neutral-200 text-[#111111] hover:bg-neutral-100 transition-colors"
+            className="md:hidden flex items-center justify-center p-2 rounded-lg border border-white/10 text-white hover:bg-white/10 transition-colors"
             aria-label="Open Navigation Menu"
           >
             <Menu className="w-5 h-5" />

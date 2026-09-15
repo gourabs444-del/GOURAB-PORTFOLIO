@@ -68,22 +68,29 @@ export function Hero({ isLoaded }: HeroProps) {
       >
         {/* Background Typography Container (z-10, strictly behind the foreground portrait) */}
         <div className="relative z-10 w-full max-w-5xl lg:max-w-6xl mx-auto flex flex-col items-center justify-center text-center select-none -translate-y-10 xs:-translate-y-14 sm:-translate-y-20 md:-translate-y-28 lg:-translate-y-32 px-2 sm:px-4">
-          {/* Line 1 (Solid Bold Black): WEB DEVELOPER (Original Oswald Font, Perfectly Spaced Above 2nd Line) */}
+          {/* Line 1 (White-Grey / Silver Gradient): WEB DEVELOPER */}
           <div
             ref={headlineTopRef}
             className="w-full relative z-10 -translate-y-5 xs:-translate-y-7 sm:-translate-y-10 md:-translate-y-13 lg:-translate-y-16 mb-1 sm:mb-2"
           >
             <svg viewBox="0 0 1000 85" className="w-full h-auto overflow-visible" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="webDevGreyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stopColor="#9CA3AF" />
+                  <stop offset="100%" stopColor="#6B7280" />
+                </linearGradient>
+              </defs>
               <text
                 x="0"
                 y="74"
                 textLength="1000"
                 lengthAdjust="spacingAndGlyphs"
-                className="font-oswald font-bold uppercase fill-[#111111]"
+                className="font-oswald font-bold uppercase"
                 style={{
                   fontFamily: "var(--font-oswald), sans-serif",
                   fontSize: "98px",
                   fontWeight: "700",
+                  fill: "url(#webDevGreyGradient)",
                 }}
               >
                 WEB DEVELOPER
