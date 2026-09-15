@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import gsap from "gsap";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
 import { siteConfig } from "@/data/siteConfig";
 import {
   Send,
@@ -45,6 +45,7 @@ export function ContactFooter() {
 
   const containerRef = useRef<HTMLElement | null>(null);
   const heroRef = useRef<HTMLDivElement | null>(null);
+  const marqueeTrackRef = useRef<HTMLDivElement | null>(null);
   const formRef = useRef<HTMLDivElement | null>(null);
 
   // Live Local Time in IST
@@ -66,9 +67,27 @@ export function ContactFooter() {
     return () => clearInterval(interval);
   }, []);
 
-  // Entrance animations
+  // Entrance animations & Marquee Parallax
   useEffect(() => {
     const ctx = gsap.context(() => {
+      // Ambient Background Kinetic Marquee
+      if (marqueeTrackRef.current) {
+        gsap.fromTo(
+          marqueeTrackRef.current,
+          { xPercent: 0 },
+          {
+            xPercent: -20,
+            ease: "none",
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: "top bottom",
+              end: "bottom bottom",
+              scrub: 1.2,
+            },
+          }
+        );
+      }
+
       const maskLines = containerRef.current?.querySelectorAll(".footer-reveal");
       if (maskLines && maskLines.length > 0) {
         gsap.fromTo(
@@ -161,6 +180,19 @@ export function ContactFooter() {
         className="pointer-events-none absolute top-1/4 left-1/2 -translate-x-1/2 w-[750px] sm:w-[1000px] h-[450px] rounded-full bg-[radial-gradient(circle_at_center,_rgba(245,158,11,0.07)_0%,_rgba(56,189,248,0.03)_50%,_transparent_75%)] blur-[120px]"
         aria-hidden="true"
       />
+
+      {/* Background Kinetic Typographic Watermark Marquee */}
+      <div
+        className="pointer-events-none absolute top-24 sm:top-32 left-0 w-full overflow-hidden whitespace-nowrap opacity-[0.035] sm:opacity-[0.045] select-none z-0"
+        aria-hidden="true"
+      >
+        <div
+          ref={marqueeTrackRef}
+          className="inline-block text-[14vw] sm:text-[12vw] font-display font-black tracking-tighter uppercase will-change-transform"
+        >
+          LET&apos;S TALK &bull; GET IN TOUCH &bull; START A PROJECT &bull; CREATE &bull; AVAILABLE 2026 &bull; LET&apos;S TALK &bull; GET IN TOUCH &bull; COLLABORATE &bull;
+        </div>
+      </div>
 
       {/* Top Live Telemetry Status Bar */}
       <div className="w-full border-b border-white/[0.06] py-3.5 px-6 sm:px-12 md:px-20 text-xs font-mono text-neutral-400 bg-white/[0.01]">
