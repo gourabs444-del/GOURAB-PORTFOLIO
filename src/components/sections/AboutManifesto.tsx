@@ -3,86 +3,126 @@
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "@/lib/gsap";
+import { useAudioFeedback } from "@/hooks/useAudioFeedback";
 
 interface WordItem {
   text: string;
-  style: string;
+  isItalic?: boolean;
   isSky?: boolean;
+  isBold?: boolean;
 }
 
-const manifestoSegments: WordItem[][] = [
-  // Paragraph 1
+const manifestoParagraphs: WordItem[][] = [
+  // Statement 1: Vision & Philosophy
   [
-    { text: "Hey,", style: "font-sans font-normal text-neutral-400" },
-    { text: "I'm", style: "font-sans font-normal text-neutral-400" },
-    { text: "Gourab.", style: "font-serif italic font-bold text-sky-400 text-3xl sm:text-4xl md:text-5xl", isSky: true },
-    { text: "I", style: "font-sans font-normal text-white" },
-    { text: "operate", style: "font-sans font-normal text-white" },
-    { text: "at", style: "font-sans font-normal text-white" },
-    { text: "the", style: "font-sans font-normal text-white" },
-    { text: "intersection", style: "font-sans font-normal text-white" },
-    { text: "of", style: "font-sans font-normal text-white" },
-    { text: "high-performance", style: "font-display font-black tracking-tight text-sky-300 uppercase", isSky: true },
-    { text: "engineering", style: "font-mono font-bold text-sky-400 tracking-wider", isSky: true },
-    { text: "and", style: "font-sans font-normal text-neutral-400" },
-    { text: "cinematic", style: "font-serif italic font-normal text-sky-300", isSky: true },
-    { text: "digital", style: "font-display font-extrabold text-white" },
-    { text: "design.", style: "font-display font-extrabold text-white" },
+    { text: "I" },
+    { text: "forge" },
+    { text: "digital", isBold: true },
+    { text: "experiences", isBold: true },
+    { text: "where" },
+    { text: "precision", isSky: true, isBold: true },
+    { text: "engineering", isSky: true, isBold: true },
+    { text: "converges" },
+    { text: "with" },
+    { text: "cinematic", isItalic: true, isSky: true },
+    { text: "art", isItalic: true, isSky: true },
+    { text: "direction.", isItalic: true, isSky: true },
+    { text: "Every" },
+    { text: "interface" },
+    { text: "is" },
+    { text: "built" },
+    { text: "with" },
+    { text: "obsessive", isBold: true },
+    { text: "craft,", isBold: true },
+    { text: "sculpted", isItalic: true },
+    { text: "motion,", isSky: true, isBold: true },
+    { text: "and" },
+    { text: "tactile", isItalic: true, isSky: true },
+    { text: "micro-physics.", isItalic: true, isSky: true },
   ],
-  // Paragraph 2
+  // Statement 2: Execution & Impact
   [
-    { text: "I", style: "font-sans font-normal text-neutral-300" },
-    { text: "build", style: "font-sans font-normal text-neutral-300" },
-    { text: "bespoke", style: "font-serif italic font-bold text-sky-400", isSky: true },
-    { text: "web", style: "font-display font-bold text-white" },
-    { text: "applications,", style: "font-display font-bold text-white" },
-    { text: "interactive", style: "font-sans font-normal text-neutral-300" },
-    { text: "WebGL", style: "font-mono font-black text-sky-300 tracking-wider", isSky: true },
-    { text: "shaders,", style: "font-serif italic font-semibold text-sky-400", isSky: true },
-    { text: "seamless", style: "font-sans font-light text-neutral-400" },
-    { text: "motion", style: "font-display font-black text-sky-300 uppercase", isSky: true },
-    { text: "systems,", style: "font-display font-black text-sky-300 uppercase", isSky: true },
-    { text: "and", style: "font-sans font-normal text-neutral-400" },
-    { text: "intelligent", style: "font-sans font-medium text-white" },
-    { text: "digital", style: "font-sans font-medium text-white" },
-    { text: "products", style: "font-sans font-medium text-white" },
-    { text: "designed", style: "font-sans font-normal text-neutral-400" },
-    { text: "to", style: "font-sans font-normal text-neutral-400" },
-    { text: "leave", style: "font-sans font-normal text-neutral-400" },
-    { text: "a", style: "font-sans font-normal text-neutral-400" },
-    { text: "lasting", style: "font-serif italic font-bold text-sky-400", isSky: true },
-    { text: "impression.", style: "font-serif italic font-bold text-sky-400", isSky: true },
+    { text: "From" },
+    { text: "bespoke", isItalic: true, isSky: true },
+    { text: "WebGL", isSky: true, isBold: true },
+    { text: "architectures", isSky: true, isBold: true },
+    { text: "to" },
+    { text: "intelligent", isBold: true },
+    { text: "AI", isBold: true },
+    { text: "ecosystems,", isBold: true },
+    { text: "I" },
+    { text: "transform" },
+    { text: "ambitious", isItalic: true },
+    { text: "visions" },
+    { text: "into" },
+    { text: "high-performance,", isSky: true, isBold: true },
+    { text: "future-proof", isSky: true, isBold: true },
+    { text: "digital", isBold: true },
+    { text: "realities", isBold: true },
+    { text: "that" },
+    { text: "command", isItalic: true },
+    { text: "attention.", isItalic: true, isSky: true },
   ],
 ];
 
 export function AboutManifesto() {
   const containerRef = useRef<HTMLElement | null>(null);
   const contentRef = useRef<HTMLDivElement | null>(null);
+  const auraRef = useRef<HTMLDivElement | null>(null);
+  const { playHover } = useAudioFeedback();
 
+  // 1. Interactive Cursor Light Follower
+  useEffect(() => {
+    const container = containerRef.current;
+    const aura = auraRef.current;
+    if (!container || !aura) return;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = container.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      gsap.to(aura, {
+        x: x,
+        y: y,
+        duration: 0.9,
+        ease: "power2.out",
+      });
+    };
+
+    container.addEventListener("mousemove", handleMouseMove);
+    return () => container.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
+  // 2. High-Grade 3D Elastic Pop-Up Animation on Scroll
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const words = containerRef.current?.querySelectorAll(".manifesto-word");
+      const words = containerRef.current?.querySelectorAll(".manifesto-word-inner");
       if (!words || words.length === 0) return;
 
-      // Kinetic Pop-Up animation scrubbed smoothly to scroll without disappearing
+      // 3D Kinetic Pop-Up Motion
       gsap.fromTo(
         words,
         {
-          opacity: 0.25,
-          y: 18,
-          scale: 0.92,
+          opacity: 0.1,
+          scale: 0.45,
+          y: 45,
+          rotateX: -55,
+          filter: "blur(8px)",
         },
         {
           opacity: 1,
-          y: 0,
           scale: 1.0,
-          stagger: 0.03,
-          ease: "power2.out",
+          y: 0,
+          rotateX: 0,
+          filter: "blur(0px)",
+          stagger: 0.04,
+          ease: "back.out(2.2)",
           scrollTrigger: {
             trigger: contentRef.current,
-            start: "top 78%",
-            end: "bottom 40%",
-            scrub: 1,
+            start: "top 76%",
+            end: "bottom 38%",
+            scrub: 1.2,
           },
         }
       );
@@ -91,57 +131,102 @@ export function AboutManifesto() {
     return () => ctx.revert();
   }, []);
 
+  // 3. Interactive Word Pop on Hover
+  const handleWordHover = (e: React.MouseEvent<HTMLSpanElement>) => {
+    playHover();
+    const target = e.currentTarget;
+    gsap.to(target, {
+      scale: 1.18,
+      y: -5,
+      rotateZ: -2,
+      duration: 0.3,
+      ease: "power2.out",
+    });
+  };
+
+  const handleWordLeave = (e: React.MouseEvent<HTMLSpanElement>) => {
+    const target = e.currentTarget;
+    gsap.to(target, {
+      scale: 1.0,
+      y: 0,
+      rotateZ: 0,
+      duration: 0.5,
+      ease: "elastic.out(1.2, 0.4)",
+    });
+  };
+
   return (
     <section
       id="about"
       ref={containerRef}
-      className="relative min-h-screen w-full flex flex-col justify-between py-24 sm:py-32 md:py-36 px-6 sm:px-12 md:px-20 lg:px-28 bg-[#050507] text-[#F4F4F6] overflow-hidden select-none border-t border-white/[0.08]"
+      className="relative min-h-screen w-full flex flex-col justify-between py-24 sm:py-32 md:py-40 px-6 sm:px-12 md:px-20 lg:px-28 bg-[#050507] text-[#F4F4F6] overflow-hidden select-none border-t border-white/[0.08]"
     >
-      {/* Centered Ambient Sky Blue Glow on Dark Base */}
+      {/* Interactive Cursor Spotlight Aura */}
       <div
-        className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] sm:w-[900px] md:w-[1200px] h-[350px] sm:h-[500px] bg-[radial-gradient(circle_at_center,_rgba(14,165,233,0.14)_0%,_rgba(56,189,248,0.04)_45%,_transparent_70%)] blur-[140px]"
+        ref={auraRef}
+        className="pointer-events-none absolute -top-[300px] -left-[300px] w-[600px] h-[600px] rounded-full bg-[radial-gradient(circle_at_center,_rgba(56,189,248,0.16)_0%,_rgba(14,165,233,0.05)_45%,_transparent_70%)] blur-[110px] will-change-transform z-0"
         aria-hidden="true"
       />
 
       {/* Top Tag Header */}
-      <div className="max-w-5xl mx-auto w-full flex items-center justify-between text-xs font-mono text-neutral-400 uppercase tracking-widest pt-4">
+      <div className="max-w-5xl mx-auto w-full flex items-center justify-between text-xs font-mono text-neutral-400 uppercase tracking-widest pt-4 relative z-10">
         <div className="flex items-center gap-2.5">
           <span className="w-2 h-2 rounded-full bg-sky-400 animate-pulse" />
           <span className="text-white font-semibold">01 // MANIFESTO</span>
         </div>
-        <span className="text-neutral-500 hidden sm:inline font-mono">THE CORE PHILOSOPHY</span>
+        <span className="text-neutral-500 hidden sm:inline font-mono">PHILOSOPHY &amp; CRAFT</span>
       </div>
 
-      {/* Main Centered Spacious Manifesto Statement */}
+      {/* Main Centered Spacious Manifesto Statement (3D Kinetic Pop-Up Words) */}
       <div
         ref={contentRef}
-        className="max-w-5xl mx-auto w-full my-auto py-12 sm:py-16 flex flex-col gap-10 sm:gap-14 md:gap-18 text-left sm:text-center"
+        style={{ perspective: "1200px" }}
+        className="max-w-5xl mx-auto w-full my-auto py-12 sm:py-16 md:py-20 flex flex-col gap-12 sm:gap-16 md:gap-20 text-left sm:text-center relative z-10"
       >
-        {manifestoSegments.map((segment, pIdx) => (
+        {manifestoParagraphs.map((paragraph, pIdx) => (
           <p
             key={pIdx}
-            className="text-2xl sm:text-3xl md:text-4xl lg:text-[2.65rem] leading-[1.85] sm:leading-[1.8] md:leading-[1.85] lg:leading-[1.9] tracking-tight"
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-[2.65rem] leading-[1.7] sm:leading-[1.75] md:leading-[1.8] tracking-tight font-normal text-neutral-300"
           >
-            {segment.map((item, wIdx) => (
-              <span
-                key={wIdx}
-                className={`manifesto-word inline-block mr-2 sm:mr-3.5 transition-all duration-200 ${item.style}`}
-              >
-                {item.text}
-              </span>
-            ))}
+            {paragraph.map((item, wIdx) => {
+              const fontClasses = item.isItalic
+                ? "font-serif italic font-normal"
+                : item.isBold
+                ? "font-sans font-semibold text-white"
+                : "font-sans font-normal text-neutral-300";
+
+              const colorClass = item.isSky
+                ? "text-sky-400 drop-shadow-[0_0_22px_rgba(56,189,248,0.35)]"
+                : "";
+
+              return (
+                <span
+                  key={wIdx}
+                  style={{ perspective: "1000px", transformStyle: "preserve-3d" }}
+                  className="inline-block mr-2 sm:mr-3.5 align-baseline"
+                >
+                  <span
+                    onMouseEnter={handleWordHover}
+                    onMouseLeave={handleWordLeave}
+                    className={`manifesto-word-inner inline-block will-change-transform cursor-pointer origin-bottom ${fontClasses} ${colorClass}`}
+                  >
+                    {item.text}
+                  </span>
+                </span>
+              );
+            })}
           </p>
         ))}
       </div>
 
       {/* Bottom Meta Bar */}
-      <div className="max-w-5xl mx-auto w-full pb-4 border-t border-white/[0.08] pt-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs font-mono text-neutral-400 uppercase tracking-widest">
+      <div className="max-w-5xl mx-auto w-full pb-4 border-t border-white/[0.08] pt-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs font-mono text-neutral-400 uppercase tracking-widest relative z-10">
         <div className="flex items-center gap-3">
           <span>FULL-STACK ARCHITECTURE</span>
           <span className="text-white/20">•</span>
-          <span className="text-sky-400 font-semibold">INTERACTIVE 3D &amp; SHADERS</span>
+          <span className="text-sky-400 font-semibold">INTERACTIVE 3D &amp; MOTION</span>
           <span className="text-white/20">•</span>
-          <span>SYSTEMS DIRECTION</span>
+          <span>AI SYSTEMS</span>
         </div>
         <span className="text-white font-medium">EDITION 2026</span>
       </div>

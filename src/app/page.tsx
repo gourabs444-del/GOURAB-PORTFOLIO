@@ -8,7 +8,6 @@ import { Hero } from "@/components/sections/Hero";
 import { AboutManifesto } from "@/components/sections/AboutManifesto";
 import { SelectedWork } from "@/components/sections/SelectedWork";
 import { Showreel } from "@/components/sections/Showreel";
-import { ExpertiseMatrix } from "@/components/sections/ExpertiseMatrix";
 import { ProcessPipeline } from "@/components/sections/ProcessPipeline";
 import { ExperienceTimeline } from "@/components/sections/ExperienceTimeline";
 import { ContactFooter } from "@/components/sections/ContactFooter";
@@ -42,7 +41,6 @@ export default function Home() {
       <AboutManifesto />
       <SelectedWork />
       <Showreel />
-      <ExpertiseMatrix />
       <ProcessPipeline />
       <ExperienceTimeline />
       <ContactFooter />
