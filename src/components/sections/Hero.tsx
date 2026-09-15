@@ -155,31 +155,31 @@ export function Hero({ isLoaded }: HeroProps) {
           <span className="font-mono text-[10px] uppercase text-neutral-500 font-bold">
             OLYMPUS
           </span>
-          <span className="font-serif italic text-neutral-500">Veuve Clicquot</span>
-        </div>
-        {/* Bottom Dual Action Buttons: Elevated Right Over Portrait Base */}
-        <div
-          ref={ctaGroupRef}
-          className="absolute bottom-2 xs:bottom-4 sm:bottom-6 md:bottom-8 lg:bottom-10 left-1/2 -translate-x-1/2 z-40 flex flex-row items-center justify-center gap-2.5 sm:gap-4 w-auto max-w-full px-2"
-        >
-          <button
-            onClick={() => scrollToSection("work")}
-            className="px-4 xs:px-6 sm:px-8 py-2.5 sm:py-3 rounded-full bg-[#111111] text-white hover:bg-black text-xs sm:text-sm font-sans font-medium tracking-tight shadow-xl transition-all duration-200 hover:scale-105 active:scale-95 whitespace-nowrap cursor-pointer border border-white/20"
-          >
-            You need a developer
-          </button>
-
-          <button
-            onClick={() => scrollToSection("contact")}
-            className="px-4 xs:px-6 sm:px-8 py-2.5 sm:py-3 rounded-full bg-white text-[#111111] border border-neutral-300 hover:border-[#111111] hover:bg-neutral-50 text-xs sm:text-sm font-sans font-medium tracking-tight shadow-xl transition-all duration-200 hover:scale-105 active:scale-95 whitespace-nowrap cursor-pointer"
-          >
-            You need a designer
-          </button>
         </div>
       </div>
 
+      {/* Bottom Dual Action Buttons: Positioned Just Below Where the Portrait Ends */}
+      <div
+        ref={ctaGroupRef}
+        className="relative z-30 flex flex-row items-center justify-center gap-2.5 sm:gap-4 mt-3 sm:mt-5 md:mt-6 mb-2 w-full mx-auto"
+      >
+        <button
+          onClick={() => scrollToSection("work")}
+          className="px-4 xs:px-6 sm:px-8 py-2.5 sm:py-3 rounded-full bg-[#111111] text-white hover:bg-black text-xs sm:text-sm font-sans font-medium tracking-tight shadow-sm transition-all duration-200 hover:scale-105 active:scale-95 whitespace-nowrap cursor-pointer"
+        >
+          You need a developer
+        </button>
+
+        <button
+          onClick={() => scrollToSection("contact")}
+          className="px-4 xs:px-6 sm:px-8 py-2.5 sm:py-3 rounded-full bg-white text-[#111111] border border-neutral-300 hover:border-[#111111] hover:bg-neutral-50 text-xs sm:text-sm font-sans font-medium tracking-tight shadow-sm transition-all duration-200 hover:scale-105 active:scale-95 whitespace-nowrap cursor-pointer"
+        >
+          You need a designer
+        </button>
+      </div>
+
       {/* Mobile Location text */}
-      <div className="lg:hidden text-center mt-2.5 text-xs font-sans text-neutral-500 flex items-center justify-center gap-1.5">
+      <div className="lg:hidden text-center mt-2 text-xs font-sans text-neutral-500 flex items-center justify-center gap-1.5">
         <MapPin className="w-3 h-3 text-neutral-700" />
         <span>based in India • Available Worldwide</span>
       </div>
