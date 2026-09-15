@@ -157,26 +157,25 @@ export function Hero({ isLoaded }: HeroProps) {
           </span>
           <span className="font-serif italic text-neutral-500">Veuve Clicquot</span>
         </div>
-      </div>
-
-      {/* Bottom Dual Action Buttons: Elevated 4 Inches Higher Over Portrait Base */}
-      <div
-        ref={ctaGroupRef}
-        className="relative z-40 flex flex-row items-center justify-center gap-2.5 sm:gap-4 -mt-28 xs:-mt-36 sm:-mt-44 md:-mt-52 lg:-mt-60 mb-2 w-full mx-auto"
-      >
-        <button
-          onClick={() => scrollToSection("work")}
-          className="px-4 xs:px-6 sm:px-8 py-2.5 sm:py-3 rounded-full bg-[#111111] text-white hover:bg-black text-xs sm:text-sm font-sans font-medium tracking-tight shadow-lg transition-all duration-200 hover:scale-105 active:scale-95 whitespace-nowrap cursor-pointer"
+        {/* Bottom Dual Action Buttons: Elevated Right Over Portrait Base */}
+        <div
+          ref={ctaGroupRef}
+          className="absolute bottom-2 xs:bottom-4 sm:bottom-6 md:bottom-8 lg:bottom-10 left-1/2 -translate-x-1/2 z-40 flex flex-row items-center justify-center gap-2.5 sm:gap-4 w-auto max-w-full px-2"
         >
-          You need a developer
-        </button>
+          <button
+            onClick={() => scrollToSection("work")}
+            className="px-4 xs:px-6 sm:px-8 py-2.5 sm:py-3 rounded-full bg-[#111111] text-white hover:bg-black text-xs sm:text-sm font-sans font-medium tracking-tight shadow-xl transition-all duration-200 hover:scale-105 active:scale-95 whitespace-nowrap cursor-pointer border border-white/20"
+          >
+            You need a developer
+          </button>
 
-        <button
-          onClick={() => scrollToSection("contact")}
-          className="px-4 xs:px-6 sm:px-8 py-2.5 sm:py-3 rounded-full bg-white text-[#111111] border border-neutral-300 hover:border-[#111111] hover:bg-neutral-50 text-xs sm:text-sm font-sans font-medium tracking-tight shadow-lg transition-all duration-200 hover:scale-105 active:scale-95 whitespace-nowrap cursor-pointer"
-        >
-          You need a designer
-        </button>
+          <button
+            onClick={() => scrollToSection("contact")}
+            className="px-4 xs:px-6 sm:px-8 py-2.5 sm:py-3 rounded-full bg-white text-[#111111] border border-neutral-300 hover:border-[#111111] hover:bg-neutral-50 text-xs sm:text-sm font-sans font-medium tracking-tight shadow-xl transition-all duration-200 hover:scale-105 active:scale-95 whitespace-nowrap cursor-pointer"
+          >
+            You need a designer
+          </button>
+        </div>
       </div>
 
       {/* Mobile Location text */}
