@@ -1,306 +1,216 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "@/lib/gsap";
 import { experiences } from "@/data/experience";
-import { useAudioFeedback } from "@/hooks/useAudioFeedback";
-import { ChevronLeft, ChevronRight, Play, Pause, ArrowRight } from "lucide-react";
+import { ArrowUpRight, MapPin, Sparkles, CheckCircle2 } from "lucide-react";
 
 export function ExperienceTimeline() {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(false);
+  const [activeIdx, setActiveIdx] = useState<number>(0);
   const sectionRef = useRef<HTMLElement | null>(null);
-  const slideContainerRef = useRef<HTMLDivElement | null>(null);
-  const watermarkRef = useRef<HTMLDivElement | null>(null);
-  const progressBarRef = useRef<HTMLDivElement | null>(null);
-  const { playHover, playClick } = useAudioFeedback();
+  const headerRef = useRef<HTMLDivElement | null>(null);
+  const detailRef = useRef<HTMLDivElement | null>(null);
 
-  const totalSlides = experiences.length;
-  const currentExp = experiences[currentSlide];
+  const activeExp = experiences[activeIdx] || experiences[0];
 
-  // Slide navigation with GSAP kinetic motion transition
-  const goToSlide = useCallback(
-    (index: number) => {
-      if (index === currentSlide || index < 0 || index >= totalSlides) return;
-      playClick();
-
-      // Animate out current slide
-      if (slideContainerRef.current) {
-        gsap.to(slideContainerRef.current.querySelectorAll(".slide-anim"), {
-          opacity: 0,
-          y: -20,
-          duration: 0.3,
-          stagger: 0.03,
-          ease: "power2.in",
-          onComplete: () => {
-            setCurrentSlide(index);
-          },
-        });
-      } else {
-        setCurrentSlide(index);
-      }
-    },
-    [currentSlide, totalSlides, playClick]
-  );
-
-  const nextSlide = useCallback(() => {
-    goToSlide((currentSlide + 1) % totalSlides);
-  }, [currentSlide, totalSlides, goToSlide]);
-
-  const prevSlide = useCallback(() => {
-    goToSlide((currentSlide - 1 + totalSlides) % totalSlides);
-  }, [currentSlide, totalSlides, goToSlide]);
-
-  // Animate in new slide elements
-  useEffect(() => {
-    if (!slideContainerRef.current) return;
-
-    // Reset and animate in new content
-    gsap.fromTo(
-      slideContainerRef.current.querySelectorAll(".slide-anim"),
-      { opacity: 0, y: 30 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.6,
-        stagger: 0.06,
-        ease: "power3.out",
-      }
-    );
-
-    // Parallax watermark animation
-    if (watermarkRef.current) {
-      gsap.fromTo(
-        watermarkRef.current,
-        { scale: 0.95, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 0.8, ease: "power3.out" }
-      );
-    }
-  }, [currentSlide]);
-
-  // Auto-play interval handling
-  useEffect(() => {
-    if (!isAutoPlaying) return;
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % totalSlides);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, [isAutoPlaying, totalSlides]);
-
-  // Keyboard navigation (ArrowLeft / ArrowRight)
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "ArrowRight") nextSlide();
-      if (e.key === "ArrowLeft") prevSlide();
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [nextSlide, prevSlide]);
-
-  // Section Entrance ScrollTrigger
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo(
-        sectionRef.current,
-        { opacity: 0.8 },
-        {
-          opacity: 1,
-          duration: 1,
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 80%",
-          },
-        }
-      );
+      // 1. Header reveal
+      if (headerRef.current) {
+        gsap.fromTo(
+          headerRef.current.querySelectorAll(".stage-reveal"),
+          { opacity: 0, y: 25 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
+            stagger: 0.08,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: headerRef.current,
+              start: "top 90%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      }
     }, sectionRef);
 
     return () => ctx.revert();
   }, []);
 
-  // Extract pure year for watermark (e.g. "2024 — PRESENT" -> "2024")
-  const watermarkYear = currentExp.year.split(" ")[0];
+  // Smooth detail transition when switching items
+  useEffect(() => {
+    if (!detailRef.current) return;
+    gsap.fromTo(
+      detailRef.current.querySelectorAll(".detail-item"),
+      { opacity: 0, y: 16 },
+      { opacity: 1, y: 0, duration: 0.4, stagger: 0.04, ease: "power2.out" }
+    );
+  }, [activeIdx]);
 
   return (
     <section
       id="experience"
       ref={sectionRef}
-      className="relative min-h-[92vh] py-24 sm:py-32 md:py-40 px-6 sm:px-12 md:px-20 lg:px-28 bg-[#040406] text-[#F4F4F6] border-t border-white/[0.08] select-none flex flex-col justify-between overflow-hidden"
+      className="relative py-28 sm:py-36 md:py-48 px-6 sm:px-12 md:px-20 lg:px-28 bg-[#050507] text-[#F4F4F6] border-t border-white/[0.08] select-none overflow-hidden"
     >
-      {/* Massive Kinetic Background Year Watermark */}
+      {/* Subtle Ambient Glow */}
       <div
-        ref={watermarkRef}
-        className="pointer-events-none absolute right-[-5%] top-1/2 -translate-y-1/2 font-display font-black text-[13rem] sm:text-[20rem] md:text-[26rem] lg:text-[32rem] text-white/[0.025] leading-none select-none z-0 tracking-tighter"
-        aria-hidden="true"
-      >
-        {watermarkYear}
-      </div>
-
-      {/* Subtle Ambient Radial Lighting */}
-      <div
-        className="pointer-events-none absolute top-1/3 left-1/4 w-[700px] h-[500px] rounded-full bg-[radial-gradient(circle,_rgba(56,189,248,0.06)_0%,_transparent_70%)] blur-[150px] z-0"
+        className="pointer-events-none absolute top-1/3 -right-20 w-[600px] h-[600px] rounded-full bg-[radial-gradient(circle,_rgba(56,189,248,0.05)_0%,_transparent_70%)] blur-[140px]"
         aria-hidden="true"
       />
 
-      <div className="max-w-7xl mx-auto w-full flex flex-col gap-12 sm:gap-16 relative z-10">
-        {/* Presentation Header: Mode, Title & Slide Scrubber */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-8 border-b border-white/[0.1]">
-          <div className="flex flex-col gap-3">
-            <div className="flex items-center gap-2.5 text-xs font-mono tracking-widest uppercase text-neutral-400">
-              <span className="w-2 h-2 rounded-full bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.8)] animate-pulse" />
-              <span className="text-white font-medium">05 // CAREER PRESENTATION</span>
+      <div className="max-w-7xl mx-auto flex flex-col gap-16 md:gap-20 relative z-10">
+        {/* Section Header */}
+        <div
+          ref={headerRef}
+          className="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-10 border-b border-white/[0.1]"
+        >
+          <div className="flex flex-col gap-3.5 max-w-2xl">
+            <div className="stage-reveal flex items-center gap-2.5 text-xs font-mono tracking-widest uppercase text-neutral-400">
+              <span className="w-2 h-2 rounded-full bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.8)]" />
+              <span className="text-white font-medium">05 // CAREER</span>
               <span className="text-white/20">/</span>
-              <span className="text-neutral-400">CHRONOLOGY STAGE</span>
+              <span className="text-neutral-400">EXPERIENCE &amp; LEADERSHIP</span>
             </div>
 
-            <h2 className="font-display font-black text-3xl xs:text-4xl sm:text-5xl md:text-6xl text-white tracking-tight leading-none">
+            <h2 className="stage-reveal font-display font-black text-4xl sm:text-5xl md:text-6xl text-white tracking-tight leading-none">
               EXPERIENCE &amp; <span className="font-serif italic font-normal text-sky-300">IMPACT</span>
             </h2>
+
+            <p className="stage-reveal font-sans text-sm sm:text-base text-neutral-300 leading-relaxed max-w-xl">
+              An 8-year track record of engineering scalable architectures, cutting latency, and directing award-winning creative technology.
+            </p>
           </div>
 
-          {/* Interactive Presentation Era Tabs */}
-          <div className="flex items-center gap-2 flex-wrap">
+          <div className="stage-reveal font-mono text-xs text-neutral-400">
+            <span>2018 &mdash; 2026 ARCHIVE</span>
+          </div>
+        </div>
+
+        {/* 2-Column Interactive Career Stage */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+          {/* Left Column: Interactive Era Timeline (5 cols) */}
+          <div className="lg:col-span-5 flex flex-col gap-2">
             {experiences.map((exp, idx) => {
-              const isActive = currentSlide === idx;
+              const isActive = activeIdx === idx;
+              const isPresent = exp.year.includes("PRESENT");
+
               return (
                 <button
                   key={exp.id}
-                  onClick={() => goToSlide(idx)}
-                  onMouseEnter={() => playHover()}
-                  className={`relative px-4 py-2 rounded-lg font-mono text-xs transition-all duration-300 cursor-pointer ${
+                  onClick={() => setActiveIdx(idx)}
+                  onMouseEnter={() => setActiveIdx(idx)}
+                  className={`group relative text-left p-6 sm:p-7 rounded-2xl transition-all duration-300 cursor-pointer flex flex-col gap-2 border ${
                     isActive
-                      ? "text-white bg-white/[0.08] border border-sky-400/50 shadow-[0_0_15px_rgba(56,189,248,0.2)]"
-                      : "text-neutral-400 hover:text-neutral-200 border border-transparent hover:border-white/10"
+                      ? "bg-white/[0.04] border-white/[0.15] shadow-lg shadow-black/40 translate-x-1 sm:translate-x-2"
+                      : "bg-transparent border-transparent hover:bg-white/[0.02] hover:border-white/[0.06] opacity-60 hover:opacity-100"
                   }`}
                 >
-                  <span className="font-bold">0{idx + 1}</span>
-                  <span className="mx-1.5 text-white/20">/</span>
-                  <span>{exp.year.split(" ")[0]}</span>
+                  {/* Left Accent Bar */}
+                  {isActive && (
+                    <div className="absolute left-0 top-3 bottom-3 w-[3px] rounded-r-full bg-sky-400 shadow-[0_0_10px_rgba(56,189,248,0.8)]" />
+                  )}
+
+                  <div className="flex items-center justify-between gap-4">
+                    <span
+                      className={`font-mono text-xs sm:text-sm font-semibold tracking-wide ${
+                        isActive ? "text-sky-300" : "text-neutral-400"
+                      }`}
+                    >
+                      {exp.year}
+                    </span>
+
+                    {isPresent ? (
+                      <span className="text-[10px] font-mono font-semibold text-emerald-400 flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                        ACTIVE
+                      </span>
+                    ) : (
+                      <span className="text-xs font-mono text-neutral-400">{exp.period}</span>
+                    )}
+                  </div>
+
+                  <h3
+                    className={`font-display font-bold text-xl sm:text-2xl transition-colors leading-snug ${
+                      isActive ? "text-white" : "text-neutral-300 group-hover:text-white"
+                    }`}
+                  >
+                    {exp.role}
+                  </h3>
+
+                  <p
+                    className={`font-serif italic text-sm sm:text-base ${
+                      isActive ? "text-sky-300/90" : "text-neutral-400"
+                    }`}
+                  >
+                    {exp.company}
+                  </p>
                 </button>
               );
             })}
           </div>
-        </div>
 
-        {/* Main Cinema Presentation Slide Stage */}
-        <div
-          ref={slideContainerRef}
-          className="min-h-[380px] sm:min-h-[420px] flex flex-col justify-between py-6"
-        >
-          <div className="flex flex-col gap-8">
-            {/* Slide Metadata & Status */}
-            <div className="slide-anim flex items-center justify-between gap-4">
-              <div className="flex items-center gap-3">
-                <span className="font-mono text-sm sm:text-base font-bold text-sky-400">
-                  // CHAPTER 0{currentSlide + 1} OF 0{totalSlides}
-                </span>
-                <span className="text-white/20">•</span>
-                <span className="font-mono text-xs sm:text-sm text-neutral-300 font-semibold tracking-wider">
-                  {currentExp.year}
-                </span>
+          {/* Right Column: Active Architecture Dossier (7 cols) */}
+          <div
+            ref={detailRef}
+            className="lg:col-span-7 relative p-8 sm:p-10 md:p-12 rounded-3xl border border-white/[0.1] bg-[#09090d]/80 backdrop-blur-xl flex flex-col justify-between gap-8 min-h-[440px]"
+          >
+            <div className="flex flex-col gap-6">
+              {/* Dossier Header */}
+              <div className="detail-item flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-white/[0.08]">
+                <div>
+                  <h3 className="font-display font-black text-2xl sm:text-3xl md:text-4xl text-white tracking-tight leading-tight">
+                    {activeExp.role}
+                  </h3>
+                  <p className="font-serif italic text-lg sm:text-xl text-sky-300 font-normal mt-1">
+                    {activeExp.company}
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2 font-mono text-xs text-neutral-400">
+                  <MapPin className="w-3.5 h-3.5 text-sky-400 shrink-0" />
+                  <span>{activeExp.location}</span>
+                </div>
               </div>
 
-              <span className="font-mono text-xs text-neutral-400">
-                {currentExp.location} &bull; {currentExp.period}
-              </span>
-            </div>
-
-            {/* Grand Role Headline & Studio */}
-            <div className="slide-anim flex flex-col gap-2 max-w-4xl">
-              <h3 className="font-display font-black text-3xl sm:text-5xl md:text-6xl text-white tracking-tight leading-[1.08]">
-                {currentExp.role}
-              </h3>
-              <p className="font-serif italic text-xl sm:text-2xl md:text-3xl text-sky-300/95 font-normal">
-                {currentExp.company}
+              {/* Narrative Summary */}
+              <p className="detail-item font-sans text-sm sm:text-base text-neutral-300 leading-relaxed font-light">
+                {activeExp.summary}
               </p>
+
+              {/* Key Architectural Highlights */}
+              <div className="detail-item space-y-3 pt-2">
+                <span className="text-[11px] font-mono tracking-widest text-neutral-400 uppercase font-semibold">
+                  KEY DELIVERABLES &amp; IMPACT:
+                </span>
+                {activeExp.highlights.map((highlight, hIdx) => (
+                  <div
+                    key={hIdx}
+                    className="flex items-start gap-3 text-xs sm:text-sm text-neutral-300 font-light leading-relaxed"
+                  >
+                    <span className="text-sky-400 font-mono font-bold select-none">&mdash;</span>
+                    <span>{highlight}</span>
+                  </div>
+                ))}
+              </div>
             </div>
 
-            {/* Expansive Narrative */}
-            <p className="slide-anim font-sans text-base sm:text-lg md:text-xl text-neutral-200 font-light leading-relaxed max-w-3xl">
-              {currentExp.summary}
-            </p>
-
-            {/* Architectural Highlights */}
-            <div className="slide-anim grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl pt-2">
-              {currentExp.highlights.map((highlight, hIdx) => (
-                <div
-                  key={hIdx}
-                  className="flex items-start gap-3 text-sm sm:text-base text-neutral-300 font-light leading-relaxed"
+            {/* Core Stack */}
+            <div className="detail-item pt-6 border-t border-white/[0.08] flex items-center gap-2 flex-wrap">
+              <span className="text-neutral-400 uppercase text-[10px] font-mono tracking-wider font-semibold mr-1">
+                STACK:
+              </span>
+              {activeExp.techStack.map((tech, tIdx) => (
+                <span
+                  key={tIdx}
+                  className="px-2.5 py-1 rounded bg-white/[0.04] border border-white/[0.08] text-[11px] font-mono text-neutral-300"
                 >
-                  <span className="text-sky-400 font-mono font-bold select-none">&mdash;</span>
-                  <span>{highlight}</span>
-                </div>
+                  {tech}
+                </span>
               ))}
-            </div>
-          </div>
-
-          {/* Tech Stack Typographic Ribbon */}
-          <div className="slide-anim pt-8 mt-6 border-t border-white/[0.08] flex items-baseline gap-3 flex-wrap font-mono text-xs text-neutral-400">
-            <span className="text-neutral-500 uppercase tracking-widest text-[11px] font-semibold">
-              TECHNOLOGIES &mdash;
-            </span>
-            <span className="text-neutral-300 tracking-wide">
-              {currentExp.techStack.join("   /   ")}
-            </span>
-          </div>
-        </div>
-
-        {/* Presentation Controls Footer */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 pt-6 border-t border-white/[0.1]">
-          {/* Slide Progress Dots */}
-          <div className="flex items-center gap-2">
-            {experiences.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => goToSlide(idx)}
-                className={`h-1.5 transition-all duration-300 rounded-full ${
-                  currentSlide === idx
-                    ? "w-8 bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.8)]"
-                    : "w-2 bg-white/20 hover:bg-white/40"
-                }`}
-                aria-label={`Go to slide ${idx + 1}`}
-              />
-            ))}
-          </div>
-
-          {/* Navigation Controls: Prev, Play/Pause, Next */}
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => setIsAutoPlaying((prev) => !prev)}
-              onMouseEnter={() => playHover()}
-              className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/10 hover:border-white/25 text-xs font-mono text-neutral-300 hover:text-white transition-colors"
-            >
-              {isAutoPlaying ? (
-                <>
-                  <Pause className="w-3 h-3 text-amber-400" />
-                  <span>PAUSE</span>
-                </>
-              ) : (
-                <>
-                  <Play className="w-3 h-3 text-emerald-400" />
-                  <span>AUTO-PLAY</span>
-                </>
-              )}
-            </button>
-
-            <div className="flex items-center gap-2">
-              <button
-                onClick={prevSlide}
-                onMouseEnter={() => playHover()}
-                className="w-10 h-10 rounded-lg border border-white/10 hover:border-sky-400/50 hover:bg-white/[0.05] flex items-center justify-center text-neutral-300 hover:text-white transition-all cursor-pointer"
-                aria-label="Previous Slide"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-
-              <button
-                onClick={nextSlide}
-                onMouseEnter={() => playHover()}
-                className="w-10 h-10 rounded-lg border border-white/10 hover:border-sky-400/50 hover:bg-white/[0.05] flex items-center justify-center text-neutral-300 hover:text-white transition-all cursor-pointer"
-                aria-label="Next Slide"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
             </div>
           </div>
         </div>
@@ -308,6 +218,7 @@ export function ExperienceTimeline() {
     </section>
   );
 }
+
 
 
 

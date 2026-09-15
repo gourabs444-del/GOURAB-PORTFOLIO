@@ -274,47 +274,48 @@ export function WhatIDo() {
             </div>
           </div>
 
-          {/* Right Column: Neon Halo & Portrait Composition */}
-          <div className="lg:col-span-5 relative flex items-center justify-center min-h-[500px] sm:min-h-[600px]">
+          {/* Right Column: Seamless Cinematic Poster Composition */}
+          <div className="lg:col-span-5 relative flex items-center justify-center min-h-[520px] sm:min-h-[640px] overflow-visible">
+            {/* Ambient Violet Backlight Glow */}
+            <div
+              className="absolute w-[360px] sm:w-[460px] md:w-[540px] h-[360px] sm:h-[460px] md:h-[540px] rounded-full bg-[radial-gradient(circle,_rgba(168,85,247,0.22)_0%,_rgba(126,34,206,0.08)_50%,_transparent_75%)] blur-[80px] pointer-events-none"
+              aria-hidden="true"
+            />
+
             {/* Outer Glowing Neon Portal Halo Ring */}
             <div
               ref={haloRingRef}
-              className="absolute w-[360px] sm:w-[460px] md:w-[520px] h-[360px] sm:h-[460px] md:h-[520px] rounded-full border border-purple-500/30 pointer-events-none will-change-transform"
+              className="absolute w-[380px] sm:w-[480px] md:w-[540px] h-[380px] sm:h-[480px] md:h-[540px] rounded-full border border-purple-500/25 pointer-events-none will-change-transform z-0"
               style={{
-                boxShadow: "0 0 70px rgba(168,85,247,0.25), inset 0 0 50px rgba(168,85,247,0.12)",
+                boxShadow: "0 0 80px rgba(168,85,247,0.2), inset 0 0 50px rgba(168,85,247,0.08)",
               }}
             >
               {/* Orbital Glow Bead */}
               <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3.5 h-3.5 rounded-full bg-purple-300 shadow-[0_0_20px_#C084FC]" />
             </div>
 
-            {/* Stylistic Handwritten Chalk Badge */}
-            <div className="absolute right-0 sm:right-2 top-4 sm:top-6 z-30 pointer-events-none select-none rotate-6 text-right">
-              <span className="font-serif italic text-purple-300 text-base sm:text-xl md:text-2xl font-normal leading-tight block opacity-95 drop-shadow-[0_0_15px_rgba(168,85,247,0.7)]">
+            {/* Stylistic Handwritten Chalk Badge Floating on Dark */}
+            <div className="absolute right-0 sm:-right-4 top-2 sm:top-6 z-30 pointer-events-none select-none rotate-6 text-right">
+              <span className="font-serif italic text-purple-300 text-lg sm:text-2xl md:text-3xl font-normal leading-tight block opacity-95 drop-shadow-[0_0_18px_rgba(168,85,247,0.8)]">
                 Same Person <br />
-                <span className="text-white">Better Ideas</span>
+                <span className="text-white drop-shadow-[0_0_12px_rgba(255,255,255,0.4)]">Better Ideas</span>
               </span>
             </div>
 
-            {/* Ambient Backlight for Portrait */}
-            <div className="absolute inset-0 max-w-[340px] max-h-[500px] m-auto bg-purple-600/20 blur-[60px] rounded-full pointer-events-none -z-0" />
-
-            {/* Gourab's Full High-Res Portrait */}
+            {/* Gourab's Portrait — Seamless Edge Blend (Zero Boxes/Borders, True Cinematic Poster) */}
             <div
               ref={portraitRef}
-              className="relative z-10 w-[240px] sm:w-[300px] md:w-[340px] aspect-[9/19] will-change-transform rounded-3xl overflow-hidden border border-purple-500/20 shadow-[0_20px_60px_rgba(0,0,0,0.8),0_0_40px_rgba(168,85,247,0.2)] bg-[#090612]"
+              className="relative z-10 w-[280px] sm:w-[360px] md:w-[420px] h-[480px] sm:h-[580px] md:h-[640px] will-change-transform flex items-center justify-center"
             >
-              <div className="relative w-full h-full">
+              <div className="relative w-full h-full [mask-image:radial-gradient(ellipse_80%_85%_at_50%_48%,black_45%,rgba(0,0,0,0.85)_65%,rgba(0,0,0,0.3)_80%,transparent_98%)] [-webkit-mask-image:radial-gradient(ellipse_80%_85%_at_50%_48%,black_45%,rgba(0,0,0,0.85)_65%,rgba(0,0,0,0.3)_80%,transparent_98%)]">
                 <Image
                   src="/assets/gourab-portrait.png"
                   alt="Gourab — Ideas into Impact"
                   fill
                   priority
-                  className="object-cover object-center filter contrast-105 brightness-105"
-                  sizes="(max-width: 640px) 240px, (max-width: 768px) 300px, 340px"
+                  className="object-contain sm:object-cover object-top filter contrast-[1.08] brightness-105"
+                  sizes="(max-width: 640px) 280px, (max-width: 768px) 360px, 420px"
                 />
-                {/* Subtle bottom edge smooth blend */}
-                <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-[#090612]/90 to-transparent pointer-events-none" />
               </div>
             </div>
           </div>
