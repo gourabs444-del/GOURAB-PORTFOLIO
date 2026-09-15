@@ -4,8 +4,15 @@ import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "@/lib/gsap";
 import { processSteps } from "@/data/experience";
-import { CardSpotlight } from "@/components/ui/CardSpotlight";
-import { CheckCircle2, Clock, Sparkles } from "lucide-react";
+
+// Distinct minimalist color accents for each pipeline phase
+const phaseAccents = [
+  { color: "#F59E0B", label: "PHASE 01 // DISCOVERY", glow: "rgba(245, 158, 11, 0.15)" },
+  { color: "#38BDF8", label: "PHASE 02 // ART DIRECTION", glow: "rgba(56, 189, 248, 0.15)" },
+  { color: "#A855F7", label: "PHASE 03 // ENGINEERING", glow: "rgba(168, 85, 247, 0.15)" },
+  { color: "#F43F5E", label: "PHASE 04 // POLISH & AUDIO", glow: "rgba(244, 63, 94, 0.15)" },
+  { color: "#10B981", label: "PHASE 05 // DEPLOYMENT", glow: "rgba(16, 185, 129, 0.15)" },
+];
 
 export function ProcessPipeline() {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -18,8 +25,8 @@ export function ProcessPipeline() {
       stepElements?.forEach((el, index) => {
         ScrollTrigger.create({
           trigger: el,
-          start: "top 60%",
-          end: "bottom 40%",
+          start: "top 65%",
+          end: "bottom 35%",
           onEnter: () => setActiveStepIndex(index),
           onEnterBack: () => setActiveStepIndex(index),
         });
@@ -29,115 +36,137 @@ export function ProcessPipeline() {
     return () => ctx.revert();
   }, []);
 
+  const currentAccent = phaseAccents[activeStepIndex] || phaseAccents[0];
+
   return (
     <section
       id="process"
       ref={containerRef}
-      className="relative py-28 md:py-40 px-6 md:px-14 border-t border-white/[0.08] overflow-hidden"
+      className="relative py-24 sm:py-32 md:py-40 px-6 sm:px-12 md:px-20 lg:px-28 bg-[#050507] text-[#F4F4F6] overflow-hidden select-none"
     >
-      <div className="max-w-7xl mx-auto flex flex-col gap-16 md:gap-24">
+      {/* Dynamic ambient background glow tuned to current phase */}
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] blur-[160px] pointer-events-none rounded-full transition-colors duration-700 opacity-20"
+        style={{ backgroundColor: currentAccent.color }}
+      />
+
+      <div className="max-w-7xl mx-auto flex flex-col gap-16 md:gap-24 relative z-10">
         {/* Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 border-b border-white/[0.08] pb-8">
-          <div>
-            <div className="flex items-center gap-3 mb-2">
-              <span className="font-mono text-xs text-accent">05 // THE METHODOLOGY</span>
-              <span className="text-white/20">/</span>
-              <span className="font-mono text-xs uppercase tracking-widest text-mist">
-                HOW I ARCHITECT & DELIVER
-              </span>
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-10 border-b border-white/[0.08]">
+          <div className="max-w-xl">
+            <div className="flex items-center gap-2.5 text-xs font-mono text-neutral-500 uppercase tracking-widest mb-3">
+              <span
+                className="w-2 h-2 rounded-full transition-colors duration-500 animate-pulse"
+                style={{ backgroundColor: currentAccent.color }}
+              />
+              <span className="text-neutral-300 font-semibold">05 // METHODOLOGY</span>
+              <span className="text-neutral-600">/</span>
+              <span>PRECISION PIPELINE</span>
             </div>
-            <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-white tracking-tight">
+            <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-white tracking-tight leading-none">
               EXECUTION PIPELINE
             </h2>
           </div>
-          <span className="font-mono text-xs text-mist/70">
-            [ FIVE-PHASE PRECISION BLUEPRINT ]
-          </span>
+
+          <div className="flex items-center gap-4 text-xs font-mono text-neutral-500">
+            <span
+              className="font-bold transition-colors duration-500 tracking-wider"
+              style={{ color: currentAccent.color }}
+            >
+              {currentAccent.label}
+            </span>
+            <span className="text-neutral-700">|</span>
+            <span className="text-neutral-400">FIVE-PHASE BLUEPRINT</span>
+          </div>
         </div>
 
-        {/* Steps Stack */}
-        <div className="relative flex flex-col gap-12 md:gap-16">
-          {/* Vertical Laser Progress Line (Desktop) */}
-          <div
-            className="hidden lg:block absolute left-[120px] top-4 bottom-4 w-[2px] bg-white/[0.06] pointer-events-none"
-            aria-hidden="true"
-          >
-            <div
-              className="w-full bg-gradient-to-b from-accent via-accent to-emerald-400 transition-all duration-500 shadow-[0_0_12px_rgba(229,169,60,0.8)]"
-              style={{
-                height: `${((activeStepIndex + 1) / processSteps.length) * 100}%`,
-              }}
-            />
-          </div>
-
+        {/* Steps Stack (Clean, Open Editorial Timeline - No Clunky Boxes) */}
+        <div className="relative flex flex-col">
           {processSteps.map((step, index) => {
             const isActive = index === activeStepIndex;
             const isPast = index < activeStepIndex;
+            const accent = phaseAccents[index] || phaseAccents[0];
 
             return (
               <div
                 key={step.step}
-                className={`process-step-row group transition-all duration-500 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start p-6 md:p-10 rounded-3xl border ${
+                className={`process-step-row group transition-all duration-500 py-12 sm:py-16 md:py-20 border-b border-white/[0.08] grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start ${
                   isActive
-                    ? "bg-surface-200/90 border-accent/40 shadow-[0_10px_40px_rgba(0,0,0,0.6)]"
+                    ? "opacity-100"
                     : isPast
-                    ? "bg-surface-300/30 border-white/[0.04] opacity-70"
-                    : "bg-surface-300/20 border-white/[0.04] opacity-50"
+                    ? "opacity-50 hover:opacity-80"
+                    : "opacity-35 hover:opacity-70"
                 }`}
               >
-                {/* Step Number + Timeline Marker */}
-                <div className="lg:col-span-3 flex items-center lg:flex-col lg:items-start justify-between lg:justify-start gap-4">
+                {/* Left Column: Number + Phase Timeline Meta */}
+                <div className="lg:col-span-4 flex flex-row lg:flex-col items-baseline lg:items-start justify-between lg:justify-start gap-4">
                   <div className="flex items-center gap-4">
                     <span
-                      className={`font-display font-extrabold text-4xl md:text-5xl tracking-tighter transition-colors ${
-                        isActive ? "text-accent" : "text-mist/40"
-                      }`}
+                      className="font-display font-black text-5xl sm:text-6xl md:text-7xl tracking-tighter transition-all duration-500 leading-none"
+                      style={{
+                        color: isActive ? accent.color : "#3A3A42",
+                        textShadow: isActive ? `0 0 30px ${accent.color}40` : "none",
+                      }}
                     >
                       {step.step}
                     </span>
-                    <span className="font-mono text-xs text-white/20 lg:hidden">/</span>
                   </div>
-                  <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] text-xs font-mono text-mist">
-                    <Clock className="w-3 h-3 text-accent" />
-                    <span>{step.duration}</span>
+
+                  <div className="flex items-center gap-3 text-xs font-mono">
+                    <span
+                      className="font-semibold transition-colors duration-300 uppercase tracking-wider"
+                      style={{ color: isActive ? accent.color : "#71717A" }}
+                    >
+                      {step.duration}
+                    </span>
+                    <span className="text-neutral-700">•</span>
+                    <span className="text-neutral-500 uppercase tracking-widest text-[11px]">
+                      STAGE {index + 1}
+                    </span>
                   </div>
                 </div>
 
-                {/* Main Step Detail */}
-                <div className="lg:col-span-9 flex flex-col gap-6">
+                {/* Right Column: Title, Subtitle, Narrative & Clean Deliverables */}
+                <div className="lg:col-span-8 flex flex-col gap-6">
                   <div>
                     <h3
-                      className={`font-display font-bold text-2xl md:text-3xl tracking-tight transition-colors ${
-                        isActive ? "text-white" : "text-white/70"
+                      className={`font-display font-bold text-2xl sm:text-3xl md:text-4xl tracking-tight transition-colors duration-300 ${
+                        isActive ? "text-white" : "text-neutral-400"
                       }`}
                     >
                       {step.title}
                     </h3>
-                    <p className="font-editorial text-base text-accent font-medium mt-1">
+                    <p
+                      className="font-sans text-sm sm:text-base font-medium mt-2 transition-colors duration-300"
+                      style={{ color: isActive ? accent.color : "#A1A1AA" }}
+                    >
                       {step.subtitle}
                     </p>
-                    <p className="font-sans text-sm md:text-base text-mist mt-3 leading-relaxed">
+                    <p className="font-sans text-sm sm:text-base text-neutral-400 mt-4 leading-relaxed font-normal">
                       {step.description}
                     </p>
                   </div>
 
-                  {/* Deliverables tags */}
-                  <div className="pt-4 border-t border-white/[0.06]">
-                    <span className="font-mono text-[11px] uppercase tracking-widest text-mist/80 block mb-3">
-                      KEY DELIVERABLES & ARTIFACTS
+                  {/* Clean Minimalist Deliverables List (No Box/Capsule Clutter) */}
+                  <div className="pt-6 border-t border-white/[0.06]">
+                    <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-500 block mb-3 font-semibold">
+                      KEY DELIVERABLES &amp; ARTIFACTS
                     </span>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-2.5 gap-x-8">
                       {step.deliverables.map((item, idx) => (
                         <div
                           key={idx}
-                          className="flex items-center gap-2 text-xs font-mono text-foreground/80"
+                          className="flex items-center gap-2.5 text-xs font-mono text-neutral-300"
                         >
-                          <CheckCircle2
-                            className={`w-3.5 h-3.5 ${
-                              isActive ? "text-accent" : "text-mist/50"
-                            }`}
+                          <span
+                            className="w-1.5 h-1.5 rounded-full transition-colors duration-300 shrink-0"
+                            style={{
+                              backgroundColor: isActive ? accent.color : "#52525B",
+                            }}
                           />
-                          <span>{item}</span>
+                          <span className={isActive ? "text-neutral-200" : "text-neutral-500"}>
+                            {item}
+                          </span>
                         </div>
                       ))}
                     </div>
@@ -151,3 +180,4 @@ export function ProcessPipeline() {
     </section>
   );
 }
+
