@@ -5,7 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "@/lib/gsap";
 import { experiences } from "@/data/experience";
 import { useAudioFeedback } from "@/hooks/useAudioFeedback";
-import { MapPin, ArrowUpRight, Sparkles } from "lucide-react";
+import { MapPin } from "lucide-react";
 
 export function ExperienceTimeline() {
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
@@ -16,28 +16,27 @@ export function ExperienceTimeline() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // 1. Header entrance - triggers earlier and smoothly
+      // 1. Header reveal - instantaneous & clean (transform + opacity only, zero heavy filter)
       if (headerRef.current) {
         gsap.fromTo(
-          headerRef.current.querySelectorAll(".flow-header-reveal"),
-          { opacity: 0, y: 24, filter: "blur(4px)" },
+          headerRef.current.querySelectorAll(".timeline-header-reveal"),
+          { opacity: 0, y: 20 },
           {
             opacity: 1,
             y: 0,
-            filter: "blur(0px)",
-            duration: 0.7,
-            stagger: 0.08,
+            duration: 0.6,
+            stagger: 0.06,
             ease: "power2.out",
             scrollTrigger: {
               trigger: headerRef.current,
-              start: "top 94%",
+              start: "top 95%",
               toggleActions: "play none none none",
             },
           }
         );
       }
 
-      // 2. Vertical Spine Progress Fill on Lenis Scroll - responsive & smooth
+      // 2. Vertical Spine Progress Fill - lightweight 60fps scrub
       if (spineRef.current) {
         gsap.fromTo(
           spineRef.current,
@@ -50,23 +49,22 @@ export function ExperienceTimeline() {
               trigger: sectionRef.current,
               start: "top 85%",
               end: "bottom 90%",
-              scrub: 0.5,
+              scrub: 0.3,
             },
           }
         );
       }
 
-      // 3. Snappy & Early Staggered Flow Items Reveal on Scroll
-      const items = sectionRef.current?.querySelectorAll(".flow-item");
+      // 3. Timeline Items Entrance - lightweight transform
+      const items = sectionRef.current?.querySelectorAll(".timeline-item");
       items?.forEach((item) => {
         gsap.fromTo(
           item,
-          { opacity: 0, y: 28, filter: "blur(3px)" },
+          { opacity: 0, y: 24 },
           {
             opacity: 1,
             y: 0,
-            filter: "blur(0px)",
-            duration: 0.6,
+            duration: 0.5,
             ease: "power2.out",
             scrollTrigger: {
               trigger: item,
@@ -85,28 +83,23 @@ export function ExperienceTimeline() {
     <section
       id="experience"
       ref={sectionRef}
-      className="relative py-28 sm:py-36 md:py-44 px-5 sm:px-10 md:px-16 lg:px-24 overflow-hidden bg-gradient-to-b from-[#0c0e14] via-[#11141d] to-[#0a0c12] text-[#F4F4F6] border-y border-white/[0.06] select-none"
+      className="relative py-24 sm:py-32 md:py-40 px-6 sm:px-12 md:px-20 lg:px-28 bg-[#050507] text-[#F4F4F6] border-t border-white/[0.08] select-none"
     >
-      {/* Dynamic Rich Atmospheric Mesh Gradients & Glows */}
+      {/* Subtle, Ultra-Lightweight Ambient Glow (No Heavy GPU Blur Filters) */}
       <div
-        className="pointer-events-none absolute -top-20 left-1/4 w-[600px] md:w-[900px] h-[500px] rounded-full bg-[radial-gradient(circle_at_center,_rgba(245,158,11,0.08)_0%,_rgba(59,130,246,0.03)_45%,_transparent_70%)] blur-[130px]"
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute bottom-0 right-10 w-[600px] h-[600px] rounded-full bg-[radial-gradient(circle,_rgba(245,158,11,0.05)_0%,_rgba(139,92,246,0.03)_50%,_transparent_70%)] blur-[140px]"
-        aria-hidden="true"
-      />
-      {/* Subtle architectural vertical grid lines for depth */}
-      <div
-        className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:160px_100%] opacity-40"
+        className="pointer-events-none absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[350px] rounded-full bg-[radial-gradient(circle_at_center,_rgba(245,158,11,0.06)_0%,_transparent_70%)] pointer-events-none"
         aria-hidden="true"
       />
 
       <div className="max-w-6xl mx-auto flex flex-col gap-16 md:gap-24 relative z-10">
-        {/* Minimal Editorial Header */}
-        <div ref={headerRef} className="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-4">
+        {/* Editorial Header */}
+        <div
+          ref={headerRef}
+          className="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-8 border-b border-white/[0.08]"
+        >
           <div className="flex flex-col gap-3">
-            <div className="flow-header-reveal flex items-center gap-3">
+            <div className="timeline-header-reveal flex items-center gap-3">
+              <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
               <span className="font-mono text-xs text-amber-400 font-semibold tracking-widest uppercase">
                 05 // CAREER CHRONOLOGY
               </span>
@@ -116,7 +109,7 @@ export function ExperienceTimeline() {
               </span>
             </div>
 
-            <h2 className="flow-header-reveal font-bodoni font-medium text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white tracking-tight leading-[1.08]">
+            <h2 className="timeline-header-reveal font-bodoni font-medium text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white tracking-tight leading-[1.08]">
               Experience &amp; <br className="hidden sm:inline" />
               <span className="font-bodoni italic font-normal bg-gradient-to-r from-amber-200 via-amber-400 to-amber-500 bg-clip-text text-transparent">
                 Milestones
@@ -124,19 +117,19 @@ export function ExperienceTimeline() {
             </h2>
           </div>
 
-          <div className="flow-header-reveal flex items-center gap-3 font-mono text-xs text-neutral-400 border border-white/10 px-4 py-2 rounded-full w-fit bg-white/[0.02]">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+          <div className="timeline-header-reveal flex items-center gap-3 font-mono text-xs text-neutral-400 border border-white/10 px-4 py-2 rounded-full w-fit bg-white/[0.02]">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
             <span>2018 — 2026 ARCHIVE</span>
           </div>
         </div>
 
-        {/* Minimal Fluid Flow (Zero Boxes / Zero Table Dividers) */}
+        {/* Lightweight Fluid Timeline Track */}
         <div className="relative pl-6 sm:pl-10 md:pl-12 flex flex-col gap-16 sm:gap-20 md:gap-24">
-          {/* Vertical Connecting Ambient Track */}
+          {/* Vertical Track Hairline + Smooth Animated Spine */}
           <div className="absolute left-0 top-3 bottom-8 w-[1px] bg-white/[0.08]">
             <div
               ref={spineRef}
-              className="w-full h-full bg-gradient-to-b from-amber-400 via-amber-300 to-amber-500/20 shadow-[0_0_12px_rgba(245,158,11,0.6)] will-change-transform"
+              className="w-full h-full bg-gradient-to-b from-amber-400 via-amber-300 to-amber-500/20 shadow-[0_0_10px_rgba(245,158,11,0.5)] will-change-transform"
             />
           </div>
 
@@ -154,27 +147,27 @@ export function ExperienceTimeline() {
                   playHover();
                 }}
                 onMouseLeave={() => setHoveredIdx(null)}
-                className={`flow-item group relative transition-all duration-500 cursor-default ${
-                  isAnyHovered && !isHovered ? "opacity-35 blur-[0.5px]" : "opacity-100"
+                className={`timeline-item group relative transition-opacity duration-300 cursor-default ${
+                  isAnyHovered && !isHovered ? "opacity-35" : "opacity-100"
                 }`}
               >
-                {/* Glowing Node Dot on the Spine */}
-                <div className="absolute -left-[27px] sm:-left-[43px] md:-left-[51px] top-1.5 flex items-center justify-center">
+                {/* Glowing Node Dot on Spine */}
+                <div className="absolute -left-[27px] sm:-left-[43px] md:-left-[51px] top-1.5 flex items-center justify-center pointer-events-none">
                   <div
                     className={`w-3.5 h-3.5 rounded-full border transition-all duration-300 flex items-center justify-center ${
                       isHovered || isPresent
-                        ? "border-amber-400 bg-amber-400 shadow-[0_0_14px_rgba(245,158,11,0.8)] scale-125"
-                        : "border-white/30 bg-[#07070a] group-hover:border-amber-400"
+                        ? "border-amber-400 bg-amber-400 shadow-[0_0_12px_rgba(245,158,11,0.7)] scale-110"
+                        : "border-white/30 bg-[#050507] group-hover:border-amber-400"
                     }`}
                   >
-                    <div className="w-1.5 h-1.5 rounded-full bg-black/80" />
+                    <div className="w-1.5 h-1.5 rounded-full bg-black" />
                   </div>
                 </div>
 
-                {/* Main Content Grid */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-start transition-transform duration-300 group-hover:translate-x-2">
-                  {/* Left Column: Year & Index & Metadata */}
-                  <div className="lg:col-span-4 flex flex-col gap-2.5">
+                {/* Content Grid */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-start transition-transform duration-300 group-hover:translate-x-1.5">
+                  {/* Left Column: Year & Index & Location */}
+                  <div className="lg:col-span-4 flex flex-col gap-2">
                     <div className="flex items-center gap-2.5">
                       <span className="font-mono text-xs font-bold text-amber-400/80">
                         // {formattedIndex}
@@ -202,9 +195,8 @@ export function ExperienceTimeline() {
                     </div>
                   </div>
 
-                  {/* Middle Column: Role, Company, Summary, Milestones & Stack */}
+                  {/* Right Column: Role, Company, Summary, Highlights & Stack */}
                   <div className="lg:col-span-8 flex flex-col gap-3.5">
-                    {/* Role Title & Company */}
                     <div>
                       <h3 className="font-display font-extrabold text-2xl sm:text-3xl text-white tracking-tight group-hover:text-amber-100 transition-colors duration-200">
                         {exp.role}
@@ -214,26 +206,25 @@ export function ExperienceTimeline() {
                       </p>
                     </div>
 
-                    {/* Concise Narrative */}
                     <p className="font-sans text-sm sm:text-base text-neutral-300 leading-relaxed font-normal">
                       {exp.summary}
                     </p>
 
-                    {/* High-Impact Milestone Bullets */}
-                    <div className="space-y-1.5 pt-1">
+                    {/* Milestones Bullets */}
+                    <div className="space-y-2 pt-1">
                       {exp.highlights.map((h, i) => (
                         <div
                           key={i}
-                          className="flex items-start gap-2.5 text-xs sm:text-sm text-neutral-400 font-sans leading-relaxed"
+                          className="flex items-start gap-2.5 text-xs sm:text-sm text-neutral-300 font-sans leading-relaxed"
                         >
-                          <span className="text-amber-400 font-mono font-bold select-none">&mdash;</span>
-                          <span className="text-neutral-300">{h}</span>
+                          <span className="text-amber-400 font-mono font-bold select-none mt-0.5">&mdash;</span>
+                          <span>{h}</span>
                         </div>
                       ))}
                     </div>
 
-                    {/* Clean Monospace Tech Stack */}
-                    <div className="pt-2 flex items-baseline gap-2 flex-wrap text-xs font-mono">
+                    {/* Minimalist Tech Stack */}
+                    <div className="pt-3 border-t border-white/[0.06] flex items-baseline gap-2 flex-wrap text-xs font-mono">
                       <span className="text-neutral-500 uppercase text-[10px] tracking-wider font-semibold">
                         STACK:
                       </span>
@@ -251,3 +242,4 @@ export function ExperienceTimeline() {
     </section>
   );
 }
+
