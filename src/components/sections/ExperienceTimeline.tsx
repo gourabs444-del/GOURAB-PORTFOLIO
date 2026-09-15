@@ -4,8 +4,8 @@ import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "@/lib/gsap";
 import { experiences } from "@/data/experience";
-import { MapPin, ArrowUpRight, Sparkles } from "lucide-react";
 import { useAudioFeedback } from "@/hooks/useAudioFeedback";
+import { ArrowUpRight } from "lucide-react";
 
 export function ExperienceTimeline() {
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -17,11 +17,11 @@ export function ExperienceTimeline() {
       items?.forEach((item) => {
         gsap.fromTo(
           item,
-          { opacity: 0, y: 35 },
+          { opacity: 0, y: 30 },
           {
             opacity: 1,
             y: 0,
-            duration: 0.7,
+            duration: 0.75,
             ease: "power3.out",
             scrollTrigger: {
               trigger: item,
@@ -40,32 +40,30 @@ export function ExperienceTimeline() {
     <section
       id="experience"
       ref={sectionRef}
-      className="relative py-24 md:py-36 px-5 sm:px-8 md:px-16 border-t border-white/[0.08] overflow-hidden bg-[#070709]"
+      className="relative py-24 sm:py-32 md:py-36 px-6 sm:px-12 md:px-20 lg:px-28 border-t border-white/[0.08] overflow-hidden bg-[#050507] text-[#F4F4F6] select-none"
     >
-      <div className="max-w-7xl mx-auto flex flex-col gap-14 md:gap-20">
+      <div className="max-w-7xl mx-auto flex flex-col gap-14 md:gap-20 relative z-10">
         {/* Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 border-b border-white/[0.08] pb-8">
-          <div>
-            <div className="flex items-center gap-3 mb-2">
-              <span className="font-mono text-xs text-amber-400 font-semibold tracking-wider">
-                06 // CAREER CHRONOLOGY
-              </span>
-              <span className="text-white/20">/</span>
-              <span className="font-mono text-xs uppercase tracking-widest text-neutral-400">
-                THE TRAJECTORY & IMPACT
-              </span>
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-10 border-b border-white/[0.08]">
+          <div className="max-w-xl">
+            <div className="flex items-center gap-2.5 text-xs font-mono text-neutral-500 uppercase tracking-widest mb-3">
+              <span className="w-2 h-2 rounded-full bg-amber-400" />
+              <span className="text-neutral-300 font-semibold">06 // CAREER CHRONOLOGY</span>
+              <span className="text-neutral-600">/</span>
+              <span>2018 — 2026</span>
             </div>
-            <h2 className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white tracking-tight">
-              EXPERIENCE & MILESTONES
+            <h2 className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-white tracking-tight leading-none">
+              EXPERIENCE &amp; MILESTONES
             </h2>
           </div>
-          <div className="flex items-center gap-3 font-mono text-xs text-neutral-400">
+
+          <div className="flex items-center gap-2 text-xs font-mono text-neutral-400">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span>[ 2018 — 2026 ARCHIVE ]</span>
+            <span>AVAILABLE FOR SELECT COMMISSIONS</span>
           </div>
         </div>
 
-        {/* Minimalist Editorial Timeline Ledger (Clean typography rows - No heavy cards/boxes, No capsule badges) */}
+        {/* Minimalist Editorial Ledger (Clean, Fast to Scan & High Impact) */}
         <div className="flex flex-col divide-y divide-white/[0.08] border-b border-white/[0.08]">
           {experiences.map((exp, idx) => {
             const isPresent = exp.year.includes("PRESENT");
@@ -75,82 +73,52 @@ export function ExperienceTimeline() {
               <div
                 key={exp.id}
                 onMouseEnter={() => playHover()}
-                className="timeline-row-item group relative py-10 sm:py-12 md:py-14 transition-colors duration-300 hover:bg-white/[0.015]"
+                className="timeline-row-item group relative py-10 sm:py-12 md:py-14 transition-all duration-300 hover:bg-white/[0.02] grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-14 items-center px-2 sm:px-4 -mx-2 sm:-mx-4 rounded-xl"
               >
-                {/* Left glowing accent line indicator on hover */}
-                <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-gradient-to-b from-amber-400 to-amber-600 scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-top" />
+                {/* Left Glowing Accent Line on Hover */}
+                <div className="absolute left-0 top-3 bottom-3 w-[2px] bg-amber-400 opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-y-0 group-hover:scale-y-100 origin-center rounded-full" />
 
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-10 items-start">
-                  {/* Column 1: Time, Location & Index */}
-                  <div className="lg:col-span-4 flex flex-col justify-between gap-3">
-                    <div className="flex items-baseline gap-3">
-                      <span className="font-mono text-xs text-amber-400/80 font-bold">
-                        {formattedIndex}
-                      </span>
-                      <span className="font-mono font-bold text-xl sm:text-2xl md:text-3xl text-white tracking-tight group-hover:text-amber-400 transition-colors duration-200">
-                        {exp.year}
-                      </span>
-                    </div>
-
-                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs text-neutral-400 mt-1">
-                      <span className="flex items-center gap-1.5 text-neutral-300">
-                        <MapPin className="w-3.5 h-3.5 text-amber-400" />
-                        {exp.location}
-                      </span>
-                      <span className="text-white/20">•</span>
-                      <span className="text-neutral-500 uppercase tracking-wider">
-                        {exp.period}
-                      </span>
-                      {isPresent && (
-                        <>
-                          <span className="text-white/20">•</span>
-                          <span className="text-emerald-400 font-semibold text-[11px] uppercase tracking-wider">
-                            Active
-                          </span>
-                        </>
-                      )}
-                    </div>
+                {/* Column 1: Timeline Year & Status */}
+                <div className="lg:col-span-4 flex flex-col gap-2">
+                  <div className="flex items-baseline gap-3">
+                    <span className="font-mono text-xs text-amber-400 font-bold">
+                      // {formattedIndex}
+                    </span>
+                    <span className="font-display font-bold text-2xl sm:text-3xl text-white tracking-tight group-hover:text-amber-400 transition-colors duration-200">
+                      {exp.year}
+                    </span>
                   </div>
 
-                  {/* Column 2: Role, Organization, Narrative & Impact */}
-                  <div className="lg:col-span-8 flex flex-col gap-4 pl-0 lg:pl-4">
-                    {/* Role & Company Header */}
-                    <div>
-                      <h3 className="font-display font-bold text-xl sm:text-2xl md:text-3xl text-white tracking-tight group-hover:translate-x-1 transition-transform duration-200">
-                        {exp.role}
-                      </h3>
-                      <p className="font-serif italic text-base sm:text-lg text-amber-400/90 font-normal mt-1">
-                        {exp.company}
-                      </p>
-                    </div>
+                  <div className="flex items-center gap-2.5 text-xs font-mono text-neutral-500">
+                    <span className="text-neutral-400">{exp.location}</span>
+                    <span>&bull;</span>
+                    {isPresent ? (
+                      <span className="text-emerald-400 font-medium">Present</span>
+                    ) : (
+                      <span>{exp.period}</span>
+                    )}
+                  </div>
+                </div>
 
-                    {/* Concise Narrative */}
-                    <p className="font-sans text-sm sm:text-base text-neutral-300 leading-relaxed max-w-3xl">
-                      {exp.summary}
-                    </p>
+                {/* Column 2: Role, Organization & Core Impact Line */}
+                <div className="lg:col-span-8 flex flex-col gap-3 group-hover:translate-x-1.5 transition-transform duration-300">
+                  <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 sm:gap-4">
+                    <h3 className="font-display font-extrabold text-xl sm:text-2xl md:text-3xl text-white tracking-tight">
+                      {exp.role}
+                    </h3>
+                    <span className="font-sans text-xs sm:text-sm text-neutral-400 font-medium shrink-0">
+                      {exp.company}
+                    </span>
+                  </div>
 
-                    {/* Key Accomplishments (Clean Editorial Em-Dash Format) */}
-                    <div className="space-y-2 pt-2">
-                      {exp.highlights.map((h, i) => (
-                        <div
-                          key={i}
-                          className="flex items-start gap-3 text-xs sm:text-sm text-neutral-400 font-sans leading-relaxed"
-                        >
-                          <span className="text-amber-400 font-mono select-none mt-[-1px]">—</span>
-                          <span className="text-neutral-300">{h}</span>
-                        </div>
-                      ))}
-                    </div>
+                  {/* Single Key High-Impact Metric (No Paragraph Clutter) */}
+                  <p className="font-sans text-sm sm:text-base text-neutral-300 leading-relaxed font-normal">
+                    {exp.highlights[0]}
+                  </p>
 
-                    {/* Tech Stack & Core Systems (Clean Inline Monospace - No Capsule Pills!) */}
-                    <div className="pt-4 mt-2 flex items-baseline gap-2 flex-wrap text-xs font-mono">
-                      <span className="text-neutral-500 uppercase text-[11px] tracking-wider font-semibold mr-1">
-                        Stack:
-                      </span>
-                      <span className="text-neutral-400 font-mono tracking-wide leading-loose">
-                        {exp.techStack.join("  /  ")}
-                      </span>
-                    </div>
+                  {/* Clean Inline Stack */}
+                  <div className="text-xs font-mono text-neutral-500 pt-1">
+                    {exp.techStack.slice(0, 5).join("  •  ")}
                   </div>
                 </div>
               </div>
@@ -161,4 +129,6 @@ export function ExperienceTimeline() {
     </section>
   );
 }
+
+
 
