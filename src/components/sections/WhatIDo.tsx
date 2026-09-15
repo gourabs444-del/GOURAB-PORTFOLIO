@@ -275,40 +275,46 @@ export function WhatIDo() {
           </div>
 
           {/* Right Column: Neon Halo & Portrait Composition */}
-          <div className="lg:col-span-5 relative flex items-center justify-center min-h-[440px] sm:min-h-[520px]">
+          <div className="lg:col-span-5 relative flex items-center justify-center min-h-[500px] sm:min-h-[600px]">
             {/* Outer Glowing Neon Portal Halo Ring */}
             <div
               ref={haloRingRef}
-              className="absolute w-[340px] sm:w-[440px] md:w-[480px] h-[340px] sm:h-[440px] md:h-[480px] rounded-full border border-purple-500/25 pointer-events-none will-change-transform"
+              className="absolute w-[360px] sm:w-[460px] md:w-[520px] h-[360px] sm:h-[460px] md:h-[520px] rounded-full border border-purple-500/30 pointer-events-none will-change-transform"
               style={{
-                boxShadow: "0 0 60px rgba(168,85,247,0.18), inset 0 0 40px rgba(168,85,247,0.1)",
+                boxShadow: "0 0 70px rgba(168,85,247,0.25), inset 0 0 50px rgba(168,85,247,0.12)",
               }}
             >
               {/* Orbital Glow Bead */}
-              <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-purple-400 shadow-[0_0_15px_#C084FC]" />
+              <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3.5 h-3.5 rounded-full bg-purple-300 shadow-[0_0_20px_#C084FC]" />
             </div>
 
             {/* Stylistic Handwritten Chalk Badge */}
-            <div className="absolute right-2 sm:right-6 top-8 z-30 pointer-events-none select-none rotate-6 text-right hidden sm:block">
-              <span className="font-serif italic text-purple-300 text-lg sm:text-xl font-normal leading-tight block opacity-90 drop-shadow-[0_0_12px_rgba(168,85,247,0.6)]">
+            <div className="absolute right-0 sm:right-2 top-4 sm:top-6 z-30 pointer-events-none select-none rotate-6 text-right">
+              <span className="font-serif italic text-purple-300 text-base sm:text-xl md:text-2xl font-normal leading-tight block opacity-95 drop-shadow-[0_0_15px_rgba(168,85,247,0.7)]">
                 Same Person <br />
                 <span className="text-white">Better Ideas</span>
               </span>
             </div>
 
-            {/* Gourab's High-Res Portrait with Smooth Bottom Gradient Fade */}
+            {/* Ambient Backlight for Portrait */}
+            <div className="absolute inset-0 max-w-[340px] max-h-[500px] m-auto bg-purple-600/20 blur-[60px] rounded-full pointer-events-none -z-0" />
+
+            {/* Gourab's Full High-Res Portrait */}
             <div
               ref={portraitRef}
-              className="relative z-10 w-[280px] sm:w-[350px] md:w-[390px] h-[400px] sm:h-[480px] md:h-[520px] will-change-transform"
+              className="relative z-10 w-[240px] sm:w-[300px] md:w-[340px] aspect-[9/19] will-change-transform rounded-3xl overflow-hidden border border-purple-500/20 shadow-[0_20px_60px_rgba(0,0,0,0.8),0_0_40px_rgba(168,85,247,0.2)] bg-[#090612]"
             >
-              <div className="relative w-full h-full [mask-image:linear-gradient(to_bottom,black_0%,black_75%,rgba(0,0,0,0.6)_88%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_0%,black_75%,rgba(0,0,0,0.6)_88%,transparent_100%)]">
+              <div className="relative w-full h-full">
                 <Image
                   src="/assets/gourab-portrait.png"
                   alt="Gourab — Ideas into Impact"
                   fill
                   priority
-                  className="object-cover object-top filter contrast-105 brightness-100"
+                  className="object-cover object-center filter contrast-105 brightness-105"
+                  sizes="(max-width: 640px) 240px, (max-width: 768px) 300px, 340px"
                 />
+                {/* Subtle bottom edge smooth blend */}
+                <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-[#090612]/90 to-transparent pointer-events-none" />
               </div>
             </div>
           </div>

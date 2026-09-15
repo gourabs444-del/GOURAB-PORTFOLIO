@@ -53,7 +53,8 @@ const config: Config = {
         "pulse-slow": "pulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite",
         "float-slow": "float 8s ease-in-out infinite",
         "glow-slow": "glow 4s ease-in-out infinite alternate",
-        "marquee": "marquee 25s linear infinite",
+        "marquee": "marquee 32s linear infinite",
+        "marquee-reverse": "marquee-reverse 32s linear infinite",
       },
       keyframes: {
         float: {
@@ -67,7 +68,11 @@ const config: Config = {
         marquee: {
           "0%": { transform: "translateX(0%)" },
           "100%": { transform: "translateX(-50%)" },
-        }
+        },
+        "marquee-reverse": {
+          "0%": { transform: "translateX(-50%)" },
+          "100%": { transform: "translateX(0%)" },
+        },
       },
       backgroundImage: {
         "radial-gradient": "radial-gradient(circle at center, var(--tw-gradient-stops))",
