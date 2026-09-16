@@ -14,6 +14,7 @@ export function IdeasIntoImpact() {
   const heroLayerRef = useRef<HTMLDivElement | null>(null);
   const ascensionRef = useRef<HTMLDivElement | null>(null);
   const portraitRef = useRef<HTMLDivElement | null>(null);
+  const shoulderBadgeRef = useRef<HTMLDivElement | null>(null);
   const auraRef = useRef<HTMLDivElement | null>(null);
   const leftContentRef = useRef<HTMLDivElement | null>(null);
   const cardsRef = useRef<HTMLDivElement | null>(null);
@@ -194,6 +195,30 @@ export function IdeasIntoImpact() {
         },
         0
       );
+
+      // Floating Spec HUD at right shoulder (synced with portrait)
+      if (shoulderBadgeRef.current) {
+        tl.fromTo(
+          shoulderBadgeRef.current,
+          {
+            opacity: 0,
+            x: isMobile ? 30 : 60,
+            y: 20,
+            scale: 0.8,
+            filter: "blur(6px)",
+          },
+          {
+            opacity: 1,
+            x: 0,
+            y: 0,
+            scale: 1,
+            filter: "blur(0px)",
+            duration: 2.8,
+            ease: "none",
+          },
+          0.1
+        );
+      }
 
       // Environmental Backlight Aura (deep expanding glow)
       tl.fromTo(
@@ -479,6 +504,22 @@ export function IdeasIntoImpact() {
         },
         7.9
       );
+
+      if (shoulderBadgeRef.current) {
+        tl.to(
+          shoulderBadgeRef.current,
+          {
+            opacity: 0,
+            x: isMobile ? 30 : 60,
+            y: 20,
+            scale: 0.8,
+            filter: "blur(6px)",
+            duration: 1.5,
+            ease: "none",
+          },
+          7.9
+        );
+      }
 
       tl.to(
         ascensionRef.current,
@@ -1355,8 +1396,23 @@ export function IdeasIntoImpact() {
                 <img
                   src="/assets/hero-hd.png"
                   alt="Gourab Creative Developer"
-                  className="w-auto h-full max-h-[540px] object-contain object-bottom scale-[1.08] sm:scale-[1.12] lg:scale-[1.15] origin-bottom translate-y-[65px] sm:translate-y-[85px] lg:translate-y-[100px] [mask-image:linear-gradient(to_bottom,black_60%,transparent_100%)] filter contrast-[1.05] brightness-[1.02]"
+                  className="w-auto h-full max-h-[540px] object-contain object-bottom scale-[1.08] sm:scale-[1.12] lg:scale-[1.15] origin-bottom translate-y-[65px] sm:translate-y-[85px] lg:translate-y-[100px] translate-x-4 sm:translate-x-8 lg:translate-x-12 [mask-image:linear-gradient(to_bottom,black_60%,transparent_100%)] filter contrast-[1.05] brightness-[1.02]"
                 />
+              </div>
+
+              {/* Right Shoulder Floating Editorial Paragraph (Beside shoulder, tiny white text) */}
+              <div
+                ref={shoulderBadgeRef}
+                className="hidden sm:flex absolute right-0 sm:right-2 lg:right-4 xl:right-8 top-[64%] sm:top-[62%] lg:top-[59%] -translate-y-1/2 z-25 flex-col gap-1.5 max-w-[145px] sm:max-w-[165px] lg:max-w-[185px] will-change-transform pointer-events-none select-none text-left"
+              >
+                <div className="text-white/60">
+                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-3 h-3">
+                    <path d="M12 0L14 10L24 12L14 14L12 24L10 14L0 12L10 10L12 0Z" />
+                  </svg>
+                </div>
+                <p className="font-sans text-[8.5px] sm:text-[9.5px] text-white/80 leading-[1.6] tracking-tight font-normal">
+                  Architecting scalable digital systems, bespoke WebGL interactions, and high-performance creative interfaces engineered with precision, motion, and distinction.
+                </p>
               </div>
             </div>
           </div>
@@ -1556,7 +1612,7 @@ export function IdeasIntoImpact() {
         {/* ========================================================= */}
         <div
           ref={slide3LayerRef}
-          className="absolute inset-0 w-full h-full flex flex-col items-center justify-between text-center overflow-hidden z-30 select-none pointer-events-none"
+          className="absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center overflow-hidden z-30 select-none pointer-events-none"
         >
           {/* AI-Generated 3D Lavender Ripple Sphere Background Canvas */}
           <div
@@ -1572,72 +1628,23 @@ export function IdeasIntoImpact() {
             />
 
             {/* Subtle atmospheric vignette and light diffusion */}
-            <div className="absolute inset-0 bg-gradient-to-b from-[#e5e1fa]/60 via-transparent to-[#ded9f9]/70 pointer-events-none" />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_40%,_rgba(220,214,248,0.45)_100%)] pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#e5e1fa]/40 via-transparent to-[#ded9f9]/50 pointer-events-none" />
           </div>
-
-          {/* Top spacer */}
-          <div className="w-full h-8 sm:h-12 relative z-10" />
 
           {/* Foreground Editorial Text Content */}
           <div
             ref={slide3ContentRef}
-            className="relative z-10 max-w-5xl mx-auto px-6 sm:px-10 md:px-14 flex flex-col items-center justify-center pointer-events-auto my-auto py-4"
+            className="relative z-10 max-w-4xl mx-auto px-6 sm:px-10 md:px-14 flex flex-col items-center justify-center pointer-events-auto py-6"
           >
-            {/* Category Pill with Sparkle */}
-            <div className="slide3-assemble-item inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/70 backdrop-blur-md border border-purple-300/40 text-[10px] sm:text-xs font-mono font-bold tracking-[0.25em] text-purple-950 uppercase mb-4 sm:mb-5 shadow-xs">
-              <span className="w-2 h-2 rounded-full bg-purple-600 animate-pulse" />
-              <span>✦ APPRECIATION // EPILOGUE</span>
-            </div>
-
-            {/* Editorial Bodoni Headline with Zero Clipping */}
-            <h2 className="slide3-assemble-item font-bodoni text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.4rem] text-neutral-950 font-medium tracking-tight leading-[1.24] sm:leading-[1.28] text-center mb-4 sm:mb-5 max-w-4xl overflow-visible">
-              <span className="block whitespace-nowrap overflow-visible drop-shadow-xs">Thank you for</span>
-              <span className="block whitespace-nowrap overflow-visible py-0.5">
-                <span className="font-bodoni italic font-normal bg-gradient-to-r from-purple-800 via-indigo-700 to-purple-900 bg-clip-text text-transparent inline-block pr-3 pl-0.5 pb-2 drop-shadow-xs">
-                  your time
-                </span>{" "}
-                <span className="text-neutral-900 font-medium">&amp; </span>
-                <span className="font-bodoni italic font-normal bg-gradient-to-r from-indigo-700 via-violet-700 to-purple-800 bg-clip-text text-transparent inline-block pr-3 pl-0.5 pb-2 drop-shadow-xs">
-                  vision.
-                </span>
-              </span>
+            {/* Clean Premium Modern Sans Headline */}
+            <h2 className="slide3-assemble-item font-sans font-bold text-3xl sm:text-5xl md:text-6xl lg:text-[4.2rem] text-[#1a1532] tracking-tight leading-[1.12] sm:leading-[1.14] text-center mb-3 sm:mb-4 max-w-3xl overflow-visible">
+              Thank you for your time &amp; vision.
             </h2>
 
-            {/* Sub-headline */}
-            <p className="slide3-assemble-item font-sans text-xs sm:text-sm md:text-base text-neutral-800/90 font-medium max-w-2xl mx-auto leading-relaxed mb-6 sm:mb-8">
+            {/* Tiny, Very Subtle Sub-headline */}
+            <p className="slide3-assemble-item font-sans text-[11px] sm:text-xs text-[#5a537d] font-normal max-w-md mx-auto leading-relaxed tracking-wide">
               Whether you have a breakthrough project, want to collaborate on ambitious digital experiences, or simply want to connect — let&apos;s create something remarkable together.
             </p>
-
-            {/* Interactive Action CTAs */}
-            <div className="slide3-assemble-item flex flex-wrap items-center justify-center gap-4">
-              <a
-                href="#contact"
-                onMouseEnter={() => playHover()}
-                className="inline-flex items-center gap-2.5 px-7 sm:px-9 py-3.5 sm:py-4 rounded-full bg-[#30284e] text-white hover:bg-[#201938] font-sans font-bold text-xs sm:text-sm tracking-tight transition-all duration-300 shadow-[0_12px_30px_rgba(48,40,78,0.3)] hover:shadow-[0_16px_36px_rgba(48,40,78,0.45)] hover:scale-105 active:scale-95 cursor-pointer"
-              >
-                <span>Start a Conversation</span>
-                <ArrowUpRight className="w-4 h-4" />
-              </a>
-
-              <a
-                href="#work"
-                onMouseEnter={() => playHover()}
-                className="inline-flex items-center justify-center px-7 sm:px-9 py-3.5 sm:py-4 rounded-full bg-white/70 backdrop-blur-md border border-purple-200 hover:border-purple-300 text-purple-950 font-sans font-semibold text-xs sm:text-sm tracking-tight transition-all duration-300 hover:bg-white/95 active:scale-95 cursor-pointer shadow-xs"
-              >
-                Explore Archive
-              </a>
-            </div>
-          </div>
-
-          {/* Bottom Trust Row (Matching Template Style) */}
-          <div className="slide3-assemble-item relative z-10 w-full max-w-4xl mx-auto pb-8 px-6 flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-neutral-600/70 font-display font-semibold text-xs sm:text-sm tracking-wider uppercase">
-            <span className="hover:text-purple-900 transition-colors">NEXT.JS</span>
-            <span className="hover:text-purple-900 transition-colors">TYPESCRIPT</span>
-            <span className="hover:text-purple-900 transition-colors">THREE.JS</span>
-            <span className="hover:text-purple-900 transition-colors">WEBGL</span>
-            <span className="hover:text-purple-900 transition-colors">GSAP 3</span>
-            <span className="hover:text-purple-900 transition-colors">TAILWIND</span>
           </div>
         </div>
       </div>
