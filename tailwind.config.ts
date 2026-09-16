@@ -55,6 +55,8 @@ const config: Config = {
         "glow-slow": "glow 4s ease-in-out infinite alternate",
         "marquee": "marquee 32s linear infinite",
         "marquee-reverse": "marquee-reverse 32s linear infinite",
+        "marquee-left": "marquee-left 40s linear infinite",
+        "marquee-right": "marquee-right 40s linear infinite",
       },
       keyframes: {
         float: {
@@ -71,6 +73,14 @@ const config: Config = {
         },
         "marquee-reverse": {
           "0%": { transform: "translateX(-50%)" },
+          "100%": { transform: "translateX(0%)" },
+        },
+        "marquee-left": {
+          "0%": { transform: "translateX(0%)" },
+          "100%": { transform: "translateX(-100%)" },
+        },
+        "marquee-right": {
+          "0%": { transform: "translateX(-100%)" },
           "100%": { transform: "translateX(0%)" },
         },
       },

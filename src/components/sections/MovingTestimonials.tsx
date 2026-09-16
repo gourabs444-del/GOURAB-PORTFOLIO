@@ -38,30 +38,15 @@ export function MovingTestimonials() {
     return () => ctx.revert();
   }, []);
 
-  // 4x duplication for completely seamless 100% gapless continuous marquee
-  const row1 = [
-    ...testimonials,
-    ...testimonials,
-    ...testimonials,
-    ...testimonials,
-  ];
-
-  const row2 = [
-    ...testimonials.slice(2),
-    ...testimonials.slice(0, 2),
-    ...testimonials.slice(2),
-    ...testimonials.slice(0, 2),
+  // 12-item sets for bulletproof ultra-wide screen coverage
+  const set1 = [...testimonials, ...testimonials];
+  const set2 = [
     ...testimonials.slice(2),
     ...testimonials.slice(0, 2),
     ...testimonials.slice(2),
     ...testimonials.slice(0, 2),
   ];
-
-  const row3 = [
-    ...testimonials.slice(4),
-    ...testimonials.slice(0, 4),
-    ...testimonials.slice(4),
-    ...testimonials.slice(0, 4),
+  const set3 = [
     ...testimonials.slice(4),
     ...testimonials.slice(0, 4),
     ...testimonials.slice(4),
@@ -198,25 +183,49 @@ export function MovingTestimonials() {
         </div>
       </div>
 
-      {/* Infinite Fluid Testimonial Stream (3 Robust Gapless Rows) */}
+      {/* Infinite Fluid Testimonial Stream (3 Robust Gapless Double-Strip Rows) */}
       <div className="relative w-full flex flex-col gap-5 sm:gap-6 overflow-hidden pointer-events-auto">
         {/* Left & Right Gradient Horizon Fade Masks */}
         <div className="pointer-events-none absolute inset-y-0 left-0 w-24 sm:w-48 bg-gradient-to-r from-[#050507] via-[#050507]/80 to-transparent z-20" />
         <div className="pointer-events-none absolute inset-y-0 right-0 w-24 sm:w-48 bg-gradient-to-l from-[#050507] via-[#050507]/80 to-transparent z-20" />
 
-        {/* Stream Track 1 (Left) */}
-        <div className="flex w-max gap-5 sm:gap-6 animate-marquee will-change-transform hover:[animation-play-state:paused]">
-          {row1.map((t, i) => renderCard(t, `r1-${i}`))}
+        {/* Row 1 (Moves Left) */}
+        <div className="flex w-full overflow-hidden select-none gap-5 sm:gap-6">
+          <div className="flex shrink-0 gap-5 sm:gap-6 animate-marquee-left hover:[animation-play-state:paused]">
+            {set1.map((t, i) => renderCard(t, `r1a-${i}`))}
+          </div>
+          <div
+            className="flex shrink-0 gap-5 sm:gap-6 animate-marquee-left hover:[animation-play-state:paused]"
+            aria-hidden="true"
+          >
+            {set1.map((t, i) => renderCard(t, `r1b-${i}`))}
+          </div>
         </div>
 
-        {/* Stream Track 2 (Right) */}
-        <div className="flex w-max gap-5 sm:gap-6 animate-marquee-reverse will-change-transform hover:[animation-play-state:paused]">
-          {row2.map((t, i) => renderCard(t, `r2-${i}`))}
+        {/* Row 2 (Moves Right) */}
+        <div className="flex w-full overflow-hidden select-none gap-5 sm:gap-6">
+          <div className="flex shrink-0 gap-5 sm:gap-6 animate-marquee-right hover:[animation-play-state:paused]">
+            {set2.map((t, i) => renderCard(t, `r2a-${i}`))}
+          </div>
+          <div
+            className="flex shrink-0 gap-5 sm:gap-6 animate-marquee-right hover:[animation-play-state:paused]"
+            aria-hidden="true"
+          >
+            {set2.map((t, i) => renderCard(t, `r2b-${i}`))}
+          </div>
         </div>
 
-        {/* Stream Track 3 (Left) */}
-        <div className="flex w-max gap-5 sm:gap-6 animate-marquee will-change-transform hover:[animation-play-state:paused]">
-          {row3.map((t, i) => renderCard(t, `r3-${i}`))}
+        {/* Row 3 (Moves Left) */}
+        <div className="flex w-full overflow-hidden select-none gap-5 sm:gap-6">
+          <div className="flex shrink-0 gap-5 sm:gap-6 animate-marquee-left hover:[animation-play-state:paused]">
+            {set3.map((t, i) => renderCard(t, `r3a-${i}`))}
+          </div>
+          <div
+            className="flex shrink-0 gap-5 sm:gap-6 animate-marquee-left hover:[animation-play-state:paused]"
+            aria-hidden="true"
+          >
+            {set3.map((t, i) => renderCard(t, `r3b-${i}`))}
+          </div>
         </div>
       </div>
     </section>
