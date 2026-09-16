@@ -40,7 +40,7 @@ html.lenis body {
 body {
   background-color: var(--background);
   color: var(--foreground);
-  overflow-x: hidden;
+  overflow-x: clip;
   font-family: var(--font-plus-jakarta), sans-serif;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -92,3 +92,46 @@ body {
     scroll-behavior: auto !important;
   }
 }
+
+/* 100% Flicker-Free GPU-Accelerated Marquee Loops */
+@keyframes marquee-scroll-left {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes marquee-scroll-right {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.animate-marquee-track-left {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
+  animation: marquee-scroll-left 50s linear infinite;
+}
+
+.animate-marquee-track-right {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
+  animation: marquee-scroll-right 50s linear infinite;
+}
+
+.animate-marquee-track-left:hover,
+.animate-marquee-track-right:hover {
+  animation-play-state: paused;
+}
+

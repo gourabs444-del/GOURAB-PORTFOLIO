@@ -38,15 +38,15 @@ export function MovingTestimonials() {
     return () => ctx.revert();
   }, []);
 
-  // 12-item sets for bulletproof ultra-wide screen coverage
-  const set1 = [...testimonials, ...testimonials];
-  const set2 = [
+  // 2 sets per row = exact 50% translation loop with zero flicker
+  const row1 = [...testimonials, ...testimonials];
+  const row2 = [
     ...testimonials.slice(2),
     ...testimonials.slice(0, 2),
     ...testimonials.slice(2),
     ...testimonials.slice(0, 2),
   ];
-  const set3 = [
+  const row3 = [
     ...testimonials.slice(4),
     ...testimonials.slice(0, 4),
     ...testimonials.slice(4),
@@ -183,48 +183,30 @@ export function MovingTestimonials() {
         </div>
       </div>
 
-      {/* Infinite Fluid Testimonial Stream (3 Robust Gapless Double-Strip Rows) */}
+      {/* Infinite Fluid Testimonial Stream (3 Completely Flicker-Free GPU Accelerated Rows) */}
       <div className="relative w-full flex flex-col gap-5 sm:gap-6 overflow-hidden pointer-events-auto">
         {/* Left & Right Gradient Horizon Fade Masks */}
         <div className="pointer-events-none absolute inset-y-0 left-0 w-24 sm:w-48 bg-gradient-to-r from-[#050507] via-[#050507]/80 to-transparent z-20" />
         <div className="pointer-events-none absolute inset-y-0 right-0 w-24 sm:w-48 bg-gradient-to-l from-[#050507] via-[#050507]/80 to-transparent z-20" />
 
-        {/* Row 1 (Moves Left) */}
-        <div className="flex w-full overflow-hidden select-none gap-5 sm:gap-6">
-          <div className="flex shrink-0 gap-5 sm:gap-6 animate-marquee-left hover:[animation-play-state:paused]">
-            {set1.map((t, i) => renderCard(t, `r1a-${i}`))}
-          </div>
-          <div
-            className="flex shrink-0 gap-5 sm:gap-6 animate-marquee-left hover:[animation-play-state:paused]"
-            aria-hidden="true"
-          >
-            {set1.map((t, i) => renderCard(t, `r1b-${i}`))}
+        {/* Row 1 (Smooth Left) */}
+        <div className="flex w-full overflow-hidden select-none">
+          <div className="animate-marquee-track-left gap-5 sm:gap-6 pr-5 sm:pr-6">
+            {row1.map((t, i) => renderCard(t, `r1-${i}`))}
           </div>
         </div>
 
-        {/* Row 2 (Moves Right) */}
-        <div className="flex w-full overflow-hidden select-none gap-5 sm:gap-6">
-          <div className="flex shrink-0 gap-5 sm:gap-6 animate-marquee-right hover:[animation-play-state:paused]">
-            {set2.map((t, i) => renderCard(t, `r2a-${i}`))}
-          </div>
-          <div
-            className="flex shrink-0 gap-5 sm:gap-6 animate-marquee-right hover:[animation-play-state:paused]"
-            aria-hidden="true"
-          >
-            {set2.map((t, i) => renderCard(t, `r2b-${i}`))}
+        {/* Row 2 (Smooth Right) */}
+        <div className="flex w-full overflow-hidden select-none">
+          <div className="animate-marquee-track-right gap-5 sm:gap-6 pr-5 sm:pr-6">
+            {row2.map((t, i) => renderCard(t, `r2-${i}`))}
           </div>
         </div>
 
-        {/* Row 3 (Moves Left) */}
-        <div className="flex w-full overflow-hidden select-none gap-5 sm:gap-6">
-          <div className="flex shrink-0 gap-5 sm:gap-6 animate-marquee-left hover:[animation-play-state:paused]">
-            {set3.map((t, i) => renderCard(t, `r3a-${i}`))}
-          </div>
-          <div
-            className="flex shrink-0 gap-5 sm:gap-6 animate-marquee-left hover:[animation-play-state:paused]"
-            aria-hidden="true"
-          >
-            {set3.map((t, i) => renderCard(t, `r3b-${i}`))}
+        {/* Row 3 (Smooth Left) */}
+        <div className="flex w-full overflow-hidden select-none">
+          <div className="animate-marquee-track-left gap-5 sm:gap-6 pr-5 sm:pr-6">
+            {row3.map((t, i) => renderCard(t, `r3-${i}`))}
           </div>
         </div>
       </div>
