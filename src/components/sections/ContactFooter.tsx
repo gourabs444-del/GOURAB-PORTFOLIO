@@ -5,15 +5,11 @@ import { siteConfig } from "@/data/siteConfig";
 import {
   ArrowUpRight,
   ArrowUp,
-  Copy,
-  Check,
   MapPin,
   Clock,
-  Mail,
 } from "lucide-react";
 
 export function ContactFooter() {
-  const [copied, setCopied] = useState(false);
   const [timeString, setTimeString] = useState<string>("");
 
   useEffect(() => {
@@ -34,12 +30,6 @@ export function ContactFooter() {
     return () => clearInterval(interval);
   }, []);
 
-  const handleCopyEmail = () => {
-    navigator.clipboard.writeText(siteConfig.contact.email || "gourabs444@gmail.com");
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -57,7 +47,6 @@ export function ContactFooter() {
     { label: "Reel", id: "showreel" },
     { label: "Pipeline", id: "pipeline" },
     { label: "Experience", id: "experience" },
-    { label: "Reviews", id: "testimonials" },
   ];
 
   return (
@@ -71,59 +60,9 @@ export function ContactFooter() {
         aria-hidden="true"
       />
 
-      <div className="max-w-6xl mx-auto flex flex-col gap-14 sm:gap-18 relative z-10">
+      <div className="max-w-6xl mx-auto flex flex-col gap-12 sm:gap-16 relative z-10">
         {/* ========================================================= */}
-        {/* 1. CLEAN HERO INVITATION & DIRECT ACTION                  */}
-        {/* ========================================================= */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 pb-12 border-b border-white/[0.08]">
-          <div className="flex flex-col gap-4 max-w-xl">
-            {/* Live Availability Status */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/10 text-xs font-mono text-neutral-300 w-fit">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
-              <span>Available for Select Projects &bull; 2026</span>
-            </div>
-
-            {/* Editorial Bodoni Headline */}
-            <h2 className="font-bodoni font-medium text-4xl sm:text-5xl md:text-6xl text-white tracking-tight leading-[1.08]">
-              Let&apos;s build something <br />
-              <span className="font-bodoni italic font-normal bg-gradient-to-r from-amber-200 via-amber-400 to-amber-500 bg-clip-text text-transparent">
-                extraordinary together.
-              </span>
-            </h2>
-          </div>
-
-          {/* Email Action Buttons */}
-          <div className="flex flex-wrap items-center gap-3">
-            <a
-              href={`mailto:${siteConfig.contact.email || "gourabs444@gmail.com"}`}
-              className="group inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-white text-black hover:bg-amber-300 font-sans font-semibold text-xs sm:text-sm tracking-tight transition-all duration-300 shadow-[0_0_25px_rgba(255,255,255,0.1)] hover:scale-[1.02] active:scale-95 cursor-pointer"
-            >
-              <Mail className="w-4 h-4 text-black" />
-              <span>{siteConfig.contact.email || "gourabs444@gmail.com"}</span>
-              <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </a>
-
-            <button
-              onClick={handleCopyEmail}
-              className="group inline-flex items-center gap-2 px-4 py-3.5 rounded-full bg-white/[0.03] border border-white/10 hover:border-white/25 text-neutral-300 hover:text-white font-mono text-xs tracking-wider transition-all duration-300 hover:bg-white/[0.06] active:scale-95 cursor-pointer"
-            >
-              {copied ? (
-                <>
-                  <Check className="w-3.5 h-3.5 text-emerald-400" />
-                  <span className="text-emerald-400 font-semibold">COPIED</span>
-                </>
-              ) : (
-                <>
-                  <Copy className="w-3.5 h-3.5 text-neutral-400 group-hover:text-white transition-colors" />
-                  <span>COPY</span>
-                </>
-              )}
-            </button>
-          </div>
-        </div>
-
-        {/* ========================================================= */}
-        {/* 2. MINIMAL 3-COLUMN PORTFOLIO MATRIX                      */}
+        {/* MINIMAL 3-COLUMN PORTFOLIO MATRIX                         */}
         {/* ========================================================= */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-8 items-start">
           {/* Col 1: Identity & Live Info (5 cols) */}
