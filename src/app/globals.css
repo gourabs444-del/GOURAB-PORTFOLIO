@@ -93,44 +93,41 @@ body {
   }
 }
 
-/* Bulletproof 100% Seamless Continuous Infinite Marquee */
-@keyframes continuous-marquee-left {
-  from {
+/* Seamless Hardware-Accelerated Marquee Animations */
+@keyframes marquee-stream-left {
+  0% {
     transform: translate3d(0, 0, 0);
   }
-  to {
-    transform: translate3d(calc(-100% - 1.5rem), 0, 0);
+  100% {
+    transform: translate3d(-50%, 0, 0);
   }
 }
 
-@keyframes continuous-marquee-right {
-  from {
-    transform: translate3d(calc(-100% - 1.5rem), 0, 0);
+@keyframes marquee-stream-right {
+  0% {
+    transform: translate3d(-50%, 0, 0);
   }
-  to {
+  100% {
     transform: translate3d(0, 0, 0);
   }
 }
 
-.animate-loop-left {
+.animate-stream-left {
   display: flex;
-  flex-shrink: 0;
-  gap: 1.5rem;
-  animation: continuous-marquee-left 36s linear infinite;
+  width: max-content;
   will-change: transform;
+  animation: marquee-stream-left 45s linear infinite;
 }
 
-.animate-loop-right {
+.animate-stream-right {
   display: flex;
-  flex-shrink: 0;
-  gap: 1.5rem;
-  animation: continuous-marquee-right 36s linear infinite;
+  width: max-content;
   will-change: transform;
+  animation: marquee-stream-right 45s linear infinite;
 }
 
-.group:hover .animate-loop-left,
-.group:hover .animate-loop-right {
+.animate-stream-left:hover,
+.animate-stream-right:hover {
   animation-play-state: paused;
 }
-
 

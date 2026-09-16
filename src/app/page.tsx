@@ -26,7 +26,7 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="relative min-h-screen w-full bg-background text-foreground overflow-x-hidden">
+    <main className="relative min-h-screen w-full bg-background text-foreground overflow-x-clip">
       {/* Cinematic Intro Preloader */}
       <Preloader onComplete={handleLoaded} />
 
@@ -37,15 +37,29 @@ export default function Home() {
       {/* Main Navigation */}
       <Header />
 
-      {/* Editorial Content Sections */}
-      <Hero isLoaded={isLoaded} />
-      <AboutManifesto />
-      <SelectedWork />
-      <Showreel />
-      <ProcessPipeline />
-      <ExperienceTimeline />
-      <MovingTestimonials />
-      <ContactFooter />
+      {/* 1. SCROLLABLE HERO INTRO CONTAINER (200vh) WITH CINEMA PORTAL STAGE */}
+      <div
+        id="hero-intro-container"
+        className="relative w-full h-[200vh] bg-[#050507] overflow-visible"
+      >
+        <div className="sticky top-0 h-screen w-full overflow-hidden z-10 flex items-center justify-center p-0">
+          <Hero isLoaded={isLoaded} />
+        </div>
+      </div>
+
+      {/* 2. OVERLAPPING MAIN DARK DRAWER SHEET (Slides up seamlessly over White Hero) */}
+      <div
+        id="main-drawer-sheet"
+        className="relative z-30 -mt-[100vh] bg-[#050507] rounded-t-[2.5rem] sm:rounded-t-[3.5rem] border-t border-white/10 overflow-hidden"
+      >
+        <AboutManifesto />
+        <SelectedWork />
+        <Showreel />
+        <ProcessPipeline />
+        <ExperienceTimeline />
+        <MovingTestimonials />
+        <ContactFooter />
+      </div>
     </main>
   );
 }

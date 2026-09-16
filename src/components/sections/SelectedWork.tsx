@@ -6,17 +6,17 @@ import { ScrollTrigger } from "@/lib/gsap";
 import { projects, Project } from "@/data/projects";
 import { ProjectModal } from "./ProjectModal";
 import { useAudioFeedback } from "@/hooks/useAudioFeedback";
-import { ArrowUpRight, Sparkles, ArrowRight } from "lucide-react";
+import { ArrowUpRight, Heart } from "lucide-react";
 import Image from "next/image";
 
 export function SelectedWork() {
-  const containerRef = useRef<HTMLDivElement | null>(null);
+  const containerRef = useRef<HTMLElement | null>(null);
   const listRef = useRef<HTMLDivElement | null>(null);
+
   const [selectedCategory, setSelectedCategory] = useState<string>("ALL");
   const [activeProject, setActiveProject] = useState<Project | null>(null);
+  const [favorites, setFavorites] = useState<Record<string, boolean>>({});
   const { playHover, playClick } = useAudioFeedback();
-
-  const headerRef = useRef<HTMLDivElement | null>(null);
 
   const categories = ["ALL", "AI Systems", "Creative Dev", "Full-Stack", "Motion & Film"];
 
@@ -25,31 +25,16 @@ export function SelectedWork() {
       ? projects
       : projects.filter((p) => p.category === selectedCategory);
 
-  // Sequential Entrance Animation
+  const toggleFavorite = (e: React.MouseEvent, id: string) => {
+    e.stopPropagation();
+    playClick();
+    setFavorites((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
+
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // 1. Header reveal
-      if (headerRef.current) {
-        gsap.fromTo(
-          headerRef.current.querySelectorAll(".header-reveal"),
-          { opacity: 0, y: 25 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.7,
-            stagger: 0.08,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: headerRef.current,
-              start: "top 82%",
-              toggleActions: "play none none reverse",
-            },
-          }
-        );
-      }
-
-      // 2. Project Cards symmetrical entrance
-      const cards = listRef.current?.querySelectorAll(".project-card");
+      // Project Cards Staggered Entrance
+      const cards = listRef.current?.querySelectorAll(".showcase-card");
       if (cards && cards.length > 0) {
         gsap.fromTo(
           cards,
@@ -58,7 +43,7 @@ export function SelectedWork() {
             opacity: 1,
             y: 0,
             duration: 0.75,
-            stagger: 0.12,
+            stagger: 0.08,
             ease: "power3.out",
             scrollTrigger: {
               trigger: listRef.current,
@@ -77,52 +62,24 @@ export function SelectedWork() {
     <section
       id="work"
       ref={containerRef}
-      className="relative py-24 sm:py-32 md:py-36 px-6 sm:px-10 md:px-16 lg:px-20 bg-[#040407] text-[#F4F4F6] overflow-hidden select-none border-t border-white/[0.08]"
+      className="relative w-full overflow-visible bg-transparent select-none py-16 sm:py-24"
     >
-      {/* Background Soft Ambient Light */}
-      <div
-        className="pointer-events-none absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[450px] bg-[radial-gradient(ellipse_at_center,_rgba(245,158,11,0.06)_0%,_rgba(56,189,248,0.03)_40%,_transparent_75%)] blur-[140px] rounded-full"
-        aria-hidden="true"
-      />
-
-      <div className="max-w-7xl mx-auto flex flex-col gap-12 md:gap-16 relative z-10">
-        {/* ========================================================= */}
-        {/* 1. EDITORIAL SECTION HEADER                               */}
-        {/* ========================================================= */}
-        <div
-          ref={headerRef}
-          className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-8 border-b border-white/[0.08]"
-        >
-          <div className="flex flex-col gap-3 max-w-2xl">
-            {/* Tag */}
-            <div className="header-reveal inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white/[0.03] border border-white/10 text-xs font-mono tracking-widest uppercase text-neutral-300 w-fit">
-              <span className="w-2 h-2 rounded-full bg-amber-400 shadow-[0_0_8px_#F59E0B]" />
-              <span className="text-white font-semibold">02 // SELECTED WORK</span>
-              <span className="text-white/20">/</span>
-              <span className="text-neutral-400">ARCHIVE 2024 &mdash; 2026</span>
-            </div>
-
-            <h2 className="header-reveal font-bodoni font-medium text-4xl sm:text-5xl md:text-6xl text-white tracking-tight leading-[1.05]">
-              SELECTED <br />
-              <span className="font-bodoni italic font-normal bg-gradient-to-r from-amber-200 via-amber-400 to-amber-500 bg-clip-text text-transparent drop-shadow-[0_0_25px_rgba(245,158,11,0.2)]">
-                WORKS &amp; ARTIFACTS
-              </span>
+      <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+        {/* Header */}
+        <div className="mb-10 border-b border-white/10 pb-6 flex flex-col sm:flex-row sm:items-end justify-between gap-6">
+          <div>
+            <span className="text-[10px] font-bold uppercase tracking-[.28em] text-neutral-400 block mb-1.5 font-mono">
+              The Collection
+            </span>
+            <h2 className="font-bodoni text-3xl sm:text-4xl lg:text-5xl text-white font-normal tracking-tight">
+              Selected Works
             </h2>
-
-            <p className="header-reveal font-sans text-xs sm:text-sm text-neutral-300 leading-relaxed max-w-xl font-light">
-              High-throughput digital platforms, spatial WebGL environments, and autonomous AI architectures engineered with obsessive precision.
-            </p>
           </div>
 
-          {/* Clean Category Filter Tabs */}
-          <div className="header-reveal flex flex-wrap items-center gap-1.5 p-1 rounded-2xl bg-white/[0.03] border border-white/[0.08] backdrop-blur-md self-start lg:self-end">
+          {/* Category Filter Pills */}
+          <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md self-start sm:self-end">
             {categories.map((cat) => {
-              const count =
-                cat === "ALL"
-                  ? projects.length
-                  : projects.filter((p) => p.category === cat).length;
               const isSelected = selectedCategory === cat;
-
               return (
                 <button
                   key={cat}
@@ -131,135 +88,110 @@ export function SelectedWork() {
                     setSelectedCategory(cat);
                   }}
                   onMouseEnter={() => playHover()}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-mono transition-all duration-200 flex items-center gap-1.5 cursor-pointer ${
+                  className={`px-3.5 py-1.5 rounded-xl text-xs font-sans font-medium transition-all duration-200 cursor-pointer ${
                     isSelected
-                      ? "bg-amber-400 text-black font-semibold shadow-[0_0_15px_rgba(245,158,11,0.35)]"
-                      : "text-neutral-400 hover:text-white hover:bg-white/[0.04]"
+                      ? "bg-white text-black font-semibold shadow-sm"
+                      : "text-neutral-400 hover:text-white hover:bg-white/10"
                   }`}
                 >
                   <span>{cat}</span>
-                  <span className={`text-[10px] ${isSelected ? "text-black/70" : "text-neutral-600"}`}>
-                    [{count}]
-                  </span>
                 </button>
               );
             })}
           </div>
         </div>
 
-        {/* ========================================================= */}
-        {/* 2. SYMMETRIC LEVEL-MATCHED 2-COLUMN LUXURY GRID           */}
-        {/* ========================================================= */}
-        <div
-          ref={listRef}
-          className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 items-stretch"
-        >
-          {filteredProjects.map((project) => (
-            <article
-              key={project.id}
-              onClick={() => {
-                playClick();
-                setActiveProject(project);
-              }}
-              onMouseEnter={() => playHover()}
-              className="project-card group relative flex flex-col justify-between p-3.5 sm:p-4 rounded-2xl bg-white/[0.02] hover:bg-white/[0.04] border border-white/[0.07] hover:border-amber-400/40 transition-all duration-300 hover:shadow-[0_20px_50px_-10px_rgba(0,0,0,0.8),0_0_25px_rgba(245,158,11,0.05)] cursor-pointer"
-            >
-              {/* Image Container with Sleek Hover Zoom */}
-              <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl bg-[#090A0F] border border-white/[0.06] group-hover:border-white/20 transition-all duration-500">
-                <Image
-                  src={project.heroImage}
-                  alt={project.title}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-105 filter contrast-[1.02] brightness-95 group-hover:brightness-105"
-                />
+          {/* Cards Grid */}
+          <div
+            ref={listRef}
+            id="grid-all-projects"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 items-stretch"
+          >
+            {filteredProjects.map((project) => {
+              const isFav = !!favorites[project.id];
 
-                {/* Subtle Gradient Overlay */}
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
-
-                {/* Corner Hover Action Arrow */}
-                <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-white flex items-center justify-center transition-all duration-300 group-hover:bg-amber-400 group-hover:text-black group-hover:scale-110 shadow-lg">
-                  <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </div>
-              </div>
-
-              {/* Minimal Clean Content Area - Mudda Ki Baat */}
-              <div className="flex flex-col gap-2.5 pt-4 px-1 pb-1 text-left">
-                {/* Meta Header Line */}
-                <div className="flex items-center justify-between text-[11px] font-mono">
-                  <div className="flex items-center gap-2">
-                    <span className="text-amber-400 font-bold">
-                      // {project.number}
-                    </span>
-                    <span className="text-neutral-700">/</span>
-                    <span className="uppercase tracking-wider text-neutral-300 font-medium">
-                      {project.category}
-                    </span>
+              return (
+                <div
+                  key={project.id}
+                  onClick={() => {
+                    playClick();
+                    setActiveProject(project);
+                  }}
+                  onMouseEnter={() => playHover()}
+                  className="showcase-card group bg-[#0c0d11] rounded-[22px] p-2.5 sm:p-3 flex flex-col justify-between cursor-pointer transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_20px_45px_-10px_rgba(0,0,0,0.35)]"
+                >
+                  {/* Image Container with Apple-style Clean Bevel */}
+                  <div className="relative aspect-[16/10.5] w-full rounded-[16px] overflow-hidden bg-[#08090b]">
+                    <Image
+                      src={project.heroImage}
+                      alt={project.title}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.05]"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   </div>
 
-                  <span className="text-neutral-500">
-                    {project.year} &bull; {project.client.split("//")[1]?.trim() || "GLOBAL"}
-                  </span>
+                  {/* Card Details */}
+                  <div className="pt-3 px-1 pb-0.5 w-full">
+                    <div className="flex items-center justify-between gap-3 w-full min-w-0">
+                      <div className="min-w-0 flex-1">
+                        <h3 className="text-[14px] sm:text-[15px] font-bold text-white group-hover:text-purple-300 transition-colors truncate block leading-snug font-sans">
+                          {project.title}
+                        </h3>
+                        <span className="text-[11px] sm:text-[12px] font-medium text-white/50 tracking-wide truncate block mt-0.5 font-sans">
+                          {project.category} &bull; {project.client.split("//")[0]?.trim()}
+                        </span>
+                      </div>
+
+                      {/* Right Action Icons: Letterboxd Stars, Fav Heart, Arrow */}
+                      <div className="flex items-center gap-1.5 shrink-0">
+                        {/* Rating Stars */}
+                        <div
+                          className="flex items-center text-[#00e054] text-[12px] font-bold select-none tracking-tight"
+                          title="Rating: 4.9 ★"
+                        >
+                          <span className="text-[#00e054] font-mono tracking-tighter text-[13px]">
+                            ★★★★★
+                          </span>
+                        </div>
+
+                        {/* Favorite Heart Button */}
+                        <button
+                          onClick={(e) => toggleFavorite(e, project.id)}
+                          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/5 hover:bg-white/10 text-white/40 hover:text-red-500 active:scale-90 transition-all cursor-pointer flex items-center justify-center border border-white/10"
+                          aria-label="Toggle Favorite"
+                        >
+                          <Heart
+                            className={`w-3.5 h-3.5 transition-colors ${
+                              isFav ? "fill-red-500 text-red-500" : "text-white/60"
+                            }`}
+                          />
+                        </button>
+
+                        {/* Direct Visit / Case Study Button */}
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (project.liveUrl) {
+                              window.open(project.liveUrl, "_blank");
+                            } else {
+                              setActiveProject(project);
+                            }
+                          }}
+                          className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/5 hover:bg-white/10 text-white/60 hover:text-white transition-all flex items-center justify-center border border-white/10"
+                          title="Visit project"
+                        >
+                          <ArrowUpRight className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-
-                {/* Title & Arrow */}
-                <h3 className="font-bodoni font-bold text-2xl sm:text-3xl text-white tracking-tight group-hover:text-amber-300 transition-colors duration-200">
-                  {project.title}
-                </h3>
-
-                {/* 1-Line Clean Professional Tagline */}
-                <p className="font-sans text-xs sm:text-sm text-neutral-400 leading-relaxed font-light line-clamp-2">
-                  {project.tagline || project.description}
-                </p>
-
-                {/* Tech Highlights */}
-                <div className="pt-2 border-t border-white/[0.06] flex flex-wrap items-center gap-1.5 text-[11px] font-mono text-neutral-400">
-                  {project.technologies.slice(0, 4).map((tech, tIdx) => (
-                    <span
-                      key={tIdx}
-                      className="px-2 py-0.5 rounded-md bg-white/[0.03] border border-white/[0.06] text-neutral-300"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                  {project.technologies.length > 4 && (
-                    <span className="text-neutral-600 text-[10px]">
-                      +{project.technologies.length - 4}
-                    </span>
-                  )}
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
-
-        {/* ========================================================= */}
-        {/* 3. ARCHITECTURAL FOOTER BANNER                            */}
-        {/* ========================================================= */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 text-xs font-mono text-neutral-400 p-6 sm:p-7 rounded-2xl bg-white/[0.02] border border-white/[0.06]">
-          <div className="flex items-center gap-3">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
-            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-              <span className="text-white font-semibold">LOOKING FOR BESPOKE ARCHITECTURE?</span>
-              <span className="text-neutral-500 hidden sm:inline">&bull;</span>
-              <span className="text-neutral-400">Accepting select client commissions for 2026</span>
-            </div>
+              );
+            })}
           </div>
-
-          <a
-            href="#contact"
-            onClick={() => {
-              playClick();
-              const el = document.getElementById("contact");
-              if (el) el.scrollIntoView({ behavior: "smooth" });
-            }}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-amber-400 hover:bg-amber-300 text-black font-sans font-bold text-xs tracking-tight shadow-[0_0_20px_rgba(245,158,11,0.3)] transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer w-fit"
-          >
-            <span>Initiate Project Brief</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </a>
         </div>
-      </div>
 
       {/* Interactive Case Study Modal */}
       <ProjectModal

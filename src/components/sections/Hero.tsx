@@ -12,6 +12,8 @@ interface HeroProps {
 
 export function Hero({ isLoaded }: HeroProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const heroContentRef = useRef<HTMLDivElement | null>(null);
+  const dimOverlayRef = useRef<HTMLDivElement | null>(null);
   const portraitRef = useRef<HTMLDivElement | null>(null);
   const headlineTopRef = useRef<HTMLHeadingElement | null>(null);
   const headlineBottomRef = useRef<HTMLHeadingElement | null>(null);
@@ -20,33 +22,59 @@ export function Hero({ isLoaded }: HeroProps) {
   const ctaGroupRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Subtle scroll parallax
-      gsap.to(portraitRef.current, {
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: 1,
-        },
-        y: 50,
-        ease: "none",
-      });
+    const introEl = document.getElementById("hero-intro-container");
+    const contentEl = heroContentRef.current;
+    const dimEl = dimOverlayRef.current;
 
-      gsap.to([headlineTopRef.current, headlineBottomRef.current], {
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top top",
-          end: "60% top",
-          scrub: 1,
-        },
-        y: -40,
-        opacity: 0.3,
-        ease: "none",
-      });
-    }, containerRef);
+    if (!introEl || !contentEl) return;
 
-    return () => ctx.revert();
+    const updateHeroTransform = (progress: number) => {
+      const p = Math.max(0, Math.min(1, progress));
+      const scale = 1 - p * 0.16; // from 1.0 down to 0.84
+      const translateY = -p * (window.innerHeight * 0.30);
+      const opacity = Math.max(0.08, 1 - p * 0.9);
+
+      contentEl.style.transform = `translate3d(0, ${translateY.toFixed(1)}px, 0) scale(${scale.toFixed(4)})`;
+      contentEl.style.opacity = opacity.toFixed(3);
+
+      if (dimEl) {
+        dimEl.style.opacity = (p * 0.72).toFixed(3);
+      }
+    };
+
+    // 1. GSAP ScrollTrigger synchronized with Lenis
+    const st = ScrollTrigger.create({
+      trigger: introEl,
+      start: "top top",
+      end: "bottom bottom",
+      scrub: true,
+      onUpdate: (self) => {
+        updateHeroTransform(self.progress);
+      },
+    });
+
+    // 2. High-performance scroll listener for instant hardware lockstep
+    const onScroll = () => {
+      const rect = introEl.getBoundingClientRect();
+      const travel = introEl.offsetHeight - window.innerHeight;
+      if (travel <= 0) return;
+      const scrolled = -rect.top;
+      const p = scrolled / travel;
+      updateHeroTransform(p);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", () => {
+      ScrollTrigger.refresh();
+      onScroll();
+    }, { passive: true });
+
+    onScroll();
+
+    return () => {
+      st.kill();
+      window.removeEventListener("scroll", onScroll);
+    };
   }, [isLoaded]);
 
   const scrollToSection = (id: string) => {
@@ -60,8 +88,19 @@ export function Hero({ isLoaded }: HeroProps) {
     <section
       id="hero"
       ref={containerRef}
-      className="relative min-h-[92vh] sm:min-h-screen w-full flex flex-col justify-between pt-24 sm:pt-28 md:pt-32 pb-8 sm:pb-10 px-4 sm:px-8 md:px-16 overflow-hidden bg-white text-[#111111] select-none"
+      className="relative w-full h-full min-h-screen overflow-hidden bg-white text-[#111111] select-none"
     >
+      {/* GPU Dimming Overlay */}
+      <div
+        ref={dimOverlayRef}
+        className="absolute inset-0 bg-black pointer-events-none opacity-0 z-40 will-change-[opacity]"
+      />
+
+      {/* Main Hero Content (Shrinks & Fades Smoothly with 0 CPU lag) */}
+      <div
+        ref={heroContentRef}
+        className="relative h-full min-h-screen w-full flex flex-col justify-between pt-24 sm:pt-28 md:pt-32 pb-8 sm:pb-10 px-4 sm:px-8 md:px-16 will-change-[transform,opacity] transform-gpu origin-center"
+      >
       {/* Main 2-Line Layered Typography & Centered Cutout Portrait Scene */}
       <div
         className="relative my-auto w-full max-w-7xl mx-auto flex flex-col items-center justify-center py-2 sm:py-4 min-h-[320px] xs:min-h-[360px] sm:min-h-[440px] md:min-h-[500px] lg:min-h-[540px]"
@@ -183,6 +222,7 @@ export function Hero({ isLoaded }: HeroProps) {
       <div className="lg:hidden text-center mt-2 text-xs font-sans text-neutral-500 flex items-center justify-center gap-1.5">
         <MapPin className="w-3 h-3 text-neutral-700" />
         <span>based in India • Available Worldwide</span>
+      </div>
       </div>
     </section>
   );

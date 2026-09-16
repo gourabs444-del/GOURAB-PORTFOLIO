@@ -14,7 +14,6 @@ export function MovingTestimonials() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Header entrance animation
       if (headerRef.current) {
         gsap.fromTo(
           headerRef.current.querySelectorAll(".header-item"),
@@ -38,20 +37,24 @@ export function MovingTestimonials() {
     return () => ctx.revert();
   }, []);
 
-  // 12-card sets to guarantee full coverage on all viewports (Mobile to 4K Ultrawide)
-  const row1 = [...testimonials, ...testimonials];
-  const row2 = [
+  // 12-item base arrays duplicated to 24 items to guarantee 100% gapless loop on all viewports (Mobile to 5K)
+  const base1 = [...testimonials, ...testimonials];
+  const base2 = [
     ...testimonials.slice(2),
     ...testimonials.slice(0, 2),
     ...testimonials.slice(2),
     ...testimonials.slice(0, 2),
   ];
-  const row3 = [
+  const base3 = [
     ...testimonials.slice(4),
     ...testimonials.slice(0, 4),
     ...testimonials.slice(4),
     ...testimonials.slice(0, 4),
   ];
+
+  const row1 = [...base1, ...base1];
+  const row2 = [...base2, ...base2];
+  const row3 = [...base3, ...base3];
 
   const renderCard = (t: Testimonial, keyId: string) => {
     const accent = t.highlightColor || "#38BDF8";
@@ -71,10 +74,10 @@ export function MovingTestimonials() {
           aria-hidden="true"
         />
 
-        {/* Letterboxd Top Bar: Avatar, "Review by Author", Green Stars & Year, Company Badge */}
+        {/* Top Bar: Avatar, Author, Letterboxd Green Stars & Year, Company Badge */}
         <div className="flex items-start justify-between relative z-10 gap-3">
           <div className="flex items-center gap-2.5 min-w-0">
-            {/* Reviewer Monogram Avatar */}
+            {/* Monogram Avatar */}
             <div className="w-8 h-8 rounded-full bg-white/[0.06] border border-white/10 flex items-center justify-center font-mono text-xs font-semibold text-white/90 shrink-0 group-hover/card:border-emerald-500/40 transition-colors shadow-inner">
               {t.avatar}
             </div>
@@ -109,12 +112,12 @@ export function MovingTestimonials() {
           </span>
         </div>
 
-        {/* Letterboxd Review Body */}
+        {/* Review Body */}
         <p className="relative z-10 font-sans text-xs sm:text-[13px] text-neutral-300 leading-relaxed font-normal line-clamp-3">
           {t.quote}
         </p>
 
-        {/* Letterboxd Footer: Role & Letterboxd Like Counter */}
+        {/* Footer: Role & Letterboxd Like Counter */}
         <div className="pt-2.5 border-t border-white/[0.06] flex items-center justify-between relative z-10 text-xs">
           <span className="font-sans text-[11px] text-neutral-400 truncate max-w-[220px]">
             {t.role}
@@ -183,39 +186,30 @@ export function MovingTestimonials() {
         </div>
       </div>
 
-      {/* Infinite Fluid Testimonial Stream (3 Robust Gapless Double-Strip Rows) */}
+      {/* Infinite Fluid Testimonial Stream (3 Gapless Continuous Rows) */}
       <div className="relative w-full flex flex-col gap-6 overflow-hidden pointer-events-auto">
         {/* Left & Right Gradient Horizon Fade Masks */}
         <div className="pointer-events-none absolute inset-y-0 left-0 w-24 sm:w-48 bg-gradient-to-r from-[#050507] via-[#050507]/80 to-transparent z-20" />
         <div className="pointer-events-none absolute inset-y-0 right-0 w-24 sm:w-48 bg-gradient-to-l from-[#050507] via-[#050507]/80 to-transparent z-20" />
 
-        {/* Row 1 (Moves Left Continuously) */}
-        <div className="group flex w-full overflow-hidden select-none gap-6">
-          <div className="animate-loop-left">
-            {row1.map((t, i) => renderCard(t, `r1-a-${i}`))}
-          </div>
-          <div className="animate-loop-left" aria-hidden="true">
-            {row1.map((t, i) => renderCard(t, `r1-b-${i}`))}
+        {/* Row 1: Leftward Stream */}
+        <div className="flex w-full overflow-hidden select-none">
+          <div className="animate-stream-left gap-6 pr-6">
+            {row1.map((t, i) => renderCard(t, `r1-${i}`))}
           </div>
         </div>
 
-        {/* Row 2 (Moves Right Continuously) */}
-        <div className="group flex w-full overflow-hidden select-none gap-6">
-          <div className="animate-loop-right">
-            {row2.map((t, i) => renderCard(t, `r2-a-${i}`))}
-          </div>
-          <div className="animate-loop-right" aria-hidden="true">
-            {row2.map((t, i) => renderCard(t, `r2-b-${i}`))}
+        {/* Row 2: Rightward Stream */}
+        <div className="flex w-full overflow-hidden select-none">
+          <div className="animate-stream-right gap-6 pr-6">
+            {row2.map((t, i) => renderCard(t, `r2-${i}`))}
           </div>
         </div>
 
-        {/* Row 3 (Moves Left Continuously) */}
-        <div className="group flex w-full overflow-hidden select-none gap-6">
-          <div className="animate-loop-left">
-            {row3.map((t, i) => renderCard(t, `r3-a-${i}`))}
-          </div>
-          <div className="animate-loop-left" aria-hidden="true">
-            {row3.map((t, i) => renderCard(t, `r3-b-${i}`))}
+        {/* Row 3: Leftward Stream */}
+        <div className="flex w-full overflow-hidden select-none">
+          <div className="animate-stream-left gap-6 pr-6">
+            {row3.map((t, i) => renderCard(t, `r3-${i}`))}
           </div>
         </div>
       </div>

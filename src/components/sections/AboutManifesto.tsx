@@ -81,7 +81,7 @@ export function AboutManifesto() {
     <section
       id="about"
       ref={containerRef}
-      className="relative min-h-[90vh] w-full flex flex-col justify-between py-24 sm:py-32 md:py-40 px-6 sm:px-12 md:px-20 lg:px-28 bg-[#050507] text-[#F4F4F6] overflow-hidden select-none border-t border-white/[0.08]"
+      className="relative min-h-[90vh] w-full flex flex-col justify-between pt-20 sm:pt-28 md:pt-36 pb-24 sm:pb-32 px-6 sm:px-12 md:px-20 lg:px-28 bg-[#050507] text-[#F4F4F6] overflow-hidden select-none"
     >
       {/* Gentle Ambient Dark Atmosphere */}
       <div
