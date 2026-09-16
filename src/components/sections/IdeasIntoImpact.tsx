@@ -74,10 +74,16 @@ export function IdeasIntoImpact() {
         ? cardsRef.current.querySelectorAll(".service-card-anim")
         : [];
 
-      // Initial states of sequential layers
       if (ctaLayerRef.current) gsap.set(ctaLayerRef.current, { opacity: 0, pointerEvents: "none" });
       if (slide2LayerRef.current) gsap.set(slide2LayerRef.current, { opacity: 0, pointerEvents: "none" });
-      if (slide3LayerRef.current) gsap.set(slide3LayerRef.current, { opacity: 0, pointerEvents: "none" });
+      if (slide3LayerRef.current) {
+        gsap.set(slide3LayerRef.current, { opacity: 0, pointerEvents: "none" });
+        const initialSlide3Items = slide3LayerRef.current.querySelectorAll(".slide3-assemble-item");
+        if (initialSlide3Items.length > 0) {
+          gsap.set(initialSlide3Items, { opacity: 0, y: isMobile ? 35 : 60, filter: "blur(10px)" });
+        }
+      }
+      if (slide3BgRef.current) gsap.set(slide3BgRef.current, { opacity: 0, scale: 1.08, filter: "blur(12px)" });
 
       // -----------------------------------------------------------------------
       // Dynamic Center Spotlight: Cards in the middle are larger & fully colored;
@@ -774,8 +780,8 @@ export function IdeasIntoImpact() {
       }
 
       // -----------------------------------------------------------------------
-      // 8. SLIDE 3 ASSEMBLES: WHITE BACKGROUND & NEW FONT & NEW COLOURS (Time: 15.8 -> 17.6)
-      // "Engineering digital products with purpose, power & distinction."
+      // 8. SLIDE 3 ASSEMBLES: 3D LAVENDER RIPPLE IMAGE REVEALS FIRST (Time: 15.4 -> 18.6)
+      // Background reveals first, and THEN the Thank You text gracefully animates in
       // -----------------------------------------------------------------------
       if (slide3LayerRef.current) {
         tl.fromTo(
@@ -787,60 +793,64 @@ export function IdeasIntoImpact() {
           {
             opacity: 1,
             pointerEvents: "auto",
-            duration: 1.2,
-            ease: "power2.out",
+            duration: 0.8,
+            ease: "none",
           },
-          15.8
+          15.4
         );
       }
 
+      // Step 1: Background image scales and fades in FIRST
       if (slide3BgRef.current) {
         tl.fromTo(
           slide3BgRef.current,
           {
-            clipPath: "polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)",
             opacity: 0,
+            scale: 1.08,
+            filter: "blur(12px)",
           },
           {
-            clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
             opacity: 1,
+            scale: 1,
+            filter: "blur(0px)",
             duration: 1.6,
-            ease: "power3.inOut",
+            ease: "power2.out",
           },
-          15.8
+          15.5
         );
       }
 
-      const slide3Items = slide3ContentRef.current
-        ? slide3ContentRef.current.querySelectorAll(".slide3-assemble-item")
+      // Step 2: Thank You text & CTAs assemble AFTER background image is fully revealed
+      const allSlide3Items = slide3LayerRef.current
+        ? slide3LayerRef.current.querySelectorAll(".slide3-assemble-item")
         : [];
 
-      if (slide3Items.length > 0) {
+      if (allSlide3Items.length > 0) {
         tl.fromTo(
-          slide3Items,
+          allSlide3Items,
           {
             opacity: 0,
-            y: isMobile ? 40 : 70,
+            y: isMobile ? 35 : 60,
             scale: 0.94,
-            filter: "blur(8px)",
+            filter: "blur(10px)",
           },
           {
             opacity: 1,
             y: 0,
             scale: 1,
             filter: "blur(0px)",
-            stagger: 0.08,
-            duration: 1.6,
+            stagger: 0.1,
+            duration: 1.5,
             ease: "power3.out",
           },
-          16.3
+          16.9
         );
       }
 
       // -----------------------------------------------------------------------
-      // 9. HOLD SLIDE 3 (Time: 17.6 -> 19.2)
+      // 9. HOLD SLIDE 3 (Time: 18.6 -> 20.6)
       // -----------------------------------------------------------------------
-      tl.to({}, { duration: 1.6 }, 17.6);
+      tl.to({}, { duration: 2.0 }, 18.6);
 
       return () => {
         window.removeEventListener("resize", updateCardSpotlight);

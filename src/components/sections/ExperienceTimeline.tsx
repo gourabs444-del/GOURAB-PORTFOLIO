@@ -66,7 +66,7 @@ export function ExperienceTimeline() {
     <section
       id="experience"
       ref={sectionRef}
-      className="relative py-28 sm:py-36 md:py-48 px-6 sm:px-12 md:px-20 lg:px-28 bg-[#050508] text-[#F4F4F6] border-t border-white/[0.08] select-none overflow-hidden"
+      className="relative py-28 sm:py-36 md:py-48 px-6 sm:px-12 md:px-20 lg:px-28 bg-black text-[#F4F4F6] border-t border-white/[0.08] select-none overflow-hidden"
     >
       {/* Dynamic Chromatic Ambient Light Mesh */}
       <div
@@ -75,12 +75,6 @@ export function ExperienceTimeline() {
         style={{
           background: `radial-gradient(circle at center, ${activeExp.glowColor} 0%, transparent 70%)`,
         }}
-        aria-hidden="true"
-      />
-
-      {/* Subtle Infographic Architectural Grid Background */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.025] bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:4rem_4rem]"
         aria-hidden="true"
       />
 
