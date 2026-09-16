@@ -74,11 +74,16 @@ export function ContactFooter() {
       id="contact"
       className="relative w-full bg-[#050508] text-[#F4F4F6] border-t border-white/[0.08] select-none pt-16 sm:pt-24 pb-10 sm:pb-12 px-6 sm:px-12 md:px-16 lg:px-24 overflow-hidden font-sans"
     >
-      {/* Subtle Ambient Radial Lighting */}
-      <div
-        className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 w-[600px] h-[250px] bg-[radial-gradient(ellipse_at_top,_rgba(139,92,246,0.06)_0%,_transparent_70%)]"
-        aria-hidden="true"
-      />
+      {/* 3D Lavender Ripple Sphere Artwork Background Layer */}
+      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden select-none">
+        <div
+          className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat opacity-40 mix-blend-screen scale-105 filter brightness-110 saturate-125"
+          style={{ backgroundImage: `url('/assets/thank-you-ripple.jpg')` }}
+        />
+        {/* Cinematic dark gradients to preserve perfect readability of footer text */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#050508]/80 via-[#050508]/60 to-[#050508]/90" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(139,92,246,0.15)_0%,_transparent_75%)]" />
+      </div>
 
       <div className="max-w-6xl mx-auto flex flex-col gap-12 sm:gap-16 relative z-10">
         {/* ========================================================= */}

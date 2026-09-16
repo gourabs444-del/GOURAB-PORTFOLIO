@@ -1614,21 +1614,26 @@ export function IdeasIntoImpact() {
           ref={slide3LayerRef}
           className="absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center overflow-hidden z-30 select-none pointer-events-none"
         >
-          {/* AI-Generated 3D Lavender Ripple Sphere Background Canvas */}
+          {/* Pure White Luxury Background Canvas */}
           <div
             ref={slide3BgRef}
-            className="absolute inset-0 w-full h-full will-change-transform z-0 overflow-hidden shadow-[0_-20px_50px_rgba(0,0,0,0.15)]"
+            className="absolute inset-0 w-full h-full will-change-transform z-0 overflow-hidden bg-[#fbfbfd] shadow-[0_-20px_50px_rgba(0,0,0,0.15)]"
           >
-            {/* Background Image */}
-            <div
-              className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat transition-transform duration-1000 scale-100"
-              style={{
-                backgroundImage: `url('/assets/thank-you-ripple.jpg')`,
-              }}
-            />
+            {/* Subtle atmospheric ambient glow on white */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,_rgba(240,238,255,0.8)_0%,_rgba(251,251,253,1)_70%)] pointer-events-none" />
 
-            {/* Subtle atmospheric vignette and light diffusion */}
-            <div className="absolute inset-0 bg-gradient-to-b from-[#e5e1fa]/40 via-transparent to-[#ded9f9]/50 pointer-events-none" />
+            {/* Background Watermark on White Canvas */}
+            <div
+              className="pointer-events-none absolute top-1/2 left-0 -translate-y-1/2 w-full flex items-center justify-center select-none -z-0 overflow-visible opacity-40"
+              aria-hidden="true"
+            >
+              <div
+                className="flex whitespace-nowrap text-neutral-900/[0.04] font-display font-black text-6xl sm:text-8xl md:text-9xl lg:text-[11rem] tracking-tight uppercase leading-none"
+              >
+                <span>GRATITUDE &bull; VISION &bull; COLLABORATION &bull; FUTURE &bull; </span>
+                <span>GRATITUDE &bull; VISION &bull; COLLABORATION &bull; FUTURE &bull; </span>
+              </div>
+            </div>
           </div>
 
           {/* Foreground Editorial Text Content */}
@@ -1641,7 +1646,7 @@ export function IdeasIntoImpact() {
               <span className="block font-editorial font-bold text-3xl sm:text-5xl md:text-6xl lg:text-[4.2rem] text-[#0a0717] tracking-[-0.04em] leading-[1.1]">
                 Thank you for
               </span>
-              <span className="block font-serif italic font-normal text-4xl sm:text-6xl md:text-7xl lg:text-[5.4rem] leading-[1.06] bg-gradient-to-r from-[#1e1347] via-[#4338ca] to-[#7c3aed] bg-clip-text text-transparent drop-shadow-[0_4px_28px_rgba(67,56,202,0.25)] py-0.5">
+              <span className="block font-serif italic font-normal text-4xl sm:text-6xl md:text-7xl lg:text-[5.4rem] leading-[1.06] bg-gradient-to-r from-[#1e1347] via-[#4338ca] to-[#7c3aed] bg-clip-text text-transparent drop-shadow-[0_4px_28px_rgba(67,56,202,0.18)] py-0.5">
                 your time &amp; vision.
               </span>
             </h2>
