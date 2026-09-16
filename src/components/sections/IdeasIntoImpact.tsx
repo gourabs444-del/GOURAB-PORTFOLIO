@@ -1612,7 +1612,7 @@ export function IdeasIntoImpact() {
         {/* ========================================================= */}
         <div
           ref={slide3LayerRef}
-          className="absolute inset-0 w-full h-full flex flex-col items-center justify-start pt-20 sm:pt-24 md:pt-32 text-center overflow-hidden z-30 select-none pointer-events-none"
+          className="absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center overflow-hidden z-30 select-none pointer-events-none px-6 sm:px-10"
         >
           {/* AI-Generated 3D Lavender Ripple Sphere Background Canvas */}
           <div
@@ -1634,7 +1634,7 @@ export function IdeasIntoImpact() {
           {/* Foreground Editorial Text Content */}
           <div
             ref={slide3ContentRef}
-            className="relative z-10 max-w-4xl mx-auto px-6 sm:px-10 md:px-14 flex flex-col items-center justify-center pointer-events-auto"
+            className="relative z-10 max-w-4xl mx-auto flex flex-col items-center justify-center pointer-events-auto my-auto py-6"
           >
             {/* Ultra-Luxury Editorial Bodoni Headline with Deep Indigo/Violet Color Theory */}
             <h2 className="slide3-assemble-item font-bodoni text-3xl sm:text-5xl md:text-6xl lg:text-[4.8rem] text-[#120d26] font-medium tracking-tight leading-[1.12] sm:leading-[1.15] text-center mb-3 sm:mb-4 max-w-4xl overflow-visible">
