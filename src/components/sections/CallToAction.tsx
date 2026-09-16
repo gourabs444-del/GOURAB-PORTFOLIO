@@ -65,15 +65,15 @@ export function CallToAction() {
       {/* ========================================================= */}
       <div className="relative z-10 flex flex-col items-center max-w-6xl mx-auto overflow-visible py-2">
         {/* Editorial Bodoni Headline - Guaranteed 3 Clean Lines with Zero Clipping */}
-        <h2 className="font-bodoni font-medium text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.5rem] text-white tracking-tight leading-[1.2] sm:leading-[1.24] text-center px-4 overflow-visible">
+        <h2 className="font-bodoni font-medium text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.4rem] text-white tracking-tight leading-[1.3] sm:leading-[1.34] text-center px-4 overflow-visible">
           <span className="block whitespace-nowrap overflow-visible">Let&apos;s build</span>
-          <span className="block whitespace-nowrap overflow-visible py-0.5">
+          <span className="block whitespace-nowrap overflow-visible py-1">
             something{" "}
-            <span className="font-bodoni italic font-normal bg-gradient-to-r from-amber-200 via-amber-400 to-amber-500 bg-clip-text text-transparent inline-block pr-2 py-0.5">
+            <span className="font-bodoni italic font-normal bg-gradient-to-r from-amber-200 via-amber-400 to-amber-500 bg-clip-text text-transparent inline-block pr-4 pl-0.5 pt-1 pb-3 leading-[1.3] overflow-visible">
               extraordinary
             </span>
           </span>
-          <span className="block font-bodoni italic font-normal bg-gradient-to-r from-sky-200 via-cyan-300 to-teal-300 bg-clip-text text-transparent whitespace-nowrap overflow-visible pr-2 py-0.5">
+          <span className="block font-bodoni italic font-normal bg-gradient-to-r from-sky-200 via-cyan-300 to-teal-300 bg-clip-text text-transparent whitespace-nowrap overflow-visible pr-4 pl-0.5 pt-1 pb-3 leading-[1.3]">
             together.
           </span>
         </h2>

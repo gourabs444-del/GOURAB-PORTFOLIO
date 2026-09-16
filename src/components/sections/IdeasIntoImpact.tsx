@@ -19,11 +19,22 @@ export function IdeasIntoImpact() {
   const cardsRef = useRef<HTMLDivElement | null>(null);
   const cardsTrackRef = useRef<HTMLDivElement | null>(null);
 
-  // Layer B refs (Let's build something extraordinary together CTA)
+  // Slide 1 refs (Let's build something extraordinary together CTA)
   const ctaLayerRef = useRef<HTMLDivElement | null>(null);
   const ctaHeadingRef = useRef<HTMLHeadingElement | null>(null);
   const ctaWatermarkRef = useRef<HTMLDivElement | null>(null);
   const ctaAuraRef = useRef<HTMLDivElement | null>(null);
+
+  // Slide 2 refs (Crafting Experiences That Transcend Pixels & Code - Modern Display)
+  const slide2LayerRef = useRef<HTMLDivElement | null>(null);
+  const slide2ContentRef = useRef<HTMLDivElement | null>(null);
+  const slide2WatermarkRef = useRef<HTMLDivElement | null>(null);
+  const slide2AuraRef = useRef<HTMLDivElement | null>(null);
+
+  // Slide 3 refs (White Background Editorial Manifesto Layer - Swiss/Bodoni on White)
+  const slide3LayerRef = useRef<HTMLDivElement | null>(null);
+  const slide3BgRef = useRef<HTMLDivElement | null>(null);
+  const slide3ContentRef = useRef<HTMLDivElement | null>(null);
 
   const { playHover } = useAudioFeedback();
 
@@ -50,25 +61,34 @@ export function IdeasIntoImpact() {
       const leftItems = leftContentRef.current
         ? leftContentRef.current.querySelectorAll(".assemble-item")
         : [];
+      const socialLabel = leftContentRef.current
+        ? leftContentRef.current.querySelector(".social-label-anim")
+        : null;
+      const socialLine = leftContentRef.current
+        ? leftContentRef.current.querySelector(".social-line-anim")
+        : null;
+      const socialIcons = leftContentRef.current
+        ? leftContentRef.current.querySelectorAll(".social-icon-item")
+        : [];
       const cardItems = cardsRef.current
         ? cardsRef.current.querySelectorAll(".service-card-anim")
         : [];
 
-      // Initial state of CTA Layer
-      if (ctaLayerRef.current) {
-        gsap.set(ctaLayerRef.current, { opacity: 0, pointerEvents: "none" });
-      }
+      // Initial states of sequential layers
+      if (ctaLayerRef.current) gsap.set(ctaLayerRef.current, { opacity: 0, pointerEvents: "none" });
+      if (slide2LayerRef.current) gsap.set(slide2LayerRef.current, { opacity: 0, pointerEvents: "none" });
+      if (slide3LayerRef.current) gsap.set(slide3LayerRef.current, { opacity: 0, pointerEvents: "none" });
 
       // -----------------------------------------------------------------------
       // Dynamic Center Spotlight: Cards in the middle are larger & fully colored;
-      // cards entering/leaving are significantly smaller & desaturated
+      // all side/incoming/outgoing cards are faded and completely desaturated
       // -----------------------------------------------------------------------
       const updateCardSpotlight = () => {
         if (!cardsRef.current || !cardsTrackRef.current) return;
         const containerRect = cardsRef.current.getBoundingClientRect();
         const centerX = containerRect.left + containerRect.width / 2;
-        // Focus radius: cards within ~32% of container width are in focal zone
-        const focusRadius = Math.max(containerRect.width * 0.32, 220);
+        // Tight focal radius focused specifically on the center card (~22% width)
+        const focusRadius = Math.max(containerRect.width * 0.22, 160);
 
         const cardElements = cardsTrackRef.current.children;
         for (let i = 0; i < cardElements.length; i++) {
@@ -83,30 +103,32 @@ export function IdeasIntoImpact() {
           // Normalized distance: 0 at center, 1 at edge of focus radius
           const ratio = Math.min(Math.max(dist / focusRadius, 0), 1);
 
-          // Smooth cosine curve: 1.0 at center -> 0.0 at outer edges
-          const focusProgress = Math.cos((ratio * Math.PI) / 2);
+          // Cosine focus progress: 1.0 at center -> 0.0 at outer edges
+          const rawProgress = Math.cos((ratio * Math.PI) / 2);
+          // Tight power curve so only the exact middle card has full focus
+          const tightFocus = Math.pow(rawProgress, 1.8);
 
-          // Scale: Center is 1.04 (bada dikhega), Sides shrink to 0.72
-          const scale = 0.72 + focusProgress * 0.32;
+          // Scale: Center is 1.04 (bada), Sides shrink to 0.68 (chota)
+          const scale = 0.68 + tightFocus * 0.36;
 
-          // Grayscale: Center is 0% (full vibrant color), Sides are 50%
-          const grayscale = (1 - focusProgress) * 50;
+          // Grayscale: Center is 0% (vivid color), Sides are 100% (completely desaturated!)
+          const grayscale = (1 - tightFocus) * 100;
 
-          // Opacity: Center is 1.0, Sides are 0.92
-          const opacity = 0.92 + focusProgress * 0.08;
+          // Opacity: Center is 1.0, Sides are 0.32 (faded into background)
+          const opacity = 0.32 + tightFocus * 0.68;
 
-          // Brightness: Center is 1.0, Sides are 0.88
-          const brightness = 0.88 + focusProgress * 0.12;
+          // Brightness: Center is 1.0, Sides are 0.55 (dimmed)
+          const brightness = 0.55 + tightFocus * 0.45;
 
           inner.style.transform = `scale(${scale.toFixed(3)})`;
           inner.style.filter = `grayscale(${grayscale.toFixed(1)}%) brightness(${brightness.toFixed(2)})`;
           inner.style.opacity = `${opacity.toFixed(3)}`;
-          inner.style.zIndex = focusProgress > 0.5 ? "20" : "1";
+          inner.style.zIndex = tightFocus > 0.4 ? "30" : "1";
 
-          if (focusProgress > 0.5) {
-            inner.style.boxShadow = `0 20px 48px -10px rgba(0,0,0,0.6), 0 0 32px rgba(255,255,255,${((focusProgress - 0.5) * 0.25).toFixed(2)})`;
+          if (tightFocus > 0.4) {
+            inner.style.boxShadow = `0 24px 50px -10px rgba(0,0,0,0.7), 0 0 32px rgba(255,255,255,${(tightFocus * 0.35).toFixed(2)})`;
           } else {
-            inner.style.boxShadow = "0 8px 24px -4px rgba(0,0,0,0.35)";
+            inner.style.boxShadow = "none";
           }
         }
       };
@@ -183,7 +205,7 @@ export function IdeasIntoImpact() {
         0
       );
 
-      // Left Content items (headline, paragraph, social icons, CTA buttons from deep left)
+      // Left Content items (headline, paragraph, availability status, CTA buttons from deep left)
       if (leftItems.length > 0) {
         tl.fromTo(
           leftItems,
@@ -208,18 +230,105 @@ export function IdeasIntoImpact() {
         );
       }
 
-      // 12 Service Bento Cards Rise & Unblur (y: 60 -> 0)
+      // "CONNECT WITH ME" label slide-in
+      if (socialLabel) {
+        tl.fromTo(
+          socialLabel,
+          {
+            opacity: 0,
+            x: isMobile ? -40 : -80,
+            filter: "blur(6px)",
+          },
+          {
+            opacity: 1,
+            x: 0,
+            filter: "blur(0px)",
+            duration: 2.5,
+            ease: "none",
+          },
+          0.1
+        );
+      }
+
+      // Accent glowing line expands from left
+      if (socialLine) {
+        tl.fromTo(
+          socialLine,
+          {
+            scaleX: 0,
+            opacity: 0,
+            transformOrigin: "left center",
+          },
+          {
+            scaleX: 1,
+            opacity: 1,
+            duration: 2.2,
+            ease: "none",
+          },
+          0.2
+        );
+      }
+
+      // 4 Social Icon Cards (LinkedIn, GitHub, Instagram, Gmail) - 3D Spring Pop & Stagger
+      if (socialIcons.length > 0) {
+        tl.fromTo(
+          socialIcons,
+          {
+            opacity: 0,
+            scale: 0.15,
+            y: isMobile ? 35 : 55,
+            rotate: -20,
+            filter: "blur(8px)",
+            transformOrigin: "center center",
+          },
+          {
+            opacity: 1,
+            scale: 1,
+            y: 0,
+            rotate: 0,
+            filter: "blur(0px)",
+            stagger: 0.09,
+            duration: 2.8,
+            ease: "none",
+          },
+          0.05
+        );
+      }
+
+      // 12 Service Bento Cards Scale Assemble (starts small & blurred, gradually expands to original size synced at 3.0)
+      if (cardsRef.current) {
+        tl.fromTo(
+          cardsRef.current,
+          {
+            opacity: 0,
+            scale: 0.55,
+            y: isMobile ? 50 : 90,
+            filter: "blur(8px)",
+            transformOrigin: "center bottom",
+          },
+          {
+            opacity: 1,
+            scale: 1,
+            y: 0,
+            filter: "blur(0px)",
+            duration: 3.0,
+            ease: "none",
+          },
+          0
+        );
+      }
+
       if (cardItems.length > 0) {
         tl.fromTo(
           cardItems,
           {
             opacity: 0,
-            y: isMobile ? 60 : 100,
-            filter: "blur(6px)",
+            scale: 0.85,
+            filter: "blur(4px)",
           },
           {
             opacity: 1,
-            y: 0,
+            scale: 1,
             filter: "blur(0px)",
             stagger: 0.02,
             duration: 2.8,
@@ -230,21 +339,22 @@ export function IdeasIntoImpact() {
       }
 
       // -----------------------------------------------------------------------
-      // 2. 12-CARD SHOWCASE REEL (Time: 3.0 -> 7.8)
-      // Slides cards 01 through 12 across the center spotlight
+      // 12-CARD CONTINUOUS ROLLING SHOWCASE REEL (Time: 0.0 -> 7.8)
+      // Starts rolling immediately from the very beginning (0.0) simultaneously
+      // as the hero elements, boy portrait & typography assemble!
       // -----------------------------------------------------------------------
       if (cardsTrackRef.current) {
         tl.fromTo(
           cardsTrackRef.current,
           {
-            xPercent: 12,
+            xPercent: 20,
           },
           {
             xPercent: -75,
-            duration: 4.8,
+            duration: 7.8,
             ease: "none",
           },
-          3.0
+          0
         );
       }
 
@@ -283,6 +393,40 @@ export function IdeasIntoImpact() {
             ease: "power3.in",
           },
           7.8
+        );
+      }
+
+      if (socialIcons.length > 0) {
+        tl.to(
+          socialIcons,
+          {
+            opacity: 0,
+            scale: 0.15,
+            y: 35,
+            rotate: 20,
+            filter: "blur(8px)",
+            stagger: {
+              each: 0.04,
+              from: "end",
+            },
+            duration: 1.4,
+            ease: "power2.in",
+          },
+          7.8
+        );
+      }
+
+      if (socialLabel) {
+        tl.to(
+          socialLabel,
+          {
+            opacity: 0,
+            x: isMobile ? -40 : -80,
+            filter: "blur(6px)",
+            duration: 1.4,
+            ease: "none",
+          },
+          7.9
         );
       }
 
@@ -354,9 +498,8 @@ export function IdeasIntoImpact() {
       );
 
       // -----------------------------------------------------------------------
-      // 4. CTA LAYER MORPH IN PLACE (Time: 8.9 -> 10.5)
+      // 4. SLIDE 1 ASSEMBLES: "Let's build something extraordinary together" (Time: 8.9 -> 10.3)
       // -----------------------------------------------------------------------
-
       if (ctaWatermarkRef.current) {
         tl.fromTo(
           ctaWatermarkRef.current,
@@ -427,10 +570,277 @@ export function IdeasIntoImpact() {
         );
       }
 
+      // HOLD SLIDE 1 (Time: 10.3 -> 11.4)
+      tl.to({}, { duration: 1.1 }, 10.3);
+
       // -----------------------------------------------------------------------
-      // 5. HOLD CTA LAYER (Time: 10.5 -> 11.8)
+      // 5. SLIDE 1 REVERSE ANIMATES OUT (Time: 11.4 -> 12.6)
       // -----------------------------------------------------------------------
-      tl.to({}, { duration: 1.3 }, 10.5);
+      if (ctaHeadingRef.current) {
+        tl.to(
+          ctaHeadingRef.current,
+          {
+            opacity: 0,
+            y: isMobile ? -30 : -55,
+            scale: 0.94,
+            filter: "blur(8px)",
+            duration: 1.2,
+            ease: "power2.in",
+          },
+          11.4
+        );
+      }
+
+      if (ctaWatermarkRef.current) {
+        tl.to(
+          ctaWatermarkRef.current,
+          {
+            opacity: 0,
+            xPercent: -30,
+            duration: 1.2,
+            ease: "none",
+          },
+          11.4
+        );
+      }
+
+      if (ctaAuraRef.current) {
+        tl.to(
+          ctaAuraRef.current,
+          {
+            opacity: 0,
+            scale: 0.3,
+            duration: 1.2,
+            ease: "none",
+          },
+          11.4
+        );
+      }
+
+      if (ctaLayerRef.current) {
+        tl.to(
+          ctaLayerRef.current,
+          {
+            opacity: 0,
+            duration: 0.6,
+            ease: "none",
+          },
+          12.0
+        );
+      }
+
+      // -----------------------------------------------------------------------
+      // 6. SLIDE 2 ASSEMBLES: NEW FONT & NEW NEON PALETTE (Time: 12.2 -> 13.8)
+      // "Crafting experiences that transcend pixels & code."
+      // -----------------------------------------------------------------------
+      if (slide2LayerRef.current) {
+        tl.fromTo(
+          slide2LayerRef.current,
+          {
+            opacity: 0,
+            pointerEvents: "none",
+          },
+          {
+            opacity: 1,
+            pointerEvents: "auto",
+            duration: 1.2,
+            ease: "power2.out",
+          },
+          12.2
+        );
+      }
+
+      if (slide2AuraRef.current) {
+        tl.fromTo(
+          slide2AuraRef.current,
+          {
+            opacity: 0,
+            scale: 0.5,
+          },
+          {
+            opacity: 1,
+            scale: 1,
+            duration: 1.4,
+            ease: "power2.out",
+          },
+          12.3
+        );
+      }
+
+      if (slide2WatermarkRef.current) {
+        tl.fromTo(
+          slide2WatermarkRef.current,
+          {
+            xPercent: 8,
+            opacity: 0,
+          },
+          {
+            xPercent: -15,
+            opacity: 1,
+            duration: 2.2,
+            ease: "none",
+          },
+          12.3
+        );
+      }
+
+      const slide2Items = slide2ContentRef.current
+        ? slide2ContentRef.current.querySelectorAll(".slide2-assemble-item")
+        : [];
+
+      if (slide2Items.length > 0) {
+        tl.fromTo(
+          slide2Items,
+          {
+            opacity: 0,
+            y: isMobile ? 35 : 60,
+            scale: 0.92,
+            filter: "blur(8px)",
+          },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            filter: "blur(0px)",
+            stagger: 0.08,
+            duration: 1.4,
+            ease: "power3.out",
+          },
+          12.5
+        );
+      }
+
+      // HOLD SLIDE 2 (Time: 13.8 -> 15.0)
+      tl.to({}, { duration: 1.2 }, 13.8);
+
+      // -----------------------------------------------------------------------
+      // 7. SLIDE 2 REVERSE ANIMATES OUT (Time: 15.0 -> 16.2)
+      // -----------------------------------------------------------------------
+      if (slide2Items.length > 0) {
+        tl.to(
+          slide2Items,
+          {
+            opacity: 0,
+            y: isMobile ? -30 : -55,
+            scale: 0.94,
+            filter: "blur(8px)",
+            stagger: {
+              each: 0.04,
+              from: "end",
+            },
+            duration: 1.2,
+            ease: "power2.in",
+          },
+          15.0
+        );
+      }
+
+      if (slide2WatermarkRef.current) {
+        tl.to(
+          slide2WatermarkRef.current,
+          {
+            opacity: 0,
+            xPercent: -30,
+            duration: 1.2,
+            ease: "none",
+          },
+          15.0
+        );
+      }
+
+      if (slide2AuraRef.current) {
+        tl.to(
+          slide2AuraRef.current,
+          {
+            opacity: 0,
+            scale: 0.3,
+            duration: 1.2,
+            ease: "none",
+          },
+          15.0
+        );
+      }
+
+      if (slide2LayerRef.current) {
+        tl.to(
+          slide2LayerRef.current,
+          {
+            opacity: 0,
+            duration: 0.6,
+            ease: "none",
+          },
+          15.6
+        );
+      }
+
+      // -----------------------------------------------------------------------
+      // 8. SLIDE 3 ASSEMBLES: WHITE BACKGROUND & NEW FONT & NEW COLOURS (Time: 15.8 -> 17.6)
+      // "Engineering digital products with purpose, power & distinction."
+      // -----------------------------------------------------------------------
+      if (slide3LayerRef.current) {
+        tl.fromTo(
+          slide3LayerRef.current,
+          {
+            opacity: 0,
+            pointerEvents: "none",
+          },
+          {
+            opacity: 1,
+            pointerEvents: "auto",
+            duration: 1.2,
+            ease: "power2.out",
+          },
+          15.8
+        );
+      }
+
+      if (slide3BgRef.current) {
+        tl.fromTo(
+          slide3BgRef.current,
+          {
+            clipPath: "polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)",
+            opacity: 0,
+          },
+          {
+            clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+            opacity: 1,
+            duration: 1.6,
+            ease: "power3.inOut",
+          },
+          15.8
+        );
+      }
+
+      const slide3Items = slide3ContentRef.current
+        ? slide3ContentRef.current.querySelectorAll(".slide3-assemble-item")
+        : [];
+
+      if (slide3Items.length > 0) {
+        tl.fromTo(
+          slide3Items,
+          {
+            opacity: 0,
+            y: isMobile ? 40 : 70,
+            scale: 0.94,
+            filter: "blur(8px)",
+          },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            filter: "blur(0px)",
+            stagger: 0.08,
+            duration: 1.6,
+            ease: "power3.out",
+          },
+          16.3
+        );
+      }
+
+      // -----------------------------------------------------------------------
+      // 9. HOLD SLIDE 3 (Time: 17.6 -> 19.2)
+      // -----------------------------------------------------------------------
+      tl.to({}, { duration: 1.6 }, 17.6);
 
       return () => {
         window.removeEventListener("resize", updateCardSpotlight);
@@ -696,7 +1106,7 @@ export function IdeasIntoImpact() {
     <div
       ref={containerRef}
       id="impact-scroll-stage"
-      className="relative w-full h-[380vh] bg-[#020204] text-white select-none border-t border-white/[0.08]"
+      className="relative w-full h-[600vh] bg-[#020204] text-white select-none border-t border-white/[0.08]"
     >
       {/* Sticky Fullscreen Pinned Stage */}
       <div
@@ -783,89 +1193,126 @@ export function IdeasIntoImpact() {
               </div>
 
               {/* Connect With Me Socials */}
-              <div className="assemble-item flex flex-col gap-2.5">
-                <div className="flex items-center gap-2.5 text-[11px] font-mono font-semibold tracking-[0.15em] text-[#64748b] uppercase">
-                  <span className="w-4 h-[1.5px] bg-[#64748b]" />
-                  <span>CONNECT WITH ME</span>
+              <div className="flex flex-col gap-3 mt-1">
+                <div className="social-label-anim flex items-center gap-2.5 text-[11px] font-mono font-semibold tracking-[0.18em] text-[#94a3b8] uppercase will-change-transform">
+                  <span className="social-line-anim w-5 h-[1.5px] bg-gradient-to-r from-purple-400 to-indigo-400 shadow-[0_0_8px_rgba(192,132,252,0.6)]" />
+                  <span className="text-neutral-400">CONNECT WITH ME</span>
                 </div>
 
-                <div className="flex items-center gap-2.5">
+                <div className="flex items-center gap-3">
                   {/* LinkedIn */}
-                  <a
-                    href="https://linkedin.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onMouseEnter={() => playHover()}
-                    className="w-10 h-10 rounded-xl bg-[#12131c]/85 border border-white/10 hover:border-[#0a66c2]/65 hover:bg-[#0a66c2]/20 hover:shadow-[0_4px_18px_rgba(10,102,194,0.38)] flex items-center justify-center transition-all duration-300 group cursor-pointer"
-                    aria-label="LinkedIn"
-                  >
-                    <svg viewBox="0 0 24 24" width="18" height="18" className="group-hover:scale-110 transition-transform">
-                      <path
-                        fill="#0A66C2"
-                        d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.65 1.65 0 1 0 0-3.3 1.65 1.65 0 0 0 0 3.3m1.4 9.74V10.13H5.06v8.37h2.8z"
-                      />
-                    </svg>
-                  </a>
+                  <div className="social-icon-item will-change-transform">
+                    <a
+                      href="https://linkedin.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onMouseEnter={() => playHover()}
+                      className="group relative w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#0e1018]/90 backdrop-blur-md border border-white/10 hover:border-[#0a66c2]/70 hover:bg-[#0a66c2]/15 flex items-center justify-center transition-all duration-300 shadow-[0_4px_16px_rgba(0,0,0,0.5)] hover:shadow-[0_8px_25px_rgba(10,102,194,0.45)] hover:-translate-y-1 hover:scale-105 active:scale-95 cursor-pointer overflow-visible"
+                      aria-label="LinkedIn"
+                    >
+                      {/* Tooltip Badge */}
+                      <span className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded-md bg-[#0a66c2] text-white font-mono text-[9px] font-bold tracking-wider uppercase opacity-0 group-hover:opacity-100 group-hover:-translate-y-0.5 transition-all duration-200 shadow-md whitespace-nowrap z-30">
+                        LinkedIn
+                      </span>
+                      {/* Ambient Glow Aura Behind */}
+                      <div className="absolute inset-0 rounded-2xl bg-[radial-gradient(circle_at_center,_rgba(10,102,194,0.35)_0%,_transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                      <svg viewBox="0 0 24 24" width="20" height="20" className="relative z-10 group-hover:scale-115 group-hover:-rotate-3 transition-transform duration-300">
+                        <path
+                          fill="#0A66C2"
+                          d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.65 1.65 0 1 0 0-3.3 1.65 1.65 0 0 0 0 3.3m1.4 9.74V10.13H5.06v8.37h2.8z"
+                        />
+                      </svg>
+                      {/* Top Specular Sheen */}
+                      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/25 to-transparent rounded-t-2xl" />
+                    </a>
+                  </div>
 
                   {/* GitHub */}
-                  <a
-                    href="https://github.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onMouseEnter={() => playHover()}
-                    className="w-10 h-10 rounded-xl bg-[#12131c]/85 border border-white/10 hover:border-white/50 hover:bg-white/15 hover:shadow-[0_4px_18px_rgba(255,255,255,0.25)] flex items-center justify-center transition-all duration-300 group cursor-pointer"
-                    aria-label="GitHub"
-                  >
-                    <svg viewBox="0 0 24 24" width="18" height="18" className="group-hover:scale-110 transition-transform">
-                      <path
-                        fill="#FFFFFF"
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                        d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+                  <div className="social-icon-item will-change-transform">
+                    <a
+                      href="https://github.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onMouseEnter={() => playHover()}
+                      className="group relative w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#0e1018]/90 backdrop-blur-md border border-white/10 hover:border-white/60 hover:bg-white/15 flex items-center justify-center transition-all duration-300 shadow-[0_4px_16px_rgba(0,0,0,0.5)] hover:shadow-[0_8px_25px_rgba(255,255,255,0.3)] hover:-translate-y-1 hover:scale-105 active:scale-95 cursor-pointer overflow-visible"
+                      aria-label="GitHub"
+                    >
+                      {/* Tooltip Badge */}
+                      <span className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded-md bg-neutral-800 border border-white/20 text-white font-mono text-[9px] font-bold tracking-wider uppercase opacity-0 group-hover:opacity-100 group-hover:-translate-y-0.5 transition-all duration-200 shadow-md whitespace-nowrap z-30">
+                        GitHub
+                      </span>
+                      <div className="absolute inset-0 rounded-2xl bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.25)_0%,_transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                      <svg viewBox="0 0 24 24" width="20" height="20" className="relative z-10 group-hover:scale-115 group-hover:-rotate-3 transition-transform duration-300">
+                        <path
+                          fill="#FFFFFF"
+                          fillRule="evenodd"
+                          clipRule="evenodd"
+                          d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+                        />
                       </svg>
+                      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/25 to-transparent rounded-t-2xl" />
                     </a>
+                  </div>
 
                   {/* Instagram */}
-                  <a
-                    href="https://instagram.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onMouseEnter={() => playHover()}
-                    className="w-10 h-10 rounded-xl bg-[#12131c]/85 border border-white/10 hover:border-[#e1306c]/65 hover:bg-[#e1306c]/20 hover:shadow-[0_4px_18px_rgba(225,48,108,0.38)] flex items-center justify-center transition-all duration-300 group cursor-pointer"
-                    aria-label="Instagram"
-                  >
-                    <svg viewBox="0 0 24 24" width="18" height="18" className="group-hover:scale-110 transition-transform">
-                      <defs>
-                        <radialGradient id="impactIgGrad2" cx="20%" cy="105%" r="130%">
-                          <stop offset="0%" stopColor="#fdf497" />
-                          <stop offset="5%" stopColor="#fdf497" />
-                          <stop offset="45%" stopColor="#fd5949" />
-                          <stop offset="60%" stopColor="#d6249f" />
-                          <stop offset="90%" stopColor="#285AEB" />
-                        </radialGradient>
-                      </defs>
-                      <path
-                        fill="url(#impactIgGrad2)"
-                        d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-                    </svg>
-                  </a>
+                  <div className="social-icon-item will-change-transform">
+                    <a
+                      href="https://instagram.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onMouseEnter={() => playHover()}
+                      className="group relative w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#0e1018]/90 backdrop-blur-md border border-white/10 hover:border-[#e1306c]/70 hover:bg-[#e1306c]/15 flex items-center justify-center transition-all duration-300 shadow-[0_4px_16px_rgba(0,0,0,0.5)] hover:shadow-[0_8px_25px_rgba(225,48,108,0.45)] hover:-translate-y-1 hover:scale-105 active:scale-95 cursor-pointer overflow-visible"
+                      aria-label="Instagram"
+                    >
+                      {/* Tooltip Badge */}
+                      <span className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded-md bg-gradient-to-r from-[#fd5949] to-[#d6249f] text-white font-mono text-[9px] font-bold tracking-wider uppercase opacity-0 group-hover:opacity-100 group-hover:-translate-y-0.5 transition-all duration-200 shadow-md whitespace-nowrap z-30">
+                        Instagram
+                      </span>
+                      <div className="absolute inset-0 rounded-2xl bg-[radial-gradient(circle_at_center,_rgba(225,48,108,0.35)_0%,_transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                      <svg viewBox="0 0 24 24" width="20" height="20" className="relative z-10 group-hover:scale-115 group-hover:-rotate-3 transition-transform duration-300">
+                        <defs>
+                          <radialGradient id="impactIgGrad2" cx="20%" cy="105%" r="130%">
+                            <stop offset="0%" stopColor="#fdf497" />
+                            <stop offset="5%" stopColor="#fdf497" />
+                            <stop offset="45%" stopColor="#fd5949" />
+                            <stop offset="60%" stopColor="#d6249f" />
+                            <stop offset="90%" stopColor="#285AEB" />
+                          </radialGradient>
+                        </defs>
+                        <path
+                          fill="url(#impactIgGrad2)"
+                          d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
+                        />
+                      </svg>
+                      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/25 to-transparent rounded-t-2xl" />
+                    </a>
+                  </div>
 
                   {/* Gmail */}
-                  <a
-                    href="mailto:gourabs444@gmail.com"
-                    onMouseEnter={() => playHover()}
-                    className="w-10 h-10 rounded-xl bg-[#12131c]/85 border border-white/10 hover:border-[#ea4335]/65 hover:bg-[#ea4335]/20 hover:shadow-[0_4px_18px_rgba(234,67,53,0.38)] flex items-center justify-center transition-all duration-300 group cursor-pointer"
-                    aria-label="Email"
-                  >
-                    <svg viewBox="0 0 24 24" width="18" height="18" className="group-hover:scale-110 transition-transform">
-                      <path fill="#4285F4" d="M20 18h2V7.5L18.5 10v7.5c0 .83.67 1.5 1.5 1.5z" />
-                      <path fill="#34A853" d="M4 19h-2V7.5L5.5 10v7.5c0 .83-.67 1.5-1.5 1.5z" />
-                      <path fill="#EA4335" d="M18.5 6H5.5L12 11l6.5-5z" />
-                      <path
-                        fill="#FBBC05"
-                        d="M2 7.5V6c0-.83.67-1.5 1.5-1.5h1.5l7 5.5 7-5.5h1.5c.83 0 1.5.67 1.5 1.5v1.5L12 14 2 7.5z" />
-                    </svg>
-                  </a>
+                  <div className="social-icon-item will-change-transform">
+                    <a
+                      href="mailto:gourabs444@gmail.com"
+                      onMouseEnter={() => playHover()}
+                      className="group relative w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#0e1018]/90 backdrop-blur-md border border-white/10 hover:border-[#ea4335]/70 hover:bg-[#ea4335]/15 flex items-center justify-center transition-all duration-300 shadow-[0_4px_16px_rgba(0,0,0,0.5)] hover:shadow-[0_8px_25px_rgba(234,67,53,0.45)] hover:-translate-y-1 hover:scale-105 active:scale-95 cursor-pointer overflow-visible"
+                      aria-label="Email"
+                    >
+                      {/* Tooltip Badge */}
+                      <span className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded-md bg-[#ea4335] text-white font-mono text-[9px] font-bold tracking-wider uppercase opacity-0 group-hover:opacity-100 group-hover:-translate-y-0.5 transition-all duration-200 shadow-md whitespace-nowrap z-30">
+                        Email
+                      </span>
+                      <div className="absolute inset-0 rounded-2xl bg-[radial-gradient(circle_at_center,_rgba(234,67,53,0.35)_0%,_transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                      <svg viewBox="0 0 24 24" width="20" height="20" className="relative z-10 group-hover:scale-115 group-hover:-rotate-3 transition-transform duration-300">
+                        <path fill="#4285F4" d="M20 18h2V7.5L18.5 10v7.5c0 .83.67 1.5 1.5 1.5z" />
+                        <path fill="#34A853" d="M4 19h-2V7.5L5.5 10v7.5c0 .83-.67 1.5-1.5 1.5z" />
+                        <path fill="#EA4335" d="M18.5 6H5.5L12 11l6.5-5z" />
+                        <path
+                          fill="#FBBC05"
+                          d="M2 7.5V6c0-.83.67-1.5 1.5-1.5h1.5l7 5.5 7-5.5h1.5c.83 0 1.5.67 1.5 1.5v1.5L12 14 2 7.5z"
+                        />
+                      </svg>
+                      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/25 to-transparent rounded-t-2xl" />
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -998,16 +1445,16 @@ export function IdeasIntoImpact() {
           <div className="relative z-10 flex flex-col items-center max-w-6xl mx-auto overflow-visible py-4">
             <h2
               ref={ctaHeadingRef}
-              className="font-bodoni font-medium text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[6.2rem] text-white tracking-tight leading-[1.18] sm:leading-[1.22] text-center px-4 overflow-visible will-change-transform"
+              className="font-bodoni font-medium text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.4rem] text-white tracking-tight leading-[1.3] sm:leading-[1.34] text-center px-4 overflow-visible will-change-transform"
             >
               <span className="block whitespace-nowrap overflow-visible">Let&apos;s build</span>
-              <span className="block whitespace-nowrap overflow-visible py-0.5">
+              <span className="block whitespace-nowrap overflow-visible py-1">
                 something{" "}
-                <span className="font-bodoni italic font-normal bg-gradient-to-r from-amber-200 via-amber-400 to-amber-500 bg-clip-text text-transparent inline-block pr-2 py-0.5 drop-shadow-[0_0_35px_rgba(245,158,11,0.35)]">
+                <span className="font-bodoni italic font-normal bg-gradient-to-r from-amber-200 via-amber-400 to-amber-500 bg-clip-text text-transparent inline-block pr-4 pl-0.5 pt-1 pb-3 leading-[1.3] overflow-visible drop-shadow-[0_0_35px_rgba(245,158,11,0.35)]">
                   extraordinary
                 </span>
               </span>
-              <span className="block font-bodoni italic font-normal bg-gradient-to-r from-sky-200 via-cyan-300 to-teal-300 bg-clip-text text-transparent whitespace-nowrap overflow-visible pr-2 py-0.5 drop-shadow-[0_0_35px_rgba(56,189,248,0.35)]">
+              <span className="block font-bodoni italic font-normal bg-gradient-to-r from-sky-200 via-cyan-300 to-teal-300 bg-clip-text text-transparent whitespace-nowrap overflow-visible pr-4 pl-0.5 pt-1 pb-3 leading-[1.3] drop-shadow-[0_0_35px_rgba(56,189,248,0.35)]">
                 together.
               </span>
             </h2>
@@ -1022,6 +1469,165 @@ export function IdeasIntoImpact() {
                 <ArrowUpRight className="w-4 h-4" />
               </a>
             </div>
+          </div>
+        </div>
+
+        {/* ========================================================= */}
+        {/* LAYER B2: SLIDE 2 - MODERN KINETIC DISPLAY & NEON PALETTE */}
+        {/* ========================================================= */}
+        <div
+          ref={slide2LayerRef}
+          className="absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center overflow-hidden z-20 px-6 sm:px-12 md:px-16 lg:px-24 select-none pointer-events-none"
+        >
+          {/* Ambient Neon Violet & Emerald Radial Glow */}
+          <div
+            ref={slide2AuraRef}
+            className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[520px] bg-[radial-gradient(ellipse_at_center,_rgba(168,85,247,0.18)_0%,_rgba(16,185,129,0.1)_40%,_transparent_70%)]"
+            aria-hidden="true"
+          />
+
+          {/* Background Sliding Watermark Text */}
+          <div
+            className="pointer-events-none absolute top-1/2 left-0 -translate-y-1/2 w-full flex items-center justify-center select-none -z-0 overflow-visible"
+            aria-hidden="true"
+          >
+            <div
+              ref={slide2WatermarkRef}
+              className="flex whitespace-nowrap text-white/[0.04] font-display font-black text-5xl sm:text-7xl md:text-8xl lg:text-[10rem] tracking-tight uppercase leading-none will-change-transform"
+            >
+              <span>DISRUPT &nbsp; INNOVATE &nbsp; ELEVATE &nbsp; TRANSCEND &nbsp; </span>
+              <span>DISRUPT &nbsp; INNOVATE &nbsp; ELEVATE &nbsp; TRANSCEND &nbsp; </span>
+            </div>
+          </div>
+
+          {/* Foreground Kinetic Typography Content */}
+          <div
+            ref={slide2ContentRef}
+            className="relative z-10 flex flex-col items-center max-w-5xl mx-auto overflow-visible py-4"
+          >
+            {/* Category Pill */}
+            <div className="slide2-assemble-item inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-violet-500/10 border border-violet-500/25 text-[10px] sm:text-xs font-mono tracking-[0.25em] text-violet-300 uppercase mb-5 shadow-[0_0_15px_rgba(168,85,247,0.2)]">
+              <span className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-ping" />
+              <span>INNOVATION &amp; MASTERY</span>
+            </div>
+
+            {/* Kinetic Display Headline (New Font: font-display / Sans, New Colors: Violet/Fuchsia & Emerald/Teal) */}
+            <h2 className="slide2-assemble-item font-display font-black text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.5rem] text-white tracking-tight leading-[1.1] sm:leading-[1.12] text-center uppercase will-change-transform mb-6">
+              <span className="block whitespace-nowrap">Crafting experiences</span>
+              <span className="block whitespace-nowrap bg-gradient-to-r from-[#c084fc] via-[#e879f9] to-[#f472b6] bg-clip-text text-transparent drop-shadow-[0_0_35px_rgba(192,132,252,0.4)]">
+                that transcend
+              </span>
+              <span className="block whitespace-nowrap bg-gradient-to-r from-[#34d399] via-[#2dd4bf] to-[#38bdf8] bg-clip-text text-transparent drop-shadow-[0_0_35px_rgba(52,211,153,0.4)]">
+                pixels &amp; code.
+              </span>
+            </h2>
+
+            {/* Sub-headline */}
+            <p className="slide2-assemble-item font-sans text-xs sm:text-sm md:text-base text-neutral-400 max-w-xl mx-auto leading-relaxed mb-8 font-normal">
+              Bridging radical imagination with high-performance engineering to shape tomorrow&apos;s digital benchmarks.
+            </p>
+
+            {/* Action CTA */}
+            <div className="slide2-assemble-item flex items-center gap-4">
+              <a
+                href="#contact"
+                onMouseEnter={() => playHover()}
+                className="pointer-events-auto inline-flex items-center gap-2 px-7 sm:px-9 py-3.5 rounded-full bg-gradient-to-r from-violet-500 via-purple-500 to-fuchsia-500 text-white font-sans font-bold text-xs sm:text-sm tracking-tight transition-all duration-300 shadow-[0_0_30px_rgba(168,85,247,0.4)] hover:shadow-[0_0_45px_rgba(168,85,247,0.65)] hover:scale-105 active:scale-95 cursor-pointer"
+              >
+                <span>Get In Touch</span>
+                <ArrowUpRight className="w-4 h-4" />
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* ========================================================= */}
+        {/* LAYER C: SLIDE 3 - LUXURY THANK YOU CANVAS & EDITORIAL    */}
+        {/* ========================================================= */}
+        <div
+          ref={slide3LayerRef}
+          className="absolute inset-0 w-full h-full flex flex-col items-center justify-between text-center overflow-hidden z-30 select-none pointer-events-none"
+        >
+          {/* AI-Generated 3D Lavender Ripple Sphere Background Canvas */}
+          <div
+            ref={slide3BgRef}
+            className="absolute inset-0 w-full h-full will-change-transform z-0 overflow-hidden shadow-[0_-20px_50px_rgba(0,0,0,0.15)]"
+          >
+            {/* Background Image */}
+            <div
+              className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat transition-transform duration-1000 scale-100"
+              style={{
+                backgroundImage: `url('/assets/thank-you-ripple.jpg')`,
+              }}
+            />
+
+            {/* Subtle atmospheric vignette and light diffusion */}
+            <div className="absolute inset-0 bg-gradient-to-b from-[#e5e1fa]/60 via-transparent to-[#ded9f9]/70 pointer-events-none" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_40%,_rgba(220,214,248,0.45)_100%)] pointer-events-none" />
+          </div>
+
+          {/* Top spacer */}
+          <div className="w-full h-8 sm:h-12 relative z-10" />
+
+          {/* Foreground Editorial Text Content */}
+          <div
+            ref={slide3ContentRef}
+            className="relative z-10 max-w-5xl mx-auto px-6 sm:px-10 md:px-14 flex flex-col items-center justify-center pointer-events-auto my-auto py-4"
+          >
+            {/* Category Pill with Sparkle */}
+            <div className="slide3-assemble-item inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/70 backdrop-blur-md border border-purple-300/40 text-[10px] sm:text-xs font-mono font-bold tracking-[0.25em] text-purple-950 uppercase mb-4 sm:mb-5 shadow-xs">
+              <span className="w-2 h-2 rounded-full bg-purple-600 animate-pulse" />
+              <span>✦ APPRECIATION // EPILOGUE</span>
+            </div>
+
+            {/* Editorial Bodoni Headline with Zero Clipping */}
+            <h2 className="slide3-assemble-item font-bodoni text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.4rem] text-neutral-950 font-medium tracking-tight leading-[1.24] sm:leading-[1.28] text-center mb-4 sm:mb-5 max-w-4xl overflow-visible">
+              <span className="block whitespace-nowrap overflow-visible drop-shadow-xs">Thank you for</span>
+              <span className="block whitespace-nowrap overflow-visible py-0.5">
+                <span className="font-bodoni italic font-normal bg-gradient-to-r from-purple-800 via-indigo-700 to-purple-900 bg-clip-text text-transparent inline-block pr-3 pl-0.5 pb-2 drop-shadow-xs">
+                  your time
+                </span>{" "}
+                <span className="text-neutral-900 font-medium">&amp; </span>
+                <span className="font-bodoni italic font-normal bg-gradient-to-r from-indigo-700 via-violet-700 to-purple-800 bg-clip-text text-transparent inline-block pr-3 pl-0.5 pb-2 drop-shadow-xs">
+                  vision.
+                </span>
+              </span>
+            </h2>
+
+            {/* Sub-headline */}
+            <p className="slide3-assemble-item font-sans text-xs sm:text-sm md:text-base text-neutral-800/90 font-medium max-w-2xl mx-auto leading-relaxed mb-6 sm:mb-8">
+              Whether you have a breakthrough project, want to collaborate on ambitious digital experiences, or simply want to connect — let&apos;s create something remarkable together.
+            </p>
+
+            {/* Interactive Action CTAs */}
+            <div className="slide3-assemble-item flex flex-wrap items-center justify-center gap-4">
+              <a
+                href="#contact"
+                onMouseEnter={() => playHover()}
+                className="inline-flex items-center gap-2.5 px-7 sm:px-9 py-3.5 sm:py-4 rounded-full bg-[#30284e] text-white hover:bg-[#201938] font-sans font-bold text-xs sm:text-sm tracking-tight transition-all duration-300 shadow-[0_12px_30px_rgba(48,40,78,0.3)] hover:shadow-[0_16px_36px_rgba(48,40,78,0.45)] hover:scale-105 active:scale-95 cursor-pointer"
+              >
+                <span>Start a Conversation</span>
+                <ArrowUpRight className="w-4 h-4" />
+              </a>
+
+              <a
+                href="#work"
+                onMouseEnter={() => playHover()}
+                className="inline-flex items-center justify-center px-7 sm:px-9 py-3.5 sm:py-4 rounded-full bg-white/70 backdrop-blur-md border border-purple-200 hover:border-purple-300 text-purple-950 font-sans font-semibold text-xs sm:text-sm tracking-tight transition-all duration-300 hover:bg-white/95 active:scale-95 cursor-pointer shadow-xs"
+              >
+                Explore Archive
+              </a>
+            </div>
+          </div>
+
+          {/* Bottom Trust Row (Matching Template Style) */}
+          <div className="slide3-assemble-item relative z-10 w-full max-w-4xl mx-auto pb-8 px-6 flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-neutral-600/70 font-display font-semibold text-xs sm:text-sm tracking-wider uppercase">
+            <span className="hover:text-purple-900 transition-colors">NEXT.JS</span>
+            <span className="hover:text-purple-900 transition-colors">TYPESCRIPT</span>
+            <span className="hover:text-purple-900 transition-colors">THREE.JS</span>
+            <span className="hover:text-purple-900 transition-colors">WEBGL</span>
+            <span className="hover:text-purple-900 transition-colors">GSAP 3</span>
+            <span className="hover:text-purple-900 transition-colors">TAILWIND</span>
           </div>
         </div>
       </div>
