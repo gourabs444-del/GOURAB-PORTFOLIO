@@ -10,7 +10,6 @@ import { SelectedWork } from "@/components/sections/SelectedWork";
 import { Showreel } from "@/components/sections/Showreel";
 import { ProcessPipeline } from "@/components/sections/ProcessPipeline";
 import { ExperienceTimeline } from "@/components/sections/ExperienceTimeline";
-import { MovingTestimonials } from "@/components/sections/MovingTestimonials";
 import { ContactFooter } from "@/components/sections/ContactFooter";
 import { FilmGrain } from "@/components/ambient/FilmGrain";
 import { AmbientCanvas } from "@/components/ambient/AmbientCanvas";
@@ -57,7 +56,6 @@ export default function Home() {
         <Showreel />
         <ProcessPipeline />
         <ExperienceTimeline />
-        <MovingTestimonials />
         <ContactFooter />
       </div>
     </main>
