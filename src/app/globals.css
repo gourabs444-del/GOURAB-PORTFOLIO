@@ -93,45 +93,44 @@ body {
   }
 }
 
-/* 100% Flicker-Free GPU-Accelerated Marquee Loops */
-@keyframes marquee-scroll-left {
-  0% {
+/* Bulletproof 100% Seamless Continuous Infinite Marquee */
+@keyframes continuous-marquee-left {
+  from {
     transform: translate3d(0, 0, 0);
   }
-  100% {
-    transform: translate3d(-50%, 0, 0);
+  to {
+    transform: translate3d(calc(-100% - 1.5rem), 0, 0);
   }
 }
 
-@keyframes marquee-scroll-right {
-  0% {
-    transform: translate3d(-50%, 0, 0);
+@keyframes continuous-marquee-right {
+  from {
+    transform: translate3d(calc(-100% - 1.5rem), 0, 0);
   }
-  100% {
+  to {
     transform: translate3d(0, 0, 0);
   }
 }
 
-.animate-marquee-track-left {
+.animate-loop-left {
   display: flex;
-  width: max-content;
+  flex-shrink: 0;
+  gap: 1.5rem;
+  animation: continuous-marquee-left 36s linear infinite;
   will-change: transform;
-  backface-visibility: hidden;
-  transform: translate3d(0, 0, 0);
-  animation: marquee-scroll-left 50s linear infinite;
 }
 
-.animate-marquee-track-right {
+.animate-loop-right {
   display: flex;
-  width: max-content;
+  flex-shrink: 0;
+  gap: 1.5rem;
+  animation: continuous-marquee-right 36s linear infinite;
   will-change: transform;
-  backface-visibility: hidden;
-  transform: translate3d(0, 0, 0);
-  animation: marquee-scroll-right 50s linear infinite;
 }
 
-.animate-marquee-track-left:hover,
-.animate-marquee-track-right:hover {
+.group:hover .animate-loop-left,
+.group:hover .animate-loop-right {
   animation-play-state: paused;
 }
+
 
