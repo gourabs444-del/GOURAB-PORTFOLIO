@@ -10,14 +10,11 @@ import { Star, Heart } from "lucide-react";
 export function MovingTestimonials() {
   const containerRef = useRef<HTMLElement | null>(null);
   const headerRef = useRef<HTMLDivElement | null>(null);
-  const track1Ref = useRef<HTMLDivElement | null>(null);
-  const track2Ref = useRef<HTMLDivElement | null>(null);
-  const track3Ref = useRef<HTMLDivElement | null>(null);
   const { playHover } = useAudioFeedback();
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // 1. Header reveal - snappy & clean
+      // Header reveal - snappy & clean
       if (headerRef.current) {
         gsap.fromTo(
           headerRef.current.querySelectorAll(".header-item"),
@@ -36,67 +33,47 @@ export function MovingTestimonials() {
           }
         );
       }
-
-      // 2. Scroll Velocity Scrub Boost on 3 Tracks
-      if (track1Ref.current && track2Ref.current && track3Ref.current) {
-        gsap.to(track1Ref.current, {
-          xPercent: -18,
-          ease: "none",
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1.0,
-          },
-        });
-
-        gsap.to(track2Ref.current, {
-          xPercent: 18,
-          ease: "none",
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1.0,
-          },
-        });
-
-        gsap.to(track3Ref.current, {
-          xPercent: -18,
-          ease: "none",
-          scrollTrigger: {
-            trigger: containerRef.current,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1.0,
-          },
-        });
-      }
     }, containerRef);
 
     return () => ctx.revert();
   }, []);
 
-  const row1 = [...testimonials, ...testimonials];
+  // 4x duplication for completely seamless 100% gapless continuous marquee
+  const row1 = [
+    ...testimonials,
+    ...testimonials,
+    ...testimonials,
+    ...testimonials,
+  ];
+
   const row2 = [
     ...testimonials.slice(2),
     ...testimonials.slice(0, 2),
     ...testimonials.slice(2),
     ...testimonials.slice(0, 2),
+    ...testimonials.slice(2),
+    ...testimonials.slice(0, 2),
+    ...testimonials.slice(2),
+    ...testimonials.slice(0, 2),
   ];
+
   const row3 = [
     ...testimonials.slice(4),
     ...testimonials.slice(0, 4),
     ...testimonials.slice(4),
     ...testimonials.slice(0, 4),
+    ...testimonials.slice(4),
+    ...testimonials.slice(0, 4),
+    ...testimonials.slice(4),
+    ...testimonials.slice(0, 4),
   ];
 
-  const renderCard = (t: Testimonial, idx: number) => {
+  const renderCard = (t: Testimonial, keyId: string) => {
     const accent = t.highlightColor || "#38BDF8";
 
     return (
       <div
-        key={`${t.id}-${idx}`}
+        key={keyId}
         onMouseEnter={() => playHover()}
         className="group relative w-[320px] sm:w-[380px] md:w-[410px] shrink-0 p-5 sm:p-6 rounded-2xl border border-white/[0.08] hover:border-white/20 bg-[#0c0e14]/95 backdrop-blur-md shadow-xl transition-all duration-300 hover:-translate-y-1 select-none flex flex-col justify-between gap-3.5"
       >
@@ -221,31 +198,25 @@ export function MovingTestimonials() {
         </div>
       </div>
 
-      {/* Infinite Fluid Testimonial Stream (3 Synchronized Rows) */}
+      {/* Infinite Fluid Testimonial Stream (3 Robust Gapless Rows) */}
       <div className="relative w-full flex flex-col gap-5 sm:gap-6 overflow-hidden pointer-events-auto">
         {/* Left & Right Gradient Horizon Fade Masks */}
         <div className="pointer-events-none absolute inset-y-0 left-0 w-24 sm:w-48 bg-gradient-to-r from-[#050507] via-[#050507]/80 to-transparent z-20" />
         <div className="pointer-events-none absolute inset-y-0 right-0 w-24 sm:w-48 bg-gradient-to-l from-[#050507] via-[#050507]/80 to-transparent z-20" />
 
         {/* Stream Track 1 (Left) */}
-        <div ref={track1Ref} className="flex w-fit will-change-transform">
-          <div className="flex w-fit animate-marquee gap-5 sm:gap-6 will-change-transform">
-            {row1.map((t, i) => renderCard(t, i))}
-          </div>
+        <div className="flex w-max gap-5 sm:gap-6 animate-marquee will-change-transform hover:[animation-play-state:paused]">
+          {row1.map((t, i) => renderCard(t, `r1-${i}`))}
         </div>
 
         {/* Stream Track 2 (Right) */}
-        <div ref={track2Ref} className="flex w-fit will-change-transform">
-          <div className="flex w-fit animate-marquee-reverse gap-5 sm:gap-6 will-change-transform">
-            {row2.map((t, i) => renderCard(t, i))}
-          </div>
+        <div className="flex w-max gap-5 sm:gap-6 animate-marquee-reverse will-change-transform hover:[animation-play-state:paused]">
+          {row2.map((t, i) => renderCard(t, `r2-${i}`))}
         </div>
 
         {/* Stream Track 3 (Left) */}
-        <div ref={track3Ref} className="flex w-fit will-change-transform">
-          <div className="flex w-fit animate-marquee gap-5 sm:gap-6 will-change-transform">
-            {row3.map((t, i) => renderCard(t, i))}
-          </div>
+        <div className="flex w-max gap-5 sm:gap-6 animate-marquee will-change-transform hover:[animation-play-state:paused]">
+          {row3.map((t, i) => renderCard(t, `r3-${i}`))}
         </div>
       </div>
     </section>
