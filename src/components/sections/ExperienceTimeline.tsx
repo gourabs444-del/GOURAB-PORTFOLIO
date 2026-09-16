@@ -1,40 +1,110 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "@/lib/gsap";
-import { experiences } from "@/data/experience";
-import { useAudioFeedback } from "@/hooks/useAudioFeedback";
-import { TechLogo } from "@/components/ui/TechLogos";
-import { MapPin, ArrowUpRight, Zap, CheckCircle2 } from "lucide-react";
+import { Code2, Palette, Film, Sparkles } from "lucide-react";
 
 export function ExperienceTimeline() {
-  const [activeIdx, setActiveIdx] = useState<number>(0);
   const sectionRef = useRef<HTMLElement | null>(null);
   const headerRef = useRef<HTMLDivElement | null>(null);
-  const detailRef = useRef<HTMLDivElement | null>(null);
-  const auraRef = useRef<HTMLDivElement | null>(null);
-  const { playHover } = useAudioFeedback();
-
-  const activeExp = experiences[activeIdx] || experiences[0];
+  const devRef = useRef<HTMLDivElement | null>(null);
+  const designRef = useRef<HTMLDivElement | null>(null);
+  const creativeRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Header reveal animation
+      // Header Animation
       if (headerRef.current) {
         gsap.fromTo(
-          headerRef.current.querySelectorAll(".stage-reveal"),
-          { opacity: 0, y: 25 },
+          headerRef.current.querySelectorAll(".skill-reveal"),
+          { opacity: 0, y: 24 },
           {
             opacity: 1,
             y: 0,
-            duration: 0.7,
+            duration: 0.8,
             stagger: 0.08,
             ease: "power2.out",
             scrollTrigger: {
               trigger: headerRef.current,
-              start: "top 90%",
-              toggleActions: "play none none none",
+              start: "top 88%",
+            },
+          }
+        );
+      }
+
+      // Development Bars Stagger
+      if (devRef.current) {
+        const bars = devRef.current.querySelectorAll(".dev-skill-bar");
+        const fills = devRef.current.querySelectorAll(".dev-bar-fill");
+        
+        gsap.fromTo(
+          bars,
+          { opacity: 0, y: 20 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
+            stagger: 0.06,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: devRef.current,
+              start: "top 85%",
+            },
+          }
+        );
+
+        gsap.fromTo(
+          fills,
+          { width: "0%" },
+          {
+            width: (i, target) => target.getAttribute("data-level") || "80%",
+            duration: 1.2,
+            stagger: 0.06,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: devRef.current,
+              start: "top 85%",
+            },
+          }
+        );
+      }
+
+      // Design Cards Stagger
+      if (designRef.current) {
+        gsap.fromTo(
+          designRef.current.querySelectorAll(".design-card-item"),
+          { opacity: 0, y: 24, scale: 0.96 },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.7,
+            stagger: 0.08,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: designRef.current,
+              start: "top 85%",
+            },
+          }
+        );
+      }
+
+      // Creative App Badges Stagger
+      if (creativeRef.current) {
+        gsap.fromTo(
+          creativeRef.current.querySelectorAll(".creative-app-item"),
+          { opacity: 0, y: 20, scale: 0.9 },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.6,
+            stagger: 0.07,
+            ease: "back.out(1.5)",
+            scrollTrigger: {
+              trigger: creativeRef.current,
+              start: "top 88%",
             },
           }
         );
@@ -44,352 +114,265 @@ export function ExperienceTimeline() {
     return () => ctx.revert();
   }, []);
 
-  // Smooth detail transition & ambient light color shift when switching items
-  useEffect(() => {
-    if (!detailRef.current) return;
-    gsap.fromTo(
-      detailRef.current.querySelectorAll(".infographic-anim"),
-      { opacity: 0, y: 16 },
-      { opacity: 1, y: 0, duration: 0.45, stagger: 0.05, ease: "power2.out" }
-    );
+  // 1. Development Skills (with iOS style level bars as sketched)
+  const devSkills = [
+    { name: "React", level: "96%", color: "from-cyan-400 to-sky-400" },
+    { name: "TypeScript", level: "92%", color: "from-blue-400 to-indigo-400" },
+    { name: "JavaScript", level: "98%", color: "from-amber-300 to-amber-500" },
+    { name: "Next.js", level: "94%", color: "from-white to-neutral-300" },
+    { name: "WebGL / Three.js", level: "88%", color: "from-emerald-400 to-teal-400" },
+    { name: "Tailwind CSS", level: "98%", color: "from-sky-300 to-cyan-400" },
+  ];
 
-    if (auraRef.current) {
-      gsap.to(auraRef.current, {
-        background: `radial-gradient(circle at center, ${activeExp.glowColor} 0%, transparent 70%)`,
-        duration: 0.8,
-        ease: "power2.out",
-      });
-    }
-  }, [activeIdx, activeExp]);
+  // 2. Design Skills (3 Column clean grouping as sketched)
+  const designGroups = [
+    {
+      title: "UI / UX & GSAP",
+      badge: "INTERACTION",
+      items: ["UI/UX Architecture", "GSAP Physics & Motion", "Human-Centered Systems"],
+      color: "border-purple-500/20 bg-purple-500/5 text-purple-300",
+    },
+    {
+      title: "Figma & Visual",
+      badge: "INTERFACE",
+      items: ["Figma Design Systems", "Visual Art Direction", "Typography & Layouts"],
+      color: "border-amber-500/20 bg-amber-500/5 text-amber-300",
+    },
+    {
+      title: "Motion & Prototyping",
+      badge: "PROTOTYPING",
+      items: ["Micro-Interactions", "Kinetic Prototyping", "Spatial 3D Layouts"],
+      color: "border-cyan-500/20 bg-cyan-500/5 text-cyan-300",
+    },
+  ];
+
+  // 3. Creative Apps (4 App Badges: Pr, Lr, Ae, DaVinci Resolve as sketched)
+  const creativeApps = [
+    {
+      symbol: "Pr.",
+      fullName: "Premiere Pro",
+      role: "Video Editing",
+      border: "border-[#9999ff]/30",
+      bg: "bg-[#00005b]/30",
+      textColor: "text-[#9999ff]",
+      glow: "shadow-[0_0_20px_rgba(153,153,255,0.15)]",
+    },
+    {
+      symbol: "Lr.",
+      fullName: "Lightroom",
+      role: "Color Grading",
+      border: "border-[#31a8ff]/30",
+      bg: "bg-[#001e36]/30",
+      textColor: "text-[#31a8ff]",
+      glow: "shadow-[0_0_20px_rgba(49,168,255,0.15)]",
+    },
+    {
+      symbol: "Ae.",
+      fullName: "After Effects",
+      role: "Motion & VFX",
+      border: "border-[#d291ff]/30",
+      bg: "bg-[#2d004d]/30",
+      textColor: "text-[#d291ff]",
+      glow: "shadow-[0_0_20px_rgba(210,145,255,0.15)]",
+    },
+    {
+      isResolve: true,
+      symbol: "Resolve",
+      fullName: "DaVinci Resolve",
+      role: "Color Science",
+      border: "border-rose-500/30",
+      bg: "bg-[#180a12]/50",
+      textColor: "text-white",
+      glow: "shadow-[0_0_20px_rgba(244,63,94,0.15)]",
+    },
+  ];
 
   return (
     <section
-      id="experience"
+      id="skills"
       ref={sectionRef}
-      className="relative py-28 sm:py-36 md:py-48 px-6 sm:px-12 md:px-20 lg:px-28 bg-black text-[#F4F4F6] border-t border-white/[0.08] select-none overflow-hidden"
+      className="relative w-full py-24 sm:py-32 md:py-40 px-6 sm:px-12 md:px-16 lg:px-24 bg-[#050508] text-[#F4F4F6] overflow-hidden select-none border-t border-white/[0.08]"
     >
-      {/* Dynamic Chromatic Ambient Light Mesh */}
+      {/* Ambient background lighting */}
       <div
-        ref={auraRef}
-        className="pointer-events-none absolute top-1/4 right-0 w-[800px] h-[800px] rounded-full blur-[170px] transition-all duration-700 opacity-80"
-        style={{
-          background: `radial-gradient(circle at center, ${activeExp.glowColor} 0%, transparent 70%)`,
-        }}
+        className="pointer-events-none absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[450px] bg-[radial-gradient(ellipse_at_center,_rgba(139,92,246,0.06)_0%,_rgba(56,189,248,0.04)_40%,_transparent_70%)]"
         aria-hidden="true"
       />
 
-      <div className="max-w-7xl mx-auto flex flex-col gap-16 md:gap-24 relative z-10">
+      <div className="max-w-6xl mx-auto flex flex-col gap-16 sm:gap-20 relative z-10">
         {/* ========================================================= */}
-        {/* 1. EDITORIAL HEADER WITH HANDWRITTEN BLUEPRINT CALLOUT    */}
+        {/* HEADER: SKILLS TITLE & SUBTITLE                           */}
         {/* ========================================================= */}
-        <div
-          ref={headerRef}
-          className="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-10 border-b border-white/[0.08] relative"
-        >
-          <div className="flex flex-col gap-4 max-w-2xl">
-            {/* Top Tag */}
-            <div className="stage-reveal flex items-center gap-2.5 text-xs font-mono tracking-widest uppercase text-neutral-400">
-              <span
-                className="w-2 h-2 rounded-full shadow-[0_0_10px_currentColor] transition-colors duration-500"
-                style={{ backgroundColor: activeExp.accent, color: activeExp.accent }}
-              />
-              <span className="text-white font-medium">05 // CAREER CHRONOLOGY</span>
-              <span className="text-white/20">/</span>
-              <span className="text-neutral-400">TRAJECTORY &amp; MASTERY</span>
-            </div>
-
-            {/* Main Editorial Title */}
-            <h2 className="stage-reveal font-display font-black text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white tracking-tight leading-[1.05]">
-              EXPERIENCE &amp; <br />
-              <span className="font-serif italic font-normal bg-gradient-to-r from-sky-400 via-indigo-300 to-purple-400 bg-clip-text text-transparent">
-                ARCHITECTURAL IMPACT
-              </span>
-            </h2>
-
-            {/* Narrative Subtitle */}
-            <p className="stage-reveal font-sans text-sm sm:text-base text-neutral-300 leading-relaxed max-w-xl font-light">
-              An 8-year track record of engineering scalable architectures, cutting latency, and directing award-winning creative technology.
-            </p>
+        <div ref={headerRef} className="flex flex-col gap-4 text-left sm:text-center items-start sm:items-center">
+          <div className="skill-reveal inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.04] border border-white/10 text-[10px] sm:text-xs font-mono tracking-[0.25em] text-neutral-400 uppercase">
+            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+            <span>04 // CORE COMPETENCIES</span>
           </div>
 
-          {/* Right: Archive Meta + Handwritten Blueprint Note */}
-          <div className="stage-reveal flex flex-col items-start md:items-end gap-3 font-mono text-xs text-neutral-400">
-            <div className="flex items-center gap-2">
-              <span className="text-neutral-500">//</span>
-              <span className="text-neutral-300 tracking-wider">2018 &mdash; 2026 ARCHIVE</span>
-            </div>
+          <h2 className="skill-reveal font-display font-black text-4xl sm:text-6xl md:text-7xl text-white tracking-tight uppercase">
+            SKILLS
+          </h2>
 
-            {/* Handwritten Blueprint Note */}
-            <div className="hidden sm:flex items-center gap-2 text-amber-300/90 font-serif italic text-base">
-              <span>* continuous production evolution</span>
-              <svg
-                className="w-10 h-5 text-amber-400 shrink-0 rotate-12"
-                viewBox="0 0 60 30"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-              >
-                <path d="M 5 22 Q 35 5, 52 18" />
-                <path d="M 44 12 L 53 19 L 46 25" />
-              </svg>
+          <p className="skill-reveal font-sans text-xs sm:text-sm md:text-base text-neutral-400 max-w-2xl leading-relaxed font-normal">
+            Specialized competencies spanning high-performance fullstack engineering, human-centered UI/UX systems, and cinematic post-production toolkits.
+          </p>
+        </div>
+
+        {/* ========================================================= */}
+        {/* 1. DEVELOPMENT SECTION (iOS Style Level Bars)              */}
+        {/* ========================================================= */}
+        <div ref={devRef} className="flex flex-col gap-6 p-6 sm:p-8 rounded-3xl bg-[#0a0b12]/80 border border-white/[0.08] backdrop-blur-md shadow-xl">
+          <div className="flex items-center gap-3 border-b border-white/[0.06] pb-4">
+            <div className="w-8 h-8 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400">
+              <Code2 className="w-4 h-4" />
             </div>
+            <div className="flex flex-col">
+              <h3 className="font-sans font-bold text-lg sm:text-xl text-white tracking-tight">
+                Development
+              </h3>
+              <span className="text-[11px] font-mono text-neutral-500 uppercase tracking-wider">
+                Full-Stack Architecture &bull; WebGL &bull; Distributed Systems
+              </span>
+            </div>
+          </div>
+
+          {/* 2-Column Grid of iOS Style Level Bars */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 pt-2">
+            {devSkills.map((s) => (
+              <div
+                key={s.name}
+                className="dev-skill-bar flex items-center justify-between gap-4 p-3.5 sm:p-4 rounded-2xl bg-white/[0.02] border border-white/5"
+              >
+                <span className="font-sans font-semibold text-sm sm:text-base text-neutral-200">
+                  {s.name}
+                </span>
+
+                {/* iOS Style Capsule Level Bar */}
+                <div className="flex items-center gap-3">
+                  <div className="relative w-28 sm:w-36 md:w-44 h-3 sm:h-3.5 bg-white/[0.08] rounded-full border border-white/10 p-0.5 overflow-hidden shadow-inner">
+                    <div
+                      data-level={s.level}
+                      className={`dev-bar-fill h-full rounded-full bg-gradient-to-r ${s.color} shadow-[0_0_10px_rgba(56,189,248,0.4)]`}
+                      style={{ width: s.level }}
+                    />
+                  </div>
+                  <span className="font-mono text-xs font-bold text-neutral-400 w-8 text-right">
+                    {s.level}
+                  </span>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 
         {/* ========================================================= */}
-        {/* 2. REORGANIZED 2-COLUMN TIMELINE & DOSSIER STAGE          */}
+        {/* 2. DESIGN SECTION (3 Columns as Sketched)                 */}
         {/* ========================================================= */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-          {/* Left Column: Connected Timeline Conduit (5 cols) */}
-          <div className="lg:col-span-5 flex flex-col relative">
-            {/* Continuous SVG Conduit Line */}
-            <div className="absolute left-[3px] top-8 bottom-8 w-[1.5px] bg-gradient-to-b from-white/20 via-white/10 to-white/5 pointer-events-none hidden sm:block" />
-
-            <div className="flex flex-col divide-y divide-white/[0.08]">
-              {experiences.map((exp, idx) => {
-                const isActive = activeIdx === idx;
-                const isPresent = exp.year.includes("PRESENT");
-
-                return (
-                  <button
-                    key={exp.id}
-                    onClick={() => {
-                      playHover();
-                      setActiveIdx(idx);
-                    }}
-                    onMouseEnter={() => {
-                      playHover();
-                      setActiveIdx(idx);
-                    }}
-                    className={`group relative text-left py-7 sm:py-8 transition-all duration-300 cursor-pointer flex flex-col gap-2 ${
-                      isActive
-                        ? "opacity-100 pl-4 sm:pl-7"
-                        : "opacity-40 hover:opacity-85 pl-0 sm:pl-7"
-                    }`}
-                  >
-                    {/* Active Conduit Node / Indicator */}
-                    {isActive ? (
-                      <div
-                        className="absolute left-0 top-8 bottom-8 w-[3px] rounded-full shadow-[0_0_14px_currentColor] transition-all duration-300"
-                        style={{ backgroundColor: exp.accent, color: exp.accent }}
-                      />
-                    ) : (
-                      <div className="absolute left-0 top-10 w-1.5 h-1.5 rounded-full bg-white/20 hidden sm:block group-hover:bg-white/50 transition-colors" />
-                    )}
-
-                    {/* Timeline Node Meta */}
-                    <div className="flex items-center justify-between gap-4">
-                      <div className="flex items-center gap-3">
-                        <span
-                          className="font-mono text-xs sm:text-sm font-semibold tracking-wider transition-colors duration-300"
-                          style={{ color: isActive ? exp.accent : "#94A3B8" }}
-                        >
-                          {exp.year}
-                        </span>
-                        {isPresent && (
-                          <span className="text-[10px] font-mono font-bold text-emerald-400 flex items-center gap-1.5 uppercase tracking-wider">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_6px_rgba(52,211,153,0.8)]" />
-                            ACTIVE
-                          </span>
-                        )}
-                      </div>
-
-                      <span className="text-xs font-mono text-neutral-400">
-                        {exp.period}
-                      </span>
-                    </div>
-
-                    {/* Role Title */}
-                    <h3
-                      className={`font-display font-black text-xl sm:text-2xl lg:text-3xl transition-all duration-300 leading-tight ${
-                        isActive ? "text-white scale-[1.01]" : "text-neutral-300 group-hover:text-white"
-                      }`}
-                    >
-                      {exp.role}
-                    </h3>
-
-                    {/* Company & Interactive Indicator */}
-                    <div className="flex items-center justify-between pt-0.5">
-                      <p
-                        className="font-serif italic text-base sm:text-lg transition-colors duration-300"
-                        style={{ color: isActive ? exp.accent : "#64748B" }}
-                      >
-                        {exp.company}
-                      </p>
-
-                      <ArrowUpRight
-                        className={`w-4 h-4 transition-all duration-300 ${
-                          isActive
-                            ? "opacity-100 translate-x-1 -translate-y-1"
-                            : "opacity-0 group-hover:opacity-100"
-                        }`}
-                        style={{ color: exp.accent }}
-                      />
-                    </div>
-
-                    {/* Handwritten Micro Note for Active Era */}
-                    {isActive && (
-                      <div className="pt-0.5 flex items-center gap-2 text-xs font-serif italic text-neutral-400 animate-in fade-in duration-300">
-                        <span className="text-amber-300/90 font-medium">↳ {exp.sketchAnnotation}</span>
-                      </div>
-                    )}
-                  </button>
-                );
-              })}
+        <div ref={designRef} className="flex flex-col gap-6 p-6 sm:p-8 rounded-3xl bg-[#0a0b12]/80 border border-white/[0.08] backdrop-blur-md shadow-xl">
+          <div className="flex items-center gap-3 border-b border-white/[0.06] pb-4">
+            <div className="w-8 h-8 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400">
+              <Palette className="w-4 h-4" />
+            </div>
+            <div className="flex flex-col">
+              <h3 className="font-sans font-bold text-lg sm:text-xl text-white tracking-tight uppercase">
+                DESIGN
+              </h3>
+              <span className="text-[11px] font-mono text-neutral-500 uppercase tracking-wider">
+                Product Design &bull; Motion Physics &bull; Systems
+              </span>
             </div>
           </div>
 
-          {/* Right Column: Dedicated Infographic Dossier (7 cols) */}
-          <div
-            ref={detailRef}
-            className="lg:col-span-7 flex flex-col justify-between gap-10 lg:pl-6"
-          >
-            <div className="flex flex-col gap-8">
-              {/* Top Dossier Title & System Classification */}
-              <div className="infographic-anim flex flex-col gap-2.5 pb-6 border-b border-white/[0.08]">
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-mono tracking-widest text-neutral-400 uppercase">
-                    // {activeExp.category}
+          {/* 3 Column Design Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 pt-2">
+            {designGroups.map((g) => (
+              <div
+                key={g.title}
+                className="design-card-item flex flex-col justify-between gap-4 p-5 sm:p-6 rounded-2xl bg-white/[0.02] border border-white/5"
+              >
+                <div className="flex flex-col gap-3">
+                  <div className="flex items-center justify-between">
+                    <span className={`text-[9px] font-mono font-bold tracking-wider px-2 py-0.5 rounded-md border uppercase ${g.color}`}>
+                      {g.badge}
+                    </span>
+                    <Sparkles className="w-3.5 h-3.5 text-neutral-600" />
+                  </div>
+
+                  <h4 className="font-sans font-bold text-base sm:text-lg text-white tracking-tight">
+                    {g.title}
+                  </h4>
+
+                  <ul className="flex flex-col gap-2 pt-1">
+                    {g.items.map((it) => (
+                      <li key={it} className="flex items-center gap-2 text-xs sm:text-sm text-neutral-400 font-normal">
+                        <span className="w-1 h-1 rounded-full bg-neutral-500" />
+                        <span>{it}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ========================================================= */}
+        {/* 3. CREATIVE SUITE (Pr, Lr, Ae, DaVinci Resolve App Badges) */}
+        {/* ========================================================= */}
+        <div ref={creativeRef} className="flex flex-col gap-6 p-6 sm:p-8 rounded-3xl bg-[#0a0b12]/80 border border-white/[0.08] backdrop-blur-md shadow-xl">
+          <div className="flex items-center gap-3 border-b border-white/[0.06] pb-4">
+            <div className="w-8 h-8 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
+              <Film className="w-4 h-4" />
+            </div>
+            <div className="flex flex-col">
+              <h3 className="font-sans font-bold text-lg sm:text-xl text-white tracking-tight">
+                Creative
+              </h3>
+              <span className="text-[11px] font-mono text-neutral-500 uppercase tracking-wider">
+                Post-Production &bull; Color Grading &bull; Motion Graphics
+              </span>
+            </div>
+          </div>
+
+          {/* 4 App Icon Badges Grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 pt-2">
+            {creativeApps.map((app) => (
+              <div
+                key={app.fullName}
+                className="creative-app-item flex flex-col items-center justify-center gap-3 p-5 sm:p-6 rounded-2xl bg-white/[0.02] border border-white/5 text-center"
+              >
+                {/* App Icon Square */}
+                <div
+                  className={`w-14 h-14 sm:w-16 sm:h-16 rounded-2xl ${app.bg} border ${app.border} ${app.glow} flex items-center justify-center shadow-lg transition-transform duration-300`}
+                >
+                  {app.isResolve ? (
+                    /* DaVinci Resolve 3-Petal Color Aperture Vector Logo */
+                    <svg viewBox="0 0 100 100" className="w-8 h-8 sm:w-9 sm:h-9">
+                      <circle cx="50" cy="50" r="46" fill="#10111a" stroke="rgba(255,255,255,0.12)" strokeWidth="3" />
+                      {/* Top Red Petal */}
+                      <path d="M50 14 C62 30, 70 42, 50 50 C30 42, 38 30, 50 14 Z" fill="#ff3b30" />
+                      {/* Bottom Right Blue Petal */}
+                      <path d="M82 70 C66 66, 56 58, 50 50 C60 42, 76 50, 82 70 Z" fill="#007aff" />
+                      {/* Bottom Left Yellow Petal */}
+                      <path d="M18 70 C24 50, 40 42, 50 50 C44 58, 34 66, 18 70 Z" fill="#ffcc00" />
+                    </svg>
+                  ) : (
+                    <span className={`font-display font-black text-xl sm:text-2xl ${app.textColor} tracking-tighter`}>
+                      {app.symbol}
+                    </span>
+                  )}
+                </div>
+
+                <div className="flex flex-col">
+                  <span className="font-sans font-bold text-sm sm:text-base text-white">
+                    {app.fullName}
+                  </span>
+                  <span className="text-[11px] font-mono text-neutral-400 mt-0.5">
+                    {app.role}
                   </span>
                 </div>
-
-                <h3 className="font-display font-black text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white tracking-tight leading-[1.06]">
-                  {activeExp.role}
-                </h3>
-
-                <div className="flex flex-wrap items-center gap-3 pt-1">
-                  <p
-                    className="font-serif italic text-xl sm:text-2xl font-normal"
-                    style={{ color: activeExp.accent }}
-                  >
-                    {activeExp.company}
-                  </p>
-                  <span className="text-neutral-500">//</span>
-                  <div className="flex items-center gap-1.5 font-mono text-xs text-neutral-300">
-                    <MapPin className="w-3.5 h-3.5" style={{ color: activeExp.accent }} />
-                    <span>{activeExp.location}</span>
-                  </div>
-                </div>
               </div>
-
-              {/* Free-Floating Infographic Metrics with Handwritten Sketch Note */}
-              <div className="infographic-anim flex flex-col gap-3 py-2 border-b border-white/[0.08]">
-                {/* Handwritten Callout Note */}
-                <div className="flex items-center gap-2 font-serif italic text-sm sm:text-base text-amber-300/90">
-                  <svg
-                    className="w-8 h-4 text-amber-400 shrink-0"
-                    viewBox="0 0 50 25"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.8"
-                    strokeLinecap="round"
-                  >
-                    <path d="M 5 5 Q 25 20, 42 10" />
-                    <path d="M 35 14 L 43 9 L 41 2" />
-                  </svg>
-                  <span>// &ldquo;{activeExp.handwrittenNote}&rdquo;</span>
-                </div>
-
-                {/* Free-Floating Metrics Row */}
-                <div className="grid grid-cols-2 gap-8 pt-1">
-                  {/* Metric 1 */}
-                  <div className="flex flex-col gap-1">
-                    <span
-                      className="font-display font-black text-4xl sm:text-5xl md:text-6xl tracking-tight drop-shadow-[0_0_25px_currentColor]"
-                      style={{ color: activeExp.accent }}
-                    >
-                      {activeExp.stat1.value}
-                    </span>
-                    <span className="font-mono text-xs sm:text-sm text-neutral-300 tracking-wider uppercase font-medium">
-                      {activeExp.stat1.label}
-                    </span>
-                    <span className="font-mono text-[10px] text-neutral-500 uppercase tracking-widest">
-                      [{activeExp.stat1.telemetry}]
-                    </span>
-                  </div>
-
-                  {/* Metric 2 */}
-                  <div className="flex flex-col gap-1">
-                    <span className="font-display font-black text-4xl sm:text-5xl md:text-6xl text-white tracking-tight">
-                      {activeExp.stat2.value}
-                    </span>
-                    <span className="font-mono text-xs sm:text-sm text-neutral-300 tracking-wider uppercase font-medium">
-                      {activeExp.stat2.label}
-                    </span>
-                    <span className="font-mono text-[10px] text-neutral-500 uppercase tracking-widest">
-                      [{activeExp.stat2.telemetry}]
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Narrative Summary */}
-              <p className="infographic-anim font-sans text-base sm:text-lg text-neutral-200 leading-relaxed font-light">
-                {activeExp.summary}
-              </p>
-
-              {/* Key Architectural Deliverables Matrix */}
-              <div className="infographic-anim space-y-3 pt-1">
-                <div className="text-xs font-mono tracking-widest text-neutral-400 uppercase font-semibold flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <Zap className="w-3.5 h-3.5" style={{ color: activeExp.accent }} />
-                    <span>KEY ARCHITECTURAL DELIVERABLES &amp; IMPACT</span>
-                  </div>
-                  <span className="text-neutral-500 font-normal hidden sm:inline">// VERIFIED</span>
-                </div>
-
-                <div className="space-y-3 pl-1">
-                  {activeExp.highlights.map((highlight, hIdx) => (
-                    <div
-                      key={hIdx}
-                      className="flex items-start gap-3.5 text-sm sm:text-base text-neutral-300 font-light leading-relaxed"
-                    >
-                      <span
-                        className="font-bold select-none mt-1 text-sm shrink-0"
-                        style={{ color: activeExp.accent }}
-                      >
-                        ✦
-                      </span>
-                      <span>{highlight}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* ========================================================= */}
-            {/* 3. CORE ARCHITECTURE SKILLS WITH AUTHENTIC BRAND SVG LOGOS */}
-            {/* ========================================================= */}
-            <div className="infographic-anim pt-8 border-t border-white/[0.08] flex flex-col gap-3.5">
-              <div className="flex items-center justify-between text-xs font-mono text-neutral-400">
-                <div className="flex items-center gap-2 uppercase tracking-widest font-semibold">
-                  <span className="text-neutral-500">//</span>
-                  <span className="text-neutral-300">CORE ARCHITECTURE &amp; PRODUCTION STACK</span>
-                </div>
-                <span className="text-[11px] font-mono text-neutral-500 hidden sm:inline">
-                  [{activeExp.techStack.length} TECHNOLOGIES]
-                </span>
-              </div>
-
-              {/* Clean Grid of Tech Chips with Authentic Brand SVG Logos */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-6 gap-2.5">
-                {activeExp.techStack.map((tech, tIdx) => (
-                  <div
-                    key={tIdx}
-                    className="group/tech flex items-center gap-2.5 px-3 py-2 rounded-xl bg-white/[0.02] border border-white/[0.06] hover:border-white/20 hover:bg-white/[0.05] transition-all duration-200 select-none cursor-default"
-                  >
-                    <TechLogo
-                      name={tech}
-                      className="w-4 h-4 shrink-0 transition-transform duration-200 group-hover/tech:scale-110"
-                    />
-                    <span className="font-mono text-xs text-neutral-300 group-hover/tech:text-white transition-colors truncate">
-                      {tech}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
