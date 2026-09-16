@@ -65,8 +65,8 @@ export const siteConfig: SiteConfig = {
     { name: "GitHub", url: "https://github.com", handle: "@gourab-dev" },
     { name: "LinkedIn", url: "https://linkedin.com", handle: "in/gourab" },
     { name: "X (Twitter)", url: "https://x.com", handle: "@gourab_x" },
-    { name: "ReadCV", url: "https://read.cv", handle: "@gourab" },
-    { name: "Awwwards", url: "https://awwwards.com", handle: "@gourab" }
+    { name: "Instagram", url: "https://instagram.com", handle: "@gourab" },
+    { name: "Email", url: "mailto:gourab@cinematic.dev", handle: "gourab@cinematic.dev" }
   ],
   manifesto: {
     headline: "BRIDGING COMPUTATION, CINEMA & INTENTIONAL DESIGN.",

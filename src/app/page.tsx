@@ -11,7 +11,6 @@ import { Showreel } from "@/components/sections/Showreel";
 import { ProcessPipeline } from "@/components/sections/ProcessPipeline";
 import { ExperienceTimeline } from "@/components/sections/ExperienceTimeline";
 import { IdeasIntoImpact } from "@/components/sections/IdeasIntoImpact";
-import { CallToAction } from "@/components/sections/CallToAction";
 import { ContactFooter } from "@/components/sections/ContactFooter";
 import { FilmGrain } from "@/components/ambient/FilmGrain";
 import { AmbientCanvas } from "@/components/ambient/AmbientCanvas";
@@ -51,7 +50,7 @@ export default function Home() {
       {/* 2. OVERLAPPING MAIN DARK DRAWER SHEET (Slides up seamlessly over White Hero) */}
       <div
         id="main-drawer-sheet"
-        className="relative z-30 -mt-[100vh] bg-[#050507] rounded-t-[2.5rem] sm:rounded-t-[3.5rem] border-t border-white/10 overflow-hidden"
+        className="relative z-30 -mt-[100vh] bg-[#050507] rounded-t-[2.5rem] sm:rounded-t-[3.5rem] border-t border-white/10 overflow-clip"
       >
         <AboutManifesto />
         <SelectedWork />
@@ -59,7 +58,6 @@ export default function Home() {
         <ProcessPipeline />
         <ExperienceTimeline />
         <IdeasIntoImpact />
-        <CallToAction />
         <ContactFooter />
       </div>
     </main>
