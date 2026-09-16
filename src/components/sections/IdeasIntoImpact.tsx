@@ -1369,11 +1369,11 @@ export function IdeasIntoImpact() {
             </div>
 
             {/* Right Column: Hero Visual with ASCENSION & Flying Portrait */}
-            <div className="w-full lg:w-[58%] relative flex items-center justify-center min-h-[420px] sm:min-h-[480px] lg:min-h-[540px] pointer-events-none">
+            <div className="w-full lg:w-[60%] relative flex items-center justify-center min-h-[440px] sm:min-h-[500px] lg:min-h-[560px] pointer-events-none">
               {/* Environmental Backlight Glow */}
               <div
                 ref={auraRef}
-                className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[480px] sm:w-[620px] lg:w-[760px] h-[320px] sm:h-[400px] lg:h-[500px] rounded-full blur-[70px] bg-[radial-gradient(ellipse_at_center,_rgba(168,85,247,0.42)_0%,_rgba(124,58,237,0.2)_40%,_transparent_70%)]"
+                className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[520px] sm:w-[680px] lg:w-[820px] h-[340px] sm:h-[420px] lg:h-[520px] rounded-full blur-[70px] bg-[radial-gradient(ellipse_at_center,_rgba(168,85,247,0.42)_0%,_rgba(124,58,237,0.2)_40%,_transparent_70%)]"
                 aria-hidden="true"
               />
 
@@ -1391,19 +1391,19 @@ export function IdeasIntoImpact() {
               {/* Flying Portrait Image */}
               <div
                 ref={portraitRef}
-                className="relative z-20 w-full max-w-[520px] sm:max-w-[620px] lg:max-w-[720px] xl:max-w-[780px] h-[420px] sm:h-[480px] lg:h-[540px] flex items-end justify-center will-change-transform"
+                className="relative z-20 w-full max-w-[620px] sm:max-w-[740px] lg:max-w-[860px] xl:max-w-[940px] h-[440px] sm:h-[500px] lg:h-[560px] flex items-end justify-center will-change-transform"
               >
                 <img
                   src="/assets/hero-hd.png"
                   alt="Gourab Creative Developer"
-                  className="w-auto h-full max-h-[540px] object-contain object-bottom scale-[1.08] sm:scale-[1.12] lg:scale-[1.15] origin-bottom translate-y-[65px] sm:translate-y-[85px] lg:translate-y-[100px] translate-x-4 sm:translate-x-8 lg:translate-x-12 [mask-image:linear-gradient(to_bottom,black_60%,transparent_100%)] filter contrast-[1.05] brightness-[1.02]"
+                  className="w-auto h-full max-h-[560px] object-contain object-bottom scale-[1.22] sm:scale-[1.32] lg:scale-[1.40] xl:scale-[1.46] origin-bottom translate-y-[50px] sm:translate-y-[65px] lg:translate-y-[75px] translate-x-12 sm:translate-x-24 lg:translate-x-36 xl:translate-x-44 [mask-image:linear-gradient(to_bottom,black_60%,transparent_100%)] filter contrast-[1.05] brightness-[1.02]"
                 />
               </div>
 
               {/* Right Shoulder Floating Editorial Paragraph (Beside shoulder, tiny white text) */}
               <div
                 ref={shoulderBadgeRef}
-                className="hidden sm:flex absolute right-0 sm:right-2 lg:right-4 xl:right-8 top-[64%] sm:top-[62%] lg:top-[59%] -translate-y-1/2 z-25 flex-col gap-1.5 max-w-[145px] sm:max-w-[165px] lg:max-w-[185px] will-change-transform pointer-events-none select-none text-left"
+                className="hidden sm:flex absolute right-[-20px] sm:right-[-10px] lg:right-0 xl:right-4 top-[64%] sm:top-[62%] lg:top-[59%] -translate-y-1/2 z-25 flex-col gap-1.5 max-w-[145px] sm:max-w-[165px] lg:max-w-[185px] will-change-transform pointer-events-none select-none text-left"
               >
                 <div className="text-white/60">
                   <svg viewBox="0 0 24 24" fill="currentColor" className="w-3 h-3">
@@ -1612,7 +1612,7 @@ export function IdeasIntoImpact() {
         {/* ========================================================= */}
         <div
           ref={slide3LayerRef}
-          className="absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center overflow-hidden z-30 select-none pointer-events-none"
+          className="absolute inset-0 w-full h-full flex flex-col items-center justify-start pt-20 sm:pt-24 md:pt-32 text-center overflow-hidden z-30 select-none pointer-events-none"
         >
           {/* AI-Generated 3D Lavender Ripple Sphere Background Canvas */}
           <div
@@ -1628,21 +1628,24 @@ export function IdeasIntoImpact() {
             />
 
             {/* Subtle atmospheric vignette and light diffusion */}
-            <div className="absolute inset-0 bg-gradient-to-b from-[#e5e1fa]/40 via-transparent to-[#ded9f9]/50 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#e5e1fa]/30 via-transparent to-[#ded9f9]/40 pointer-events-none" />
           </div>
 
           {/* Foreground Editorial Text Content */}
           <div
             ref={slide3ContentRef}
-            className="relative z-10 max-w-4xl mx-auto px-6 sm:px-10 md:px-14 flex flex-col items-center justify-center pointer-events-auto py-6"
+            className="relative z-10 max-w-4xl mx-auto px-6 sm:px-10 md:px-14 flex flex-col items-center justify-center pointer-events-auto"
           >
-            {/* Clean Premium Modern Sans Headline */}
-            <h2 className="slide3-assemble-item font-sans font-bold text-3xl sm:text-5xl md:text-6xl lg:text-[4.2rem] text-[#1a1532] tracking-tight leading-[1.12] sm:leading-[1.14] text-center mb-3 sm:mb-4 max-w-3xl overflow-visible">
-              Thank you for your time &amp; vision.
+            {/* Ultra-Luxury Editorial Bodoni Headline with Deep Indigo/Violet Color Theory */}
+            <h2 className="slide3-assemble-item font-bodoni text-3xl sm:text-5xl md:text-6xl lg:text-[4.8rem] text-[#120d26] font-medium tracking-tight leading-[1.12] sm:leading-[1.15] text-center mb-3 sm:mb-4 max-w-4xl overflow-visible">
+              <span>Thank you for </span>
+              <span className="font-bodoni italic font-normal bg-gradient-to-r from-[#2e1d6d] via-[#4c1d95] to-[#6d28d9] bg-clip-text text-transparent inline-block pr-2">
+                your time &amp; vision.
+              </span>
             </h2>
 
-            {/* Tiny, Very Subtle Sub-headline */}
-            <p className="slide3-assemble-item font-sans text-[11px] sm:text-xs text-[#5a537d] font-normal max-w-md mx-auto leading-relaxed tracking-wide">
+            {/* Tiny, Sophisticated Sub-headline in Soft Muted Lavender-Slate */}
+            <p className="slide3-assemble-item font-sans text-[11px] sm:text-xs text-[#554d78] font-normal max-w-md mx-auto leading-relaxed tracking-wider">
               Whether you have a breakthrough project, want to collaborate on ambitious digital experiences, or simply want to connect — let&apos;s create something remarkable together.
             </p>
           </div>
