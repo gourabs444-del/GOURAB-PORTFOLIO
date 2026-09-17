@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "@/lib/gsap";
 import { ArrowUpRight } from "lucide-react";
 import { useAudioFeedback } from "@/hooks/useAudioFeedback";
+import { DnaHelixCanvas } from "@/components/ambient/DnaHelixCanvas";
 
 export function IdeasIntoImpact() {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -19,6 +20,10 @@ export function IdeasIntoImpact() {
   const leftContentRef = useRef<HTMLDivElement | null>(null);
   const cardsRef = useRef<HTMLDivElement | null>(null);
   const cardsTrackRef = useRef<HTMLDivElement | null>(null);
+
+  // 3D DNA Helix Background Ref & State
+  const dnaWrapRef = useRef<HTMLDivElement | null>(null);
+  const [dnaColorProg, setDnaColorProg] = useState(0);
 
   // Slide 1 refs (Let's build something extraordinary together CTA)
   const ctaLayerRef = useRef<HTMLDivElement | null>(null);
@@ -75,6 +80,7 @@ export function IdeasIntoImpact() {
         ? cardsRef.current.querySelectorAll(".service-card-anim")
         : [];
 
+      if (dnaWrapRef.current) gsap.set(dnaWrapRef.current, { opacity: 0, scale: 0.9 });
       if (ctaLayerRef.current) gsap.set(ctaLayerRef.current, { opacity: 0, pointerEvents: "none" });
       if (slide2LayerRef.current) gsap.set(slide2LayerRef.current, { opacity: 0, pointerEvents: "none" });
       if (slide3LayerRef.current) {
@@ -549,6 +555,23 @@ export function IdeasIntoImpact() {
       // -----------------------------------------------------------------------
       // 4. SLIDE 1 ASSEMBLES: "Let's build something extraordinary together" (Time: 8.9 -> 10.3)
       // -----------------------------------------------------------------------
+      if (dnaWrapRef.current) {
+        tl.fromTo(
+          dnaWrapRef.current,
+          {
+            opacity: 0,
+            scale: 0.88,
+          },
+          {
+            opacity: 0.55,
+            scale: 1,
+            duration: 1.8,
+            ease: "power2.out",
+          },
+          8.9
+        );
+      }
+
       if (ctaWatermarkRef.current) {
         tl.fromTo(
           ctaWatermarkRef.current,
@@ -625,6 +648,22 @@ export function IdeasIntoImpact() {
       // -----------------------------------------------------------------------
       // 5. SLIDE 1 REVERSE ANIMATES OUT (Time: 11.4 -> 12.6)
       // -----------------------------------------------------------------------
+      // Smooth DNA color morph from Amber-Cyan (0) to Orchid-Mint (1)
+      const dnaColorProxy = { val: 0 };
+      tl.fromTo(
+        dnaColorProxy,
+        { val: 0 },
+        {
+          val: 1,
+          duration: 1.6,
+          ease: "power2.inOut",
+          onUpdate: () => {
+            setDnaColorProg(dnaColorProxy.val);
+          },
+        },
+        11.4
+      );
+
       if (ctaHeadingRef.current) {
         tl.to(
           ctaHeadingRef.current,
@@ -805,6 +844,19 @@ export function IdeasIntoImpact() {
             scale: 0.3,
             duration: 1.2,
             ease: "none",
+          },
+          15.0
+        );
+      }
+
+      if (dnaWrapRef.current) {
+        tl.to(
+          dnaWrapRef.current,
+          {
+            opacity: 0,
+            scale: 1.1,
+            duration: 1.2,
+            ease: "power2.in",
           },
           15.0
         );
@@ -1344,7 +1396,7 @@ export function IdeasIntoImpact() {
         {/* ========================================================= */}
         <div
           ref={heroLayerRef}
-          className="max-w-7xl mx-auto w-full flex flex-col justify-between h-full relative z-10 py-1 will-change-transform transform-gpu"
+          className="max-w-7xl mx-auto w-full flex flex-col justify-between h-full relative z-10 py-1 -translate-y-6 sm:-translate-y-9 lg:-translate-y-12 will-change-transform transform-gpu"
         >
           {/* ========================================================= */}
           {/* 1. HERO SECTION: ASSEMBLED CONTENT & PORTRAIT            */}
