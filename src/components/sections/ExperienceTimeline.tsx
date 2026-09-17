@@ -636,11 +636,46 @@ export function ExperienceTimeline() {
 
         {/* Validation Footnote */}
         <div className="skill-reveal mt-2 pt-6 border-t border-neutral-200/80 flex items-center justify-center sm:justify-start">
-          <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-neutral-100/90 border border-neutral-200/70 shadow-sm transition-all duration-200 hover:border-emerald-500/40 hover:bg-emerald-50/50">
-            <BadgeCheck className="w-4 h-4 text-emerald-600 shrink-0" />
-            <span className="font-sans font-medium text-xs text-neutral-700">
-              Validated through Pluralsight &amp; HackerRank assessments
-            </span>
+          <div className="inline-flex items-center flex-wrap gap-2.5 px-4 py-2.5 rounded-xl bg-neutral-100/90 border border-neutral-200/80 shadow-sm transition-all duration-200 hover:border-emerald-500/40 hover:bg-emerald-50/40 text-xs text-neutral-700 font-sans">
+            <BadgeCheck className="w-4.5 h-4.5 text-emerald-600 shrink-0" />
+            <span className="font-medium text-neutral-600">Validated through</span>
+            
+            {/* Pluralsight Brand Logo */}
+            <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-white border border-neutral-200/80 shadow-[0_1px_3px_rgba(0,0,0,0.05)] transition-transform duration-200 hover:scale-105">
+              <svg viewBox="0 0 100 100" className="w-4 h-4 shrink-0">
+                <defs>
+                  <linearGradient id="ps-badge-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#F15A24" />
+                    <stop offset="100%" stopColor="#EC008C" />
+                  </linearGradient>
+                </defs>
+                <circle cx="50" cy="50" r="48" fill="url(#ps-badge-grad)" />
+                <polygon points="34,28 72,50 34,72" fill="none" stroke="#ffffff" strokeWidth="7" strokeLinejoin="round" />
+                <polygon points="44,35 64,50 44,65" fill="none" stroke="#ffffff" strokeWidth="6" strokeLinejoin="round" />
+              </svg>
+              <span className="font-display font-black text-[11px] tracking-[0.14em] uppercase text-neutral-900">
+                PLURALSIGHT
+              </span>
+            </div>
+
+            <span className="font-bold text-neutral-400">&amp;</span>
+
+            {/* HackerRank Brand Logo */}
+            <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-white border border-neutral-200/80 shadow-[0_1px_3px_rgba(0,0,0,0.05)] transition-transform duration-200 hover:scale-105">
+              <svg viewBox="0 0 100 100" className="w-4 h-4 shrink-0">
+                <path
+                  d="M50 5 L88 27 L88 73 L50 95 L12 73 L12 27 Z"
+                  fill="#00EA64"
+                />
+                <path d="M35 66 L35 38 L29 44 L29 35 L39 25 L49 35 L49 44 L43 38 L43 66 Z" fill="#ffffff" />
+                <path d="M57 34 L57 62 L51 56 L51 65 L61 75 L71 65 L71 56 L65 62 L65 34 Z" fill="#ffffff" />
+              </svg>
+              <span className="font-sans font-extrabold text-[11px] tracking-tight text-neutral-900">
+                HackerRank
+              </span>
+            </div>
+
+            <span className="font-medium text-neutral-600">assessments</span>
           </div>
         </div>
       </div>
