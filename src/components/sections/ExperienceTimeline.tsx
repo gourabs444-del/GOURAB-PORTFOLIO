@@ -3,7 +3,7 @@
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "@/lib/gsap";
-import { Code2, Palette, Film } from "lucide-react";
+import { Code2, Palette, Film, BadgeCheck } from "lucide-react";
 
 export function ExperienceTimeline() {
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -82,7 +82,7 @@ export function ExperienceTimeline() {
       name: "React",
       role: "Frontend & Architecture",
       level: "96%",
-      barColor: "from-[#087ea4] to-[#00d8ff]",
+      barColor: "bg-[#00d8ff]",
       icon: (
         <svg viewBox="-11.5 -10.23 23 20.46" className="w-5 h-5 shrink-0" fill="none">
           <circle cx="0" cy="0" r="2.05" fill="#61DAFB" />
@@ -98,7 +98,7 @@ export function ExperienceTimeline() {
       name: "TypeScript",
       role: "Strict Type Systems",
       level: "92%",
-      barColor: "from-[#3178c6] to-[#4f95e6]",
+      barColor: "bg-[#3178c6]",
       icon: (
         <svg viewBox="0 0 128 128" className="w-5 h-5 shrink-0 rounded-[3px] overflow-hidden" fill="none">
           <rect width="128" height="128" rx="14" fill="#3178C6" />
@@ -113,7 +113,7 @@ export function ExperienceTimeline() {
       name: "JavaScript",
       role: "ESNext & Performance",
       level: "98%",
-      barColor: "from-[#f7df1e] to-[#eab308]",
+      barColor: "bg-[#eab308]",
       icon: (
         <svg viewBox="0 0 128 128" className="w-5 h-5 shrink-0 rounded-[3px] overflow-hidden" fill="none">
           <rect width="128" height="128" rx="14" fill="#F7DF1E" />
@@ -128,7 +128,7 @@ export function ExperienceTimeline() {
       name: "Next.js",
       role: "App Router & SSR",
       level: "94%",
-      barColor: "from-neutral-900 to-neutral-700",
+      barColor: "bg-neutral-900",
       icon: (
         <svg viewBox="0 0 180 180" className="w-5 h-5 shrink-0" fill="none">
           <circle cx="90" cy="90" r="90" fill="#000000" />
@@ -154,7 +154,7 @@ export function ExperienceTimeline() {
       name: "Three.js",
       role: "3D Shaders & Canvas",
       level: "88%",
-      barColor: "from-emerald-500 to-teal-500",
+      barColor: "bg-[#10b981]",
       icon: (
         <svg viewBox="0 0 24 24" className="w-5 h-5 shrink-0" fill="none">
           <path
@@ -168,7 +168,7 @@ export function ExperienceTimeline() {
       name: "Tailwind CSS",
       role: "Responsive Design Systems",
       level: "98%",
-      barColor: "from-[#38bdf8] to-[#0284c7]",
+      barColor: "bg-[#06b6d4]",
       icon: (
         <svg viewBox="0 0 24 24" className="w-5 h-5 shrink-0" fill="none">
           <path
@@ -182,7 +182,7 @@ export function ExperienceTimeline() {
       name: "Node.js",
       role: "Server Microservices",
       level: "90%",
-      barColor: "from-[#539e43] to-[#388e3c]",
+      barColor: "bg-[#539e43]",
       icon: (
         <svg viewBox="0 0 24 24" className="w-5 h-5 shrink-0" fill="none">
           <path
@@ -200,7 +200,7 @@ export function ExperienceTimeline() {
       name: "Python",
       role: "Automation & LLM Pipelines",
       level: "92%",
-      barColor: "from-[#387eb8] to-[#ffe052]",
+      barColor: "bg-[#387eb8]",
       icon: (
         <svg viewBox="0 0 128 128" className="w-5 h-5 shrink-0" fill="none">
           <linearGradient id="py_a" gradientUnits="userSpaceOnUse" x1="70.252" y1="1237.476" x2="170.659" y2="1151.089" gradientTransform="matrix(.563 0 0 -.568 -29.215 707.817)">
@@ -220,7 +220,7 @@ export function ExperienceTimeline() {
       name: "Git",
       role: "CI/CD & Version Control",
       level: "95%",
-      barColor: "from-[#f05032] to-[#ea580c]",
+      barColor: "bg-[#f05032]",
       icon: (
         <svg viewBox="0 0 128 128" className="w-5 h-5 shrink-0" fill="none">
           <path fill="#F05032" d="M124.737 58.378L69.621 3.264c-3.172-3.174-8.32-3.174-11.497 0L46.68 14.71l14.518 14.518c3.375-1.139 7.243-.375 9.932 2.314 2.703 2.706 3.461 6.607 2.294 9.993l13.992 13.993c3.385-1.167 7.292-.413 9.994 2.295 3.78 3.777 3.78 9.9 0 13.679a9.673 9.673 0 01-13.683 0 9.677 9.677 0 01-2.105-10.521L68.574 47.933l-.002 34.341a9.708 9.708 0 012.559 1.828c3.778 3.777 3.778 9.898 0 13.683-3.779 3.777-9.904 3.777-13.679 0-3.778-3.784-3.778-9.905 0-13.683a9.65 9.65 0 013.167-2.11V47.333a9.581 9.581 0 01-3.167-2.111c-2.862-2.86-3.551-7.06-2.083-10.576L41.056 20.333 3.264 58.123a8.133 8.133 0 000 11.5l55.117 55.114c3.174 3.174 8.32 3.174 11.499 0l54.858-54.858a8.135 8.135 0 00-.001-11.501z" />
@@ -235,7 +235,7 @@ export function ExperienceTimeline() {
       name: "Figma",
       role: "Design Systems & UI/UX",
       level: "96%",
-      barColor: "from-[#a259ff] via-[#f24e1e] to-[#0acf83]",
+      barColor: "bg-[#a259ff]",
       icon: (
         <svg viewBox="0 0 128 128" className="w-5 h-5 shrink-0" fill="none">
           <path fill="#0ACF83" d="M45.5 129c11.9 0 21.5-9.6 21.5-21.5V86H45.5C33.6 86 24 95.6 24 107.5S33.6 129 45.5 129zm0 0" />
@@ -250,7 +250,7 @@ export function ExperienceTimeline() {
       name: "GSAP",
       role: "ScrollTrigger & Timelines",
       level: "98%",
-      barColor: "from-[#88ce02] to-[#65a30d]",
+      barColor: "bg-[#88ce02]",
       icon: (
         <svg viewBox="0 0 100 100" className="w-5 h-5 shrink-0 rounded-[3px] overflow-hidden" fill="none">
           <rect width="100" height="100" rx="12" fill="#0E100F" />
@@ -266,7 +266,7 @@ export function ExperienceTimeline() {
       name: "UI / UX Architecture",
       role: "Human-Centered Flows",
       level: "94%",
-      barColor: "from-neutral-800 to-neutral-600",
+      barColor: "bg-neutral-800",
       icon: (
         <svg viewBox="0 0 24 24" className="w-5 h-5 shrink-0 text-neutral-800" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
           <rect x="3" y="3" width="18" height="18" rx="2" />
@@ -278,7 +278,7 @@ export function ExperienceTimeline() {
       name: "Kinetic Prototyping",
       role: "Micro-Interactions",
       level: "92%",
-      barColor: "from-neutral-800 to-neutral-600",
+      barColor: "bg-neutral-800",
       icon: (
         <svg viewBox="0 0 24 24" className="w-5 h-5 shrink-0 text-neutral-800" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
           <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
@@ -290,7 +290,7 @@ export function ExperienceTimeline() {
       name: "Blender",
       role: "3D Modeling & Lighting",
       level: "86%",
-      barColor: "from-[#ea7600] to-[#225780]",
+      barColor: "bg-[#ea7600]",
       icon: (
         <svg viewBox="0 0 24 24" className="w-5 h-5 shrink-0" fill="none">
           <path
@@ -306,7 +306,7 @@ export function ExperienceTimeline() {
       name: "Visual Art Direction",
       role: "Typography & Layouts",
       level: "95%",
-      barColor: "from-neutral-800 to-neutral-600",
+      barColor: "bg-neutral-800",
       icon: (
         <svg viewBox="0 0 24 24" className="w-5 h-5 shrink-0 text-neutral-800" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
           <path d="m12 19 7-7 3 3-7 7-3-3z" />
@@ -324,7 +324,7 @@ export function ExperienceTimeline() {
       name: "DaVinci Resolve",
       role: "Color Science & ACES LUTs",
       level: "96%",
-      barColor: "from-rose-500 via-sky-500 to-amber-500",
+      barColor: "bg-[#e11d48]",
       icon: (
         <svg viewBox="0 0 100 100" className="w-5 h-5 shrink-0 rounded-full overflow-hidden" fill="none">
           <defs>
@@ -365,7 +365,7 @@ export function ExperienceTimeline() {
       name: "Adobe Premiere Pro",
       role: "Video Editing & Film Pacing",
       level: "95%",
-      barColor: "from-[#9999ff] to-[#7979ff]",
+      barColor: "bg-[#7979ff]",
       icon: (
         <svg viewBox="0 0 128 128" className="w-5 h-5 shrink-0 rounded-[3px] overflow-hidden" fill="none">
           <rect width="128" height="128" rx="14" fill="#00005B" />
@@ -381,7 +381,7 @@ export function ExperienceTimeline() {
       name: "Adobe After Effects",
       role: "Motion Graphics & Visual VFX",
       level: "92%",
-      barColor: "from-[#d291ff] to-[#b359ff]",
+      barColor: "bg-[#b359ff]",
       icon: (
         <svg viewBox="0 0 128 128" className="w-5 h-5 shrink-0 rounded-[3px] overflow-hidden" fill="none">
           <rect width="128" height="128" rx="14" fill="#2D004D" />
@@ -397,7 +397,7 @@ export function ExperienceTimeline() {
       name: "Adobe Lightroom",
       role: "Editorial Color Grading",
       level: "90%",
-      barColor: "from-[#31a8ff] to-[#0084e6]",
+      barColor: "bg-[#31a8ff]",
       icon: (
         <svg viewBox="0 0 128 128" className="w-5 h-5 shrink-0 rounded-[3px] overflow-hidden" fill="none">
           <rect width="128" height="128" rx="14" fill="#001E36" />
@@ -413,7 +413,7 @@ export function ExperienceTimeline() {
       name: "Cinematic Sound Design",
       role: "Foley & Sub-bass Impact",
       level: "88%",
-      barColor: "from-neutral-800 to-neutral-600",
+      barColor: "bg-neutral-800",
       icon: (
         <svg viewBox="0 0 24 24" className="w-5 h-5 shrink-0 text-neutral-800" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
           <path d="M2 10v4M6 6v12M10 3v18M14 8v8M18 5v14M22 10v4" />
@@ -424,7 +424,7 @@ export function ExperienceTimeline() {
       name: "Video Encoding & HLS",
       role: "Adaptive Bitrate & Codecs",
       level: "94%",
-      barColor: "from-neutral-800 to-neutral-600",
+      barColor: "bg-neutral-800",
       icon: (
         <svg viewBox="0 0 24 24" className="w-5 h-5 shrink-0 text-neutral-800" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
           <rect x="2" y="4" width="15" height="16" rx="2" />
@@ -502,14 +502,14 @@ export function ExperienceTimeline() {
 
                 {/* Right: Clean Level Bar + Percentage */}
                 <div className="flex items-center gap-2.5 shrink-0">
-                  <div className="w-16 sm:w-20 h-1.5 bg-neutral-100 rounded-full overflow-hidden">
+                  <div className="w-20 sm:w-24 h-2 bg-neutral-200/90 border border-neutral-300/70 rounded-full overflow-hidden shadow-inner">
                     <div
                       data-level={s.level}
-                      className={`skill-bar-fill h-full rounded-full bg-gradient-to-r ${s.barColor}`}
+                      className={`skill-bar-fill h-full rounded-full ${s.barColor}`}
                       style={{ width: s.level }}
                     />
                   </div>
-                  <span className="font-mono text-xs font-bold text-neutral-700 w-7 text-right">
+                  <span className="font-mono text-xs font-bold text-neutral-800 w-8 text-right">
                     {s.level}
                   </span>
                 </div>
@@ -560,14 +560,14 @@ export function ExperienceTimeline() {
 
                 {/* Right: Clean Level Bar + Percentage */}
                 <div className="flex items-center gap-2.5 shrink-0">
-                  <div className="w-16 sm:w-20 h-1.5 bg-neutral-100 rounded-full overflow-hidden">
+                  <div className="w-20 sm:w-24 h-2 bg-neutral-200/90 border border-neutral-300/70 rounded-full overflow-hidden shadow-inner">
                     <div
                       data-level={s.level}
-                      className={`skill-bar-fill h-full rounded-full bg-gradient-to-r ${s.barColor}`}
+                      className={`skill-bar-fill h-full rounded-full ${s.barColor}`}
                       style={{ width: s.level }}
                     />
                   </div>
-                  <span className="font-mono text-xs font-bold text-neutral-700 w-7 text-right">
+                  <span className="font-mono text-xs font-bold text-neutral-800 w-8 text-right">
                     {s.level}
                   </span>
                 </div>
@@ -618,19 +618,29 @@ export function ExperienceTimeline() {
 
                 {/* Right: Clean Level Bar + Percentage */}
                 <div className="flex items-center gap-2.5 shrink-0">
-                  <div className="w-16 sm:w-20 h-1.5 bg-neutral-100 rounded-full overflow-hidden">
+                  <div className="w-20 sm:w-24 h-2 bg-neutral-200/90 border border-neutral-300/70 rounded-full overflow-hidden shadow-inner">
                     <div
                       data-level={s.level}
-                      className={`skill-bar-fill h-full rounded-full bg-gradient-to-r ${s.barColor}`}
+                      className={`skill-bar-fill h-full rounded-full ${s.barColor}`}
                       style={{ width: s.level }}
                     />
                   </div>
-                  <span className="font-mono text-xs font-bold text-neutral-700 w-7 text-right">
+                  <span className="font-mono text-xs font-bold text-neutral-800 w-8 text-right">
                     {s.level}
                   </span>
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+
+        {/* Validation Footnote */}
+        <div className="skill-reveal mt-2 pt-6 border-t border-neutral-200/80 flex items-center justify-center sm:justify-start">
+          <div className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-neutral-100/90 border border-neutral-200/70 shadow-sm transition-all duration-200 hover:border-emerald-500/40 hover:bg-emerald-50/50">
+            <BadgeCheck className="w-4 h-4 text-emerald-600 shrink-0" />
+            <span className="font-sans font-medium text-xs text-neutral-700">
+              Validated through Pluralsight &amp; HackerRank assessments
+            </span>
           </div>
         </div>
       </div>
