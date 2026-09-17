@@ -82,22 +82,6 @@ export function ContactFooter() {
           className="absolute bottom-0 left-1/4 w-[500px] h-[350px] rounded-full blur-[120px] opacity-20 bg-[radial-gradient(circle,_rgba(56,189,248,0.2)_0%,_transparent_70%)]"
           aria-hidden="true"
         />
-        {/* Subtle Faint Landscape Blend Overlay */}
-        <div
-          className="absolute inset-0 w-full h-full bg-cover bg-bottom bg-no-repeat opacity-[0.08] mix-blend-luminosity pointer-events-none filter contrast-125"
-          style={{ backgroundImage: `url('/assets/footer-winter-mountain.png')` }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#030305] via-[#030305]/90 to-[#030305] pointer-events-none" />
-      </div>
-
-      {/* Giant Background Typography Watermark */}
-      <div
-        className="pointer-events-none absolute bottom-4 left-1/2 -translate-x-1/2 w-full flex items-center justify-center select-none z-0 overflow-hidden"
-        aria-hidden="true"
-      >
-        <span className="font-display font-black text-[12vw] tracking-tighter uppercase text-white/[0.025] leading-none whitespace-nowrap">
-          GOURAB
-        </span>
       </div>
 
       <div className="max-w-6xl mx-auto flex flex-col gap-12 sm:gap-16 relative z-10">

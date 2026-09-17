@@ -5,232 +5,11 @@ import gsap from "gsap";
 import { ScrollTrigger } from "@/lib/gsap";
 import { ArrowUpRight } from "lucide-react";
 import { useAudioFeedback } from "@/hooks/useAudioFeedback";
-
-interface DnaState {
-  amplitude: number;
-  phase: number;
-  opacity: number;
-  morphProgress: number;
-}
-
-function HorizontalDnaHelix({
-  dnaState,
-}: {
-  dnaState: React.MutableRefObject<DnaState>;
-}) {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    let animId: number;
-
-    const handleResize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = window.innerWidth * dpr;
-      canvas.height = window.innerHeight * dpr;
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-
-    const strand1Words = [
-      "ARCHITECTING",
-      "THE",
-      "FUTURE",
-      "CREATIVE",
-      "ENGINEERING",
-      "EXPERIENCES",
-      "BEYOND",
-      "PIXELS",
-      "DIGITAL",
-      "MASTERPIECES",
-      "INNOVATION",
-      "TRANSFORMATION",
-    ];
-    const strand2Words = [
-      "DISRUPT",
-      "INNOVATE",
-      "ELEVATE",
-      "TRANSCEND",
-      "SYNAPSE",
-      "ALGORITHM",
-      "QUANTUM",
-      "EVOLUTION",
-      "DNA",
-      "CODE",
-      "INTERACTION",
-      "ARCHITECTURE",
-    ];
-    const rungs = ["A::T", "C::G", "GLSL", "WEBGL", "GSAP", "NEXT", "2026", "AI"];
-
-    const render = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const width = canvas.width;
-      const height = canvas.height;
-      const cssW = width / dpr;
-      const cssH = height / dpr;
-
-      ctx.clearRect(0, 0, width, height);
-
-      const { amplitude, phase, opacity, morphProgress } = dnaState.current;
-
-      if (opacity <= 0.005) {
-        animId = requestAnimationFrame(render);
-        return;
-      }
-
-      ctx.save();
-      ctx.scale(dpr, dpr);
-
-      const centerY = cssH / 2;
-      const nodeCount = Math.ceil(cssW / 55) + 6;
-      const nodeSpacing = cssW / (nodeCount - 6);
-      const frequency = (Math.PI * 2) / 420;
-
-      const maxAmp = amplitude;
-
-      // Base Pair Rungs (Connecting Hydrogen Bonds)
-      if (maxAmp > 3) {
-        for (let i = 0; i < nodeCount; i++) {
-          const x = (i - 3) * nodeSpacing;
-          const theta = x * frequency + phase;
-
-          const y1 = centerY + Math.sin(theta) * maxAmp;
-          const y2 = centerY - Math.sin(theta) * maxAmp;
-          const z1 = Math.cos(theta);
-
-          if (i % 2 === 0) {
-            const rungAlpha =
-              Math.max(0, (Math.abs(z1) * 0.28 + 0.12) * opacity * Math.min(1, maxAmp / 25));
-            ctx.beginPath();
-            ctx.moveTo(x, y1);
-            ctx.lineTo(x, y2);
-            ctx.strokeStyle = `rgba(167, 139, 250, ${rungAlpha.toFixed(3)})`;
-            ctx.lineWidth = 1 + (z1 + 1) * 0.6;
-            ctx.stroke();
-
-            // Periodic Rung Labels
-            if (i % 4 === 0 && maxAmp > 35) {
-              const rungLabel = rungs[(i / 4) % rungs.length];
-              const midY = (y1 + y2) / 2;
-              const labelAlpha = rungAlpha * 0.85;
-              ctx.font = `600 10px monospace`;
-              ctx.fillStyle = `rgba(232, 121, 249, ${labelAlpha.toFixed(3)})`;
-              ctx.textAlign = "center";
-              ctx.textBaseline = "middle";
-              ctx.fillText(rungLabel, x, midY);
-            }
-          }
-        }
-      }
-
-      // Strand 1 Nodes & Faded Text
-      for (let i = 0; i < nodeCount; i++) {
-        const x = (i - 3) * nodeSpacing;
-        const theta = x * frequency + phase;
-
-        const y1 = centerY + Math.sin(theta) * maxAmp;
-        const z1 = Math.cos(theta);
-
-        const word = strand1Words[i % strand1Words.length];
-
-        const depthScale = 0.65 + (z1 + 1) * 0.35;
-        const fontSize = Math.round(20 * depthScale + (1 - morphProgress) * 14);
-        const nodeAlpha = Math.min(1, Math.max(0.12, (z1 + 1.2) / 2.2)) * opacity;
-
-        ctx.font = `900 ${fontSize}px sans-serif`;
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-
-        if (z1 >= 0) {
-          ctx.fillStyle = `rgba(255, 255, 255, ${nodeAlpha.toFixed(3)})`;
-        } else {
-          ctx.fillStyle = `rgba(192, 132, 252, ${nodeAlpha.toFixed(3)})`;
-        }
-
-        ctx.fillText(word, x, y1);
-
-        // Glowing Node Sphere on DNA Strand
-        if (maxAmp > 15) {
-          ctx.beginPath();
-          ctx.arc(x, y1, 2.5 * depthScale, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(245, 158, 11, ${(nodeAlpha * 1.3).toFixed(3)})`;
-          ctx.fill();
-        }
-      }
-
-      // Strand 2 Nodes & Faded Text
-      for (let i = 0; i < nodeCount; i++) {
-        const x = (i - 3) * nodeSpacing;
-        const theta = x * frequency + phase;
-
-        const y2 = centerY - Math.sin(theta) * maxAmp;
-        const z2 = -Math.cos(theta);
-
-        const word = strand2Words[i % strand2Words.length];
-
-        const depthScale = 0.65 + (z2 + 1) * 0.35;
-        const fontSize = Math.round(20 * depthScale + (1 - morphProgress) * 14);
-        const nodeAlpha = Math.min(1, Math.max(0.12, (z2 + 1.2) / 2.2)) * opacity;
-
-        ctx.font = `900 ${fontSize}px sans-serif`;
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-
-        if (z2 >= 0) {
-          ctx.fillStyle = `rgba(255, 255, 255, ${nodeAlpha.toFixed(3)})`;
-        } else {
-          ctx.fillStyle = `rgba(56, 189, 248, ${nodeAlpha.toFixed(3)})`;
-        }
-
-        ctx.fillText(word, x, y2);
-
-        // Glowing Node Sphere on DNA Strand
-        if (maxAmp > 15) {
-          ctx.beginPath();
-          ctx.arc(x, y2, 2.5 * depthScale, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(45, 212, 191, ${(nodeAlpha * 1.3).toFixed(3)})`;
-          ctx.fill();
-        }
-      }
-
-      ctx.restore();
-
-      animId = requestAnimationFrame(render);
-    };
-
-    render();
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      cancelAnimationFrame(animId);
-    };
-  }, [dnaState]);
-
-  return (
-    <canvas
-      ref={canvasRef}
-      className="pointer-events-none absolute inset-0 w-full h-full select-none z-0"
-      aria-hidden="true"
-    />
-  );
-}
+import { ArtisticDnaCanvas } from "@/components/ambient/ArtisticDnaCanvas";
 
 export function IdeasIntoImpact() {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const stageRef = useRef<HTMLDivElement | null>(null);
-
-  // Dynamic Horizontal 3D DNA Helix state
-  const dnaStateRef = useRef<DnaState>({
-    amplitude: 0,
-    phase: 0,
-    opacity: 0,
-    morphProgress: 0,
-  });
 
   // Layer A refs (Ideas Into Impact Hero)
   const heroLayerRef = useRef<HTMLDivElement | null>(null);
@@ -309,18 +88,52 @@ export function IdeasIntoImpact() {
       if (slide3BgRef.current) gsap.set(slide3BgRef.current, { opacity: 0, scale: 1.08, filter: "blur(12px)" });
 
       // -----------------------------------------------------------------------
-      // Dynamic Center Spotlight: Cards in the middle are larger & fully colored;
-      // all side/incoming/outgoing cards are faded and completely desaturated
+      // -----------------------------------------------------------------------
+      // Dynamic Center Spotlight: Middle card is 100% normal & vivid;
+      // all side cards are completely desaturated (100% grayscale) and faded (0.22 opacity)
+      // -----------------------------------------------------------------------
+      // -----------------------------------------------------------------------
+      // Continuous Ultra-Fluid Center Spotlight:
+      // Cards smoothly brighten, scale up & colorize as they approach center,
+      // reach 100% normal at screen center, and smoothly fade/desaturate as they slide past.
       // -----------------------------------------------------------------------
       const updateCardSpotlight = () => {
         if (!cardsRef.current || !cardsTrackRef.current) return;
         const containerRect = cardsRef.current.getBoundingClientRect();
         const centerX = containerRect.left + containerRect.width / 2;
-        // Tight focal radius focused specifically on the center card (~22% width)
-        const focusRadius = Math.max(containerRect.width * 0.22, 160);
 
         const cardElements = cardsTrackRef.current.children;
-        for (let i = 0; i < cardElements.length; i++) {
+        const count = cardElements.length;
+        if (count === 0) return;
+
+        // Dynamic spacing between cards (~320px)
+        let cardSpacing = 320;
+        if (count > 1) {
+          const r0 = cardElements[0].getBoundingClientRect();
+          const r1 = cardElements[1].getBoundingClientRect();
+          cardSpacing = Math.abs(r1.left - r0.left) || 320;
+        }
+
+        // Smooth focus radius across card spacing for 100% continuous interpolation
+        const focusRadius = cardSpacing * 1.15;
+
+        // 1. Find closest card index to center for zIndex & shadow prioritization
+        let minDist = Infinity;
+        let closestIdx = 0;
+
+        for (let i = 0; i < count; i++) {
+          const cardEl = cardElements[i] as HTMLElement;
+          const cardRect = cardEl.getBoundingClientRect();
+          const cardCenterX = cardRect.left + cardRect.width / 2;
+          const dist = Math.abs(centerX - cardCenterX);
+          if (dist < minDist) {
+            minDist = dist;
+            closestIdx = i;
+          }
+        }
+
+        // 2. Apply continuous fluid spotlight to every card with zero sharp jumps
+        for (let i = 0; i < count; i++) {
           const cardEl = cardElements[i] as HTMLElement;
           const inner = cardEl.querySelector<HTMLElement>(".card-inner-spotlight");
           if (!inner) continue;
@@ -329,34 +142,33 @@ export function IdeasIntoImpact() {
           const cardCenterX = cardRect.left + cardRect.width / 2;
           const dist = Math.abs(centerX - cardCenterX);
 
-          // Normalized distance: 0 at center, 1 at edge of focus radius
-          const ratio = Math.min(Math.max(dist / focusRadius, 0), 1);
+          // Normalized distance from center (0 at center -> 1 at focusRadius)
+          const normDist = Math.min(dist / focusRadius, 1);
+          
+          // Ultra-smooth Cosine curve (1.0 at center -> 0.0 at focusRadius)
+          const rawFocus = Math.cos((normDist * Math.PI) / 2);
+          const tightFocus = Math.pow(rawFocus, 1.35); // Silky cubic falloff curve
 
-          // Cosine focus progress: 1.0 at center -> 0.0 at outer edges
-          const rawProgress = Math.cos((ratio * Math.PI) / 2);
-          // Smooth focus curve so center card pops prominently while side cards smoothly fade
-          const tightFocus = Math.pow(rawProgress, 1.8);
+          // Scale: 1.0 at center, 0.72 at side
+          const scale = 0.72 + tightFocus * 0.28;
 
-          // Scale: Center is 1.0 (normal perfect), Sides shrink to 0.70
-          const scale = 0.70 + tightFocus * 0.30;
-
-          // Grayscale: 0% (vivid full color) at center, 100% (desaturated) on side cards
+          // Grayscale: 0% (vivid full color) at center, 100% (desaturated) at sides
           const grayscale = (1 - tightFocus) * 100;
 
-          // Opacity: 1.0 at center, 0.28 on side cards (faded)
-          const opacity = 0.28 + tightFocus * 0.72;
+          // Opacity: 1.0 at center, 0.24 at sides
+          const opacity = 0.24 + tightFocus * 0.76;
 
-          // Brightness: 1.0 at center, 0.55 on side cards
-          const brightness = 0.55 + tightFocus * 0.45;
+          // Brightness: 1.0 at center, 0.42 at sides
+          const brightness = 0.42 + tightFocus * 0.58;
 
           inner.style.transform = `scale(${scale.toFixed(3)})`;
           inner.style.filter = `grayscale(${grayscale.toFixed(1)}%) brightness(${brightness.toFixed(2)})`;
           inner.style.opacity = `${opacity.toFixed(3)}`;
-          inner.style.zIndex = tightFocus > 0.4 ? "30" : "1";
+          inner.style.zIndex = i === closestIdx ? "30" : `${Math.max(1, Math.round(tightFocus * 20))}`;
 
-          // Clean deep drop shadow when in center - no white halo or glow
-          if (tightFocus > 0.4) {
-            inner.style.boxShadow = `0 24px 48px -10px rgba(0,0,0,0.85)`;
+          if (tightFocus > 0.55) {
+            const shadowAlpha = ((tightFocus - 0.55) / 0.45) * 0.85;
+            inner.style.boxShadow = `0 24px 48px -10px rgba(0,0,0,${shadowAlpha.toFixed(2)})`;
           } else {
             inner.style.boxShadow = "none";
           }
@@ -556,14 +368,14 @@ export function IdeasIntoImpact() {
           {
             opacity: 0,
             scale: 0.55,
-            y: isMobile ? 10 : 20,
+            y: isMobile ? 15 : 25,
             filter: "blur(8px)",
             transformOrigin: "center bottom",
           },
           {
             opacity: 1,
             scale: 1,
-            y: isMobile ? -55 : -105,
+            y: isMobile ? -45 : -85,
             filter: "blur(0px)",
             duration: 3.0,
             ease: "none",
@@ -771,30 +583,18 @@ export function IdeasIntoImpact() {
       // -----------------------------------------------------------------------
       // 4. SLIDE 1 ASSEMBLES: "Let's build something extraordinary together" (Time: 8.9 -> 10.3)
       // -----------------------------------------------------------------------
-      tl.to(
-        dnaStateRef.current,
-        {
-          opacity: 0.22,
-          amplitude: 0,
-          morphProgress: 0,
-          duration: 1.4,
-          ease: "power2.out",
-        },
-        8.9
-      );
-
       if (ctaWatermarkRef.current) {
         tl.fromTo(
           ctaWatermarkRef.current,
           {
-            xPercent: 6,
+            scale: 0.9,
             opacity: 0,
           },
           {
-            xPercent: -18,
+            scale: 1,
             opacity: 1,
             duration: 2.2,
-            ease: "none",
+            ease: "power2.out",
           },
           8.9
         );
@@ -857,20 +657,8 @@ export function IdeasIntoImpact() {
       tl.to({}, { duration: 1.1 }, 10.3);
 
       // -----------------------------------------------------------------------
-      // 5. SLIDE 1 REVERSE ANIMATES OUT & MORPHS INTO HORIZONTAL DNA HELIX (Time: 11.4 -> 12.6)
+      // 5. SLIDE 1 REVERSE ANIMATES OUT (Time: 11.4 -> 12.6)
       // -----------------------------------------------------------------------
-      tl.to(
-        dnaStateRef.current,
-        {
-          amplitude: 110,
-          opacity: 0.38,
-          morphProgress: 1,
-          duration: 1.4,
-          ease: "power2.inOut",
-        },
-        11.4
-      );
-
       if (ctaHeadingRef.current) {
         tl.to(
           ctaHeadingRef.current,
@@ -891,9 +679,9 @@ export function IdeasIntoImpact() {
           ctaWatermarkRef.current,
           {
             opacity: 0,
-            xPercent: -30,
+            scale: 1.08,
             duration: 1.2,
-            ease: "none",
+            ease: "power2.in",
           },
           11.4
         );
@@ -925,19 +713,9 @@ export function IdeasIntoImpact() {
       }
 
       // -----------------------------------------------------------------------
-      // 6. SLIDE 2 ASSEMBLES: HORIZONTAL DNA ROTATES & SCROLLS (Time: 12.2 -> 13.8)
+      // 6. SLIDE 2 ASSEMBLES: NEW FONT & NEW NEON PALETTE (Time: 12.2 -> 13.8)
       // "Crafting experiences that transcend pixels & code."
       // -----------------------------------------------------------------------
-      tl.to(
-        dnaStateRef.current,
-        {
-          phase: Math.PI * 8,
-          duration: 2.8,
-          ease: "none",
-        },
-        12.2
-      );
-
       if (slide2LayerRef.current) {
         tl.fromTo(
           slide2LayerRef.current,
@@ -976,14 +754,14 @@ export function IdeasIntoImpact() {
         tl.fromTo(
           slide2WatermarkRef.current,
           {
-            xPercent: 8,
+            scale: 0.9,
             opacity: 0,
           },
           {
-            xPercent: -15,
+            scale: 1,
             opacity: 1,
             duration: 2.2,
-            ease: "none",
+            ease: "power2.out",
           },
           12.3
         );
@@ -1021,17 +799,6 @@ export function IdeasIntoImpact() {
       // -----------------------------------------------------------------------
       // 7. SLIDE 2 REVERSE ANIMATES OUT (Time: 15.0 -> 16.2)
       // -----------------------------------------------------------------------
-      tl.to(
-        dnaStateRef.current,
-        {
-          opacity: 0,
-          amplitude: 0,
-          duration: 1.0,
-          ease: "power2.in",
-        },
-        15.0
-      );
-
       if (slide2Items.length > 0) {
         tl.to(
           slide2Items,
@@ -1591,11 +1358,8 @@ export function IdeasIntoImpact() {
       {/* Sticky Fullscreen Pinned Stage */}
       <div
         ref={stageRef}
-        className="sticky top-0 w-full h-screen min-h-screen flex flex-col justify-between overflow-hidden px-4 sm:px-8 md:px-12 lg:px-16 pt-2 pb-2 sm:pt-3 sm:pb-3 transform-gpu"
+        className="sticky top-0 w-full h-screen min-h-screen flex flex-col justify-between overflow-hidden px-4 sm:px-8 md:px-12 lg:px-16 pt-0 pb-2 sm:pt-1 sm:pb-3 transform-gpu"
       >
-        {/* Dynamic 3D Horizontal DNA Helix Canvas Background */}
-        <HorizontalDnaHelix dnaState={dnaStateRef} />
-
         {/* Studio Lighting Ambient Glows */}
         <div
           className="pointer-events-none absolute top-0 right-0 w-[600px] h-[500px] rounded-full blur-[140px] opacity-70 bg-[radial-gradient(ellipse_at_top,_rgba(147,51,234,0.25)_0%,_rgba(124,58,237,0.1)_40%,_transparent_70%)]"
@@ -1614,7 +1378,7 @@ export function IdeasIntoImpact() {
         {/* ========================================================= */}
         <div
           ref={heroLayerRef}
-          className="max-w-7xl mx-auto w-full flex flex-col justify-between h-full relative z-10 py-1 will-change-transform transform-gpu"
+          className="max-w-7xl mx-auto w-full flex flex-col justify-between h-full relative z-10 py-0 -translate-y-4 sm:-translate-y-7 lg:-translate-y-9 will-change-transform transform-gpu"
         >
           {/* ========================================================= */}
           {/* 1. HERO SECTION: ASSEMBLED CONTENT & PORTRAIT            */}
@@ -1812,7 +1576,7 @@ export function IdeasIntoImpact() {
               {/* Behind-the-Head Tall Condensed Editorial Typography */}
               <div
                 ref={ascensionRef}
-                className="absolute top-[18%] sm:top-[17%] lg:top-[17%] left-[52.8%] -translate-x-1/2 select-none z-10 opacity-90 will-change-transform pointer-events-none"
+                className="absolute top-[6%] sm:top-[5%] lg:top-[4%] left-[52.8%] -translate-x-1/2 select-none z-10 opacity-90 will-change-transform pointer-events-none"
                 aria-hidden="true"
               >
                 <span className="block font-display font-black text-7xl sm:text-8xl md:text-9xl lg:text-[8.8rem] xl:text-[10.2rem] tracking-[0.05em] uppercase whitespace-nowrap bg-gradient-to-b from-white/90 via-white/40 to-transparent bg-clip-text text-transparent scale-y-[1.65] origin-bottom">
@@ -1828,14 +1592,14 @@ export function IdeasIntoImpact() {
                 <img
                   src="/assets/hero-hd.png"
                   alt="Gourab Creative Developer"
-                  className="w-auto h-full max-h-[540px] object-contain object-bottom scale-[1.08] sm:scale-[1.12] lg:scale-[1.15] origin-bottom translate-y-[65px] sm:translate-y-[85px] lg:translate-y-[100px] translate-x-4 sm:translate-x-8 lg:translate-x-12 [mask-image:linear-gradient(to_bottom,black_60%,transparent_100%)] filter contrast-[1.05] brightness-[1.02]"
+                  className="w-auto h-full max-h-[540px] object-contain object-bottom scale-[1.08] sm:scale-[1.12] lg:scale-[1.15] origin-bottom translate-y-[20px] sm:translate-y-[35px] lg:translate-y-[45px] translate-x-4 sm:translate-x-8 lg:translate-x-12 [mask-image:linear-gradient(to_bottom,black_60%,transparent_100%)] filter contrast-[1.05] brightness-[1.02]"
                 />
               </div>
 
               {/* Right Shoulder Floating Editorial Paragraph (Beside shoulder, ultra-tiny white text) */}
               <div
                 ref={shoulderBadgeRef}
-                className="hidden sm:flex absolute right-[-12px] sm:right-[-4px] lg:right-0 xl:right-4 top-[64%] sm:top-[62%] lg:top-[59%] -translate-y-1/2 z-25 flex-col gap-1 max-w-[130px] sm:max-w-[145px] lg:max-w-[160px] will-change-transform pointer-events-none select-none text-left"
+                className="hidden sm:flex absolute right-[-48px] sm:right-[-42px] lg:right-[-36px] xl:right-[-28px] top-[64%] sm:top-[62%] lg:top-[59%] -translate-y-1/2 z-25 flex-col gap-1 max-w-[130px] sm:max-w-[145px] lg:max-w-[160px] will-change-transform pointer-events-none select-none text-left"
               >
                 <div className="text-white/50">
                   <svg viewBox="0 0 24 24" fill="currentColor" className="w-2.5 h-2.5">
@@ -1932,18 +1696,13 @@ export function IdeasIntoImpact() {
             aria-hidden="true"
           />
 
-          {/* Background Single Sliding Watermark Text */}
+          {/* Background Artistic 3D DNA Canvas */}
           <div
-            className="pointer-events-none absolute top-1/2 left-0 -translate-y-1/2 w-full flex items-center justify-center select-none -z-0 overflow-visible"
+            ref={ctaWatermarkRef}
+            className="pointer-events-none absolute inset-0 w-full h-full flex items-center justify-center select-none z-0 overflow-hidden"
             aria-hidden="true"
           >
-            <div
-              ref={ctaWatermarkRef}
-              className="flex whitespace-nowrap text-white/[0.04] font-display font-black text-5xl sm:text-7xl md:text-8xl lg:text-[10rem] tracking-tight uppercase leading-none will-change-transform"
-            >
-              <span>ARCHITECTING THE FUTURE &nbsp; CREATIVE ENGINEERING &nbsp; EXPERIENCES BEYOND PIXELS &nbsp; DIGITAL MASTERPIECES &nbsp; </span>
-              <span>ARCHITECTING THE FUTURE &nbsp; CREATIVE ENGINEERING &nbsp; EXPERIENCES BEYOND PIXELS &nbsp; DIGITAL MASTERPIECES &nbsp; </span>
-            </div>
+            <ArtisticDnaCanvas />
           </div>
 
           {/* Foreground 3-Line Bodoni Headline */}
@@ -1991,18 +1750,13 @@ export function IdeasIntoImpact() {
             aria-hidden="true"
           />
 
-          {/* Background Sliding Watermark Text */}
+          {/* Background Artistic 3D DNA Canvas */}
           <div
-            className="pointer-events-none absolute top-1/2 left-0 -translate-y-1/2 w-full flex items-center justify-center select-none -z-0 overflow-visible"
+            ref={slide2WatermarkRef}
+            className="pointer-events-none absolute inset-0 w-full h-full flex items-center justify-center select-none z-0 overflow-hidden"
             aria-hidden="true"
           >
-            <div
-              ref={slide2WatermarkRef}
-              className="flex whitespace-nowrap text-white/[0.04] font-display font-black text-5xl sm:text-7xl md:text-8xl lg:text-[10rem] tracking-tight uppercase leading-none will-change-transform"
-            >
-              <span>DISRUPT &nbsp; INNOVATE &nbsp; ELEVATE &nbsp; TRANSCEND &nbsp; </span>
-              <span>DISRUPT &nbsp; INNOVATE &nbsp; ELEVATE &nbsp; TRANSCEND &nbsp; </span>
-            </div>
+            <ArtisticDnaCanvas />
           </div>
 
           {/* Foreground Luxury Bodoni Typography Content */}
@@ -2058,18 +1812,7 @@ export function IdeasIntoImpact() {
             {/* Subtle atmospheric ambient glow on white */}
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,_rgba(240,238,255,0.8)_0%,_rgba(251,251,253,1)_70%)] pointer-events-none" />
 
-            {/* Background Watermark on White Canvas */}
-            <div
-              className="pointer-events-none absolute top-1/2 left-0 -translate-y-1/2 w-full flex items-center justify-center select-none -z-0 overflow-visible opacity-40"
-              aria-hidden="true"
-            >
-              <div
-                className="flex whitespace-nowrap text-neutral-900/[0.04] font-display font-black text-6xl sm:text-8xl md:text-9xl lg:text-[11rem] tracking-tight uppercase leading-none"
-              >
-                <span>GRATITUDE &bull; VISION &bull; COLLABORATION &bull; FUTURE &bull; </span>
-                <span>GRATITUDE &bull; VISION &bull; COLLABORATION &bull; FUTURE &bull; </span>
-              </div>
-            </div>
+
           </div>
 
           {/* Foreground Editorial Text Content */}
