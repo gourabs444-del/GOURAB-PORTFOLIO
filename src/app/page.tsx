@@ -55,8 +55,8 @@ export default function Home() {
         <AboutManifesto />
         <SelectedWork />
         <Showreel />
-        <ProcessPipeline />
         <ExperienceTimeline />
+        <ProcessPipeline />
         <IdeasIntoImpact />
         <ContactFooter />
       </div>

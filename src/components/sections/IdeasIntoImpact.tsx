@@ -112,19 +112,19 @@ export function IdeasIntoImpact() {
 
           // Cosine focus progress: 1.0 at center -> 0.0 at outer edges
           const rawProgress = Math.cos((ratio * Math.PI) / 2);
-          // Tight power curve so only the exact middle card has full focus
+          // Smooth focus curve so center card pops prominently while side cards smoothly fade
           const tightFocus = Math.pow(rawProgress, 1.8);
 
-          // Scale: Center is 1.04 (bada), Sides shrink to 0.68 (chota)
-          const scale = 0.68 + tightFocus * 0.36;
+          // Scale: Center is 1.0 (normal perfect), Sides shrink to 0.70
+          const scale = 0.70 + tightFocus * 0.30;
 
-          // Grayscale: Center is 0% (vivid color), Sides are 100% (completely desaturated!)
+          // Grayscale: 0% (vivid full color) at center, 100% (desaturated) on side cards
           const grayscale = (1 - tightFocus) * 100;
 
-          // Opacity: Center is 1.0, Sides are 0.32 (faded into background)
-          const opacity = 0.32 + tightFocus * 0.68;
+          // Opacity: 1.0 at center, 0.28 on side cards (faded)
+          const opacity = 0.28 + tightFocus * 0.72;
 
-          // Brightness: Center is 1.0, Sides are 0.55 (dimmed)
+          // Brightness: 1.0 at center, 0.55 on side cards
           const brightness = 0.55 + tightFocus * 0.45;
 
           inner.style.transform = `scale(${scale.toFixed(3)})`;
@@ -132,8 +132,9 @@ export function IdeasIntoImpact() {
           inner.style.opacity = `${opacity.toFixed(3)}`;
           inner.style.zIndex = tightFocus > 0.4 ? "30" : "1";
 
+          // Clean deep drop shadow when in center - no white halo or glow
           if (tightFocus > 0.4) {
-            inner.style.boxShadow = `0 24px 50px -10px rgba(0,0,0,0.7), 0 0 32px rgba(255,255,255,${(tightFocus * 0.35).toFixed(2)})`;
+            inner.style.boxShadow = `0 24px 48px -10px rgba(0,0,0,0.85)`;
           } else {
             inner.style.boxShadow = "none";
           }
@@ -370,9 +371,10 @@ export function IdeasIntoImpact() {
       }
 
       // -----------------------------------------------------------------------
-      // 12-CARD CONTINUOUS ROLLING SHOWCASE REEL (Time: 0.0 -> 7.8)
+      // 12-CARD CONTINUOUS ROLLING SHOWCASE REEL (Time: 0.0 -> 9.2)
       // Starts rolling immediately from the very beginning (0.0) simultaneously
-      // as the hero elements, boy portrait & typography assemble!
+      // as the hero elements assemble, continuing seamlessly without pausing
+      // straight into the converging deassembly!
       // -----------------------------------------------------------------------
       if (cardsTrackRef.current) {
         tl.fromTo(
@@ -381,8 +383,8 @@ export function IdeasIntoImpact() {
             xPercent: 20,
           },
           {
-            xPercent: -75,
-            duration: 7.8,
+            xPercent: -86,
+            duration: 9.2,
             ease: "none",
           },
           0
@@ -390,24 +392,24 @@ export function IdeasIntoImpact() {
       }
 
       // -----------------------------------------------------------------------
-      // 3. SIMULTANEOUS CONVERGING DEASSEMBLE (Time: 7.8 -> 9.4)
-      // As Card 12 finishes, all cards converge into one spot together
-      // and deassemble simultaneously with hero elements
+      // 3. SIMULTANEOUS CONVERGING DEASSEMBLE (Time: 7.8 -> 9.1)
+      // Smooth continuous flow: hero elements & cards deassemble simultaneously
+      // without any hesitation or dead pause
       // -----------------------------------------------------------------------
 
       if (cardItems.length > 0) {
         tl.to(
           cardItems,
           {
-            scale: 0.1,
+            scale: 0.12,
             opacity: 0,
             filter: "blur(10px)",
             stagger: {
-              each: 0.02,
+              each: 0.015,
               from: "center",
             },
-            duration: 1.5,
-            ease: "power3.in",
+            duration: 1.3,
+            ease: "power2.inOut",
           },
           7.8
         );
@@ -417,11 +419,11 @@ export function IdeasIntoImpact() {
         tl.to(
           cardsTrackRef.current,
           {
-            scale: 0.2,
+            scale: 0.25,
             opacity: 0,
-            filter: "blur(12px)",
-            duration: 1.5,
-            ease: "power3.in",
+            filter: "blur(10px)",
+            duration: 1.3,
+            ease: "power2.inOut",
           },
           7.8
         );
@@ -437,10 +439,10 @@ export function IdeasIntoImpact() {
             rotate: 20,
             filter: "blur(8px)",
             stagger: {
-              each: 0.04,
+              each: 0.03,
               from: "end",
             },
-            duration: 1.4,
+            duration: 1.3,
             ease: "power2.in",
           },
           7.8
@@ -454,10 +456,10 @@ export function IdeasIntoImpact() {
             opacity: 0,
             x: isMobile ? -40 : -80,
             filter: "blur(6px)",
-            duration: 1.4,
-            ease: "none",
+            duration: 1.3,
+            ease: "power2.in",
           },
-          7.9
+          7.8
         );
       }
 
@@ -470,13 +472,13 @@ export function IdeasIntoImpact() {
             y: 40,
             filter: "blur(6px)",
             stagger: {
-              each: 0.03,
+              each: 0.025,
               from: "end",
             },
-            duration: 1.5,
-            ease: "none",
+            duration: 1.3,
+            ease: "power2.in",
           },
-          7.9
+          7.8
         );
       }
 
@@ -485,10 +487,10 @@ export function IdeasIntoImpact() {
         {
           opacity: 0,
           scale: 0.2,
-          duration: 1.5,
-          ease: "none",
+          duration: 1.3,
+          ease: "power2.in",
         },
-        7.9
+        7.8
       );
 
       tl.to(
@@ -499,10 +501,10 @@ export function IdeasIntoImpact() {
           y: isMobile ? 140 : 280,
           scale: 0.55,
           filter: "grayscale(100%) blur(8px)",
-          duration: 1.6,
-          ease: "none",
+          duration: 1.3,
+          ease: "power2.in",
         },
-        7.9
+        7.8
       );
 
       if (shoulderBadgeRef.current) {
@@ -514,10 +516,10 @@ export function IdeasIntoImpact() {
             y: 20,
             scale: 0.8,
             filter: "blur(6px)",
-            duration: 1.5,
-            ease: "none",
+            duration: 1.3,
+            ease: "power2.in",
           },
-          7.9
+          7.8
         );
       }
 
@@ -528,20 +530,20 @@ export function IdeasIntoImpact() {
           scale: isMobile ? 1.4 : 1.8,
           y: isMobile ? 70 : 160,
           filter: "blur(10px)",
-          duration: 1.6,
-          ease: "none",
+          duration: 1.3,
+          ease: "power2.in",
         },
-        7.9
+        7.8
       );
 
       tl.to(
         heroLayerRef.current,
         {
           opacity: 0,
-          duration: 0.8,
+          duration: 0.6,
           ease: "none",
         },
-        9.1
+        8.8
       );
 
       // -----------------------------------------------------------------------
@@ -901,7 +903,7 @@ export function IdeasIntoImpact() {
     return () => ctx.revert();
   }, []);
 
-  // 12 Clean & Crisp White Capability Cards
+  // 12 Uniquely Styled AI & Generative Aesthetic Capability Cards (Inspired by Reference Designs)
   const services = [
     {
       num: "01",
@@ -909,12 +911,27 @@ export function IdeasIntoImpact() {
       desc: "Modern, responsive and ultra high-performance web systems.",
       category: "FULLSTACK",
       color: {
-        border: "border-neutral-200 hover:border-sky-400/80",
-        bg: "bg-white",
-        badge: "text-sky-700 bg-sky-50 border-sky-200",
-        beam: "from-transparent via-sky-500 to-transparent",
-        iconWrap: "text-sky-600 bg-sky-50 border border-sky-200",
-        glowDot: "bg-sky-500 shadow-[0_0_8px_#0ea5e9]",
+        border: "border-sky-400/35 hover:border-sky-400/80",
+        bg: "from-[#0a1829] via-[#12253d] to-[#06101c]",
+        badge: "text-sky-200 bg-sky-500/20 border-sky-400/35",
+        beam: "from-transparent via-sky-400 to-transparent",
+        iconWrap: "text-sky-300 bg-sky-500/20 border border-sky-400/35",
+        glowDot: "bg-sky-400 shadow-[0_0_10px_#38bdf8]",
+        bgLayer: (
+          <>
+            {/* Swiss Alps Twilight Haze & Mountain Silhouettes (Ref 1) */}
+            <div className="absolute top-0 right-0 w-44 h-44 bg-[radial-gradient(ellipse_at_top_right,_rgba(56,189,248,0.3)_0%,_transparent_65%)]" />
+            <div className="absolute bottom-0 right-0 w-36 h-28 opacity-25">
+              <svg viewBox="0 0 200 120" className="w-full h-full text-sky-200" fill="currentColor">
+                <polygon points="20,120 70,40 120,120" opacity="0.6" />
+                <polygon points="80,120 130,20 180,120" opacity="0.9" />
+                <polygon points="120,120 160,50 200,120" opacity="0.4" />
+                <polyline points="130,20 138,45 125,50 142,65" stroke="white" strokeWidth="2" fill="none" opacity="0.8" />
+              </svg>
+            </div>
+            <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[#06101c] via-[#06101c]/80 to-transparent" />
+          </>
+        ),
       },
       icon: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
@@ -930,12 +947,31 @@ export function IdeasIntoImpact() {
       desc: "Clean, human-centered and converting design systems.",
       category: "DESIGN",
       color: {
-        border: "border-neutral-200 hover:border-purple-400/80",
-        bg: "bg-white",
-        badge: "text-purple-700 bg-purple-50 border-purple-200",
-        beam: "from-transparent via-purple-500 to-transparent",
-        iconWrap: "text-purple-600 bg-purple-50 border border-purple-200",
-        glowDot: "bg-purple-500 shadow-[0_0_8px_#a855f7]",
+        border: "border-purple-400/35 hover:border-purple-400/80",
+        bg: "from-[#24083d] via-[#170329] to-[#090112]",
+        badge: "text-purple-200 bg-purple-500/20 border-purple-400/35",
+        beam: "from-transparent via-purple-400 to-transparent",
+        iconWrap: "text-purple-300 bg-purple-500/20 border border-purple-400/35",
+        glowDot: "bg-purple-400 shadow-[0_0_10px_#c084fc]",
+        bgLayer: (
+          <>
+            {/* Holographic Iridescent Liquid & Chrome Violet (Ref 2) */}
+            <div className="absolute top-0 right-0 w-48 h-48 bg-[radial-gradient(circle_at_80%_20%,_rgba(168,85,247,0.38)_0%,_rgba(236,72,153,0.2)_40%,_transparent_70%)]" />
+            <div className="absolute -bottom-6 -right-6 w-36 h-36 opacity-30">
+              <svg viewBox="0 0 100 100" className="w-full h-full">
+                <defs>
+                  <linearGradient id="holoFluid" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#c084fc" />
+                    <stop offset="50%" stopColor="#38bdf8" />
+                    <stop offset="100%" stopColor="#f472b6" />
+                  </linearGradient>
+                </defs>
+                <circle cx="50" cy="50" r="40" fill="url(#holoFluid)" opacity="0.6" filter="blur(4px)" />
+                <path d="M20,50 Q50,10 80,50 T140,50" stroke="url(#holoFluid)" strokeWidth="8" fill="none" opacity="0.7" />
+              </svg>
+            </div>
+          </>
+        ),
       },
       icon: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
@@ -953,12 +989,22 @@ export function IdeasIntoImpact() {
       desc: "Smart workflow engines to save time and scale fast.",
       category: "SYSTEMS",
       color: {
-        border: "border-neutral-200 hover:border-amber-400/80",
-        bg: "bg-white",
-        badge: "text-amber-800 bg-amber-50 border-amber-200",
-        beam: "from-transparent via-amber-500 to-transparent",
-        iconWrap: "text-amber-600 bg-amber-50 border border-amber-200",
-        glowDot: "bg-amber-500 shadow-[0_0_8px_#f59e0b]",
+        border: "border-amber-400/35 hover:border-amber-400/80",
+        bg: "from-[#2d0a24] via-[#1c0418] to-[#0d010c]",
+        badge: "text-amber-200 bg-amber-500/20 border-amber-400/35",
+        beam: "from-transparent via-amber-400 to-transparent",
+        iconWrap: "text-amber-300 bg-amber-500/20 border border-amber-400/35",
+        glowDot: "bg-amber-400 shadow-[0_0_10px_#f59e0b]",
+        bgLayer: (
+          <>
+            {/* Studio Sunset UI & 3D Glass Spheres (Ref 3) */}
+            <div className="absolute top-0 left-0 w-44 h-44 bg-[radial-gradient(circle_at_20%_20%,_rgba(244,63,94,0.35)_0%,_rgba(251,146,60,0.25)_45%,_transparent_70%)]" />
+            <div className="absolute bottom-2 right-2 flex gap-1.5 opacity-35">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-200 via-rose-300 to-purple-400 shadow-inner" />
+              <div className="w-6 h-6 rounded-full bg-gradient-to-br from-pink-200 to-amber-400 shadow-inner -mt-2" />
+            </div>
+          </>
+        ),
       },
       icon: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
@@ -972,12 +1018,24 @@ export function IdeasIntoImpact() {
       desc: "Tailored concepts that give digital brands an edge.",
       category: "BRANDING",
       color: {
-        border: "border-neutral-200 hover:border-emerald-400/80",
-        bg: "bg-white",
-        badge: "text-emerald-700 bg-emerald-50 border-emerald-200",
-        beam: "from-transparent via-emerald-500 to-transparent",
-        iconWrap: "text-emerald-600 bg-emerald-50 border border-emerald-200",
-        glowDot: "bg-emerald-500 shadow-[0_0_8px_#10b981]",
+        border: "border-emerald-400/35 hover:border-emerald-400/80",
+        bg: "from-[#042115] via-[#083020] to-[#02110b]",
+        badge: "text-emerald-200 bg-emerald-500/20 border-emerald-400/35",
+        beam: "from-transparent via-emerald-400 to-transparent",
+        iconWrap: "text-emerald-300 bg-emerald-500/20 border border-emerald-400/35",
+        glowDot: "bg-emerald-400 shadow-[0_0_10px_#10b981]",
+        bgLayer: (
+          <>
+            {/* Emerald Aurora & Frosted Geometric Prisms */}
+            <div className="absolute top-0 right-0 w-44 h-44 bg-[radial-gradient(circle_at_80%_30%,_rgba(16,185,129,0.32)_0%,_transparent_65%)]" />
+            <div className="absolute -bottom-4 -right-4 w-32 h-32 opacity-25">
+              <svg viewBox="0 0 100 100" className="w-full h-full text-emerald-300" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <polygon points="50,10 90,80 10,80" />
+                <polygon points="50,25 80,75 20,75" />
+              </svg>
+            </div>
+          </>
+        ),
       },
       icon: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
@@ -993,12 +1051,26 @@ export function IdeasIntoImpact() {
       desc: "Interactive spatial 3D shaders and immersive Three.js worlds.",
       category: "GRAPHICS",
       color: {
-        border: "border-neutral-200 hover:border-rose-400/80",
-        bg: "bg-white",
-        badge: "text-rose-700 bg-rose-50 border-rose-200",
-        beam: "from-transparent via-rose-500 to-transparent",
-        iconWrap: "text-rose-600 bg-rose-50 border border-rose-200",
-        glowDot: "bg-rose-500 shadow-[0_0_8px_#f43f5e]",
+        border: "border-rose-400/35 hover:border-rose-400/80",
+        bg: "from-[#290717] via-[#1b030f] to-[#0b0106]",
+        badge: "text-rose-200 bg-rose-500/20 border-rose-400/35",
+        beam: "from-transparent via-rose-400 to-transparent",
+        iconWrap: "text-rose-300 bg-rose-500/20 border border-rose-400/35",
+        glowDot: "bg-rose-400 shadow-[0_0_10px_#f43f5e]",
+        bgLayer: (
+          <>
+            {/* Cyberpunk Crimson Laser Core & 3D Wireframe */}
+            <div className="absolute top-0 right-0 w-44 h-44 bg-[radial-gradient(circle_at_80%_20%,_rgba(244,63,94,0.35)_0%,_transparent_65%)]" />
+            <div className="absolute bottom-1 right-2 w-28 h-28 opacity-25">
+              <svg viewBox="0 0 100 100" className="w-full h-full text-rose-300" fill="none" stroke="currentColor" strokeWidth="1.2">
+                <polygon points="50,15 85,35 85,75 50,95 15,75 15,35" />
+                <line x1="50" y1="15" x2="50" y2="95" />
+                <line x1="15" y1="35" x2="85" y2="75" />
+                <line x1="15" y1="75" x2="85" y2="35" />
+              </svg>
+            </div>
+          </>
+        ),
       },
       icon: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
@@ -1014,12 +1086,27 @@ export function IdeasIntoImpact() {
       desc: "Robust backend engines, distributed APIs and low-latency data.",
       category: "ENGINEERING",
       color: {
-        border: "border-neutral-200 hover:border-indigo-400/80",
-        bg: "bg-white",
-        badge: "text-indigo-700 bg-indigo-50 border-indigo-200",
-        beam: "from-transparent via-indigo-500 to-transparent",
-        iconWrap: "text-indigo-600 bg-indigo-50 border border-indigo-200",
-        glowDot: "bg-indigo-500 shadow-[0_0_8px_#6366f1]",
+        border: "border-indigo-400/35 hover:border-indigo-400/80",
+        bg: "from-[#07132e] via-[#0d1d42] to-[#030713]",
+        badge: "text-indigo-200 bg-indigo-500/20 border-indigo-400/35",
+        beam: "from-transparent via-indigo-400 to-transparent",
+        iconWrap: "text-indigo-300 bg-indigo-500/20 border border-indigo-400/35",
+        glowDot: "bg-indigo-400 shadow-[0_0_10px_#6366f1]",
+        bgLayer: (
+          <>
+            {/* Deep Sapphire Cobalt Circuit Constellation */}
+            <div className="absolute top-0 right-0 w-44 h-44 bg-[radial-gradient(circle_at_80%_30%,_rgba(99,102,241,0.32)_0%,_transparent_65%)]" />
+            <div className="absolute -bottom-2 -right-2 w-32 h-32 opacity-25">
+              <svg viewBox="0 0 100 100" className="w-full h-full text-indigo-300" fill="none" stroke="currentColor" strokeWidth="1.2">
+                <circle cx="20" cy="80" r="4" fill="currentColor" />
+                <circle cx="80" cy="30" r="4" fill="currentColor" />
+                <circle cx="60" cy="70" r="4" fill="currentColor" />
+                <polyline points="20,80 50,80 60,70 80,70 80,30" />
+                <line x1="60" y1="70" x2="60" y2="40" />
+              </svg>
+            </div>
+          </>
+        ),
       },
       icon: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
@@ -1035,12 +1122,26 @@ export function IdeasIntoImpact() {
       desc: "Autonomous agentic pipelines, RAG systems & model orchestration.",
       category: "INTELLIGENCE",
       color: {
-        border: "border-neutral-200 hover:border-teal-400/80",
-        bg: "bg-white",
-        badge: "text-teal-700 bg-teal-50 border-teal-200",
-        beam: "from-transparent via-teal-500 to-transparent",
-        iconWrap: "text-teal-600 bg-teal-50 border border-teal-200",
-        glowDot: "bg-teal-500 shadow-[0_0_8px_#14b8a6]",
+        border: "border-teal-400/35 hover:border-teal-400/80",
+        bg: "from-[#032123] via-[#063136] to-[#021011]",
+        badge: "text-teal-200 bg-teal-500/20 border-teal-400/35",
+        beam: "from-transparent via-teal-400 to-transparent",
+        iconWrap: "text-teal-300 bg-teal-500/20 border border-teal-400/35",
+        glowDot: "bg-teal-400 shadow-[0_0_10px_#14b8a6]",
+        bgLayer: (
+          <>
+            {/* Quantum Synaptic Neural Matrix */}
+            <div className="absolute top-0 right-0 w-44 h-44 bg-[radial-gradient(circle_at_80%_20%,_rgba(20,184,166,0.32)_0%,_transparent_65%)]" />
+            <div className="absolute bottom-1 right-1 w-32 h-32 opacity-25">
+              <svg viewBox="0 0 100 100" className="w-full h-full text-teal-300">
+                <circle cx="50" cy="50" r="35" stroke="currentColor" strokeWidth="1" strokeDasharray="4 4" fill="none" />
+                <circle cx="50" cy="50" r="20" stroke="currentColor" strokeWidth="1.5" fill="none" />
+                <circle cx="50" cy="50" r="5" fill="currentColor" />
+                <line x1="15" y1="50" x2="85" y2="50" stroke="currentColor" strokeWidth="1" />
+              </svg>
+            </div>
+          </>
+        ),
       },
       icon: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
@@ -1055,12 +1156,25 @@ export function IdeasIntoImpact() {
       desc: "Kinetic typography, GSAP physics and 60fps micro-interactions.",
       category: "EXPERIENCE",
       color: {
-        border: "border-neutral-200 hover:border-orange-400/80",
-        bg: "bg-white",
-        badge: "text-orange-700 bg-orange-50 border-orange-200",
-        beam: "from-transparent via-orange-500 to-transparent",
-        iconWrap: "text-orange-600 bg-orange-50 border border-orange-200",
-        glowDot: "bg-orange-500 shadow-[0_0_8px_#f97316]",
+        border: "border-orange-400/35 hover:border-orange-400/80",
+        bg: "from-[#2b1103] via-[#3d1805] to-[#120501]",
+        badge: "text-orange-200 bg-orange-500/20 border-orange-400/35",
+        beam: "from-transparent via-orange-400 to-transparent",
+        iconWrap: "text-orange-300 bg-orange-500/20 border border-orange-400/35",
+        glowDot: "bg-orange-400 shadow-[0_0_10px_#f97316]",
+        bgLayer: (
+          <>
+            {/* Solar Flare Corona & Kinetic Speed Stream */}
+            <div className="absolute top-0 right-0 w-44 h-44 bg-[radial-gradient(circle_at_80%_30%,_rgba(249,115,22,0.32)_0%,_transparent_65%)]" />
+            <div className="absolute -bottom-4 -right-4 w-36 h-36 opacity-25">
+              <svg viewBox="0 0 100 100" className="w-full h-full text-orange-300" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M0,80 Q50,20 100,60" />
+                <path d="M10,95 Q60,35 100,75" />
+                <path d="M20,110 Q70,50 100,90" />
+              </svg>
+            </div>
+          </>
+        ),
       },
       icon: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
@@ -1076,12 +1190,24 @@ export function IdeasIntoImpact() {
       desc: "Cohesive visual narratives that position products as market leaders.",
       category: "STRATEGY",
       color: {
-        border: "border-neutral-200 hover:border-red-400/80",
-        bg: "bg-white",
-        badge: "text-red-700 bg-red-50 border-red-200",
-        beam: "from-transparent via-red-500 to-transparent",
-        iconWrap: "text-red-600 bg-red-50 border border-red-200",
-        glowDot: "bg-red-500 shadow-[0_0_8px_#ef4444]",
+        border: "border-red-400/35 hover:border-red-400/80",
+        bg: "from-[#280606] via-[#380909] to-[#110202]",
+        badge: "text-red-200 bg-red-500/20 border-red-400/35",
+        beam: "from-transparent via-red-400 to-transparent",
+        iconWrap: "text-red-300 bg-red-500/20 border border-red-400/35",
+        glowDot: "bg-red-400 shadow-[0_0_10px_#ef4444]",
+        bgLayer: (
+          <>
+            {/* Crimson Luxe Velvet & Specular Starburst */}
+            <div className="absolute top-0 right-0 w-44 h-44 bg-[radial-gradient(circle_at_80%_20%,_rgba(239,68,68,0.32)_0%,_transparent_65%)]" />
+            <div className="absolute bottom-2 right-2 w-28 h-28 opacity-25">
+              <svg viewBox="0 0 100 100" className="w-full h-full text-red-300">
+                <path d="M50,10 L55,45 L90,50 L55,55 L50,90 L45,55 L10,50 L45,45 Z" fill="currentColor" opacity="0.6" />
+                <circle cx="50" cy="50" r="12" fill="white" opacity="0.8" />
+              </svg>
+            </div>
+          </>
+        ),
       },
       icon: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
@@ -1096,12 +1222,24 @@ export function IdeasIntoImpact() {
       desc: "Serverless deployments, edge computing and high-availability stacks.",
       category: "INFRA",
       color: {
-        border: "border-neutral-200 hover:border-blue-400/80",
-        bg: "bg-white",
-        badge: "text-blue-700 bg-blue-50 border-blue-200",
-        beam: "from-transparent via-blue-500 to-transparent",
-        iconWrap: "text-blue-600 bg-blue-50 border border-blue-200",
-        glowDot: "bg-blue-500 shadow-[0_0_8px_#3b82f6]",
+        border: "border-blue-400/35 hover:border-blue-400/80",
+        bg: "from-[#091a33] via-[#10274a] to-[#040c19]",
+        badge: "text-blue-200 bg-blue-500/20 border-blue-400/35",
+        beam: "from-transparent via-blue-400 to-transparent",
+        iconWrap: "text-blue-300 bg-blue-500/20 border border-blue-400/35",
+        glowDot: "bg-blue-400 shadow-[0_0_10px_#3b82f6]",
+        bgLayer: (
+          <>
+            {/* Arctic Stratosphere Clouds & Crystal Polygons */}
+            <div className="absolute top-0 right-0 w-44 h-44 bg-[radial-gradient(circle_at_80%_30%,_rgba(59,130,246,0.32)_0%,_transparent_65%)]" />
+            <div className="absolute -bottom-2 -right-2 w-32 h-32 opacity-25">
+              <svg viewBox="0 0 100 100" className="w-full h-full text-blue-300" fill="none" stroke="currentColor" strokeWidth="1.2">
+                <polygon points="20,40 50,20 80,40 80,70 50,90 20,70" />
+                <polygon points="35,50 50,40 65,50 65,65 50,75 35,65" />
+              </svg>
+            </div>
+          </>
+        ),
       },
       icon: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
@@ -1115,12 +1253,24 @@ export function IdeasIntoImpact() {
       desc: "Silky smooth React Native & Flutter apps that feel truly native.",
       category: "MOBILE",
       color: {
-        border: "border-neutral-200 hover:border-lime-500/80",
-        bg: "bg-white",
-        badge: "text-lime-800 bg-lime-50 border-lime-200",
-        beam: "from-transparent via-lime-500 to-transparent",
-        iconWrap: "text-lime-700 bg-lime-50 border border-lime-200",
-        glowDot: "bg-lime-500 shadow-[0_0_8px_#84cc16]",
+        border: "border-lime-400/35 hover:border-lime-400/80",
+        bg: "from-[#101f03] via-[#182e05] to-[#060c01]",
+        badge: "text-lime-200 bg-lime-500/20 border-lime-400/35",
+        beam: "from-transparent via-lime-400 to-transparent",
+        iconWrap: "text-lime-300 bg-lime-500/20 border border-lime-400/35",
+        glowDot: "bg-lime-400 shadow-[0_0_10px_#84cc16]",
+        bgLayer: (
+          <>
+            {/* Cyber Device Wave & Neon Chartreuse Ripples */}
+            <div className="absolute top-0 right-0 w-44 h-44 bg-[radial-gradient(circle_at_80%_20%,_rgba(132,204,22,0.32)_0%,_transparent_65%)]" />
+            <div className="absolute -bottom-4 -right-4 w-32 h-32 opacity-25">
+              <svg viewBox="0 0 100 100" className="w-full h-full text-lime-300" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <rect x="30" y="20" width="45" height="70" rx="10" />
+                <circle cx="52.5" cy="78" r="3" fill="currentColor" />
+              </svg>
+            </div>
+          </>
+        ),
       },
       icon: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
@@ -1135,12 +1285,24 @@ export function IdeasIntoImpact() {
       desc: "Turnkey software prototypes shipped with speed and polish.",
       category: "INNOVATION",
       color: {
-        border: "border-neutral-200 hover:border-fuchsia-400/80",
-        bg: "bg-white",
-        badge: "text-fuchsia-700 bg-fuchsia-50 border-fuchsia-200",
-        beam: "from-transparent via-fuchsia-500 to-transparent",
-        iconWrap: "text-fuchsia-600 bg-fuchsia-50 border border-fuchsia-200",
-        glowDot: "bg-fuchsia-500 shadow-[0_0_8px_#d946ef]",
+        border: "border-fuchsia-400/35 hover:border-fuchsia-400/80",
+        bg: "from-[#26062b] via-[#38093e] to-[#0f0112]",
+        badge: "text-fuchsia-200 bg-fuchsia-500/20 border-fuchsia-400/35",
+        beam: "from-transparent via-fuchsia-400 to-transparent",
+        iconWrap: "text-fuchsia-300 bg-fuchsia-500/20 border border-fuchsia-400/35",
+        glowDot: "bg-fuchsia-400 shadow-[0_0_10px_#d946ef]",
+        bgLayer: (
+          <>
+            {/* Galactic Supernova & Orchid Nebula Vortex */}
+            <div className="absolute top-0 right-0 w-44 h-44 bg-[radial-gradient(circle_at_80%_30%,_rgba(217,70,239,0.35)_0%,_transparent_65%)]" />
+            <div className="absolute bottom-2 right-2 w-28 h-28 opacity-30">
+              <svg viewBox="0 0 100 100" className="w-full h-full text-fuchsia-300">
+                <polygon points="50,15 58,42 85,50 58,58 50,85 42,58 15,50 42,42" fill="currentColor" opacity="0.8" />
+                <circle cx="50" cy="50" r="4" fill="white" />
+              </svg>
+            </div>
+          </>
+        ),
       },
       icon: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
@@ -1433,41 +1595,48 @@ export function IdeasIntoImpact() {
                 >
                   <div
                     onMouseEnter={() => playHover()}
-                    className={`card-inner-spotlight group relative flex flex-col justify-between gap-3 p-4 sm:p-5 rounded-2xl bg-white border ${s.color.border} shadow-[0_12px_32px_rgba(0,0,0,0.4)] cursor-default overflow-hidden will-change-transform transform-gpu origin-center transition-shadow duration-300 hover:border-neutral-400`}
+                    className={`card-inner-spotlight group relative flex flex-col justify-between gap-3 p-4 sm:p-5 rounded-2xl bg-gradient-to-br ${s.color.bg} border ${s.color.border} shadow-[0_16px_36px_rgba(0,0,0,0.55)] cursor-default overflow-hidden will-change-transform transform-gpu origin-center transition-shadow duration-300 backdrop-blur-xl`}
                     style={{
                       transition: "transform 0.08s ease-out, filter 0.08s ease-out, opacity 0.08s ease-out, border-color 0.3s ease, box-shadow 0.3s ease",
                     }}
                   >
+                    {/* Unique Ambient Visual Layer (Swiss Alps, Neon Chrome, Studio UI Orbs, etc.) */}
+                    <div className="absolute inset-0 pointer-events-none overflow-hidden select-none z-0">
+                      {s.color.bgLayer}
+                      {/* Top Glass Frost Highlight */}
+                      <div className="absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
+                    </div>
+
                     {/* Top Laser Accent Hover Beam */}
                     <div
-                      className={`absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r ${s.color.beam} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
+                      className={`absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r ${s.color.beam} opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10`}
                     />
 
-                    <div className="flex flex-col gap-2.5">
+                    <div className="relative z-10 flex flex-col gap-2.5">
                       {/* Header: Icon & Category Badge */}
                       <div className="flex items-center justify-between">
-                        <div className={`w-8 h-8 rounded-xl flex items-center justify-center ${s.color.iconWrap} transition-transform duration-300 group-hover:scale-110 shadow-xs`}>
+                        <div className={`w-8 h-8 rounded-xl flex items-center justify-center ${s.color.iconWrap} transition-transform duration-300 group-hover:scale-110 shadow-xs backdrop-blur-md`}>
                           {s.icon}
                         </div>
 
-                        <span className={`text-[9px] font-mono font-bold tracking-wider px-2 py-0.5 rounded-md border ${s.color.badge} uppercase`}>
+                        <span className={`text-[9px] font-mono font-bold tracking-wider px-2.5 py-0.5 rounded-full border ${s.color.badge} uppercase backdrop-blur-md`}>
                           {s.category}
                         </span>
                       </div>
 
                       {/* Title */}
-                      <h3 className="font-sans font-bold text-base sm:text-lg text-neutral-900 tracking-tight transition-colors">
+                      <h3 className="font-sans font-bold text-base sm:text-lg text-white tracking-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]">
                         {s.title}
                       </h3>
 
                       {/* Description */}
-                      <p className="font-sans text-xs sm:text-[13px] text-neutral-600 leading-relaxed line-clamp-2">
+                      <p className="font-sans text-xs sm:text-[13px] text-white/80 leading-relaxed line-clamp-2">
                         {s.desc}
                       </p>
                     </div>
 
                     {/* Bottom Status Tag */}
-                    <div className="pt-2 border-t border-neutral-200/80 flex items-center justify-between text-[10px] font-mono text-neutral-500 uppercase tracking-widest font-medium">
+                    <div className="relative z-10 pt-2 border-t border-white/10 flex items-center justify-between text-[10px] font-mono text-white/60 uppercase tracking-widest font-medium">
                       <span>{s.num} // CAPABILITY</span>
                       <span className={`w-1.5 h-1.5 rounded-full ${s.color.glowDot} opacity-75 group-hover:opacity-100 transition-opacity`} />
                     </div>
