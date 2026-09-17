@@ -28,13 +28,11 @@ export function IdeasIntoImpact() {
   // Slide 1 refs (Let's build something extraordinary together CTA)
   const ctaLayerRef = useRef<HTMLDivElement | null>(null);
   const ctaHeadingRef = useRef<HTMLHeadingElement | null>(null);
-  const ctaWatermarkRef = useRef<HTMLDivElement | null>(null);
   const ctaAuraRef = useRef<HTMLDivElement | null>(null);
 
   // Slide 2 refs (Crafting Experiences That Transcend Pixels & Code - Modern Display)
   const slide2LayerRef = useRef<HTMLDivElement | null>(null);
   const slide2ContentRef = useRef<HTMLDivElement | null>(null);
-  const slide2WatermarkRef = useRef<HTMLDivElement | null>(null);
   const slide2AuraRef = useRef<HTMLDivElement | null>(null);
 
   // Slide 3 refs (White Background Editorial Manifesto Layer - Swiss/Bodoni on White)
@@ -563,27 +561,10 @@ export function IdeasIntoImpact() {
             scale: 0.88,
           },
           {
-            opacity: 0.55,
+            opacity: 0.9,
             scale: 1,
             duration: 1.8,
             ease: "power2.out",
-          },
-          8.9
-        );
-      }
-
-      if (ctaWatermarkRef.current) {
-        tl.fromTo(
-          ctaWatermarkRef.current,
-          {
-            xPercent: 6,
-            opacity: 0,
-          },
-          {
-            xPercent: -18,
-            opacity: 1,
-            duration: 2.2,
-            ease: "none",
           },
           8.9
         );
@@ -679,19 +660,6 @@ export function IdeasIntoImpact() {
         );
       }
 
-      if (ctaWatermarkRef.current) {
-        tl.to(
-          ctaWatermarkRef.current,
-          {
-            opacity: 0,
-            xPercent: -30,
-            duration: 1.2,
-            ease: "none",
-          },
-          11.4
-        );
-      }
-
       if (ctaAuraRef.current) {
         tl.to(
           ctaAuraRef.current,
@@ -755,23 +723,6 @@ export function IdeasIntoImpact() {
         );
       }
 
-      if (slide2WatermarkRef.current) {
-        tl.fromTo(
-          slide2WatermarkRef.current,
-          {
-            xPercent: 8,
-            opacity: 0,
-          },
-          {
-            xPercent: -15,
-            opacity: 1,
-            duration: 2.2,
-            ease: "none",
-          },
-          12.3
-        );
-      }
-
       const slide2Items = slide2ContentRef.current
         ? slide2ContentRef.current.querySelectorAll(".slide2-assemble-item")
         : [];
@@ -818,19 +769,6 @@ export function IdeasIntoImpact() {
             },
             duration: 1.2,
             ease: "power2.in",
-          },
-          15.0
-        );
-      }
-
-      if (slide2WatermarkRef.current) {
-        tl.to(
-          slide2WatermarkRef.current,
-          {
-            opacity: 0,
-            xPercent: -30,
-            duration: 1.2,
-            ease: "none",
           },
           15.0
         );
@@ -1714,20 +1652,6 @@ export function IdeasIntoImpact() {
             aria-hidden="true"
           />
 
-          {/* Background Single Sliding Watermark Text */}
-          <div
-            className="pointer-events-none absolute top-1/2 left-0 -translate-y-1/2 w-full flex items-center justify-center select-none -z-0 overflow-visible"
-            aria-hidden="true"
-          >
-            <div
-              ref={ctaWatermarkRef}
-              className="flex whitespace-nowrap text-white/[0.04] font-display font-black text-5xl sm:text-7xl md:text-8xl lg:text-[10rem] tracking-tight uppercase leading-none will-change-transform"
-            >
-              <span>ARCHITECTING THE FUTURE &nbsp; CREATIVE ENGINEERING &nbsp; EXPERIENCES BEYOND PIXELS &nbsp; DIGITAL MASTERPIECES &nbsp; </span>
-              <span>ARCHITECTING THE FUTURE &nbsp; CREATIVE ENGINEERING &nbsp; EXPERIENCES BEYOND PIXELS &nbsp; DIGITAL MASTERPIECES &nbsp; </span>
-            </div>
-          </div>
-
           {/* Foreground 3-Line Bodoni Headline */}
           <div className="relative z-10 flex flex-col items-center max-w-6xl mx-auto overflow-visible py-4">
             <h2
@@ -1772,20 +1696,6 @@ export function IdeasIntoImpact() {
             className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[520px] bg-[radial-gradient(ellipse_at_center,_rgba(217,70,239,0.12)_0%,_rgba(45,212,191,0.07)_40%,_transparent_70%)]"
             aria-hidden="true"
           />
-
-          {/* Background Sliding Watermark Text */}
-          <div
-            className="pointer-events-none absolute top-1/2 left-0 -translate-y-1/2 w-full flex items-center justify-center select-none -z-0 overflow-visible"
-            aria-hidden="true"
-          >
-            <div
-              ref={slide2WatermarkRef}
-              className="flex whitespace-nowrap text-white/[0.04] font-display font-black text-5xl sm:text-7xl md:text-8xl lg:text-[10rem] tracking-tight uppercase leading-none will-change-transform"
-            >
-              <span>DISRUPT &nbsp; INNOVATE &nbsp; ELEVATE &nbsp; TRANSCEND &nbsp; </span>
-              <span>DISRUPT &nbsp; INNOVATE &nbsp; ELEVATE &nbsp; TRANSCEND &nbsp; </span>
-            </div>
-          </div>
 
           {/* Foreground Luxury Bodoni Typography Content */}
           <div

@@ -77,11 +77,11 @@ export function TechLogo({ name, className = "w-4 h-4 shrink-0" }: TechLogoProps
   // Three.js
   if (normalized.includes("three")) {
     return (
-      <svg className={className} viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M64 8L8 104H120L64 8Z" stroke="#FFFFFF" strokeWidth="10" strokeLinejoin="round" fill="none" />
-        <path d="M64 8L64 104" stroke="#FFFFFF" strokeWidth="8" />
-        <path d="M8 104L92 56" stroke="#FFFFFF" strokeWidth="8" />
-        <path d="M120 104L36 56" stroke="#FFFFFF" strokeWidth="8" />
+      <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M21.745 5.306l-8.799-5.08a2.008 2.008 0 0 0-2.008 0L2.14 5.306A2.008 2.008 0 0 0 1.136 7.04v10.16a2.008 2.008 0 0 0 1.004 1.734l8.799 5.08a2.008 2.008 0 0 0 2.008 0l8.799-5.08a2.008 2.008 0 0 0 1.004-1.734V7.04a2.008 2.008 0 0 0-1.004-1.734zm-9.8 14.93l-7.795-4.5V6.736l7.795 4.5v9zm1.008-10.23l-7.8-4.504 7.796-4.5 7.8 4.5-7.796 4.504zm7.796 5.73l-7.796 4.5v-9l7.796-4.5v9z"
+          fill="#FFFFFF"
+        />
       </svg>
     );
   }
@@ -98,14 +98,15 @@ export function TechLogo({ name, className = "w-4 h-4 shrink-0" }: TechLogoProps
   }
 
   // GSAP (GreenSock)
-  if (normalized.includes("gsap")) {
+  if (normalized.includes("gsap") || normalized.includes("greensock")) {
     return (
-      <svg className={className} viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="128" height="128" rx="20" fill="#0ae448" />
+      <svg className={className} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="100" height="100" rx="16" fill="#0E100F" />
         <path
-          d="M32 64C32 46.3269 46.3269 32 64 32C76.5 32 87.3 39.2 92.5 49.5L78 57C75.2 51.5 69.8 48 64 48C55.1634 48 48 55.1634 48 64C48 72.8366 55.1634 80 64 80C70.5 80 76 75.8 78.5 70H64V56H96V74C90.5 87 78 96 64 96C46.3269 96 32 81.6731 32 64Z"
-          fill="#000000"
+          d="M48.8 18.5c-15.8 0-28.6 12.8-28.6 28.6 0 15.8 12.8 28.6 28.6 28.6 12.4 0 23-7.9 26.8-19.1h-9.9c-3.1 6-9.4 10.1-16.9 10.1-10.8 0-19.6-8.8-19.6-19.6s8.8-19.6 19.6-19.6c7.5 0 13.8 4.1 16.9 10.1h9.9c-3.8-11.2-14.4-19.1-26.8-19.1zm22.4 20.3l-8.5 10.5 8.5 10.5h10.8l-8.5-10.5 8.5-10.5H71.2z"
+          fill="#88CE02"
         />
+        <circle cx="48.8" cy="47.1" r="5.5" fill="#88CE02" />
       </svg>
     );
   }
