@@ -1,15 +1,236 @@
 "use client";
 
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "@/lib/gsap";
 import { ArrowUpRight } from "lucide-react";
 import { useAudioFeedback } from "@/hooks/useAudioFeedback";
-import { DnaHelixCanvas } from "@/components/ambient/DnaHelixCanvas";
+
+interface DnaState {
+  amplitude: number;
+  phase: number;
+  opacity: number;
+  morphProgress: number;
+}
+
+function HorizontalDnaHelix({
+  dnaState,
+}: {
+  dnaState: React.MutableRefObject<DnaState>;
+}) {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let animId: number;
+
+    const handleResize = () => {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    const strand1Words = [
+      "ARCHITECTING",
+      "THE",
+      "FUTURE",
+      "CREATIVE",
+      "ENGINEERING",
+      "EXPERIENCES",
+      "BEYOND",
+      "PIXELS",
+      "DIGITAL",
+      "MASTERPIECES",
+      "INNOVATION",
+      "TRANSFORMATION",
+    ];
+    const strand2Words = [
+      "DISRUPT",
+      "INNOVATE",
+      "ELEVATE",
+      "TRANSCEND",
+      "SYNAPSE",
+      "ALGORITHM",
+      "QUANTUM",
+      "EVOLUTION",
+      "DNA",
+      "CODE",
+      "INTERACTION",
+      "ARCHITECTURE",
+    ];
+    const rungs = ["A::T", "C::G", "GLSL", "WEBGL", "GSAP", "NEXT", "2026", "AI"];
+
+    const render = () => {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const width = canvas.width;
+      const height = canvas.height;
+      const cssW = width / dpr;
+      const cssH = height / dpr;
+
+      ctx.clearRect(0, 0, width, height);
+
+      const { amplitude, phase, opacity, morphProgress } = dnaState.current;
+
+      if (opacity <= 0.005) {
+        animId = requestAnimationFrame(render);
+        return;
+      }
+
+      ctx.save();
+      ctx.scale(dpr, dpr);
+
+      const centerY = cssH / 2;
+      const nodeCount = Math.ceil(cssW / 55) + 6;
+      const nodeSpacing = cssW / (nodeCount - 6);
+      const frequency = (Math.PI * 2) / 420;
+
+      const maxAmp = amplitude;
+
+      // Base Pair Rungs (Connecting Hydrogen Bonds)
+      if (maxAmp > 3) {
+        for (let i = 0; i < nodeCount; i++) {
+          const x = (i - 3) * nodeSpacing;
+          const theta = x * frequency + phase;
+
+          const y1 = centerY + Math.sin(theta) * maxAmp;
+          const y2 = centerY - Math.sin(theta) * maxAmp;
+          const z1 = Math.cos(theta);
+
+          if (i % 2 === 0) {
+            const rungAlpha =
+              Math.max(0, (Math.abs(z1) * 0.28 + 0.12) * opacity * Math.min(1, maxAmp / 25));
+            ctx.beginPath();
+            ctx.moveTo(x, y1);
+            ctx.lineTo(x, y2);
+            ctx.strokeStyle = `rgba(167, 139, 250, ${rungAlpha.toFixed(3)})`;
+            ctx.lineWidth = 1 + (z1 + 1) * 0.6;
+            ctx.stroke();
+
+            // Periodic Rung Labels
+            if (i % 4 === 0 && maxAmp > 35) {
+              const rungLabel = rungs[(i / 4) % rungs.length];
+              const midY = (y1 + y2) / 2;
+              const labelAlpha = rungAlpha * 0.85;
+              ctx.font = `600 10px monospace`;
+              ctx.fillStyle = `rgba(232, 121, 249, ${labelAlpha.toFixed(3)})`;
+              ctx.textAlign = "center";
+              ctx.textBaseline = "middle";
+              ctx.fillText(rungLabel, x, midY);
+            }
+          }
+        }
+      }
+
+      // Strand 1 Nodes & Faded Text
+      for (let i = 0; i < nodeCount; i++) {
+        const x = (i - 3) * nodeSpacing;
+        const theta = x * frequency + phase;
+
+        const y1 = centerY + Math.sin(theta) * maxAmp;
+        const z1 = Math.cos(theta);
+
+        const word = strand1Words[i % strand1Words.length];
+
+        const depthScale = 0.65 + (z1 + 1) * 0.35;
+        const fontSize = Math.round(20 * depthScale + (1 - morphProgress) * 14);
+        const nodeAlpha = Math.min(1, Math.max(0.12, (z1 + 1.2) / 2.2)) * opacity;
+
+        ctx.font = `900 ${fontSize}px sans-serif`;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+
+        if (z1 >= 0) {
+          ctx.fillStyle = `rgba(255, 255, 255, ${nodeAlpha.toFixed(3)})`;
+        } else {
+          ctx.fillStyle = `rgba(192, 132, 252, ${nodeAlpha.toFixed(3)})`;
+        }
+
+        ctx.fillText(word, x, y1);
+
+        // Glowing Node Sphere on DNA Strand
+        if (maxAmp > 15) {
+          ctx.beginPath();
+          ctx.arc(x, y1, 2.5 * depthScale, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(245, 158, 11, ${(nodeAlpha * 1.3).toFixed(3)})`;
+          ctx.fill();
+        }
+      }
+
+      // Strand 2 Nodes & Faded Text
+      for (let i = 0; i < nodeCount; i++) {
+        const x = (i - 3) * nodeSpacing;
+        const theta = x * frequency + phase;
+
+        const y2 = centerY - Math.sin(theta) * maxAmp;
+        const z2 = -Math.cos(theta);
+
+        const word = strand2Words[i % strand2Words.length];
+
+        const depthScale = 0.65 + (z2 + 1) * 0.35;
+        const fontSize = Math.round(20 * depthScale + (1 - morphProgress) * 14);
+        const nodeAlpha = Math.min(1, Math.max(0.12, (z2 + 1.2) / 2.2)) * opacity;
+
+        ctx.font = `900 ${fontSize}px sans-serif`;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+
+        if (z2 >= 0) {
+          ctx.fillStyle = `rgba(255, 255, 255, ${nodeAlpha.toFixed(3)})`;
+        } else {
+          ctx.fillStyle = `rgba(56, 189, 248, ${nodeAlpha.toFixed(3)})`;
+        }
+
+        ctx.fillText(word, x, y2);
+
+        // Glowing Node Sphere on DNA Strand
+        if (maxAmp > 15) {
+          ctx.beginPath();
+          ctx.arc(x, y2, 2.5 * depthScale, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(45, 212, 191, ${(nodeAlpha * 1.3).toFixed(3)})`;
+          ctx.fill();
+        }
+      }
+
+      ctx.restore();
+
+      animId = requestAnimationFrame(render);
+    };
+
+    render();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      cancelAnimationFrame(animId);
+    };
+  }, [dnaState]);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="pointer-events-none absolute inset-0 w-full h-full select-none z-0"
+      aria-hidden="true"
+    />
+  );
+}
 
 export function IdeasIntoImpact() {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const stageRef = useRef<HTMLDivElement | null>(null);
+
+  // Dynamic Horizontal 3D DNA Helix state
+  const dnaStateRef = useRef<DnaState>({
+    amplitude: 0,
+    phase: 0,
+    opacity: 0,
+    morphProgress: 0,
+  });
 
   // Layer A refs (Ideas Into Impact Hero)
   const heroLayerRef = useRef<HTMLDivElement | null>(null);
@@ -21,18 +242,16 @@ export function IdeasIntoImpact() {
   const cardsRef = useRef<HTMLDivElement | null>(null);
   const cardsTrackRef = useRef<HTMLDivElement | null>(null);
 
-  // 3D DNA Helix Background Ref & State
-  const dnaWrapRef = useRef<HTMLDivElement | null>(null);
-  const [dnaColorProg, setDnaColorProg] = useState(0);
-
   // Slide 1 refs (Let's build something extraordinary together CTA)
   const ctaLayerRef = useRef<HTMLDivElement | null>(null);
   const ctaHeadingRef = useRef<HTMLHeadingElement | null>(null);
+  const ctaWatermarkRef = useRef<HTMLDivElement | null>(null);
   const ctaAuraRef = useRef<HTMLDivElement | null>(null);
 
   // Slide 2 refs (Crafting Experiences That Transcend Pixels & Code - Modern Display)
   const slide2LayerRef = useRef<HTMLDivElement | null>(null);
   const slide2ContentRef = useRef<HTMLDivElement | null>(null);
+  const slide2WatermarkRef = useRef<HTMLDivElement | null>(null);
   const slide2AuraRef = useRef<HTMLDivElement | null>(null);
 
   // Slide 3 refs (White Background Editorial Manifesto Layer - Swiss/Bodoni on White)
@@ -78,7 +297,6 @@ export function IdeasIntoImpact() {
         ? cardsRef.current.querySelectorAll(".service-card-anim")
         : [];
 
-      if (dnaWrapRef.current) gsap.set(dnaWrapRef.current, { opacity: 0, scale: 0.9 });
       if (ctaLayerRef.current) gsap.set(ctaLayerRef.current, { opacity: 0, pointerEvents: "none" });
       if (slide2LayerRef.current) gsap.set(slide2LayerRef.current, { opacity: 0, pointerEvents: "none" });
       if (slide3LayerRef.current) {
@@ -338,14 +556,14 @@ export function IdeasIntoImpact() {
           {
             opacity: 0,
             scale: 0.55,
-            y: isMobile ? 50 : 90,
+            y: isMobile ? 10 : 20,
             filter: "blur(8px)",
             transformOrigin: "center bottom",
           },
           {
             opacity: 1,
             scale: 1,
-            y: 0,
+            y: isMobile ? -55 : -105,
             filter: "blur(0px)",
             duration: 3.0,
             ease: "none",
@@ -553,18 +771,30 @@ export function IdeasIntoImpact() {
       // -----------------------------------------------------------------------
       // 4. SLIDE 1 ASSEMBLES: "Let's build something extraordinary together" (Time: 8.9 -> 10.3)
       // -----------------------------------------------------------------------
-      if (dnaWrapRef.current) {
+      tl.to(
+        dnaStateRef.current,
+        {
+          opacity: 0.22,
+          amplitude: 0,
+          morphProgress: 0,
+          duration: 1.4,
+          ease: "power2.out",
+        },
+        8.9
+      );
+
+      if (ctaWatermarkRef.current) {
         tl.fromTo(
-          dnaWrapRef.current,
+          ctaWatermarkRef.current,
           {
+            xPercent: 6,
             opacity: 0,
-            scale: 0.88,
           },
           {
-            opacity: 0.9,
-            scale: 1,
-            duration: 1.8,
-            ease: "power2.out",
+            xPercent: -18,
+            opacity: 1,
+            duration: 2.2,
+            ease: "none",
           },
           8.9
         );
@@ -627,20 +857,16 @@ export function IdeasIntoImpact() {
       tl.to({}, { duration: 1.1 }, 10.3);
 
       // -----------------------------------------------------------------------
-      // 5. SLIDE 1 REVERSE ANIMATES OUT (Time: 11.4 -> 12.6)
+      // 5. SLIDE 1 REVERSE ANIMATES OUT & MORPHS INTO HORIZONTAL DNA HELIX (Time: 11.4 -> 12.6)
       // -----------------------------------------------------------------------
-      // Smooth DNA color morph from Amber-Cyan (0) to Orchid-Mint (1)
-      const dnaColorProxy = { val: 0 };
-      tl.fromTo(
-        dnaColorProxy,
-        { val: 0 },
+      tl.to(
+        dnaStateRef.current,
         {
-          val: 1,
-          duration: 1.6,
+          amplitude: 110,
+          opacity: 0.38,
+          morphProgress: 1,
+          duration: 1.4,
           ease: "power2.inOut",
-          onUpdate: () => {
-            setDnaColorProg(dnaColorProxy.val);
-          },
         },
         11.4
       );
@@ -655,6 +881,19 @@ export function IdeasIntoImpact() {
             filter: "blur(8px)",
             duration: 1.2,
             ease: "power2.in",
+          },
+          11.4
+        );
+      }
+
+      if (ctaWatermarkRef.current) {
+        tl.to(
+          ctaWatermarkRef.current,
+          {
+            opacity: 0,
+            xPercent: -30,
+            duration: 1.2,
+            ease: "none",
           },
           11.4
         );
@@ -686,9 +925,19 @@ export function IdeasIntoImpact() {
       }
 
       // -----------------------------------------------------------------------
-      // 6. SLIDE 2 ASSEMBLES: NEW FONT & NEW NEON PALETTE (Time: 12.2 -> 13.8)
+      // 6. SLIDE 2 ASSEMBLES: HORIZONTAL DNA ROTATES & SCROLLS (Time: 12.2 -> 13.8)
       // "Crafting experiences that transcend pixels & code."
       // -----------------------------------------------------------------------
+      tl.to(
+        dnaStateRef.current,
+        {
+          phase: Math.PI * 8,
+          duration: 2.8,
+          ease: "none",
+        },
+        12.2
+      );
+
       if (slide2LayerRef.current) {
         tl.fromTo(
           slide2LayerRef.current,
@@ -718,6 +967,23 @@ export function IdeasIntoImpact() {
             scale: 1,
             duration: 1.4,
             ease: "power2.out",
+          },
+          12.3
+        );
+      }
+
+      if (slide2WatermarkRef.current) {
+        tl.fromTo(
+          slide2WatermarkRef.current,
+          {
+            xPercent: 8,
+            opacity: 0,
+          },
+          {
+            xPercent: -15,
+            opacity: 1,
+            duration: 2.2,
+            ease: "none",
           },
           12.3
         );
@@ -755,6 +1021,17 @@ export function IdeasIntoImpact() {
       // -----------------------------------------------------------------------
       // 7. SLIDE 2 REVERSE ANIMATES OUT (Time: 15.0 -> 16.2)
       // -----------------------------------------------------------------------
+      tl.to(
+        dnaStateRef.current,
+        {
+          opacity: 0,
+          amplitude: 0,
+          duration: 1.0,
+          ease: "power2.in",
+        },
+        15.0
+      );
+
       if (slide2Items.length > 0) {
         tl.to(
           slide2Items,
@@ -774,6 +1051,19 @@ export function IdeasIntoImpact() {
         );
       }
 
+      if (slide2WatermarkRef.current) {
+        tl.to(
+          slide2WatermarkRef.current,
+          {
+            opacity: 0,
+            xPercent: -30,
+            duration: 1.2,
+            ease: "none",
+          },
+          15.0
+        );
+      }
+
       if (slide2AuraRef.current) {
         tl.to(
           slide2AuraRef.current,
@@ -782,19 +1072,6 @@ export function IdeasIntoImpact() {
             scale: 0.3,
             duration: 1.2,
             ease: "none",
-          },
-          15.0
-        );
-      }
-
-      if (dnaWrapRef.current) {
-        tl.to(
-          dnaWrapRef.current,
-          {
-            opacity: 0,
-            scale: 1.1,
-            duration: 1.2,
-            ease: "power2.in",
           },
           15.0
         );
@@ -1316,6 +1593,9 @@ export function IdeasIntoImpact() {
         ref={stageRef}
         className="sticky top-0 w-full h-screen min-h-screen flex flex-col justify-between overflow-hidden px-4 sm:px-8 md:px-12 lg:px-16 pt-2 pb-2 sm:pt-3 sm:pb-3 transform-gpu"
       >
+        {/* Dynamic 3D Horizontal DNA Helix Canvas Background */}
+        <HorizontalDnaHelix dnaState={dnaStateRef} />
+
         {/* Studio Lighting Ambient Glows */}
         <div
           className="pointer-events-none absolute top-0 right-0 w-[600px] h-[500px] rounded-full blur-[140px] opacity-70 bg-[radial-gradient(ellipse_at_top,_rgba(147,51,234,0.25)_0%,_rgba(124,58,237,0.1)_40%,_transparent_70%)]"
@@ -1334,7 +1614,7 @@ export function IdeasIntoImpact() {
         {/* ========================================================= */}
         <div
           ref={heroLayerRef}
-          className="max-w-7xl mx-auto w-full flex flex-col justify-between h-full relative z-10 py-1 -translate-y-6 sm:-translate-y-9 lg:-translate-y-12 will-change-transform transform-gpu"
+          className="max-w-7xl mx-auto w-full flex flex-col justify-between h-full relative z-10 py-1 will-change-transform transform-gpu"
         >
           {/* ========================================================= */}
           {/* 1. HERO SECTION: ASSEMBLED CONTENT & PORTRAIT            */}
@@ -1572,7 +1852,7 @@ export function IdeasIntoImpact() {
           {/* 2. SERVICES 12-CARD SHOWCASE REEL */}
           <div
             ref={cardsRef}
-            className="relative w-full overflow-hidden pb-2 sm:pb-3 mt-auto -translate-y-5 sm:-translate-y-9 lg:-translate-y-12 z-30 [mask-image:linear-gradient(to_right,transparent_0%,black_6%,black_94%,transparent_100%)]"
+            className="relative w-full overflow-hidden pb-2 sm:pb-3 mt-auto z-30 [mask-image:linear-gradient(to_right,transparent_0%,black_6%,black_94%,transparent_100%)]"
           >
             <div
               ref={cardsTrackRef}
@@ -1652,6 +1932,20 @@ export function IdeasIntoImpact() {
             aria-hidden="true"
           />
 
+          {/* Background Single Sliding Watermark Text */}
+          <div
+            className="pointer-events-none absolute top-1/2 left-0 -translate-y-1/2 w-full flex items-center justify-center select-none -z-0 overflow-visible"
+            aria-hidden="true"
+          >
+            <div
+              ref={ctaWatermarkRef}
+              className="flex whitespace-nowrap text-white/[0.04] font-display font-black text-5xl sm:text-7xl md:text-8xl lg:text-[10rem] tracking-tight uppercase leading-none will-change-transform"
+            >
+              <span>ARCHITECTING THE FUTURE &nbsp; CREATIVE ENGINEERING &nbsp; EXPERIENCES BEYOND PIXELS &nbsp; DIGITAL MASTERPIECES &nbsp; </span>
+              <span>ARCHITECTING THE FUTURE &nbsp; CREATIVE ENGINEERING &nbsp; EXPERIENCES BEYOND PIXELS &nbsp; DIGITAL MASTERPIECES &nbsp; </span>
+            </div>
+          </div>
+
           {/* Foreground 3-Line Bodoni Headline */}
           <div className="relative z-10 flex flex-col items-center max-w-6xl mx-auto overflow-visible py-4">
             <h2
@@ -1696,6 +1990,20 @@ export function IdeasIntoImpact() {
             className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[520px] bg-[radial-gradient(ellipse_at_center,_rgba(217,70,239,0.12)_0%,_rgba(45,212,191,0.07)_40%,_transparent_70%)]"
             aria-hidden="true"
           />
+
+          {/* Background Sliding Watermark Text */}
+          <div
+            className="pointer-events-none absolute top-1/2 left-0 -translate-y-1/2 w-full flex items-center justify-center select-none -z-0 overflow-visible"
+            aria-hidden="true"
+          >
+            <div
+              ref={slide2WatermarkRef}
+              className="flex whitespace-nowrap text-white/[0.04] font-display font-black text-5xl sm:text-7xl md:text-8xl lg:text-[10rem] tracking-tight uppercase leading-none will-change-transform"
+            >
+              <span>DISRUPT &nbsp; INNOVATE &nbsp; ELEVATE &nbsp; TRANSCEND &nbsp; </span>
+              <span>DISRUPT &nbsp; INNOVATE &nbsp; ELEVATE &nbsp; TRANSCEND &nbsp; </span>
+            </div>
+          </div>
 
           {/* Foreground Luxury Bodoni Typography Content */}
           <div

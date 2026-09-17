@@ -4,14 +4,14 @@ import React, { useEffect, useRef } from "react";
 
 interface DnaHelixCanvasProps {
   className?: string;
-  opacity?: number;
-  colorProgress?: number; // 0 (Slide 1: Amber/Cyan) to 1 (Slide 2: Fuchsia/Teal)
+  opacity?: number; // 0 to 1
+  colorProgress?: number; // 0 (Slide 1: amber-cyan) to 1 (Slide 2: violet-teal)
   speed?: number;
 }
 
 export function DnaHelixCanvas({
   className = "",
-  opacity = 0.85,
+  opacity = 0.5,
   colorProgress = 0,
   speed = 1,
 }: DnaHelixCanvasProps) {
@@ -69,21 +69,11 @@ export function DnaHelixCanvas({
       return { r, g, b };
     };
 
-    // Text sequences for Strand 1 & Strand 2
-    const strand1RawText = "DISRUPT • INNOVATE • ELEVATE • TRANSCEND • ARCHITECT • MASTERPIECE • FUTURE • BEYOND • ";
-    const strand2RawText = "CREATIVE • ENGINEERING • VISION • PRECISION • PIXELS • CODE • EXTRAORDINARY • MOTION • ";
-
-    const strand1Chars = strand1RawText.repeat(3).split("");
-    const strand2Chars = strand2RawText.repeat(3).split("");
-
-    const basePairs = ["A — T", "G — C", "T — A", "C — G", "0 — 1", "1 — 0"];
-
     const render = (time: number) => {
       const dt = Math.min((time - lastTime) / 1000, 0.1);
       lastTime = time;
 
-      // Rotation speed
-      angle += dt * 0.85 * speed;
+      angle += dt * 0.95 * speed;
 
       ctx.clearRect(0, 0, width, height);
 
@@ -95,205 +85,197 @@ export function DnaHelixCanvas({
 
       const p = Math.max(0, Math.min(1, colorProgressRef.current));
 
-      // Slide 1 Colors: Amber/Gold (245, 158, 11) & Electric Cyan (56, 189, 248)
-      // Slide 2 Colors: Fuchsia/Pink (232, 121, 249) & Neon Mint/Teal (45, 212, 191)
+      // Slide 1 Colors: Amber (245, 158, 11) & Cyan (56, 189, 248)
+      // Slide 2 Colors: Fuchsia (232, 121, 249) & Mint (52, 211, 153)
       const strand1Color = lerpColor(245, 158, 11, 232, 121, 249, p);
-      const strand2Color = lerpColor(56, 189, 248, 45, 212, 191, p);
+      const strand2Color = lerpColor(56, 189, 248, 52, 211, 153, p);
 
-      const isMobile = width < 768;
+      const count = Math.min(Math.max(Math.floor(width / 30), 30), 56);
       const centerY = height * 0.5;
-      const radius = Math.min(height * 0.38, isMobile ? 85 : 130);
-      const focalLength = isMobile ? 320 : 420;
-      const totalWidth = width * 1.35;
+      const radius = Math.min(height * 0.32, 95);
+      const focalLength = 320;
+      const totalWidth = width * 1.18;
       const startX = (width - totalWidth) / 2;
 
-      const charCount = Math.min(Math.max(Math.floor(width / (isMobile ? 18 : 22)), 48), 84);
-      const cycles = isMobile ? 3.2 : 4.5;
-
-      interface RenderableItem {
+      interface DepthItem {
+        type: "rung" | "node1" | "node2";
         z: number;
-        draw: () => void;
+        render: () => void;
       }
 
-      const renderQueue: RenderableItem[] = [];
+      const drawItems: DepthItem[] = [];
 
-      // Structure to hold points for connecting rungs
-      interface StrandPoint {
-        x: number;
-        y: number;
-        z: number;
-        scale: number;
-        char: string;
-        color: { r: number; g: number; b: number };
-        isStrand1: boolean;
-        tangent: number;
-      }
+      // Calculate base pairs and nodes
+      const pointsStrand1: { x: number; y: number; z: number; scale: number; alpha: number }[] = [];
+      const pointsStrand2: { x: number; y: number; z: number; scale: number; alpha: number }[] = [];
 
-      const strand1Points: StrandPoint[] = [];
-      const strand2Points: StrandPoint[] = [];
-
-      for (let i = 0; i < charCount; i++) {
-        const u = i / (charCount - 1);
+      for (let i = 0; i < count; i++) {
+        const u = i / (count - 1);
         const x = startX + u * totalWidth;
 
-        // Helix phase calculation
-        const phase = angle + u * Math.PI * 2 * cycles;
-        const waveTilt = Math.sin(u * Math.PI * 2 + angle * 0.2) * (height * 0.035);
+        // Wave phase along X with diagonal slope
+        const wave = angle + u * Math.PI * 4.6;
+        const waveYOffset = Math.sin(u * Math.PI * 2 + angle * 0.3) * (height * 0.04);
 
-        // Strand 1 calculations
-        const y1Raw = Math.sin(phase) * radius;
-        const z1 = Math.cos(phase) * radius;
+        // 3D coordinates for Strand 1
+        const y1Offset = Math.sin(wave) * radius;
+        const z1 = Math.cos(wave) * radius;
         const scale1 = focalLength / (focalLength + z1);
-        const y1 = centerY + y1Raw * scale1 + waveTilt;
-        const char1 = strand1Chars[i % strand1Chars.length];
-        const tangent1 = Math.atan2(Math.cos(phase) * radius * scale1 * 0.2, totalWidth / charCount);
+        const y1 = centerY + y1Offset * scale1 + waveYOffset;
+        const alpha1 = Math.max(0.08, Math.min(0.9, (z1 / radius + 1) * 0.45 + 0.1)) * currentOpacity;
 
-        strand1Points.push({
-          x,
-          y: y1,
-          z: z1,
-          scale: scale1,
-          char: char1,
-          color: strand1Color,
-          isStrand1: true,
-          tangent: tangent1,
-        });
+        pointsStrand1.push({ x, y: y1, z: z1, scale: scale1, alpha: alpha1 });
 
-        // Strand 2 calculations (offset by PI for double helix opposite strand)
-        const phase2 = phase + Math.PI;
-        const y2Raw = Math.sin(phase2) * radius;
-        const z2 = Math.cos(phase2) * radius;
+        // 3D coordinates for Strand 2 (opposite phase + PI)
+        const y2Offset = Math.sin(wave + Math.PI) * radius;
+        const z2 = Math.cos(wave + Math.PI) * radius;
         const scale2 = focalLength / (focalLength + z2);
-        const y2 = centerY + y2Raw * scale2 + waveTilt;
-        const char2 = strand2Chars[i % strand2Chars.length];
-        const tangent2 = Math.atan2(Math.cos(phase2) * radius * scale2 * 0.2, totalWidth / charCount);
+        const y2 = centerY + y2Offset * scale2 + waveYOffset;
+        const alpha2 = Math.max(0.08, Math.min(0.9, (z2 / radius + 1) * 0.45 + 0.1)) * currentOpacity;
 
-        strand2Points.push({
-          x,
-          y: y2,
-          z: z2,
-          scale: scale2,
-          char: char2,
-          color: strand2Color,
-          isStrand1: false,
-          tangent: tangent2,
-        });
-      }
+        pointsStrand2.push({ x, y: y2, z: z2, scale: scale2, alpha: alpha2 });
 
-      // 1. Add Connecting Rungs at periodic intervals
-      const rungStep = isMobile ? 3 : 2;
-      for (let i = 0; i < charCount; i += rungStep) {
-        const p1 = strand1Points[i];
-        const p2 = strand2Points[i];
-        if (!p1 || !p2) continue;
+        // Add Rung connecting Strand 1 and Strand 2
+        const avgZ = (z1 + z2) / 2;
+        const rungAlpha = Math.max(0.05, Math.min(0.65, (avgZ / radius + 1) * 0.3 + 0.08)) * currentOpacity;
 
-        const avgZ = (p1.z + p2.z) / 2;
-        const normZ = (avgZ / radius + 1) * 0.5; // 0 (far) to 1 (close)
-        const rungAlpha = Math.max(0.04, Math.min(0.45, normZ * 0.4 + 0.05)) * currentOpacity;
-        const basePairLabel = basePairs[Math.floor(i / rungStep) % basePairs.length];
-
-        renderQueue.push({
+        drawItems.push({
+          type: "rung",
           z: avgZ,
-          draw: () => {
-            // Draw gradient laser connector between Strand 1 and Strand 2
-            const grad = ctx.createLinearGradient(p1.x, p1.y, p2.x, p2.y);
+          render: () => {
+            // Draw connecting rung line
+            const grad = ctx.createLinearGradient(x, y1, x, y2);
             grad.addColorStop(
               0,
-              `rgba(${p1.color.r}, ${p1.color.g}, ${p1.color.b}, ${rungAlpha * 0.7})`
+              `rgba(${strand1Color.r}, ${strand1Color.g}, ${strand1Color.b}, ${alpha1 * 0.6})`
             );
             grad.addColorStop(
               0.5,
-              `rgba(255, 255, 255, ${rungAlpha * 0.9})`
+              `rgba(255, 255, 255, ${rungAlpha * 0.8})`
             );
             grad.addColorStop(
               1,
-              `rgba(${p2.color.r}, ${p2.color.g}, ${p2.color.b}, ${rungAlpha * 0.7})`
+              `rgba(${strand2Color.r}, ${strand2Color.g}, ${strand2Color.b}, ${alpha2 * 0.6})`
             );
 
             ctx.beginPath();
-            ctx.moveTo(p1.x, p1.y);
-            ctx.lineTo(p2.x, p2.y);
+            ctx.moveTo(x, y1);
+            ctx.lineTo(x, y2);
             ctx.strokeStyle = grad;
-            ctx.lineWidth = Math.max(0.6, 1.4 * normZ);
-            ctx.setLineDash([3, 4]);
+            ctx.lineWidth = Math.max(0.8, 1.6 * ((avgZ / radius + 1) * 0.5 + 0.3));
             ctx.stroke();
-            ctx.setLineDash([]); // Reset line dash
 
-            // Connecting node dots
-            const dotSize = Math.max(1.2, 2.8 * normZ);
+            // Intermediate micro-dots along rung
+            const dotCount = 3;
+            for (let d = 1; d <= dotCount; d++) {
+              const f = d / (dotCount + 1);
+              const dx = x;
+              const dy = y1 + (y2 - y1) * f;
+              const dz = z1 + (z2 - z1) * f;
+              const dAlpha = Math.max(0.05, (dz / radius + 1) * 0.35) * currentOpacity;
+              const dSize = Math.max(0.8, 1.6 * (focalLength / (focalLength + dz)));
+
+              ctx.beginPath();
+              ctx.arc(dx, dy, dSize, 0, Math.PI * 2);
+              ctx.fillStyle = `rgba(255, 255, 255, ${dAlpha * 0.9})`;
+              ctx.fill();
+            }
+          },
+        });
+
+        // Add Strand 1 Node
+        drawItems.push({
+          type: "node1",
+          z: z1,
+          render: () => {
+            const size = Math.max(1.8, 3.8 * scale1);
+            // Outer soft glow
             ctx.beginPath();
-            ctx.arc(p1.x, p1.y, dotSize, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(${p1.color.r}, ${p1.color.g}, ${p1.color.b}, ${rungAlpha * 1.2})`;
+            ctx.arc(x, y1, size * 2.2, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${strand1Color.r}, ${strand1Color.g}, ${strand1Color.b}, ${alpha1 * 0.25})`;
             ctx.fill();
 
+            // Core dot
             ctx.beginPath();
-            ctx.arc(p2.x, p2.y, dotSize, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(${p2.color.r}, ${p2.color.g}, ${p2.color.b}, ${rungAlpha * 1.2})`;
+            ctx.arc(x, y1, size, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${strand1Color.r}, ${strand1Color.g}, ${strand1Color.b}, ${alpha1})`;
             ctx.fill();
 
-            // Center base-pair micro label (e.g. A — T, G — C)
-            if (normZ > 0.4 && !isMobile) {
-              const midX = (p1.x + p2.x) / 2;
-              const midY = (p1.y + p2.y) / 2;
-              ctx.save();
-              ctx.translate(midX, midY);
-              ctx.font = `700 ${Math.round(8 * normZ)}px monospace`;
-              ctx.textAlign = "center";
-              ctx.textBaseline = "middle";
-              ctx.fillStyle = `rgba(255, 255, 255, ${rungAlpha * 0.75})`;
-              ctx.fillText(basePairLabel, 0, 0);
-              ctx.restore();
+            // Bright specular center for close nodes
+            if (z1 > 0) {
+              ctx.beginPath();
+              ctx.arc(x, y1, size * 0.45, 0, Math.PI * 2);
+              ctx.fillStyle = `rgba(255, 255, 255, ${alpha1 * 0.9})`;
+              ctx.fill();
+            }
+          },
+        });
+
+        // Add Strand 2 Node
+        drawItems.push({
+          type: "node2",
+          z: z2,
+          render: () => {
+            const size = Math.max(1.8, 3.8 * scale2);
+            // Outer soft glow
+            ctx.beginPath();
+            ctx.arc(x, y2, size * 2.2, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${strand2Color.r}, ${strand2Color.g}, ${strand2Color.b}, ${alpha2 * 0.25})`;
+            ctx.fill();
+
+            // Core dot
+            ctx.beginPath();
+            ctx.arc(x, y2, size, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(${strand2Color.r}, ${strand2Color.g}, ${strand2Color.b}, ${alpha2})`;
+            ctx.fill();
+
+            // Bright specular center for close nodes
+            if (z2 > 0) {
+              ctx.beginPath();
+              ctx.arc(x, y2, size * 0.45, 0, Math.PI * 2);
+              ctx.fillStyle = `rgba(255, 255, 255, ${alpha2 * 0.9})`;
+              ctx.fill();
             }
           },
         });
       }
 
-      // 2. Add Typography Characters to Render Queue for both strands
-      const addCharToQueue = (p: StrandPoint) => {
-        const normZ = (p.z / radius + 1) * 0.5; // 0 = far back, 1 = closest front
-        // Dynamic opacity: close characters are brighter with luminous glow; far characters are darker
-        const alpha = Math.max(0.08, Math.min(0.85, Math.pow(normZ, 1.2) * 0.78 + 0.07)) * currentOpacity;
-        const fontSize = Math.round((isMobile ? 18 : 28) * p.scale);
+      // Draw continuous backbones / ribbons for Strand 1 & Strand 2
+      if (pointsStrand1.length > 1) {
+        // Strand 1 Backbone
+        ctx.beginPath();
+        ctx.moveTo(pointsStrand1[0].x, pointsStrand1[0].y);
+        for (let i = 1; i < pointsStrand1.length; i++) {
+          const prev = pointsStrand1[i - 1];
+          const curr = pointsStrand1[i];
+          const mx = (prev.x + curr.x) / 2;
+          const my = (prev.y + curr.y) / 2;
+          ctx.quadraticCurveTo(prev.x, prev.y, mx, my);
+        }
+        ctx.lineTo(pointsStrand1[pointsStrand1.length - 1].x, pointsStrand1[pointsStrand1.length - 1].y);
+        ctx.strokeStyle = `rgba(${strand1Color.r}, ${strand1Color.g}, ${strand1Color.b}, ${0.28 * currentOpacity})`;
+        ctx.lineWidth = 1.4;
+        ctx.stroke();
 
-        renderQueue.push({
-          z: p.z,
-          draw: () => {
-            ctx.save();
-            ctx.translate(p.x, p.y);
-            ctx.rotate(p.tangent);
+        // Strand 2 Backbone
+        ctx.beginPath();
+        ctx.moveTo(pointsStrand2[0].x, pointsStrand2[0].y);
+        for (let i = 1; i < pointsStrand2.length; i++) {
+          const prev = pointsStrand2[i - 1];
+          const curr = pointsStrand2[i];
+          const mx = (prev.x + curr.x) / 2;
+          const my = (prev.y + curr.y) / 2;
+          ctx.quadraticCurveTo(prev.x, prev.y, mx, my);
+        }
+        ctx.lineTo(pointsStrand2[pointsStrand2.length - 1].x, pointsStrand2[pointsStrand2.length - 1].y);
+        ctx.strokeStyle = `rgba(${strand2Color.r}, ${strand2Color.g}, ${strand2Color.b}, ${0.28 * currentOpacity})`;
+        ctx.lineWidth = 1.4;
+        ctx.stroke();
+      }
 
-            ctx.font = `900 ${fontSize}px 'Cinzel', 'Syne', 'Playfair Display', sans-serif`;
-            ctx.textAlign = "center";
-            ctx.textBaseline = "middle";
-
-            // Glow shadow for close/front characters
-            if (normZ > 0.6) {
-              ctx.shadowColor = `rgba(${p.color.r}, ${p.color.g}, ${p.color.b}, ${alpha * 0.85})`;
-              ctx.shadowBlur = 16 * normZ;
-            }
-
-            // Foreground Text Fill
-            ctx.fillStyle = `rgba(${p.color.r}, ${p.color.g}, ${p.color.b}, ${alpha})`;
-            ctx.fillText(p.char, 0, 0);
-
-            // Bright specular highlight on top front characters
-            if (normZ > 0.75) {
-              ctx.shadowBlur = 0;
-              ctx.fillStyle = `rgba(255, 255, 255, ${alpha * 0.65})`;
-              ctx.fillText(p.char, 0, 0);
-            }
-
-            ctx.restore();
-          },
-        });
-      };
-
-      strand1Points.forEach(addCharToQueue);
-      strand2Points.forEach(addCharToQueue);
-
-      // 3. Depth Sorting: Back-to-Front Painter's Algorithm
-      renderQueue.sort((a, b) => a.z - b.z);
-      renderQueue.forEach((item) => item.draw());
+      // Depth sort items (Z-index Painter's Algorithm: back to front)
+      drawItems.sort((a, b) => a.z - b.z);
+      drawItems.forEach((item) => item.render());
 
       animFrameRef.current = requestAnimationFrame(render);
     };
