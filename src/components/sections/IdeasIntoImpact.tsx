@@ -587,14 +587,14 @@ export function IdeasIntoImpact() {
         tl.fromTo(
           ctaWatermarkRef.current,
           {
-            scale: 0.9,
+            xPercent: 6,
             opacity: 0,
           },
           {
-            scale: 1,
+            xPercent: -18,
             opacity: 1,
             duration: 2.2,
-            ease: "power2.out",
+            ease: "none",
           },
           8.9
         );
@@ -679,9 +679,9 @@ export function IdeasIntoImpact() {
           ctaWatermarkRef.current,
           {
             opacity: 0,
-            scale: 1.08,
+            xPercent: -30,
             duration: 1.2,
-            ease: "power2.in",
+            ease: "none",
           },
           11.4
         );
@@ -1352,6 +1352,7 @@ export function IdeasIntoImpact() {
   return (
     <div
       ref={containerRef}
+      data-pinned-container="true"
       id="impact-scroll-stage"
       className="relative w-full h-[600vh] bg-[#020204] text-white select-none border-t border-white/[0.08]"
     >
@@ -1696,13 +1697,18 @@ export function IdeasIntoImpact() {
             aria-hidden="true"
           />
 
-          {/* Background Artistic 3D DNA Canvas */}
+          {/* Background Single Sliding Watermark Text */}
           <div
-            ref={ctaWatermarkRef}
-            className="pointer-events-none absolute inset-0 w-full h-full flex items-center justify-center select-none z-0 overflow-hidden"
+            className="pointer-events-none absolute top-1/2 left-0 -translate-y-1/2 w-full flex items-center justify-center select-none -z-0 overflow-visible"
             aria-hidden="true"
           >
-            <ArtisticDnaCanvas />
+            <div
+              ref={ctaWatermarkRef}
+              className="flex whitespace-nowrap text-white/[0.04] font-display font-black text-5xl sm:text-7xl md:text-8xl lg:text-[10rem] tracking-tight uppercase leading-none will-change-transform"
+            >
+              <span>ARCHITECTING THE FUTURE &nbsp; CREATIVE ENGINEERING &nbsp; EXPERIENCES BEYOND PIXELS &nbsp; DIGITAL MASTERPIECES &nbsp; </span>
+              <span>ARCHITECTING THE FUTURE &nbsp; CREATIVE ENGINEERING &nbsp; EXPERIENCES BEYOND PIXELS &nbsp; DIGITAL MASTERPIECES &nbsp; </span>
+            </div>
           </div>
 
           {/* Foreground 3-Line Bodoni Headline */}

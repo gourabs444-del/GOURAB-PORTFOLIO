@@ -4,9 +4,10 @@ import React, { useEffect, useRef } from "react";
 
 interface ArtisticDnaCanvasProps {
   className?: string;
+  scrollProgress?: number; // Optional direct controlled progress (0 to 1)
 }
 
-export function ArtisticDnaCanvas({ className = "" }: ArtisticDnaCanvasProps) {
+export function ArtisticDnaCanvas({ className = "", scrollProgress }: ArtisticDnaCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
@@ -28,53 +29,65 @@ export function ArtisticDnaCanvas({ className = "" }: ArtisticDnaCanvasProps) {
 
     window.addEventListener("resize", handleResize);
 
-    // Physics & Motion State
-    let rotationAngle = 0;
-    const baseSpeed = 0.016; // Continuous smooth rotation even when idle
-    let extraSpeed = 0; // Velocity impulse added by scrolling
+    // Rotation & Physics State
+    let currentAngle = 0;
+    let targetAngle = 0;
     let amplitude = 70; // Helix vertical spread
-    let targetAmplitude = 70;
-    let lastScrollY = typeof window !== "undefined" ? window.scrollY : 0;
+
+    const calculateScrollProgress = () => {
+      if (typeof scrollProgress === "number") {
+        return Math.min(Math.max(scrollProgress, 0), 1);
+      }
+
+      // Automatically find pinned container or fallback to section/window
+      const container = canvas.closest("[data-pinned-container]") || canvas.parentElement;
+      if (container) {
+        const rect = container.getBoundingClientRect();
+        const scrollableHeight = rect.height - window.innerHeight;
+        if (scrollableHeight > 0) {
+          return Math.min(Math.max(-rect.top / scrollableHeight, 0), 1);
+        }
+      }
+
+      // Window scroll fallback
+      const rect = canvas.getBoundingClientRect();
+      const totalDist = window.innerHeight + rect.height;
+      const currentDist = window.innerHeight - rect.top;
+      return Math.min(Math.max(currentDist / totalDist, 0), 1);
+    };
 
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      const delta = Math.abs(currentScrollY - lastScrollY);
-      lastScrollY = currentScrollY;
-
-      if (delta > 0) {
-        // Boost momentum proportional to scroll speed
-        // "half scroll bhi kru to same animate hoga... double scroll kru to jyada hoga"
-        extraSpeed += Math.min(delta * 0.0008, 0.1);
-        targetAmplitude = 70 + Math.min(delta * 0.5, 55);
-      }
+      const progress = calculateScrollProgress();
+      // Fixed 1.5 full rounds (540 degrees / 3*PI) bound strictly to full scroll path
+      targetAngle = progress * Math.PI * 3;
     };
+
+    // Initial calculation
+    handleScroll();
 
     window.addEventListener("scroll", handleScroll, { passive: true });
 
     // Number of base-pair steps along the helix
-    const numNodes = 40;
+    const numNodes = 38;
 
     const render = () => {
-      // Smooth decay of momentum and amplitude expansion
-      extraSpeed *= 0.925;
-      targetAmplitude += (70 - targetAmplitude) * 0.04;
-      amplitude += (targetAmplitude - amplitude) * 0.08;
-
-      const currentSpeed = baseSpeed + extraSpeed;
-      rotationAngle += currentSpeed;
+      // Liquid-smooth lerp towards target scroll rotation
+      // Stops completely when scroll stops, no endless spinning
+      const diff = targetAngle - currentAngle;
+      currentAngle += diff * 0.075;
 
       ctx.clearRect(0, 0, width, height);
 
       const centerX = width / 2;
       const centerY = height / 2;
-      const strandLength = Math.max(width * 0.92, 980);
+      const strandLength = Math.max(width * 0.9, 940);
       const spacing = strandLength / numNodes;
       const startX = centerX - strandLength / 2;
 
       // Soft ambient background aura
       const bgGlow = ctx.createRadialGradient(centerX, centerY, 30, centerX, centerY, width * 0.45);
-      bgGlow.addColorStop(0, "rgba(168, 85, 247, 0.1)");
-      bgGlow.addColorStop(0.5, "rgba(56, 189, 248, 0.05)");
+      bgGlow.addColorStop(0, "rgba(168, 85, 247, 0.08)");
+      bgGlow.addColorStop(0.5, "rgba(56, 189, 248, 0.04)");
       bgGlow.addColorStop(1, "rgba(0, 0, 0, 0)");
       ctx.fillStyle = bgGlow;
       ctx.fillRect(0, 0, width, height);
@@ -85,7 +98,7 @@ export function ArtisticDnaCanvas({ className = "" }: ArtisticDnaCanvasProps) {
 
       for (let i = 0; i < numNodes; i++) {
         const x = startX + i * spacing;
-        const phase = rotationAngle + i * 0.22;
+        const phase = currentAngle + i * 0.22;
 
         // Strand A 3D coordinates
         const yA = centerY + Math.sin(phase) * amplitude;
@@ -202,7 +215,7 @@ export function ArtisticDnaCanvas({ className = "" }: ArtisticDnaCanvasProps) {
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [scrollProgress]);
 
   return (
     <canvas
