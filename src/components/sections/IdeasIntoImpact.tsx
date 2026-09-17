@@ -1539,16 +1539,16 @@ export function IdeasIntoImpact() {
         </div>
 
         {/* ========================================================= */}
-        {/* LAYER B2: SLIDE 2 - MODERN KINETIC DISPLAY & NEON PALETTE */}
+        {/* LAYER B2: SLIDE 2 - LUXURY EDITORIAL & ETHEREAL GRADIENT  */}
         {/* ========================================================= */}
         <div
           ref={slide2LayerRef}
           className="absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center overflow-hidden z-20 px-6 sm:px-12 md:px-16 lg:px-24 select-none pointer-events-none"
         >
-          {/* Ambient Neon Violet & Emerald Radial Glow */}
+          {/* Ambient Ethereal Orchid & Mint Radial Glow */}
           <div
             ref={slide2AuraRef}
-            className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[520px] bg-[radial-gradient(ellipse_at_center,_rgba(168,85,247,0.18)_0%,_rgba(16,185,129,0.1)_40%,_transparent_70%)]"
+            className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[520px] bg-[radial-gradient(ellipse_at_center,_rgba(217,70,239,0.12)_0%,_rgba(45,212,191,0.07)_40%,_transparent_70%)]"
             aria-hidden="true"
           />
 
@@ -1566,30 +1566,27 @@ export function IdeasIntoImpact() {
             </div>
           </div>
 
-          {/* Foreground Kinetic Typography Content */}
+          {/* Foreground Luxury Bodoni Typography Content */}
           <div
             ref={slide2ContentRef}
-            className="relative z-10 flex flex-col items-center max-w-5xl mx-auto overflow-visible py-4"
+            className="relative z-10 flex flex-col items-center max-w-6xl mx-auto overflow-visible py-4"
           >
-            {/* Category Pill */}
-            <div className="slide2-assemble-item inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-violet-500/10 border border-violet-500/25 text-[10px] sm:text-xs font-mono tracking-[0.25em] text-violet-300 uppercase mb-5 shadow-[0_0_15px_rgba(168,85,247,0.2)]">
-              <span className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-ping" />
-              <span>INNOVATION &amp; MASTERY</span>
-            </div>
-
-            {/* Kinetic Display Headline (New Font: font-display / Sans, New Colors: Violet/Fuchsia & Emerald/Teal) */}
-            <h2 className="slide2-assemble-item font-display font-black text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.5rem] text-white tracking-tight leading-[1.1] sm:leading-[1.12] text-center uppercase will-change-transform mb-6">
-              <span className="block whitespace-nowrap">Crafting experiences</span>
-              <span className="block whitespace-nowrap bg-gradient-to-r from-[#c084fc] via-[#e879f9] to-[#f472b6] bg-clip-text text-transparent drop-shadow-[0_0_35px_rgba(192,132,252,0.4)]">
-                that transcend
+            {/* Foreground 3-Line Bodoni Headline (Capsule removed as requested) */}
+            <h2 className="slide2-assemble-item font-bodoni font-medium text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.4rem] text-white tracking-tight leading-[1.3] sm:leading-[1.34] text-center px-4 overflow-visible will-change-transform mb-4">
+              <span className="block whitespace-nowrap overflow-visible">Crafting experiences</span>
+              <span className="block whitespace-nowrap overflow-visible py-1">
+                that{" "}
+                <span className="font-bodoni italic font-normal bg-gradient-to-r from-purple-200 via-fuchsia-300 to-pink-300 bg-clip-text text-transparent inline-block pr-4 pl-0.5 pt-1 pb-3 leading-[1.3] overflow-visible drop-shadow-[0_0_35px_rgba(232,121,249,0.35)]">
+                  transcend
+                </span>
               </span>
-              <span className="block whitespace-nowrap bg-gradient-to-r from-[#34d399] via-[#2dd4bf] to-[#38bdf8] bg-clip-text text-transparent drop-shadow-[0_0_35px_rgba(52,211,153,0.4)]">
+              <span className="block font-bodoni italic font-normal bg-gradient-to-r from-teal-200 via-cyan-300 to-emerald-300 bg-clip-text text-transparent whitespace-nowrap overflow-visible pr-4 pl-0.5 pt-1 pb-3 leading-[1.3] drop-shadow-[0_0_35px_rgba(45,212,191,0.35)]">
                 pixels &amp; code.
               </span>
             </h2>
 
             {/* Sub-headline */}
-            <p className="slide2-assemble-item font-sans text-xs sm:text-sm md:text-base text-neutral-400 max-w-xl mx-auto leading-relaxed mb-8 font-normal">
+            <p className="slide2-assemble-item font-sans text-xs sm:text-sm md:text-base text-neutral-400 max-w-xl mx-auto leading-relaxed mb-8 font-light">
               Bridging radical imagination with high-performance engineering to shape tomorrow&apos;s digital benchmarks.
             </p>
 
@@ -1598,7 +1595,7 @@ export function IdeasIntoImpact() {
               <a
                 href="#contact"
                 onMouseEnter={() => playHover()}
-                className="pointer-events-auto inline-flex items-center gap-2 px-7 sm:px-9 py-3.5 rounded-full bg-gradient-to-r from-violet-500 via-purple-500 to-fuchsia-500 text-white font-sans font-bold text-xs sm:text-sm tracking-tight transition-all duration-300 shadow-[0_0_30px_rgba(168,85,247,0.4)] hover:shadow-[0_0_45px_rgba(168,85,247,0.65)] hover:scale-105 active:scale-95 cursor-pointer"
+                className="pointer-events-auto inline-flex items-center gap-2 px-7 sm:px-9 py-3.5 rounded-full bg-gradient-to-r from-purple-400 via-fuchsia-500 to-pink-500 text-white hover:from-purple-300 hover:to-pink-400 font-sans font-bold text-xs sm:text-sm tracking-tight transition-all duration-300 shadow-[0_0_30px_rgba(217,70,239,0.35)] hover:shadow-[0_0_40px_rgba(217,70,239,0.55)] active:scale-95 cursor-pointer"
               >
                 <span>Get In Touch</span>
                 <ArrowUpRight className="w-4 h-4" />
