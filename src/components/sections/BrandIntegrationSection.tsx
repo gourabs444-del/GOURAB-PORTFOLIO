@@ -221,27 +221,20 @@ export function BrandIntegrationSection() {
 
       tl.fromTo(
         ".engine-graph",
-        { opacity: 0, scale: 0.88 },
+        { opacity: 0, scale: 0.92 },
         { opacity: 1, scale: 1, duration: 0.4, ease: "power3.out" },
         5.9
       );
 
       tl.fromTo(
-        ".engine-line",
-        { strokeDasharray: 300, strokeDashoffset: 300, opacity: 0 },
-        { strokeDashoffset: 0, opacity: 1, duration: 0.4, stagger: 0.05, ease: "power2.out" },
+        ".engine-node",
+        { opacity: 0, scale: 0.85, y: 20 },
+        { opacity: 1, scale: 1, y: 0, duration: 0.4, stagger: 0.07, ease: "power3.out" },
         6.05
       );
 
-      tl.fromTo(
-        ".engine-node",
-        { opacity: 0, scale: 0.7, y: 25 },
-        { opacity: 1, scale: 1, y: 0, duration: 0.4, stagger: 0.06, ease: "back.out(1.5)" },
-        6.15
-      );
-
       // Morphing Exit into Act 08 (6.7 -> 7.1)
-      tl.to(".act-07", { opacity: 0, scale: 0.88, y: -30, duration: 0.4, ease: "power2.inOut" }, 6.7);
+      tl.to(".act-07", { opacity: 0, scale: 0.92, y: -30, duration: 0.4, ease: "power2.inOut" }, 6.7);
 
       // =======================================================================
       // 08 — FOUNDER CONNECTION (Time: 6.8 -> 8.0, Exits 7.7 -> 8.1)
@@ -256,9 +249,9 @@ export function BrandIntegrationSection() {
       );
 
       tl.fromTo(
-        ".founder-pill",
-        { opacity: 0, y: 20, scale: 0.88 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.35, stagger: 0.08, ease: "power3.out" },
+        ".founder-roles",
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" },
         7.15
       );
 
@@ -429,41 +422,45 @@ export function BrandIntegrationSection() {
               </p>
             </div>
 
-            {/* 2. 3 Sleek Modern Pillar Cards */}
+            {/* 2. 3 Sleek Modern Visual Graphic Cards */}
             <div className="product-layer-fg w-full grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
               
               {/* Card 1: Architecture Engine */}
               <button
                 type="button"
                 onClick={() => handleSimulateClick("build")}
-                className={`group relative p-7 rounded-2xl transition-all duration-300 backdrop-blur-2xl text-left cursor-pointer overflow-hidden ${
+                className={`group relative rounded-2xl transition-all duration-300 text-left cursor-pointer overflow-hidden border ${
                   activeTab === "build"
-                    ? "bg-gradient-to-b from-cyan-500/20 via-cyan-500/5 to-transparent border border-cyan-400/50 shadow-[0_15px_40px_rgba(56,189,248,0.25)] scale-[1.03]"
-                    : "bg-white/[0.03] border border-white/10 hover:bg-white/[0.06] hover:border-white/25"
+                    ? "border-cyan-400/60 shadow-[0_15px_40px_rgba(56,189,248,0.3)] scale-[1.03] ring-1 ring-cyan-400/40"
+                    : "border-white/10 hover:border-white/30 hover:scale-[1.01]"
                 }`}
               >
-                <div className="flex items-center justify-between mb-6">
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${
-                    activeTab === "build" ? "bg-cyan-400 text-black shadow-[0_0_25px_rgba(56,189,248,0.8)]" : "bg-cyan-400/10 text-cyan-400 border border-cyan-400/20"
-                  }`}>
-                    <Code className="w-5 h-5" />
-                  </div>
-                  <span className="font-mono text-[9px] font-bold tracking-widest uppercase text-cyan-400/90 px-2.5 py-1 rounded-full bg-cyan-400/10 border border-cyan-400/20">
+                <div className="relative aspect-[16/10] w-full overflow-hidden bg-black/40">
+                  <img
+                    src="/assets/card-architecture-engine.jpg"
+                    alt="Architecture Engine"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
+                  
+                  {/* Badge */}
+                  <div className="absolute top-3 right-3 font-mono text-[9px] font-bold tracking-widest uppercase text-cyan-300 px-2.5 py-1 rounded-full bg-black/60 border border-cyan-400/30 backdrop-blur-md">
                     LATENCY 14MS
-                  </span>
-                </div>
+                  </div>
 
-                <div>
-                  <h4 className="font-sans font-extrabold text-lg text-white tracking-tight mb-2 group-hover:text-cyan-200 transition-colors">
-                    Architecture Engine
-                  </h4>
-                  <p className="font-sans text-xs text-neutral-400 font-normal leading-relaxed">
-                    Modular WebGL viewport pipeline integrated with React 19 optimistic state reconciliation.
-                  </p>
+                  {/* Text Overlay */}
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <h4 className="font-sans font-extrabold text-base sm:text-lg text-white tracking-tight mb-1 group-hover:text-cyan-200 transition-colors">
+                      Architecture Engine
+                    </h4>
+                    <p className="font-sans text-[11px] text-neutral-300 font-normal line-clamp-2 leading-relaxed">
+                      Modular WebGL viewport pipeline integrated with React 19 optimistic state reconciliation.
+                    </p>
+                  </div>
                 </div>
 
                 {activeTab === "build" && (
-                  <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent shadow-[0_0_15px_#38bdf8]" />
+                  <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent shadow-[0_0_15px_#38bdf8]" />
                 )}
               </button>
 
@@ -471,34 +468,38 @@ export function BrandIntegrationSection() {
               <button
                 type="button"
                 onClick={() => handleSimulateClick("ai")}
-                className={`group relative p-7 rounded-2xl transition-all duration-300 backdrop-blur-2xl text-left cursor-pointer overflow-hidden ${
+                className={`group relative rounded-2xl transition-all duration-300 text-left cursor-pointer overflow-hidden border ${
                   activeTab === "ai"
-                    ? "bg-gradient-to-b from-fuchsia-500/20 via-fuchsia-500/5 to-transparent border border-fuchsia-400/50 shadow-[0_15px_40px_rgba(232,121,249,0.25)] scale-[1.03]"
-                    : "bg-white/[0.03] border border-white/10 hover:bg-white/[0.06] hover:border-white/25"
+                    ? "border-fuchsia-400/60 shadow-[0_15px_40px_rgba(232,121,249,0.3)] scale-[1.03] ring-1 ring-fuchsia-400/40"
+                    : "border-white/10 hover:border-white/30 hover:scale-[1.01]"
                 }`}
               >
-                <div className="flex items-center justify-between mb-6">
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${
-                    activeTab === "ai" ? "bg-fuchsia-400 text-black shadow-[0_0_25px_rgba(232,121,249,0.8)]" : "bg-fuchsia-400/10 text-fuchsia-400 border border-fuchsia-400/20"
-                  }`}>
-                    <Sparkles className="w-5 h-5" />
-                  </div>
-                  <span className="font-mono text-[9px] font-bold tracking-widest uppercase text-fuchsia-400/90 px-2.5 py-1 rounded-full bg-fuchsia-400/10 border border-fuchsia-400/20">
-                    99.8% PRECISION
-                  </span>
-                </div>
+                <div className="relative aspect-[16/10] w-full overflow-hidden bg-black/40">
+                  <img
+                    src="/assets/card-neural-matrix.png"
+                    alt="Neural Design Matrix"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
 
-                <div>
-                  <h4 className="font-sans font-extrabold text-lg text-white tracking-tight mb-2 group-hover:text-fuchsia-200 transition-colors">
-                    Neural Design Matrix
-                  </h4>
-                  <p className="font-sans text-xs text-neutral-400 font-normal leading-relaxed">
-                    Generative design tokenization engine mapping spatial UI parameters in real-time.
-                  </p>
+                  {/* Badge */}
+                  <div className="absolute top-3 right-3 font-mono text-[9px] font-bold tracking-widest uppercase text-fuchsia-300 px-2.5 py-1 rounded-full bg-black/60 border border-fuchsia-400/30 backdrop-blur-md">
+                    99.8% PRECISION
+                  </div>
+
+                  {/* Text Overlay */}
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <h4 className="font-sans font-extrabold text-base sm:text-lg text-white tracking-tight mb-1 group-hover:text-fuchsia-200 transition-colors">
+                      Neural Design Matrix
+                    </h4>
+                    <p className="font-sans text-[11px] text-neutral-300 font-normal line-clamp-2 leading-relaxed">
+                      Generative design tokenization engine mapping spatial UI parameters in real-time.
+                    </p>
+                  </div>
                 </div>
 
                 {activeTab === "ai" && (
-                  <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-transparent via-fuchsia-400 to-transparent shadow-[0_0_15px_#e879f9]" />
+                  <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-fuchsia-400 to-transparent shadow-[0_0_15px_#e879f9]" />
                 )}
               </button>
 
@@ -506,34 +507,38 @@ export function BrandIntegrationSection() {
               <button
                 type="button"
                 onClick={() => handleSimulateClick("deploy")}
-                className={`group relative p-7 rounded-2xl transition-all duration-300 backdrop-blur-2xl text-left cursor-pointer overflow-hidden ${
+                className={`group relative rounded-2xl transition-all duration-300 text-left cursor-pointer overflow-hidden border ${
                   activeTab === "deploy"
-                    ? "bg-gradient-to-b from-amber-500/20 via-amber-500/5 to-transparent border border-amber-400/50 shadow-[0_15px_40px_rgba(245,158,11,0.25)] scale-[1.03]"
-                    : "bg-white/[0.03] border border-white/10 hover:bg-white/[0.06] hover:border-white/25"
+                    ? "border-amber-400/60 shadow-[0_15px_40px_rgba(245,158,11,0.3)] scale-[1.03] ring-1 ring-amber-400/40"
+                    : "border-white/10 hover:border-white/30 hover:scale-[1.01]"
                 }`}
               >
-                <div className="flex items-center justify-between mb-6">
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${
-                    activeTab === "deploy" ? "bg-amber-400 text-black shadow-[0_0_25px_rgba(245,158,11,0.8)]" : "bg-amber-400/10 text-amber-400 border border-amber-400/20"
-                  }`}>
-                    <Zap className="w-5 h-5" />
-                  </div>
-                  <span className="font-mono text-[9px] font-bold tracking-widest uppercase text-amber-400/90 px-2.5 py-1 rounded-full bg-amber-400/10 border border-amber-400/20">
-                    GLOBAL EDGE SYNC
-                  </span>
-                </div>
+                <div className="relative aspect-[16/10] w-full overflow-hidden bg-black/40">
+                  <img
+                    src="/assets/card-edge-deployment.png"
+                    alt="Edge Deployment"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
 
-                <div>
-                  <h4 className="font-sans font-extrabold text-lg text-white tracking-tight mb-2 group-hover:text-amber-200 transition-colors">
-                    Edge Deployment
-                  </h4>
-                  <p className="font-sans text-xs text-neutral-400 font-normal leading-relaxed">
-                    Sub-30ms global edge routing network delivering zero-latency asset distribution.
-                  </p>
+                  {/* Badge */}
+                  <div className="absolute top-3 right-3 font-mono text-[9px] font-bold tracking-widest uppercase text-amber-300 px-2.5 py-1 rounded-full bg-black/60 border border-amber-400/30 backdrop-blur-md">
+                    GLOBAL EDGE SYNC
+                  </div>
+
+                  {/* Text Overlay */}
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <h4 className="font-sans font-extrabold text-base sm:text-lg text-white tracking-tight mb-1 group-hover:text-amber-200 transition-colors">
+                      Edge Deployment
+                    </h4>
+                    <p className="font-sans text-[11px] text-neutral-300 font-normal line-clamp-2 leading-relaxed">
+                      Sub-30ms global edge routing network delivering zero-latency asset distribution.
+                    </p>
+                  </div>
                 </div>
 
                 {activeTab === "deploy" && (
-                  <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-transparent via-amber-400 to-transparent shadow-[0_0_15px_#f59e0b]" />
+                  <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-amber-400 to-transparent shadow-[0_0_15px_#f59e0b]" />
                 )}
               </button>
 
@@ -543,138 +548,157 @@ export function BrandIntegrationSection() {
         </div>
 
         {/* ========================================================= */}
-        {/* ACT 06 — EXPERIENCE (3 CLEAN ISOLATED FROSTED CARDS)      */}
+        {/* ACT 06 — EXPERIENCE (ULTRA-CLEAN BOXLESS & CAPSULE-FREE)  */}
         {/* ========================================================= */}
-        <div className="act-06 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6 transition-transform">
-          <div className="exp-flow w-full max-w-5xl flex flex-col items-center">
-            <span className="font-mono text-xs font-bold tracking-[0.25em] text-neutral-400 uppercase mb-8">
-              EXPERIENCE THE PROCESS
-            </span>
+        <div className="act-06 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6 sm:px-12 transition-transform">
+          <div className="exp-flow w-full max-w-6xl flex flex-col items-center">
+            {/* Minimal Monospace Header */}
+            <div className="flex items-center gap-2.5 text-xs font-mono font-bold tracking-[0.3em] text-neutral-400 uppercase mb-12 sm:mb-16">
+              <span className="w-6 h-[1.5px] bg-white/20" />
+              <span>EXPERIENCE THE PROCESS</span>
+              <span className="w-6 h-[1.5px] bg-white/20" />
+            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full text-left">
-              {/* Card 1: INPUT */}
-              <div className="p-7 sm:p-8 rounded-2xl bg-white/[0.02] border border-white/10 backdrop-blur-xl hover:bg-white/[0.04] hover:border-white/20 transition-all duration-300 flex flex-col justify-between group shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
+            {/* Clean Boxless 3-Column Grid with Minimal Dividers */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 w-full text-left relative divide-y md:divide-y-0 md:divide-x divide-white/10">
+              
+              {/* Item 1: INPUT */}
+              <div className="flex flex-col justify-between pt-6 md:pt-0 md:px-6 first:pl-0 group">
                 <div>
-                  <div className="w-10 h-10 rounded-xl bg-amber-400/10 border border-amber-400/20 text-amber-400 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform duration-300">
-                    <Terminal className="w-5 h-5" />
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="font-bodoni italic font-normal text-4xl sm:text-5xl text-amber-400/90 tracking-tight">
+                      01
+                    </span>
+                    <Terminal className="w-5 h-5 text-amber-400/80 stroke-[1.5]" />
                   </div>
-                  <span className="font-mono text-[11px] text-amber-400/90 font-bold tracking-widest uppercase block mb-1">
-                    1. INPUT
+
+                  <span className="font-mono text-[10px] sm:text-[11px] font-bold tracking-[0.22em] text-amber-400/90 uppercase block mb-2">
+                    INPUT // SPECIFICATION
                   </span>
-                  <h4 className="font-sans font-extrabold text-lg text-white tracking-tight mb-2">
+
+                  <h4 className="font-bodoni font-medium text-2xl sm:text-3xl text-white tracking-tight mb-3 group-hover:text-amber-200 transition-colors">
                     System Specification
                   </h4>
-                  <p className="font-sans text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
+
+                  <p className="font-sans text-xs sm:text-sm text-neutral-400 font-normal leading-relaxed max-w-sm">
                     Precise architectural vision &amp; technical specification defined from day one.
                   </p>
                 </div>
               </div>
 
-              {/* Card 2: ENGINE */}
-              <div className="p-7 sm:p-8 rounded-2xl bg-white/[0.02] border border-white/10 backdrop-blur-xl hover:bg-white/[0.04] hover:border-white/20 transition-all duration-300 flex flex-col justify-between group shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
+              {/* Item 2: ENGINE */}
+              <div className="flex flex-col justify-between pt-6 md:pt-0 md:px-8 group">
                 <div>
-                  <div className="w-10 h-10 rounded-xl bg-sky-400/10 border border-sky-400/20 text-sky-400 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform duration-300">
-                    <Cpu className="w-5 h-5" />
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="font-bodoni italic font-normal text-4xl sm:text-5xl text-sky-400/90 tracking-tight">
+                      02
+                    </span>
+                    <Cpu className="w-5 h-5 text-sky-400/80 stroke-[1.5]" />
                   </div>
-                  <span className="font-mono text-[11px] text-sky-400/90 font-bold tracking-widest uppercase block mb-1">
-                    2. ENGINE
+
+                  <span className="font-mono text-[10px] sm:text-[11px] font-bold tracking-[0.22em] text-sky-400/90 uppercase block mb-2">
+                    ENGINE // PIPELINE
                   </span>
-                  <h4 className="font-sans font-extrabold text-lg text-white tracking-tight mb-2">
+
+                  <h4 className="font-bodoni font-medium text-2xl sm:text-3xl text-white tracking-tight mb-3 group-hover:text-sky-200 transition-colors">
                     GPU Render Pipeline
                   </h4>
-                  <p className="font-sans text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
+
+                  <p className="font-sans text-xs sm:text-sm text-neutral-400 font-normal leading-relaxed max-w-sm">
                     High-throughput WebGL, React 19, and optimized GPU frame pipelines.
                   </p>
                 </div>
               </div>
 
-              {/* Card 3: RESULT */}
-              <div className="p-7 sm:p-8 rounded-2xl bg-white/[0.02] border border-white/10 backdrop-blur-xl hover:bg-white/[0.04] hover:border-white/20 transition-all duration-300 flex flex-col justify-between group shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
+              {/* Item 3: RESULT */}
+              <div className="flex flex-col justify-between pt-6 md:pt-0 md:px-8 last:pr-0 group">
                 <div>
-                  <div className="w-10 h-10 rounded-xl bg-emerald-400/10 border border-emerald-400/20 text-emerald-400 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform duration-300">
-                    <Layers className="w-5 h-5" />
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="font-bodoni italic font-normal text-4xl sm:text-5xl text-emerald-400/90 tracking-tight">
+                      03
+                    </span>
+                    <Layers className="w-5 h-5 text-emerald-400/80 stroke-[1.5]" />
                   </div>
-                  <span className="font-mono text-[11px] text-emerald-400/90 font-bold tracking-widest uppercase block mb-1">
-                    3. RESULT
+
+                  <span className="font-mono text-[10px] sm:text-[11px] font-bold tracking-[0.22em] text-emerald-400/90 uppercase block mb-2">
+                    RESULT // OUTPUT
                   </span>
-                  <h4 className="font-sans font-extrabold text-lg text-white tracking-tight mb-2">
+
+                  <h4 className="font-bodoni font-medium text-2xl sm:text-3xl text-white tracking-tight mb-3 group-hover:text-emerald-200 transition-colors">
                     Cinematic Output
                   </h4>
-                  <p className="font-sans text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
+
+                  <p className="font-sans text-xs sm:text-sm text-neutral-400 font-normal leading-relaxed max-w-sm">
                     A flawless cinematic digital product engineered to redefine benchmarks.
                   </p>
                 </div>
               </div>
+
             </div>
           </div>
         </div>
 
         {/* ========================================================= */}
-        {/* ACT 07 — ENGINE / ARCHITECTURE (CLEAN ISOLATED NODES)     */}
+        {/* ACT 07 — ENGINE / ARCHITECTURE (ULTRA-CLEAN BOXLESS NODES) */}
         {/* ========================================================= */}
         <div className="act-07 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6 transition-transform">
-          <span className="font-mono text-xs font-bold tracking-[0.25em] text-neutral-400 uppercase mb-8">
-            ENGINEERED FROM THE GROUND UP
-          </span>
+          <div className="flex items-center gap-2.5 text-xs font-mono font-bold tracking-[0.3em] text-neutral-400 uppercase mb-8 sm:mb-10">
+            <span className="w-6 h-[1.5px] bg-white/20" />
+            <span>ENGINEERED FROM THE GROUND UP</span>
+            <span className="w-6 h-[1.5px] bg-white/20" />
+          </div>
 
-          <div className="engine-graph relative w-full max-w-5xl p-6 sm:p-10 rounded-2xl bg-black/40 border border-white/10 backdrop-blur-md">
-            {/* SVG Connecting Signal Lines */}
-            <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 800 300">
-              <line className="engine-line" x1="150" y1="150" x2="300" y2="150" stroke="#f59e0b" strokeWidth="2" strokeDasharray="6 6" />
-              <line className="engine-line" x1="300" y1="150" x2="450" y2="150" stroke="#38bdf8" strokeWidth="2" strokeDasharray="6 6" />
-              <line className="engine-line" x1="450" y1="150" x2="650" y2="150" stroke="#10b981" strokeWidth="2" strokeDasharray="6 6" />
-            </svg>
-
-            {/* Architecture Node Grid */}
+          <div className="engine-graph relative w-full max-w-5xl mx-auto">
+            {/* Architecture Node Grid (No outer box container, no connecting lines) */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 relative z-10">
               {/* Node 1 */}
-              <div className="engine-node p-6 rounded-2xl bg-white/[0.02] border border-white/10 backdrop-blur-xl hover:bg-white/[0.04] hover:border-white/20 transition-all duration-300 flex flex-col items-center group shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
-                <div className="w-10 h-10 rounded-xl bg-amber-400/10 border border-amber-400/20 text-amber-400 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform duration-300">
+              <div className="engine-node p-6 sm:p-7 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-amber-400/30 hover:bg-white/[0.04] transition-all duration-300 flex flex-col items-center text-center group">
+                <div className="w-11 h-11 rounded-xl bg-amber-400/10 border border-amber-400/20 text-amber-400 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(245,158,11,0.4)] transition-all duration-300">
                   <Code className="w-5 h-5" />
                 </div>
-                <span className="font-sans font-extrabold text-xs text-white tracking-wide uppercase mb-1">
+                <span className="font-sans font-extrabold text-sm text-white tracking-wide uppercase mb-1 group-hover:text-amber-300 transition-colors">
                   NEXT.JS 15
                 </span>
-                <span className="font-mono text-[10px] text-neutral-400 uppercase tracking-wider">
+                <span className="font-mono text-[10px] text-neutral-400 uppercase tracking-widest font-medium">
                   REACT 19 / TS
                 </span>
               </div>
 
               {/* Node 2 */}
-              <div className="engine-node p-6 rounded-2xl bg-white/[0.02] border border-white/10 backdrop-blur-xl hover:bg-white/[0.04] hover:border-white/20 transition-all duration-300 flex flex-col items-center group shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
-                <div className="w-10 h-10 rounded-xl bg-sky-400/10 border border-sky-400/20 text-sky-400 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform duration-300">
+              <div className="engine-node p-6 sm:p-7 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-sky-400/30 hover:bg-white/[0.04] transition-all duration-300 flex flex-col items-center text-center group">
+                <div className="w-11 h-11 rounded-xl bg-sky-400/10 border border-sky-400/20 text-sky-400 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(56,189,248,0.4)] transition-all duration-300">
                   <Layers className="w-5 h-5" />
                 </div>
-                <span className="font-sans font-extrabold text-xs text-white tracking-wide uppercase mb-1">
+                <span className="font-sans font-extrabold text-sm text-white tracking-wide uppercase mb-1 group-hover:text-sky-300 transition-colors">
                   GSAP &amp; WEBGLEngine
                 </span>
-                <span className="font-mono text-[10px] text-neutral-400 uppercase tracking-wider">
+                <span className="font-mono text-[10px] text-neutral-400 uppercase tracking-widest font-medium">
                   60FPS SHADERS
                 </span>
               </div>
 
               {/* Node 3 */}
-              <div className="engine-node p-6 rounded-2xl bg-white/[0.02] border border-white/10 backdrop-blur-xl hover:bg-white/[0.04] hover:border-white/20 transition-all duration-300 flex flex-col items-center group shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
-                <div className="w-10 h-10 rounded-xl bg-purple-400/10 border border-purple-400/20 text-purple-400 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform duration-300">
+              <div className="engine-node p-6 sm:p-7 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-purple-400/30 hover:bg-white/[0.04] transition-all duration-300 flex flex-col items-center text-center group">
+                <div className="w-11 h-11 rounded-xl bg-purple-400/10 border border-purple-400/20 text-purple-400 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(192,132,252,0.4)] transition-all duration-300">
                   <Cpu className="w-5 h-5" />
                 </div>
-                <span className="font-sans font-extrabold text-xs text-white tracking-wide uppercase mb-1">
+                <span className="font-sans font-extrabold text-sm text-white tracking-wide uppercase mb-1 group-hover:text-purple-300 transition-colors">
                   NODE.JS API
                 </span>
-                <span className="font-mono text-[10px] text-neutral-400 uppercase tracking-wider">
+                <span className="font-mono text-[10px] text-neutral-400 uppercase tracking-widest font-medium">
                   EDGE ROUTING
                 </span>
               </div>
 
               {/* Node 4 */}
-              <div className="engine-node p-6 rounded-2xl bg-white/[0.02] border border-white/10 backdrop-blur-xl hover:bg-white/[0.04] hover:border-white/20 transition-all duration-300 flex flex-col items-center group shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
-                <div className="w-10 h-10 rounded-xl bg-emerald-400/10 border border-emerald-400/20 text-emerald-400 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform duration-300">
+              <div className="engine-node p-6 sm:p-7 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-emerald-400/30 hover:bg-white/[0.04] transition-all duration-300 flex flex-col items-center text-center group">
+                <div className="w-11 h-11 rounded-xl bg-emerald-400/10 border border-emerald-400/20 text-emerald-400 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(16,185,129,0.4)] transition-all duration-300">
                   <Database className="w-5 h-5" />
                 </div>
-                <span className="font-sans font-extrabold text-xs text-white tracking-wide uppercase mb-1">
+                <span className="font-sans font-extrabold text-sm text-white tracking-wide uppercase mb-1 group-hover:text-emerald-300 transition-colors">
                   POSTGRES &amp; AI
                 </span>
-                <span className="font-mono text-[10px] text-neutral-400 uppercase tracking-wider">
+                <span className="font-mono text-[10px] text-neutral-400 uppercase tracking-widest font-medium">
                   NEURAL VECTOR DB
                 </span>
               </div>
@@ -705,35 +729,15 @@ export function BrandIntegrationSection() {
             </h3>
           </div>
 
-          {/* Professional Executive Roles Container */}
-          <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.02] border border-white/10 backdrop-blur-xl max-w-3xl w-full flex flex-wrap items-center justify-center gap-3 shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
-            <div className="founder-pill px-4 py-2 rounded-xl bg-white/[0.03] border border-white/10 flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-              <span className="font-mono text-xs font-bold tracking-widest text-white uppercase">
-                FOUNDER &amp; ARCHITECT
-              </span>
-            </div>
-
-            <div className="founder-pill px-4 py-2 rounded-xl bg-white/[0.03] border border-white/10 flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-sky-400" />
-              <span className="font-mono text-xs font-bold tracking-widest text-white uppercase">
-                LEAD PRODUCT ENGINEER
-              </span>
-            </div>
-
-            <div className="founder-pill px-4 py-2 rounded-xl bg-white/[0.03] border border-white/10 flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-purple-400" />
-              <span className="font-mono text-xs font-bold tracking-widest text-white uppercase">
-                UI/UX &amp; MOTION SYSTEMS
-              </span>
-            </div>
-
-            <div className="founder-pill px-4 py-2 rounded-xl bg-white/[0.03] border border-white/10 flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-              <span className="font-mono text-xs font-bold tracking-widest text-white uppercase">
-                CREATIVE TECHNOLOGIST
-              </span>
-            </div>
+          {/* Clean Editorial Roles Line (No Capsules, No Box Card) */}
+          <div className="founder-roles flex flex-wrap items-center justify-center gap-2.5 sm:gap-4 font-mono text-xs sm:text-sm text-neutral-400 font-medium tracking-[0.2em] uppercase max-w-2xl px-4">
+            <span>FOUNDER &amp; ARCHITECT</span>
+            <span className="text-amber-400 font-bold">•</span>
+            <span>LEAD PRODUCT ENGINEER</span>
+            <span className="text-cyan-400 font-bold hidden sm:inline-block">•</span>
+            <span>UI/UX &amp; MOTION SYSTEMS</span>
+            <span className="text-purple-400 font-bold hidden sm:inline-block">•</span>
+            <span>CREATIVE TECHNOLOGIST</span>
           </div>
         </div>
 
