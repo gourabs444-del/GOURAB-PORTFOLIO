@@ -2109,18 +2109,18 @@ export function IdeasIntoImpact() {
             </h2>
 
             {/* Hand-drawn Sketch Layout: [Start a Project] | (A) Algora Logo */}
-            <div className="mt-8 sm:mt-10 flex items-center justify-center gap-3 sm:gap-4 pointer-events-auto">
-              {/* Left: Start a Project Sharp Square Button (Radius 0, Compact, No Arrow) */}
+            <div className="mt-8 sm:mt-10 flex items-center justify-center gap-3.5 sm:gap-5 pointer-events-auto">
+              {/* Left: Start a Project Sleek Architectural Button (Radius 0, Perfect Proportions) */}
               <a
                 href="#contact"
                 onMouseEnter={() => playHover()}
-                className="inline-flex items-center justify-center px-4 py-2 sm:px-5 sm:py-2.5 rounded-none bg-white text-black hover:bg-neutral-100 font-sans font-bold text-xs sm:text-sm tracking-tight transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.25)] hover:shadow-[0_0_35px_rgba(255,255,255,0.5)] border border-white active:scale-95 cursor-pointer"
+                className="inline-flex items-center justify-center px-7 sm:px-9 py-3 sm:py-3.5 rounded-none bg-white text-black hover:bg-neutral-100 font-sans font-bold text-xs sm:text-sm tracking-wide transition-all duration-300 shadow-[0_0_25px_rgba(255,255,255,0.3)] hover:shadow-[0_0_40px_rgba(255,255,255,0.6)] border border-white active:scale-95 cursor-pointer"
               >
                 <span>Start a Project</span>
               </a>
 
               {/* Center Vertical Divider | */}
-              <div className="w-[1.5px] h-6 bg-gradient-to-b from-transparent via-white/50 to-transparent select-none" />
+              <div className="w-[1.5px] h-7 sm:h-8 bg-gradient-to-b from-transparent via-white/50 to-transparent select-none" />
 
               {/* Right: Standalone Official Algora Logo Icon */}
               <a
@@ -2128,7 +2128,7 @@ export function IdeasIntoImpact() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onMouseEnter={() => playHover()}
-                className="group relative flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-none bg-black border border-white/30 hover:border-white/80 transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.4)] hover:shadow-[0_0_25px_rgba(255,255,255,0.4)] cursor-pointer overflow-hidden p-0.5"
+                className="group relative flex items-center justify-center w-10 h-10 sm:w-[46px] sm:h-[46px] rounded-none bg-black border border-white/30 hover:border-white/80 transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.4)] hover:shadow-[0_0_25px_rgba(255,255,255,0.4)] cursor-pointer overflow-hidden p-1"
                 title="Algora Official Logo"
               >
                 <img
