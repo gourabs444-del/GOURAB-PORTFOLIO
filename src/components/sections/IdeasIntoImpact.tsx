@@ -2110,14 +2110,13 @@ export function IdeasIntoImpact() {
 
             {/* Hand-drawn Sketch Layout: [Start a Project] | (A) Algora Logo */}
             <div className="mt-8 sm:mt-10 flex items-center justify-center gap-3 sm:gap-4 pointer-events-auto">
-              {/* Left: Start a Project Rectangular Clean White Button */}
+              {/* Left: Start a Project Sharp Square Button (Radius 0, Compact, No Arrow) */}
               <a
                 href="#contact"
                 onMouseEnter={() => playHover()}
-                className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 rounded-xl bg-white text-black hover:bg-neutral-100 font-sans font-bold text-xs sm:text-sm tracking-tight transition-all duration-300 shadow-[0_0_25px_rgba(255,255,255,0.3)] hover:shadow-[0_0_40px_rgba(255,255,255,0.55)] border border-white/40 active:scale-95 cursor-pointer"
+                className="inline-flex items-center justify-center px-4 py-2 sm:px-5 sm:py-2.5 rounded-none bg-white text-black hover:bg-neutral-100 font-sans font-bold text-xs sm:text-sm tracking-tight transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.25)] hover:shadow-[0_0_35px_rgba(255,255,255,0.5)] border border-white active:scale-95 cursor-pointer"
               >
                 <span>Start a Project</span>
-                <ArrowUpRight className="w-4 h-4 text-black" />
               </a>
 
               {/* Center Vertical Divider | */}
@@ -2129,13 +2128,13 @@ export function IdeasIntoImpact() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onMouseEnter={() => playHover()}
-                className="group relative flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-black border border-white/30 hover:border-white/80 transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.4)] hover:shadow-[0_0_25px_rgba(255,255,255,0.4)] cursor-pointer overflow-hidden p-0.5"
+                className="group relative flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-none bg-black border border-white/30 hover:border-white/80 transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.4)] hover:shadow-[0_0_25px_rgba(255,255,255,0.4)] cursor-pointer overflow-hidden p-0.5"
                 title="Algora Official Logo"
               >
                 <img
                   src="/assets/algora-icon.png"
                   alt="Algora Official Logo"
-                  className="w-full h-full object-contain rounded-lg group-hover:scale-110 transition-transform duration-300"
+                  className="w-full h-full object-contain rounded-none group-hover:scale-110 transition-transform duration-300"
                 />
               </a>
             </div>
