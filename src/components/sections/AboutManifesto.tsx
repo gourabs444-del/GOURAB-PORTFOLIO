@@ -2,16 +2,11 @@
 
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "@/lib/gsap";
-import { Sparkles, Terminal } from "lucide-react";
+import { Headphones, Film, Gamepad2, Video, Globe } from "lucide-react";
 
 export function AboutManifesto() {
   const containerRef = useRef<HTMLElement | null>(null);
   const contentRef = useRef<HTMLDivElement | null>(null);
-  const p1Ref = useRef<HTMLParagraphElement | null>(null);
-  const p2Ref = useRef<HTMLParagraphElement | null>(null);
-  const p3Ref = useRef<HTMLParagraphElement | null>(null);
-  const p4Ref = useRef<HTMLParagraphElement | null>(null);
   const auraRef = useRef<HTMLDivElement | null>(null);
 
   // 1. Smooth ambient cursor aura with dampening
@@ -37,152 +32,232 @@ export function AboutManifesto() {
     return () => container.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  // 2. Advanced Word-by-Word Crisp Luminous Scroll Reveal
+  // 2. Smooth non-flickering fade-in scroll triggers
   useEffect(() => {
     const ctx = gsap.context(() => {
-      [p1Ref, p2Ref, p3Ref, p4Ref].forEach((ref) => {
-        if (!ref.current) return;
-        const words = ref.current.querySelectorAll(".word-reveal");
-        if (words && words.length > 0) {
-          gsap.fromTo(
-            words,
-            {
-              opacity: 0.18,
-              y: 8,
-              scale: 0.98,
+      if (!contentRef.current) return;
+
+      const blocks = contentRef.current.querySelectorAll(".fade-trigger");
+      blocks.forEach((block) => {
+        gsap.fromTo(
+          block,
+          { opacity: 0, y: 24 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.9,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: block,
+              start: "top 88%",
+              toggleActions: "play none none reverse",
             },
-            {
-              opacity: 1,
-              y: 0,
-              scale: 1,
-              stagger: 0.03,
-              ease: "power2.out",
-              scrollTrigger: {
-                trigger: ref.current,
-                start: "top 88%",
-                end: "bottom 60%",
-                scrub: 0.5,
-              },
-            }
-          );
-        }
+          }
+        );
       });
     }, containerRef);
 
     return () => ctx.revert();
   }, []);
 
-  // Helper to split string into animated words with individual tags
-  const renderWords = (text: string, className = "") => {
-    return text.split(" ").map((word, i) => (
-      <span
-        key={i}
-        className={`word-reveal inline-block mr-[0.26em] transition-all duration-300 will-change-transform ${className}`}
-      >
-        {word}
-      </span>
-    ));
-  };
+  const CREATIVE_DISCIPLINES = [
+    {
+      icon: Headphones,
+      title: "Audio & Sound",
+      desc: "Composition & Acoustics",
+    },
+    {
+      icon: Film,
+      title: "Cinematography",
+      desc: "Visual & Narrative Direction",
+    },
+    {
+      icon: Gamepad2,
+      title: "Interactive Engine",
+      desc: "3D & Real-Time Graphics",
+    },
+    {
+      icon: Video,
+      title: "Motion Direction",
+      desc: "Cinematic Film Production",
+    },
+    {
+      icon: Globe,
+      title: "Global Research",
+      desc: "Spatial & Cultural Insights",
+    },
+  ];
 
   return (
     <section
       id="about"
       ref={containerRef}
-      className="relative min-h-[85vh] w-full flex flex-col justify-between pt-16 sm:pt-24 md:pt-28 pb-20 sm:pb-28 px-6 sm:px-12 md:px-20 lg:px-28 bg-[#040407] text-[#F4F4F6] overflow-hidden select-none border-t border-white/[0.08]"
+      className="relative min-h-screen w-full flex flex-col justify-between pt-16 sm:pt-24 md:pt-28 pb-20 sm:pb-28 px-6 sm:px-12 md:px-20 lg:px-28 bg-[#040407] text-[#F4F4F6] overflow-hidden select-none border-t border-white/[0.08]"
     >
       {/* Dynamic Cursor Light Aura Follower */}
       <div
         ref={auraRef}
-        className="pointer-events-none absolute -top-[250px] -left-[250px] w-[550px] h-[550px] rounded-full bg-[radial-gradient(circle_at_center,_rgba(56,189,248,0.08)_0%,_rgba(245,158,11,0.03)_40%,_transparent_70%)] blur-[100px] will-change-transform z-0"
+        className="pointer-events-none absolute -top-[250px] -left-[250px] w-[550px] h-[550px] rounded-full bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.05)_0%,_transparent_70%)] blur-[100px] will-change-transform z-0"
         aria-hidden="true"
       />
 
-      {/* Top Tag Header - Clean white highlighted text without 01 // */}
-      <div className="max-w-5xl mx-auto w-full flex items-center justify-start text-xs font-mono uppercase tracking-widest pt-2 relative z-10">
-        <div className="inline-flex items-center gap-2.5">
-          <span className="w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)] animate-pulse" />
-          <span className="text-white font-bold tracking-[0.2em] text-xs sm:text-sm font-mono uppercase drop-shadow-[0_0_12px_rgba(255,255,255,0.35)]">
-            A LITTLE ABOUT ME
-          </span>
-        </div>
-      </div>
-
-      {/* Main Editorial Statement with Crisp Tiny Clean Text */}
+      {/* Main Content Container */}
       <div
         ref={contentRef}
-        className="max-w-3xl lg:max-w-4xl mx-auto w-full my-auto py-10 sm:py-14 md:py-16 flex flex-col gap-8 sm:gap-10 text-left relative z-10"
+        className="max-w-4xl mx-auto w-full py-6 sm:py-10 flex flex-col gap-12 sm:gap-16 text-left relative z-10"
       >
-        {/* Main Headline & Title Group */}
-        <div className="flex flex-col gap-2.5">
-          <h2 className="font-sans font-black text-3xl xs:text-4xl sm:text-5xl md:text-6xl tracking-tight text-white drop-shadow-[0_0_30px_rgba(255,255,255,0.15)]">
-            Hello, I&apos;m Gourab
-          </h2>
-          <p className="font-bodoni italic text-lg sm:text-xl md:text-2xl font-medium bg-gradient-to-r from-sky-300 via-sky-400 to-indigo-300 bg-clip-text text-transparent">
-            a Full Stack Developer and Creative Technologist.
-          </p>
-        </div>
+        {/* SECTION 1: A LITTLE ABOUT ME */}
+        <div className="fade-trigger flex flex-col gap-8">
+          {/* Clean White Top Header Tag */}
+          <div className="inline-flex items-center gap-2.5 text-xs font-mono uppercase tracking-[0.2em] text-white font-bold">
+            <span className="w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)] animate-pulse" />
+            <span>A LITTLE ABOUT ME</span>
+          </div>
 
-        {/* Minimal Subtle Hairline Divider */}
-        <div className="w-full h-[1px] bg-gradient-to-r from-sky-400/30 via-white/10 to-transparent" />
-
-        {/* Body Paragraphs - Tiny, clean, refined micro text */}
-        <div className="flex flex-col gap-5 sm:gap-6">
-          {/* Paragraph 1 */}
-          <p
-            ref={p1Ref}
-            className="font-sans text-xs sm:text-sm md:text-base leading-[1.8] tracking-normal text-neutral-300"
-          >
-            {renderWords("I work across the entire product journey — from", "text-neutral-300 font-normal")}
-            {renderWords("concept and architecture", "text-white font-semibold")}
-            {renderWords("to interface, development, and deployment. My work spans", "text-neutral-300 font-normal")}
-            {renderWords("modern web applications,", "text-sky-300 font-medium")}
-            {renderWords("AI & LLM integration,", "text-indigo-300 font-medium")}
-            {renderWords("interactive experiences,", "text-amber-200 font-medium")}
-            {renderWords("and product engineering.", "text-white font-semibold")}
-          </p>
-
-          {/* Paragraph 2 */}
-          <p
-            ref={p2Ref}
-            className="font-sans text-xs sm:text-sm md:text-base leading-[1.8] tracking-normal text-neutral-300"
-          >
-            {renderWords("I’m particularly interested in understanding how", "text-neutral-300 font-normal")}
-            {renderWords("systems work beneath the surface", "text-white font-medium")}
-            {renderWords("and then turning that complexity into experiences that feel", "text-neutral-300 font-normal")}
-            {renderWords("simple, intuitive, and purposeful.", "font-bodoni italic text-sky-200 font-medium")}
-          </p>
-
-          {/* Paragraph 3 & 4 Group */}
-          <div className="flex flex-col gap-2 pt-1">
-            <p
-              ref={p3Ref}
-              className="font-sans text-xs sm:text-sm md:text-base leading-[1.8] tracking-normal text-neutral-400"
-            >
-              {renderWords("I don't see development as just writing code.", "text-neutral-400 italic")}
-            </p>
-            <p
-              ref={p4Ref}
-              className="font-sans text-sm sm:text-base md:text-lg leading-[1.7] tracking-normal text-white"
-            >
-              {renderWords("I see it as solving problems, designing systems, and creating something worth using.", "text-white font-semibold drop-shadow-[0_0_15px_rgba(255,255,255,0.12)]")}
+          {/* Headline & Subtitle */}
+          <div className="flex flex-col gap-2.5">
+            <h2 className="font-sans font-black text-3xl xs:text-4xl sm:text-5xl md:text-6xl tracking-tight text-white">
+              Hello, I&apos;m Gourab
+            </h2>
+            <p className="font-bodoni italic text-lg sm:text-xl md:text-2xl font-medium text-white/80">
+              a Full Stack Developer and Creative Technologist.
             </p>
           </div>
-        </div>
-      </div>
 
-      {/* Bottom Meta Bar */}
-      <div className="max-w-5xl mx-auto w-full pb-2 border-t border-white/[0.08] pt-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs font-mono text-neutral-400 uppercase tracking-widest relative z-10">
-        <div className="flex items-center gap-3">
-          <span>FULL-STACK ARCHITECTURE</span>
-          <span className="text-white/20">&bull;</span>
-          <span className="text-neutral-300 font-medium">INTERACTIVE 3D &amp; MOTION</span>
-          <span className="text-white/20">&bull;</span>
-          <span>AI SYSTEMS</span>
+          {/* Minimal Subtle Hairline Divider */}
+          <div className="w-full h-[1px] bg-white/10" />
+
+          {/* Clean White Paragraphs */}
+          <div className="flex flex-col gap-5 text-sm sm:text-base leading-[1.8] text-white/90 font-normal">
+            <p>
+              I work across the entire product journey — from <strong className="text-white font-semibold">concept and architecture</strong> to interface, development, and deployment. My work spans <span className="text-white font-medium">modern web applications</span>, <span className="text-white font-medium">AI &amp; LLM integration</span>, <span className="text-white font-medium">interactive experiences</span>, and <strong className="text-white font-semibold">product engineering</strong>.
+            </p>
+            <p>
+              I’m particularly interested in understanding how <span className="text-white font-medium">systems work beneath the surface</span> and then turning that complexity into experiences that feel <em className="font-bodoni text-white font-normal">simple, intuitive, and purposeful</em>.
+            </p>
+            <div className="pt-2 flex flex-col gap-1">
+              <p className="text-neutral-400 italic">
+                I don't see development as just writing code.
+              </p>
+              <p className="text-white font-semibold text-base sm:text-lg">
+                I see it as solving problems, designing systems, and creating something worth using.
+              </p>
+            </div>
+          </div>
         </div>
-        <span className="text-neutral-400 font-medium tracking-widest">EDITION 2026</span>
+
+        {/* Hairline Divider between sections */}
+        <div className="w-full h-[1px] bg-white/10" />
+
+        {/* SECTION 2: WHAT I DO? */}
+        <div className="fade-trigger flex flex-col gap-8">
+          {/* Clean White Header Tag */}
+          <div className="inline-flex items-center gap-2.5 text-xs font-mono uppercase tracking-[0.2em] text-white font-bold">
+            <span className="w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)] animate-pulse" />
+            <span>WHAT I DO?</span>
+          </div>
+
+          {/* Paragraphs */}
+          <div className="flex flex-col gap-5 text-sm sm:text-base leading-[1.8] text-white/90 font-normal">
+            <p>
+              I design and develop <strong className="text-white font-semibold">scalable digital products</strong>, working across the full development lifecycle—from <span className="text-white font-medium">architecture and engineering</span> to <span className="text-white font-medium">interface development and deployment</span>.
+            </p>
+            <p>
+              My work focuses on building <span className="text-white font-medium">modern web applications</span>, <span className="text-white font-medium">robust backend systems</span>, <span className="text-white font-medium">AI-powered solutions</span>, and <span className="text-white font-medium">interactive digital experiences</span>, with an emphasis on performance, usability, maintainability, and thoughtful system design.
+            </p>
+            <p>
+              I also bring a <em className="font-bodoni text-white font-normal">strong creative perspective to technology</em>, combining development, visual design, motion, and interactive storytelling to create products that are not only <strong className="text-white font-semibold">technically sound</strong>, but <span className="text-white font-medium">purposeful and engaging</span>.
+            </p>
+          </div>
+
+          {/* Minimal Clean Capabilities List (NO BOXES, NO CAPSULES, ONLY WHITE TEXT) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 pt-4">
+            {/* 01 */}
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-3">
+                <span className="font-mono text-xs text-white/60 tracking-widest font-semibold">01 —</span>
+                <h4 className="text-base sm:text-lg font-bold text-white tracking-tight">
+                  Product Development
+                </h4>
+              </div>
+              <p className="font-mono text-xs sm:text-sm text-neutral-400 pl-9">
+                Concept &rarr; Architecture &rarr; Development &rarr; Deployment
+              </p>
+            </div>
+
+            {/* 02 */}
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-3">
+                <span className="font-mono text-xs text-white/60 tracking-widest font-semibold">02 —</span>
+                <h4 className="text-base sm:text-lg font-bold text-white tracking-tight">
+                  Full-Stack Engineering
+                </h4>
+              </div>
+              <p className="font-mono text-xs sm:text-sm text-neutral-400 pl-9">
+                Frontend systems &bull; Backend architecture &bull; APIs &bull; Databases
+              </p>
+            </div>
+
+            {/* 03 */}
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-3">
+                <span className="font-mono text-xs text-white/60 tracking-widest font-semibold">03 —</span>
+                <h4 className="text-base sm:text-lg font-bold text-white tracking-tight">
+                  AI &amp; Emerging Technology
+                </h4>
+              </div>
+              <p className="font-mono text-xs sm:text-sm text-neutral-400 pl-9">
+                LLM integration &bull; AI-powered features &bull; Intelligent workflows
+              </p>
+            </div>
+
+            {/* 04 */}
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-3">
+                <span className="font-mono text-xs text-white/60 tracking-widest font-semibold">04 —</span>
+                <h4 className="text-base sm:text-lg font-bold text-white tracking-tight">
+                  Interactive Experiences
+                </h4>
+              </div>
+              <p className="font-mono text-xs sm:text-sm text-neutral-400 pl-9">
+                Creative interfaces &bull; Motion &bull; Visual systems &bull; Interactive web experiences
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* SECTION 3: CREATIVE DISCIPLINES & INFLUENCES */}
+        <div className="fade-trigger pt-12 sm:pt-16 border-t border-white/10 flex flex-col items-center justify-center text-center">
+          <div className="inline-flex items-center gap-2.5 text-xs font-mono font-bold tracking-[0.25em] text-neutral-400 uppercase mb-8">
+            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_#38bdf8] animate-pulse" />
+            <span>CREATIVE DISCIPLINES &amp; INFLUENCES</span>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3.5 sm:gap-4 w-full max-w-4xl mx-auto">
+            {CREATIVE_DISCIPLINES.map((item, idx) => {
+              const Icon = item.icon;
+              return (
+                <div
+                  key={idx}
+                  className="group relative p-4 sm:p-5 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-cyan-400/40 hover:bg-white/[0.05] transition-all duration-300 flex flex-col items-center text-center cursor-pointer backdrop-blur-md shadow-md hover:scale-[1.04]"
+                >
+                  <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-white/[0.04] border border-white/10 text-white/80 flex items-center justify-center mb-3 group-hover:text-white group-hover:border-cyan-400/40 group-hover:bg-cyan-400/10 group-hover:shadow-[0_0_20px_rgba(56,189,248,0.25)] transition-all duration-300">
+                    <Icon className="w-5 h-5 stroke-[1.75]" />
+                  </div>
+
+                  <span className="font-sans font-extrabold text-xs sm:text-sm text-white tracking-tight uppercase mb-0.5 group-hover:text-cyan-300 transition-colors">
+                    {item.title}
+                  </span>
+
+                  <span className="font-mono text-[9px] sm:text-[10px] text-neutral-400 font-normal tracking-wide">
+                    {item.desc}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </div>
     </section>
   );
 }
-
-

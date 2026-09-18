@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "@/lib/gsap";
+import { ScrollTrigger, Observer } from "@/lib/gsap";
 import { ArrowRight } from "lucide-react";
 
 // Slide Item Interfaces
@@ -62,12 +62,6 @@ const SLIDES: SlideItem[] = [
     id: 8,
     type: "arch-carousel",
     alt: "3D Arch Carousel - Create Stunning AI Generated Visuals Instantly",
-  },
-  {
-    id: 9,
-    type: "image",
-    src: "/assets/creative-minds-poster-8.jpg",
-    alt: "Ideas Are Shaped Through Strategy, Design, and Execution",
   },
 ];
 
@@ -279,9 +273,9 @@ export function CreativeMindsSection() {
       const cards = cardRefs.current.filter(Boolean) as HTMLDivElement[];
       if (cards.length < 2) return;
 
-      // Master ScrollTrigger timeline with smooth snapping and 3D transitions
+      // Master ScrollTrigger pinned timeline
       const totalSteps = cards.length - 1;
-      const scrollDistance = totalSteps * 500;
+      const scrollDistance = totalSteps * 550; // smooth 550px scroll height per slide
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -289,12 +283,28 @@ export function CreativeMindsSection() {
           start: "top top",
           end: `+=${scrollDistance}`,
           pin: true,
-          scrub: 0.6,
+          scrub: 0.4, // Butter-smooth fluid scrub synced with Lenis RAF
           snap: {
-            snapTo: 1 / totalSteps,
-            duration: { min: 0.2, max: 0.4 },
-            delay: 0.02,
-            ease: "power2.inOut",
+            snapTo: (progress, self) => {
+              const stepFraction = 1 / totalSteps;
+              const rawStep = progress * totalSteps;
+              const currentStep = Math.round(rawStep);
+              const velocity = self ? self.getVelocity() : 0;
+
+              // High scroll velocity (>1400px/s) advances 2 steps, normal velocity advances 1 step
+              let targetStep = currentStep;
+              if (Math.abs(velocity) > 1400) {
+                const direction = velocity > 0 ? 1 : -1;
+                targetStep = currentStep + direction;
+              }
+
+              // Clamp target step between 0 and totalSteps
+              targetStep = Math.max(0, Math.min(totalSteps, targetStep));
+              return targetStep * stepFraction;
+            },
+            duration: { min: 0.35, max: 0.65 },
+            delay: 0.04, // Ultra-responsive snap triggering
+            ease: "back.out(1.4)", // Satisfying magnetic spring bounce-back lock to dead-center
           },
         },
       });
@@ -305,84 +315,35 @@ export function CreativeMindsSection() {
         const nextCard = cards[i + 1];
         const startTime = i * 1.0;
 
-        const isTransitionToLast = i === totalSteps - 1;
+        // Clean, sharp poster slide transition (Zero blur filters, crisp 100% vector edges)
+        tl.to(
+          currentCard,
+          {
+            xPercent: -100,
+            scale: 0.94,
+            opacity: 0,
+            ease: "power2.inOut",
+            duration: 1,
+          },
+          startTime
+        );
 
-        if (isTransitionToLast) {
-          // Slide 8 (3D Arch Carousel) -> Slide 9 ("Ideas Are Shaped Through...")
-          // Arch Carousel expands & scale-fades in 3D, Slide 9 enters with dramatic 3D scale-up
-          tl.to(
-            currentCard,
-            {
-              scale: 1.3,
-              yPercent: -32,
-              rotate: -5,
-              opacity: 0,
-              filter: "blur(16px)",
-              ease: "power2.inOut",
-              duration: 1,
-            },
-            startTime
-          );
-
-          tl.fromTo(
-            nextCard,
-            {
-              xPercent: 0,
-              yPercent: 45,
-              scale: 0.58,
-              rotate: 4,
-              opacity: 0,
-              filter: "blur(14px)",
-            },
-            {
-              xPercent: 0,
-              yPercent: 0,
-              scale: 1,
-              rotate: 0,
-              opacity: 1,
-              filter: "blur(0px)",
-              ease: "power3.out",
-              duration: 1,
-            },
-            startTime
-          );
-        } else {
-          // Standard fluid slide for slides 1-8
-          tl.to(
-            currentCard,
-            {
-              xPercent: -105,
-              scale: 0.88,
-              rotate: -4,
-              opacity: 0,
-              filter: "blur(8px)",
-              ease: "sine.inOut",
-              duration: 0.75,
-            },
-            startTime
-          );
-
-          tl.fromTo(
-            nextCard,
-            {
-              xPercent: 105,
-              scale: 0.88,
-              rotate: 4,
-              opacity: 0,
-              filter: "blur(8px)",
-            },
-            {
-              xPercent: 0,
-              scale: 1,
-              rotate: 0,
-              opacity: 1,
-              filter: "blur(0px)",
-              ease: "sine.inOut",
-              duration: 0.75,
-            },
-            startTime
-          );
-        }
+        tl.fromTo(
+          nextCard,
+          {
+            xPercent: 100,
+            scale: 0.94,
+            opacity: 0,
+          },
+          {
+            xPercent: 0,
+            scale: 1,
+            opacity: 1,
+            ease: "power2.inOut",
+            duration: 1,
+          },
+          startTime
+        );
       }
     }, sectionRef);
 

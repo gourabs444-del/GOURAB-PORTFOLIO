@@ -441,22 +441,6 @@ export function BrandIntegrationSection() {
                     alt="Architecture Engine"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
-                  
-                  {/* Badge */}
-                  <div className="absolute top-3 right-3 font-mono text-[9px] font-bold tracking-widest uppercase text-cyan-300 px-2.5 py-1 rounded-full bg-black/60 border border-cyan-400/30 backdrop-blur-md">
-                    LATENCY 14MS
-                  </div>
-
-                  {/* Text Overlay */}
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <h4 className="font-sans font-extrabold text-base sm:text-lg text-white tracking-tight mb-1 group-hover:text-cyan-200 transition-colors">
-                      Architecture Engine
-                    </h4>
-                    <p className="font-sans text-[11px] text-neutral-300 font-normal line-clamp-2 leading-relaxed">
-                      Modular WebGL viewport pipeline integrated with React 19 optimistic state reconciliation.
-                    </p>
-                  </div>
                 </div>
 
                 {activeTab === "build" && (
@@ -480,22 +464,6 @@ export function BrandIntegrationSection() {
                     alt="Neural Design Matrix"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
-
-                  {/* Badge */}
-                  <div className="absolute top-3 right-3 font-mono text-[9px] font-bold tracking-widest uppercase text-fuchsia-300 px-2.5 py-1 rounded-full bg-black/60 border border-fuchsia-400/30 backdrop-blur-md">
-                    99.8% PRECISION
-                  </div>
-
-                  {/* Text Overlay */}
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <h4 className="font-sans font-extrabold text-base sm:text-lg text-white tracking-tight mb-1 group-hover:text-fuchsia-200 transition-colors">
-                      Neural Design Matrix
-                    </h4>
-                    <p className="font-sans text-[11px] text-neutral-300 font-normal line-clamp-2 leading-relaxed">
-                      Generative design tokenization engine mapping spatial UI parameters in real-time.
-                    </p>
-                  </div>
                 </div>
 
                 {activeTab === "ai" && (
@@ -515,26 +483,10 @@ export function BrandIntegrationSection() {
               >
                 <div className="relative aspect-[16/10] w-full overflow-hidden bg-black/40">
                   <img
-                    src="/assets/card-edge-deployment.png"
+                    src="/assets/card-edge-deployment.jpg"
                     alt="Edge Deployment"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
-
-                  {/* Badge */}
-                  <div className="absolute top-3 right-3 font-mono text-[9px] font-bold tracking-widest uppercase text-amber-300 px-2.5 py-1 rounded-full bg-black/60 border border-amber-400/30 backdrop-blur-md">
-                    GLOBAL EDGE SYNC
-                  </div>
-
-                  {/* Text Overlay */}
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <h4 className="font-sans font-extrabold text-base sm:text-lg text-white tracking-tight mb-1 group-hover:text-amber-200 transition-colors">
-                      Edge Deployment
-                    </h4>
-                    <p className="font-sans text-[11px] text-neutral-300 font-normal line-clamp-2 leading-relaxed">
-                      Sub-30ms global edge routing network delivering zero-latency asset distribution.
-                    </p>
-                  </div>
                 </div>
 
                 {activeTab === "deploy" && (
