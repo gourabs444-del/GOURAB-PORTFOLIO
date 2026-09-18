@@ -7,15 +7,6 @@ import { ArrowUpRight, ArrowUp, Github, Linkedin, Twitter, Instagram, Mail } fro
 import { useAudioFeedback } from "@/hooks/useAudioFeedback";
 import { VerticalCardsGridBackground } from "@/components/ambient/VerticalCardsGridBackground";
 
-const ARC_CARDS = [
-  { id: 1, src: "/assets/cards/arc-card-1.jpg", alt: "Spatial Web Architecture", rotate: -24, x: -240, y: 30 },
-  { id: 2, src: "/assets/cards/arc-card-2.jpg", alt: "Neural AI Canvas", rotate: -14, x: -145, y: 10 },
-  { id: 3, src: "/assets/cards/arc-card-3.jpg", alt: "3D Volumetric Engine", rotate: -5, x: -48, y: -8 },
-  { id: 4, src: "/assets/cards/arc-card-4.jpg", alt: "Cinematic Motion Systems", rotate: 5, x: 48, y: -8 },
-  { id: 5, src: "/assets/cards/arc-card-5.jpg", alt: "Edge Compute Pipeline", rotate: 14, x: 145, y: 10 },
-  { id: 6, src: "/assets/cards/arc-card-6.jpg", alt: "Creative Direction & UX", rotate: 24, x: 240, y: 30 },
-];
-
 export function IdeasIntoImpact() {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const stageRef = useRef<HTMLDivElement | null>(null);
@@ -909,8 +900,8 @@ export function IdeasIntoImpact() {
         );
       }
 
-      // -----------------------------------------------------------------------      // -----------------------------------------------------------------------      // -----------------------------------------------------------------------      // -----------------------------------------------------------------------
-      // 8. SLIDE 3: ULTRA-LUXURY ARC CARDS & EDITORIAL CANVAS (Time: 15.2 -> 20.0)
+      // -----------------------------------------------------------------------      // -----------------------------------------------------------------------      // -----------------------------------------------------------------------
+      // 8. SLIDE 3: 2-PHASE LUXURY THANK YOU DISPLAY (Time: 15.4 -> 19.5)
       // -----------------------------------------------------------------------
       if (slide3LayerRef.current) {
         tl.fromTo(
@@ -925,7 +916,7 @@ export function IdeasIntoImpact() {
             duration: 0.6,
             ease: "none",
           },
-          15.2
+          15.4
         );
       }
 
@@ -942,92 +933,58 @@ export function IdeasIntoImpact() {
             duration: 0.8,
             ease: "none",
           },
-          15.2
+          15.4
         );
       }
 
       if (slide3LayerRef.current) {
-        const arcCards = slide3LayerRef.current.querySelectorAll(".arc-card");
-        const typoGroup = slide3LayerRef.current.querySelector(".slide3-typography-group");
-        const featuresGrid = slide3LayerRef.current.querySelector(".slide3-features-grid");
+        const headerGroup = slide3LayerRef.current.querySelector(".slide3-header-group");
+        const heyThere = slide3LayerRef.current.querySelector(".slide3-hey-there");
         const bottomGrid = slide3LayerRef.current.querySelector(".slide3-bottom-grid");
-        const contentContainer = slide3LayerRef.current.querySelector(".slide3-content-container");
 
-        // Initial hidden positions ("urte urte aake")
-        if (arcCards.length) {
-          gsap.set(arcCards, { opacity: 0, y: 100, scale: 0.7 });
-        }
-        if (typoGroup) gsap.set(typoGroup, { opacity: 0, y: 60 });
-        if (featuresGrid) gsap.set(featuresGrid, { opacity: 0, y: 40 });
-        if (bottomGrid) gsap.set(bottomGrid, { opacity: 0, y: 30, pointerEvents: "none" });
-
-        // Phase 1 (15.4 -> 16.8): Flying cards fan & Bodoni typography fly in
-        if (arcCards.length) {
-          tl.to(
-            arcCards,
+        if (headerGroup) {
+          tl.fromTo(
+            headerGroup,
+            {
+              opacity: 0,
+              scale: 0.92,
+              y: isMobile ? 25 : 40,
+            },
             {
               opacity: 1,
-              y: 0,
               scale: 1,
-              duration: 1.2,
-              stagger: 0.08,
-              ease: "power2.out",
+              y: 0,
+              duration: 1.0,
+              ease: "none",
             },
-            15.4
+            15.2
           );
         }
 
-        if (typoGroup) {
-          tl.to(
-            typoGroup,
-            {
-              opacity: 1,
-              y: 0,
-              duration: 1.2,
-              ease: "power2.out",
-            },
-            15.6
-          );
-        }
-
-        if (featuresGrid) {
-          tl.to(
-            featuresGrid,
-            {
-              opacity: 1,
-              y: 0,
-              duration: 1.1,
-              ease: "power2.out",
-            },
-            16.0
+        if (heyThere) {
+          tl.fromTo(
+            heyThere,
+            { opacity: 0, scale: 0.85, y: -15 },
+            { opacity: 1, scale: 1, y: 0, duration: 0.8, ease: "none" },
+            15.3
           );
         }
 
         if (bottomGrid) {
-          tl.to(
+          tl.fromTo(
             bottomGrid,
+            {
+              opacity: 0,
+              y: 25,
+            },
             {
               opacity: 1,
               y: 0,
               pointerEvents: "auto",
               duration: 1.0,
-              ease: "power2.out",
-            },
-            16.2
-          );
-        }
-
-        // Phase 2 (17.2 -> 19.5): Scroll-driven exit ("then scroll k sath sath wo bhi uthega")
-        if (contentContainer) {
-          tl.to(
-            contentContainer,
-            {
-              y: isMobile ? -140 : -220,
-              scale: isMobile ? 0.94 : 0.96,
-              duration: 2.0,
               ease: "none",
             },
-            17.2
+            15.4
           );
         }
       }
@@ -2244,87 +2201,53 @@ export function IdeasIntoImpact() {
           {/* Foreground Editorial Content Container */}
           <div
             ref={slide3ContentRef}
-            className="slide3-content-container relative z-10 w-full max-w-5xl mx-auto h-full pointer-events-auto flex flex-col items-center justify-between py-4 sm:py-8 will-change-transform"
+            className="relative z-10 w-full max-w-6xl mx-auto h-full pointer-events-auto flex flex-col items-center justify-between py-10 sm:py-14 px-6 sm:px-12"
           >
-            {/* 1. Floating 6-Card Arc Fan Array */}
-            <div className="slide3-arc-fan relative w-full max-w-4xl h-36 sm:h-48 md:h-56 mt-2 sm:mt-4 flex items-center justify-center pointer-events-none overflow-visible">
-              {ARC_CARDS.map((card, idx) => (
-                <div
-                  key={card.id}
-                  className={`arc-card arc-card-${idx + 1} absolute w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36 rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_15px_35px_rgba(9,7,20,0.16)] border-2 border-white backdrop-blur-md will-change-transform transition-shadow duration-300 hover:shadow-[0_20px_45px_rgba(9,7,20,0.28)]`}
-                  style={{
-                    transform: `translate(${card.x}px, ${card.y}px) rotate(${card.rotate}deg)`,
-                  }}
-                >
-                  <img
-                    src={card.src}
-                    alt={card.alt}
-                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-                  />
-                </div>
-              ))}
-            </div>
+            {/* 1. Central Header + Sublines + Paragraph Group */}
+            <div className="slide3-header-group flex flex-col items-center justify-center text-center w-full my-auto gap-3 sm:gap-4">
+              {/* Floating "hey there!" header flanked by leaf branch SVGs */}
+              <div className="slide3-hey-there flex items-center justify-center gap-3 sm:gap-4 mb-1">
+                {/* Left Leaf Accent */}
+                <svg className="w-6 h-10 sm:w-7 sm:h-11 text-[#090714]/35 transform -rotate-12" viewBox="0 0 40 80" fill="currentColor">
+                  <path d="M20 0 C20 40, 20 60, 20 80 M20 15 C10 10, 2 15, 5 25 C10 25, 18 20, 20 15 M20 30 C30 25, 38 30, 35 40 C30 40, 22 35, 20 30 M20 45 C10 40, 2 45, 5 55 C10 55, 18 50, 20 45" stroke="currentColor" strokeWidth="2.5" fill="none" />
+                </svg>
 
-            {/* 2. Bodoni High-Impact Typography & CTA */}
-            <div className="slide3-typography-group flex flex-col items-center text-center max-w-3xl mx-auto px-4 z-10 -mt-2 sm:-mt-4">
-              <h2 className="font-bodoni font-medium text-3xl sm:text-5xl md:text-6xl lg:text-[4.8rem] text-[#090714] tracking-tight leading-[1.12] mb-3">
-                <span className="block font-medium">Crafting High-Impact</span>
-                <span className="block italic font-normal text-[#090714]/90 py-0.5">
-                  Digital Experiences
+                <span className="font-bodoni italic text-2xl sm:text-3xl text-[#090714]/90 tracking-wide">
+                  hey there!
                 </span>
-                <span className="block italic font-normal text-[#090714]">
-                  Instantly
+
+                {/* Right Leaf Accent */}
+                <svg className="w-6 h-10 sm:w-7 sm:h-11 text-[#090714]/35 transform rotate-12" viewBox="0 0 40 80" fill="currentColor">
+                  <path d="M20 0 C20 40, 20 60, 20 80 M20 15 C30 10, 38 15, 35 25 C30 25, 22 20, 20 15 M20 30 C10 25, 2 30, 5 40 C10 40, 18 35, 20 30 M20 45 C30 40, 38 45, 35 55 C30 55, 22 50, 20 45" stroke="currentColor" strokeWidth="2.5" fill="none" />
+                </svg>
+              </div>
+
+              {/* Headline: "THANK YOU" */}
+              <h2 className="text-center max-w-5xl overflow-visible flex flex-col items-center justify-center">
+                <span className="slide3-line-1 block font-syne font-black text-6xl sm:text-8xl md:text-9xl text-[#090714] tracking-tight uppercase leading-none drop-shadow-xs">
+                  THANK YOU
                 </span>
               </h2>
 
-              {/* Subtitle */}
-              <p className="font-sans text-xs sm:text-sm text-[#090714]/70 leading-relaxed font-normal max-w-lg mx-auto mb-5">
-                Transforming visionary ideas into breathtaking digital realities with cutting-edge engineering &amp; design.
-              </p>
-
-              {/* Pill CTA Button */}
-              <a
-                href="#contact"
-                onMouseEnter={() => playHover()}
-                className="pointer-events-auto inline-flex items-center gap-2 px-6 sm:px-7 py-2.5 sm:py-3 rounded-full bg-[#090714] text-white hover:bg-black font-sans font-bold text-xs sm:text-[13px] tracking-tight transition-all duration-300 shadow-[0_8px_25px_rgba(9,7,20,0.22)] hover:shadow-[0_12px_35px_rgba(9,7,20,0.38)] hover:scale-105 active:scale-95 cursor-pointer border border-[#090714]/20"
-              >
-                <span>Start Generating Now</span>
-                <ArrowUpRight className="w-4 h-4 text-white" />
-              </a>
-            </div>
-
-            {/* 3. Bottom 3 Features Grid */}
-            <div className="slide3-features-grid w-full max-w-4xl grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 pt-4 sm:pt-5 border-t border-[#090714]/15 px-4 text-center my-2">
-              <div className="flex flex-col items-center">
-                <h4 className="font-bodoni font-bold text-sm sm:text-base text-[#090714] mb-1">
-                  Realistic Results
-                </h4>
-                <p className="font-sans text-[11px] sm:text-xs text-[#090714]/65 font-normal max-w-xs leading-relaxed">
-                  Digital products engineered to perform at native speed with 60 FPS precision.
-                </p>
+              {/* Cursive Subline: "for your time & vision" */}
+              <div className="slide3-line-2 font-bodoni italic text-2xl sm:text-3xl text-[#090714]/85 tracking-wide mt-1">
+                for your time &amp; vision
               </div>
 
-              <div className="flex flex-col items-center">
-                <h4 className="font-bodoni font-bold text-sm sm:text-base text-[#090714] mb-1">
-                  Fast Execution
-                </h4>
-                <p className="font-sans text-[11px] sm:text-xs text-[#090714]/65 font-normal max-w-xs leading-relaxed">
-                  Rapid prototyping from initial architectural vision to production deployment.
-                </p>
-              </div>
+              {/* Middle Subtitle & Description */}
+              <div className="flex flex-col items-center gap-2 max-w-2xl mx-auto mt-4 sm:mt-6">
+                <h3 className="slide3-subtitle font-mono text-[10px] sm:text-[11px] font-extrabold tracking-[0.25em] text-[#090714]/80 uppercase">
+                  AND FOR SUPPORTING OUR CREATIVE JOURNEY
+                </h3>
 
-              <div className="flex flex-col items-center">
-                <h4 className="font-bodoni font-bold text-sm sm:text-base text-[#090714] mb-1">
-                  Diverse Capabilities
-                </h4>
-                <p className="font-sans text-[11px] sm:text-xs text-[#090714]/65 font-normal max-w-xs leading-relaxed">
-                  Full-stack architecture, WebGL shaders, AI systems &amp; cinematic motion design.
+                <p className="slide3-desc font-sans text-xs sm:text-sm text-[#090714]/70 leading-relaxed font-normal max-w-xl">
+                  We craft digital products and visual stories driven by passion, elegance, and unyielding attention to detail. Thank you for being a part of this story.
                 </p>
               </div>
             </div>
 
-            {/* 3. Bottom Assembled Footer Layout (Assembles from bottom in Phase 2) */}
-            <div className="slide3-bottom-grid opacity-0 absolute bottom-3 sm:bottom-6 left-0 right-0 mx-auto w-full flex flex-col md:flex-row items-center justify-between gap-4 border-t border-[#090714]/15 pt-3.5 pb-1 px-6 sm:px-12 pointer-events-none">
+            {/* 2. Bottom Assembled Footer Layout (Pinned at Bottom) */}
+            <div className="slide3-bottom-grid w-full flex flex-col md:flex-row items-center justify-between gap-4 border-t border-[#090714]/15 pt-4 pb-2 px-4 sm:px-8">
               {/* Item 1: Left Group — Signature & Real Algora Brand Logo */}
               <div className="flex items-center gap-4 sm:gap-6">
                 {/* Handwritten Signature */}

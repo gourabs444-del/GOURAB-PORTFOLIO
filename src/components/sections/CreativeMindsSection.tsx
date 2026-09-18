@@ -63,10 +63,20 @@ const SLIDES: SlideItem[] = [
     type: "arch-carousel",
     alt: "3D Arch Carousel - Create Stunning AI Generated Visuals Instantly",
   },
+  {
+    id: 9,
+    type: "image",
+    src: "/assets/creative-minds-poster-8.jpg",
+    alt: "Ideas Are Shaped Through Strategy, Design, and Execution",
+  },
 ];
 
+interface ArchCarouselProps {
+  scrollRotationRef?: React.MutableRefObject<number>;
+}
+
 // Zero-Re-Render 120FPS GPU Hardware Accelerated Sunrise/Sunset 3D Arch Carousel
-function ArchCarouselComponent() {
+function ArchCarouselComponent({ scrollRotationRef }: ArchCarouselProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   const cards = [
@@ -91,7 +101,7 @@ function ArchCarouselComponent() {
     // Scroll wheel listener for interactive rotation
     // ALWAYS CLOCKWISE: Math.abs(e.deltaY) guarantees clockwise rotation regardless of scroll direction
     const handleWheel = (e: WheelEvent) => {
-      velocity += Math.abs(e.deltaY) * 0.06;
+      velocity += Math.abs(e.deltaY) * 0.08;
     };
 
     window.addEventListener("wheel", handleWheel, { passive: true });
@@ -105,7 +115,7 @@ function ArchCarouselComponent() {
       if (e.touches.length > 0) {
         const deltaY = Math.abs(lastTouchY - e.touches[0].clientY);
         lastTouchY = e.touches[0].clientY;
-        velocity += deltaY * 0.12;
+        velocity += deltaY * 0.14;
       }
     };
 
@@ -122,16 +132,20 @@ function ArchCarouselComponent() {
       // Friction velocity decay (0.91 per frame)
       velocity *= 0.91;
 
-      // Base idle rotation (9 deg/sec) + ALWAYS CLOCKWISE scroll velocity boost
-      const rotationStep = delta * 9 + velocity * delta * 12;
+      // Base idle rotation (12 deg/sec) + ALWAYS CLOCKWISE scroll velocity boost
+      const rotationStep = delta * 12 + velocity * delta * 15;
       currentRotation = (currentRotation + rotationStep) % 360;
+
+      // Add scrollRotationRef value driven by GSAP timeline scrub
+      const scrollRot = scrollRotationRef?.current || 0;
+      const totalRotation = currentRotation + scrollRot;
 
       const container = containerRef.current;
       if (container) {
         const children = container.children;
         for (let i = 0; i < children.length; i++) {
           const el = children[i] as HTMLElement;
-          const rawAngle = i * angleStep + currentRotation;
+          const rawAngle = i * angleStep + totalRotation;
           let normAngle = ((rawAngle + 180) % 360) - 180;
           const absAngle = Math.abs(normAngle);
 
@@ -178,7 +192,7 @@ function ArchCarouselComponent() {
       window.removeEventListener("touchmove", handleTouchMove);
       cancelAnimationFrame(animId);
     };
-  }, [cards.length]);
+  }, [cards.length, scrollRotationRef]);
 
   return (
     <div className="relative w-full h-full flex flex-col items-center justify-center bg-[#FFFFFF] select-none pointer-events-auto overflow-hidden px-4">
@@ -264,6 +278,7 @@ function ArchCarouselComponent() {
 export function CreativeMindsSection() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const archRotationRef = useRef(0);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -273,9 +288,10 @@ export function CreativeMindsSection() {
       const cards = cardRefs.current.filter(Boolean) as HTMLDivElement[];
       if (cards.length < 2) return;
 
-      // Master ScrollTrigger pinned timeline
-      const totalSteps = cards.length - 1;
-      const scrollDistance = totalSteps * 550; // smooth 550px scroll height per slide
+      // 8 total cards, with 2 extra scroll steps allocated for arch-carousel spinning
+      // Total units = 9 (0 to 9)
+      const totalUnits = 9;
+      const scrollDistance = totalUnits * 650; // 5850px scroll height
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -283,47 +299,35 @@ export function CreativeMindsSection() {
           start: "top top",
           end: `+=${scrollDistance}`,
           pin: true,
-          scrub: 0.4, // Butter-smooth fluid scrub synced with Lenis RAF
+          scrub: 0.2, // Zero-lag fluid scrub
           snap: {
-            snapTo: (progress, self) => {
-              const stepFraction = 1 / totalSteps;
-              const rawStep = progress * totalSteps;
-              const currentStep = Math.round(rawStep);
-              const velocity = self ? self.getVelocity() : 0;
-
-              // High scroll velocity (>1400px/s) advances 2 steps, normal velocity advances 1 step
-              let targetStep = currentStep;
-              if (Math.abs(velocity) > 1400) {
-                const direction = velocity > 0 ? 1 : -1;
-                targetStep = currentStep + direction;
-              }
-
-              // Clamp target step between 0 and totalSteps
-              targetStep = Math.max(0, Math.min(totalSteps, targetStep));
-              return targetStep * stepFraction;
+            snapTo: (progress) => {
+              const roundedStep = Math.round(progress * totalUnits);
+              return roundedStep / totalUnits;
             },
-            duration: { min: 0.35, max: 0.65 },
-            delay: 0.04, // Ultra-responsive snap triggering
-            ease: "back.out(1.4)", // Satisfying magnetic spring bounce-back lock to dead-center
+            duration: { min: 0.15, max: 0.35 },
+            delay: 0.01,
+            ease: "power1.out",
           },
         },
       });
 
-      // Animate consecutive slide transitions
-      for (let i = 0; i < totalSteps; i++) {
+      const animDuration = 0.8;
+
+      // 1. Slides 0 to 5 (poster-1 through poster-7 -> arch-carousel)
+      for (let i = 0; i < 6; i++) {
         const currentCard = cards[i];
         const nextCard = cards[i + 1];
         const startTime = i * 1.0;
 
-        // Clean, sharp poster slide transition (Zero blur filters, crisp 100% vector edges)
         tl.to(
           currentCard,
           {
             xPercent: -100,
             scale: 0.94,
             opacity: 0,
-            ease: "power2.inOut",
-            duration: 1,
+            ease: "power1.inOut",
+            duration: animDuration,
           },
           startTime
         );
@@ -339,12 +343,60 @@ export function CreativeMindsSection() {
             xPercent: 0,
             scale: 1,
             opacity: 1,
-            ease: "power2.inOut",
-            duration: 1,
+            ease: "power1.out",
+            duration: animDuration,
           },
           startTime
         );
       }
+
+      // 2. Fast AI Cards Spinning Phase during 2 scroll steps (t = 6.0 to t = 8.0)
+      const rotationProxy = { angle: 0 };
+      tl.to(
+        rotationProxy,
+        {
+          angle: 720, // 2 full 360-degree fast rotations as user scrolls
+          ease: "none",
+          duration: 2.0,
+          onUpdate: () => {
+            archRotationRef.current = rotationProxy.angle;
+          },
+        },
+        6.0
+      );
+
+      // 3. Slide 6 (arch-carousel) -> Slide 7 (poster-8: Ideas Are Shaped...)
+      const archCard = cards[6];
+      const poster8Card = cards[7];
+
+      tl.to(
+        archCard,
+        {
+          xPercent: -100,
+          scale: 0.94,
+          opacity: 0,
+          ease: "power1.inOut",
+          duration: animDuration,
+        },
+        8.0
+      );
+
+      tl.fromTo(
+        poster8Card,
+        {
+          xPercent: 100,
+          scale: 0.94,
+          opacity: 0,
+        },
+        {
+          xPercent: 0,
+          scale: 1,
+          opacity: 1,
+          ease: "power1.out",
+          duration: animDuration,
+        },
+        8.0
+      );
     }, sectionRef);
 
     return () => ctx.revert();
@@ -369,7 +421,7 @@ export function CreativeMindsSection() {
             }`}
           >
             {slide.type === "arch-carousel" ? (
-              <ArchCarouselComponent />
+              <ArchCarouselComponent scrollRotationRef={archRotationRef} />
             ) : (
               <div className="relative w-full max-w-xl sm:max-w-2xl lg:max-w-3xl h-full flex items-center justify-center px-4 bg-[#FFFFFF]">
                 <img
@@ -385,3 +437,4 @@ export function CreativeMindsSection() {
     </section>
   );
 }
+

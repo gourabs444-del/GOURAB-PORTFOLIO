@@ -3,7 +3,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "@/lib/gsap";
-import { ArrowUpRight, Cpu, Layers, Terminal, Sparkles, Check, Database, Zap, Code, ShieldCheck } from "lucide-react";
+import { ArrowUpRight, Cpu, Layers, Terminal, Sparkles, Check, Database, Zap, Code, ShieldCheck, ChevronRight } from "lucide-react";
 import { useAudioFeedback } from "@/hooks/useAudioFeedback";
 
 export function BrandIntegrationSection() {
@@ -500,89 +500,194 @@ export function BrandIntegrationSection() {
         </div>
 
         {/* ========================================================= */}
-        {/* ACT 06 — EXPERIENCE (ULTRA-CLEAN BOXLESS & CAPSULE-FREE)  */}
+        {/* ACT 06 — EXPERIENCE (ULTRA-HIGH-END 3-COLUMN SHOWCASE)    */}
         {/* ========================================================= */}
-        <div className="act-06 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6 sm:px-12 transition-transform">
-          <div className="exp-flow w-full max-w-6xl flex flex-col items-center">
+        <div className="act-06 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-4 sm:px-8 lg:px-12 transition-transform">
+          
+          {/* Subtle Top Metadata Headers */}
+          <div className="absolute top-6 left-6 hidden md:flex items-center gap-2 font-mono text-[10px] tracking-[0.25em] text-neutral-400 uppercase">
+            <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
+            <span>SYS // DESIGN FRAMEWORK</span>
+          </div>
+
+          <div className="absolute top-6 right-6 hidden md:flex items-center gap-2 font-mono text-[10px] tracking-[0.25em] text-neutral-400 uppercase">
+            <span>ACT.06 / EXPERIENCE</span>
+          </div>
+
+          <div className="exp-flow w-full max-w-7xl flex flex-col items-center my-auto">
             {/* Minimal Monospace Header */}
-            <div className="flex items-center gap-2.5 text-xs font-mono font-bold tracking-[0.3em] text-neutral-400 uppercase mb-12 sm:mb-16">
-              <span className="w-6 h-[1.5px] bg-white/20" />
-              <span>EXPERIENCE THE PROCESS</span>
-              <span className="w-6 h-[1.5px] bg-white/20" />
+            <div className="flex flex-col items-center mb-6 sm:mb-10">
+              <div className="flex items-center gap-3 text-xs font-mono font-bold tracking-[0.35em] text-white uppercase mb-1">
+                <span className="w-8 h-[1px] bg-gradient-to-r from-transparent via-amber-400 to-transparent" />
+                <span>EXPERIENCE THE PROCESS</span>
+                <span className="w-8 h-[1px] bg-gradient-to-r from-transparent via-emerald-400 to-transparent" />
+              </div>
+              <span className="font-mono text-[10px] tracking-[0.25em] text-neutral-400 uppercase">
+                FROM CONCEPT TO DIGITAL REALITY
+              </span>
             </div>
 
-            {/* Clean Boxless 3-Column Grid with Minimal Dividers */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 w-full text-left relative divide-y md:divide-y-0 md:divide-x divide-white/10">
+            {/* 3-Column Grid with Glowing Chevrons */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 w-full text-left relative items-stretch">
               
-              {/* Item 1: INPUT */}
-              <div className="flex flex-col justify-between pt-6 md:pt-0 md:px-6 first:pl-0 group">
+              {/* Chevron Connector 1 -> 2 (Desktop) */}
+              <div className="hidden md:flex absolute left-[32.5%] top-1/2 -translate-y-1/2 z-20 items-center justify-center">
+                <div className="w-8 h-8 rounded-full bg-amber-400/10 border border-amber-400/30 flex items-center justify-center text-amber-400 shadow-[0_0_15px_rgba(245,158,11,0.3)] backdrop-blur-sm">
+                  <ChevronRight className="w-5 h-5 stroke-[2.5]" />
+                </div>
+              </div>
+
+              {/* Chevron Connector 2 -> 3 (Desktop) */}
+              <div className="hidden md:flex absolute left-[65.8%] top-1/2 -translate-y-1/2 z-20 items-center justify-center">
+                <div className="w-8 h-8 rounded-full bg-emerald-400/10 border border-emerald-400/30 flex items-center justify-center text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.3)] backdrop-blur-sm">
+                  <ChevronRight className="w-5 h-5 stroke-[2.5]" />
+                </div>
+              </div>
+
+              {/* Column 01: INPUT / SPECIFICATION */}
+              <div className="flex flex-col justify-between p-5 sm:p-6 rounded-2xl bg-white/[0.015] border border-amber-500/15 hover:border-amber-400/40 hover:bg-white/[0.03] transition-all duration-500 group shadow-[0_10px_30px_rgba(0,0,0,0.4)]">
                 <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="font-bodoni italic font-normal text-4xl sm:text-5xl text-amber-400/90 tracking-tight">
+                  {/* Top Header & Number */}
+                  <div className="flex items-baseline justify-between mb-3">
+                    <span className="font-bodoni italic font-normal text-4xl sm:text-5xl text-amber-400 tracking-tight drop-shadow-[0_0_12px_rgba(245,158,11,0.3)]">
                       01
                     </span>
-                    <Terminal className="w-5 h-5 text-amber-400/80 stroke-[1.5]" />
+                    <span className="font-mono text-[10px] sm:text-[11px] font-bold tracking-[0.22em] text-amber-400/90 uppercase">
+                      INPUT // SPECIFICATION
+                    </span>
                   </div>
 
-                  <span className="font-mono text-[10px] sm:text-[11px] font-bold tracking-[0.22em] text-amber-400/90 uppercase block mb-2">
-                    INPUT // SPECIFICATION
-                  </span>
-
-                  <h4 className="font-bodoni font-medium text-2xl sm:text-3xl text-white tracking-tight mb-3 group-hover:text-amber-200 transition-colors">
+                  {/* Title & Description */}
+                  <h4 className="font-bodoni font-medium text-2xl sm:text-3xl text-white tracking-tight mb-2 group-hover:text-amber-200 transition-colors">
                     System Specification
                   </h4>
 
-                  <p className="font-sans text-xs sm:text-sm text-neutral-400 font-normal leading-relaxed max-w-sm">
+                  <p className="font-sans text-xs text-neutral-400 font-normal leading-relaxed mb-5">
                     Precise architectural vision &amp; technical specification defined from day one.
                   </p>
+
+                  {/* Feature Bullet Points */}
+                  <div className="space-y-2 mb-5 border-t border-white/5 pt-4">
+                    {[
+                      "Design System Blueprint",
+                      "Tech Stack Architecture",
+                      "Interactive Wireframes",
+                      "Requirement Mapping",
+                    ].map((feature, idx) => (
+                      <div key={idx} className="flex items-center gap-2.5 text-xs text-neutral-300 font-mono">
+                        <span className="w-1.5 h-1.5 rounded-full bg-amber-400/80 shadow-[0_0_6px_#f59e0b]" />
+                        <span>{feature}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* 3D Gold Tablet Graphic */}
+                <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden border border-amber-400/20 bg-black/40 group-hover:border-amber-400/50 transition-all duration-500 shadow-[0_8px_25px_rgba(245,158,11,0.15)]">
+                  <img
+                    src="/assets/exp-3d-input-gold.jpg"
+                    alt="01 System Specification 3D Asset"
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60" />
                 </div>
               </div>
 
-              {/* Item 2: ENGINE */}
-              <div className="flex flex-col justify-between pt-6 md:pt-0 md:px-8 group">
+              {/* Column 02: ENGINE / PIPELINE */}
+              <div className="flex flex-col justify-between p-5 sm:p-6 rounded-2xl bg-white/[0.015] border border-sky-500/15 hover:border-sky-400/40 hover:bg-white/[0.03] transition-all duration-500 group shadow-[0_10px_30px_rgba(0,0,0,0.4)]">
                 <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="font-bodoni italic font-normal text-4xl sm:text-5xl text-sky-400/90 tracking-tight">
+                  {/* Top Header & Number */}
+                  <div className="flex items-baseline justify-between mb-3">
+                    <span className="font-bodoni italic font-normal text-4xl sm:text-5xl text-sky-400 tracking-tight drop-shadow-[0_0_12px_rgba(56,189,248,0.3)]">
                       02
                     </span>
-                    <Cpu className="w-5 h-5 text-sky-400/80 stroke-[1.5]" />
+                    <span className="font-mono text-[10px] sm:text-[11px] font-bold tracking-[0.22em] text-sky-400/90 uppercase">
+                      ENGINE // PIPELINE
+                    </span>
                   </div>
 
-                  <span className="font-mono text-[10px] sm:text-[11px] font-bold tracking-[0.22em] text-sky-400/90 uppercase block mb-2">
-                    ENGINE // PIPELINE
-                  </span>
-
-                  <h4 className="font-bodoni font-medium text-2xl sm:text-3xl text-white tracking-tight mb-3 group-hover:text-sky-200 transition-colors">
+                  {/* Title & Description */}
+                  <h4 className="font-bodoni font-medium text-2xl sm:text-3xl text-white tracking-tight mb-2 group-hover:text-sky-200 transition-colors">
                     GPU Render Pipeline
                   </h4>
 
-                  <p className="font-sans text-xs sm:text-sm text-neutral-400 font-normal leading-relaxed max-w-sm">
+                  <p className="font-sans text-xs text-neutral-400 font-normal leading-relaxed mb-5">
                     High-throughput WebGL, React 19, and optimized GPU frame pipelines.
                   </p>
+
+                  {/* Feature Bullet Points */}
+                  <div className="space-y-2 mb-5 border-t border-white/5 pt-4">
+                    {[
+                      "Custom Shaders",
+                      "WebGL Acceleration",
+                      "60FPS Physics Engine",
+                      "Dynamic Geometry",
+                    ].map((feature, idx) => (
+                      <div key={idx} className="flex items-center gap-2.5 text-xs text-neutral-300 font-mono">
+                        <span className="w-1.5 h-1.5 rounded-full bg-sky-400/80 shadow-[0_0_6px_#38bdf8]" />
+                        <span>{feature}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* 3D Cyan Stack Graphic */}
+                <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden border border-sky-400/20 bg-black/40 group-hover:border-sky-400/50 transition-all duration-500 shadow-[0_8px_25px_rgba(56,189,248,0.15)]">
+                  <img
+                    src="/assets/exp-3d-engine-blue.jpg"
+                    alt="02 GPU Render Pipeline 3D Asset"
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60" />
                 </div>
               </div>
 
-              {/* Item 3: RESULT */}
-              <div className="flex flex-col justify-between pt-6 md:pt-0 md:px-8 last:pr-0 group">
+              {/* Column 03: RESULT / OUTPUT */}
+              <div className="flex flex-col justify-between p-5 sm:p-6 rounded-2xl bg-white/[0.015] border border-emerald-500/15 hover:border-emerald-400/40 hover:bg-white/[0.03] transition-all duration-500 group shadow-[0_10px_30px_rgba(0,0,0,0.4)]">
                 <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="font-bodoni italic font-normal text-4xl sm:text-5xl text-emerald-400/90 tracking-tight">
+                  {/* Top Header & Number */}
+                  <div className="flex items-baseline justify-between mb-3">
+                    <span className="font-bodoni italic font-normal text-4xl sm:text-5xl text-emerald-400 tracking-tight drop-shadow-[0_0_12px_rgba(16,185,129,0.3)]">
                       03
                     </span>
-                    <Layers className="w-5 h-5 text-emerald-400/80 stroke-[1.5]" />
+                    <span className="font-mono text-[10px] sm:text-[11px] font-bold tracking-[0.22em] text-emerald-400/90 uppercase">
+                      RESULT // OUTPUT
+                    </span>
                   </div>
 
-                  <span className="font-mono text-[10px] sm:text-[11px] font-bold tracking-[0.22em] text-emerald-400/90 uppercase block mb-2">
-                    RESULT // OUTPUT
-                  </span>
-
-                  <h4 className="font-bodoni font-medium text-2xl sm:text-3xl text-white tracking-tight mb-3 group-hover:text-emerald-200 transition-colors">
+                  {/* Title & Description */}
+                  <h4 className="font-bodoni font-medium text-2xl sm:text-3xl text-white tracking-tight mb-2 group-hover:text-emerald-200 transition-colors">
                     Cinematic Output
                   </h4>
 
-                  <p className="font-sans text-xs sm:text-sm text-neutral-400 font-normal leading-relaxed max-w-sm">
+                  <p className="font-sans text-xs text-neutral-400 font-normal leading-relaxed mb-5">
                     A flawless cinematic digital product engineered to redefine benchmarks.
                   </p>
+
+                  {/* Feature Bullet Points */}
+                  <div className="space-y-2 mb-5 border-t border-white/5 pt-4">
+                    {[
+                      "Pixel-Perfect Render",
+                      "3D Spatial Audio",
+                      "Cross-Platform Ready",
+                      "Enterprise Security",
+                    ].map((feature, idx) => (
+                      <div key={idx} className="flex items-center gap-2.5 text-xs text-neutral-300 font-mono">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400/80 shadow-[0_0_6px_#10b981]" />
+                        <span>{feature}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* 3D Emerald Screen Graphic */}
+                <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden border border-emerald-400/20 bg-black/40 group-hover:border-emerald-400/50 transition-all duration-500 shadow-[0_8px_25px_rgba(16,185,129,0.15)]">
+                  <img
+                    src="/assets/exp-3d-result-green.jpg"
+                    alt="03 Cinematic Output 3D Asset"
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60" />
                 </div>
               </div>
 
