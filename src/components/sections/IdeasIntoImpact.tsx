@@ -2219,14 +2219,14 @@ export function IdeasIntoImpact() {
           ref={slide3LayerRef}
           className="absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center overflow-hidden z-30 select-none pointer-events-none"
         >
-          {/* Ambient Luxury Background Canvas */}
+          {/* Ambient Luxury Milk White Background Canvas */}
           <div
             ref={slide3BgRef}
-            className="absolute inset-0 w-full h-full will-change-transform z-0 overflow-hidden bg-[#E5DAF7] bg-gradient-to-br from-[#ECE3FC] via-[#E5DAF7] to-[#C8B8F7] shadow-[0_-20px_50px_rgba(0,0,0,0.15)] flex items-center justify-center"
+            className="absolute inset-0 w-full h-full will-change-transform z-0 overflow-hidden bg-[#FAF9F6] shadow-[0_-20px_50px_rgba(0,0,0,0.15)] flex items-center justify-center"
           >
-            {/* Soft lavender atmospheric ambient glow matching reference image */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,_rgba(237,220,248,0.85)_0%,_rgba(229,218,247,0.95)_50%,_rgba(200,184,247,1)_100%)] pointer-events-none" />
-            <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[600px] bg-[radial-gradient(ellipse_at_center,_rgba(168,139,250,0.3)_0%,_rgba(217,70,239,0.18)_45%,_transparent_75%)] rounded-full blur-[110px]" />
+            {/* Soft atmospheric ambient glow on pristine milk white */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,_rgba(255,255,255,0.95)_0%,_rgba(250,249,246,1)_75%)] pointer-events-none" />
+            <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[600px] bg-[radial-gradient(ellipse_at_center,_rgba(245,243,238,0.6)_0%,_rgba(238,235,227,0.3)_45%,_transparent_75%)] rounded-full blur-[100px]" />
           </div>
 
           {/* Foreground Editorial Centered Content */}
