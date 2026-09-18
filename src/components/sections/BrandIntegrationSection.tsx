@@ -402,173 +402,141 @@ export function BrandIntegrationSection() {
         </div>
 
         {/* ========================================================= */}
-        {/* ACT 05 — PRODUCT REVEAL (BORDERLESS GRAPHICAL NEURAL ENGINE) */}
+        {/* ACT 05 — PRODUCT REVEAL (COOL TYPOGRAPHY + SLEEK CARDS)   */}
         {/* ========================================================= */}
         <div className="act-05 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6 transition-transform">
           <div className="relative w-full max-w-5xl mx-auto flex flex-col items-center">
             
-            {/* Ambient Multi-Color Holographic Glow Backdrops (No Card Box) */}
-            <div className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-[radial-gradient(ellipse_at_center,_rgba(56,189,248,0.15)_0%,_rgba(232,121,249,0.12)_45%,_transparent_75%)] rounded-full blur-[90px]" />
+            {/* Ambient Multi-Color Radial Aura (No Outer Box) */}
+            <div className="pointer-events-none absolute -top-32 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[radial-gradient(ellipse_at_center,_rgba(56,189,248,0.12)_0%,_rgba(232,121,249,0.1)_45%,_transparent_75%)] rounded-full blur-[100px]" />
 
-            {/* 1. Top Floating Telemetry HUD Badge */}
-            <div className="flex items-center gap-3 sm:gap-4 px-4 py-1.5 rounded-full bg-white/[0.04] border border-white/10 backdrop-blur-xl shadow-[0_0_30px_rgba(56,189,248,0.15)] mb-8 sm:mb-10">
-              <span className="font-mono text-[10px] sm:text-[11px] font-bold tracking-[0.2em] text-white uppercase flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
-                ALGORA ENGINE v2.4
+            {/* 1. Cool Kinetic Typography Headline */}
+            <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-10 sm:mb-14">
+              <span className="font-mono text-xs font-extrabold tracking-[0.3em] text-cyan-400 uppercase mb-3 flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+                ALGORA ENGINE // SYSTEM ARCHITECTURE
               </span>
-              <div className="w-[1px] h-3 bg-white/20" />
-              <span className="font-mono text-[10px] sm:text-[11px] font-extrabold text-emerald-400 tracking-wider flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                60 FPS ACTIVE
-              </span>
+              
+              <h3 className="font-display font-black text-3xl sm:text-5xl md:text-6xl text-white tracking-tight leading-tight uppercase mb-4">
+                ENGINEERED WITH{" "}
+                <span className="font-bodoni italic font-normal bg-gradient-to-r from-cyan-200 via-fuchsia-300 to-amber-300 bg-clip-text text-transparent inline-block pr-2">
+                  Precision &amp; Intelligence.
+                </span>
+              </h3>
+
+              <p className="font-sans text-sm sm:text-base text-neutral-400 font-light max-w-xl leading-relaxed">
+                Three specialized spatial nodes powering real-time WebGL rendering, neural design matrices, and zero-latency global edge deployment.
+              </p>
             </div>
 
-            {/* 2. 3 Borderless Interactive Graphic Module Cards */}
-            <div className="product-layer-fg w-full grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-8 text-left">
+            {/* 2. 3 Sleek Modern Pillar Cards */}
+            <div className="product-layer-fg w-full grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
               
-              {/* Module 1: Architecture Engine */}
+              {/* Card 1: Architecture Engine */}
               <button
                 type="button"
                 onClick={() => handleSimulateClick("build")}
-                className={`relative p-5 sm:p-6 rounded-2xl transition-all duration-300 backdrop-blur-xl flex flex-col justify-between group text-left cursor-pointer overflow-hidden ${
+                className={`group relative p-7 rounded-2xl transition-all duration-300 backdrop-blur-2xl text-left cursor-pointer overflow-hidden ${
                   activeTab === "build"
-                    ? "bg-gradient-to-b from-cyan-500/15 via-cyan-500/5 to-transparent border border-cyan-400/40 shadow-[0_10px_35px_rgba(56,189,248,0.25)] scale-[1.02]"
-                    : "bg-white/[0.02] border border-white/10 hover:bg-white/[0.05] hover:border-white/20"
+                    ? "bg-gradient-to-b from-cyan-500/20 via-cyan-500/5 to-transparent border border-cyan-400/50 shadow-[0_15px_40px_rgba(56,189,248,0.25)] scale-[1.03]"
+                    : "bg-white/[0.03] border border-white/10 hover:bg-white/[0.06] hover:border-white/25"
                 }`}
               >
-                <div className="flex items-center justify-between mb-4">
-                  <div className={`w-9 h-9 rounded-xl flex items-center justify-center transition-colors ${
-                    activeTab === "build" ? "bg-cyan-400 text-black shadow-[0_0_20px_rgba(56,189,248,0.6)]" : "bg-cyan-400/10 text-cyan-400 border border-cyan-400/20"
+                <div className="flex items-center justify-between mb-6">
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${
+                    activeTab === "build" ? "bg-cyan-400 text-black shadow-[0_0_25px_rgba(56,189,248,0.8)]" : "bg-cyan-400/10 text-cyan-400 border border-cyan-400/20"
                   }`}>
-                    <Code className="w-4 h-4" />
+                    <Code className="w-5 h-5" />
                   </div>
-                  <span className="font-mono text-[9px] font-bold tracking-widest uppercase text-cyan-400/90 px-2 py-0.5 rounded-md bg-cyan-400/10 border border-cyan-400/20">
+                  <span className="font-mono text-[9px] font-bold tracking-widest uppercase text-cyan-400/90 px-2.5 py-1 rounded-full bg-cyan-400/10 border border-cyan-400/20">
                     LATENCY 14MS
                   </span>
                 </div>
 
                 <div>
-                  <h4 className="font-sans font-extrabold text-base text-white tracking-tight mb-1">
+                  <h4 className="font-sans font-extrabold text-lg text-white tracking-tight mb-2 group-hover:text-cyan-200 transition-colors">
                     Architecture Engine
                   </h4>
-                  <p className="font-mono text-[11px] text-neutral-400 font-light">
-                    Modular WebGL &amp; React 19 Stream
+                  <p className="font-sans text-xs text-neutral-400 font-normal leading-relaxed">
+                    Modular WebGL viewport pipeline integrated with React 19 optimistic state reconciliation.
                   </p>
                 </div>
 
                 {activeTab === "build" && (
-                  <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent shadow-[0_0_12px_#38bdf8]" />
+                  <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent shadow-[0_0_15px_#38bdf8]" />
                 )}
               </button>
 
-              {/* Module 2: Neural Design Matrix */}
+              {/* Card 2: Neural Design Matrix */}
               <button
                 type="button"
                 onClick={() => handleSimulateClick("ai")}
-                className={`relative p-5 sm:p-6 rounded-2xl transition-all duration-300 backdrop-blur-xl flex flex-col justify-between group text-left cursor-pointer overflow-hidden ${
+                className={`group relative p-7 rounded-2xl transition-all duration-300 backdrop-blur-2xl text-left cursor-pointer overflow-hidden ${
                   activeTab === "ai"
-                    ? "bg-gradient-to-b from-fuchsia-500/15 via-fuchsia-500/5 to-transparent border border-fuchsia-400/40 shadow-[0_10px_35px_rgba(232,121,249,0.25)] scale-[1.02]"
-                    : "bg-white/[0.02] border border-white/10 hover:bg-white/[0.05] hover:border-white/20"
+                    ? "bg-gradient-to-b from-fuchsia-500/20 via-fuchsia-500/5 to-transparent border border-fuchsia-400/50 shadow-[0_15px_40px_rgba(232,121,249,0.25)] scale-[1.03]"
+                    : "bg-white/[0.03] border border-white/10 hover:bg-white/[0.06] hover:border-white/25"
                 }`}
               >
-                <div className="flex items-center justify-between mb-4">
-                  <div className={`w-9 h-9 rounded-xl flex items-center justify-center transition-colors ${
-                    activeTab === "ai" ? "bg-fuchsia-400 text-black shadow-[0_0_20px_rgba(232,121,249,0.6)]" : "bg-fuchsia-400/10 text-fuchsia-400 border border-fuchsia-400/20"
+                <div className="flex items-center justify-between mb-6">
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${
+                    activeTab === "ai" ? "bg-fuchsia-400 text-black shadow-[0_0_25px_rgba(232,121,249,0.8)]" : "bg-fuchsia-400/10 text-fuchsia-400 border border-fuchsia-400/20"
                   }`}>
-                    <Sparkles className="w-4 h-4" />
+                    <Sparkles className="w-5 h-5" />
                   </div>
-                  <span className="font-mono text-[9px] font-bold tracking-widest uppercase text-fuchsia-400/90 px-2 py-0.5 rounded-md bg-fuchsia-400/10 border border-fuchsia-400/20">
-                    ACCURACY 99.8%
+                  <span className="font-mono text-[9px] font-bold tracking-widest uppercase text-fuchsia-400/90 px-2.5 py-1 rounded-full bg-fuchsia-400/10 border border-fuchsia-400/20">
+                    99.8% PRECISION
                   </span>
                 </div>
 
                 <div>
-                  <h4 className="font-sans font-extrabold text-base text-white tracking-tight mb-1">
+                  <h4 className="font-sans font-extrabold text-lg text-white tracking-tight mb-2 group-hover:text-fuchsia-200 transition-colors">
                     Neural Design Matrix
                   </h4>
-                  <p className="font-mono text-[11px] text-neutral-400 font-light">
-                    Generative Token Tokenizer Pipeline
+                  <p className="font-sans text-xs text-neutral-400 font-normal leading-relaxed">
+                    Generative design tokenization engine mapping spatial UI parameters in real-time.
                   </p>
                 </div>
 
                 {activeTab === "ai" && (
-                  <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-fuchsia-400 to-transparent shadow-[0_0_12px_#e879f9]" />
+                  <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-transparent via-fuchsia-400 to-transparent shadow-[0_0_15px_#e879f9]" />
                 )}
               </button>
 
-              {/* Module 3: Edge Deployment */}
+              {/* Card 3: Edge Deployment */}
               <button
                 type="button"
                 onClick={() => handleSimulateClick("deploy")}
-                className={`relative p-5 sm:p-6 rounded-2xl transition-all duration-300 backdrop-blur-xl flex flex-col justify-between group text-left cursor-pointer overflow-hidden ${
+                className={`group relative p-7 rounded-2xl transition-all duration-300 backdrop-blur-2xl text-left cursor-pointer overflow-hidden ${
                   activeTab === "deploy"
-                    ? "bg-gradient-to-b from-amber-500/15 via-amber-500/5 to-transparent border border-amber-400/40 shadow-[0_10px_35px_rgba(245,158,11,0.25)] scale-[1.02]"
-                    : "bg-white/[0.02] border border-white/10 hover:bg-white/[0.05] hover:border-white/20"
+                    ? "bg-gradient-to-b from-amber-500/20 via-amber-500/5 to-transparent border border-amber-400/50 shadow-[0_15px_40px_rgba(245,158,11,0.25)] scale-[1.03]"
+                    : "bg-white/[0.03] border border-white/10 hover:bg-white/[0.06] hover:border-white/25"
                 }`}
               >
-                <div className="flex items-center justify-between mb-4">
-                  <div className={`w-9 h-9 rounded-xl flex items-center justify-center transition-colors ${
-                    activeTab === "deploy" ? "bg-amber-400 text-black shadow-[0_0_20px_rgba(245,158,11,0.6)]" : "bg-amber-400/10 text-amber-400 border border-amber-400/20"
+                <div className="flex items-center justify-between mb-6">
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${
+                    activeTab === "deploy" ? "bg-amber-400 text-black shadow-[0_0_25px_rgba(245,158,11,0.8)]" : "bg-amber-400/10 text-amber-400 border border-amber-400/20"
                   }`}>
-                    <Zap className="w-4 h-4" />
+                    <Zap className="w-5 h-5" />
                   </div>
-                  <span className="font-mono text-[9px] font-bold tracking-widest uppercase text-amber-400/90 px-2 py-0.5 rounded-md bg-amber-400/10 border border-amber-400/20">
-                    100% EDGE SYNC
+                  <span className="font-mono text-[9px] font-bold tracking-widest uppercase text-amber-400/90 px-2.5 py-1 rounded-full bg-amber-400/10 border border-amber-400/20">
+                    GLOBAL EDGE SYNC
                   </span>
                 </div>
 
                 <div>
-                  <h4 className="font-sans font-extrabold text-base text-white tracking-tight mb-1">
+                  <h4 className="font-sans font-extrabold text-lg text-white tracking-tight mb-2 group-hover:text-amber-200 transition-colors">
                     Edge Deployment
                   </h4>
-                  <p className="font-mono text-[11px] text-neutral-400 font-light">
-                    Global Low-Latency Node Routing
+                  <p className="font-sans text-xs text-neutral-400 font-normal leading-relaxed">
+                    Sub-30ms global edge routing network delivering zero-latency asset distribution.
                   </p>
                 </div>
 
                 {activeTab === "deploy" && (
-                  <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-amber-400 to-transparent shadow-[0_0_12px_#f59e0b]" />
+                  <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-transparent via-amber-400 to-transparent shadow-[0_0_15px_#f59e0b]" />
                 )}
               </button>
 
-            </div>
-
-            {/* 3. Live Telemetry Visual Frequency Wave & Terminal Stream (No Outer Card Box) */}
-            <div className="w-full p-5 sm:p-6 rounded-2xl bg-white/[0.02] border border-white/10 backdrop-blur-xl flex flex-col gap-4 text-left">
-              <div className="flex items-center justify-between pb-3 border-b border-white/10 text-[10px] font-mono tracking-widest text-neutral-400 uppercase">
-                <span className="flex items-center gap-2 text-white font-bold">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                  LIVE TELEMETRY STREAM
-                </span>
-
-                {/* Cybernetic Frequency Wave Equalizer */}
-                <div className="flex items-end gap-1 h-3">
-                  <span className="w-1 bg-cyan-400 h-full animate-bounce" style={{ animationDuration: "0.6s" }} />
-                  <span className="w-1 bg-fuchsia-400 h-2/3 animate-bounce" style={{ animationDuration: "0.8s" }} />
-                  <span className="w-1 bg-emerald-400 h-full animate-bounce" style={{ animationDuration: "0.5s" }} />
-                  <span className="w-1 bg-amber-400 h-1/2 animate-bounce" style={{ animationDuration: "0.9s" }} />
-                  <span className="w-1 bg-sky-400 h-4/5 animate-bounce" style={{ animationDuration: "0.7s" }} />
-                </div>
-              </div>
-
-              {/* Terminal Code Execution Output */}
-              <div className="font-mono text-xs sm:text-sm text-cyan-300/90 py-1 flex items-center gap-2">
-                <span className="text-neutral-500 font-bold">&gt;</span>
-                <span className="bg-gradient-to-r from-white via-cyan-200 to-fuchsia-200 bg-clip-text text-transparent font-medium">
-                  {promptText}
-                </span>
-              </div>
-
-              {/* Pipeline Status Bar */}
-              <div className="pt-3 border-t border-white/10 flex items-center justify-between text-xs font-mono">
-                <span className="flex items-center gap-2 text-emerald-400 font-medium">
-                  <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
-                  <span>{isProcessing ? "Executing Live Pipeline..." : demoResult}</span>
-                </span>
-                <span className="text-neutral-500 text-[10px] font-mono hidden sm:inline-block uppercase tracking-wider">
-                  STATUS: OK
-                </span>
-              </div>
             </div>
 
           </div>

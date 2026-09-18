@@ -234,6 +234,12 @@ export function CreativeMindsSection() {
           end: `+=${scrollDistance}`,
           pin: true,
           scrub: 0.5,
+          snap: {
+            snapTo: 1 / totalSteps,
+            duration: { min: 0.2, max: 0.4 },
+            delay: 0.02,
+            ease: "power2.inOut",
+          },
         },
       });
 
@@ -241,7 +247,7 @@ export function CreativeMindsSection() {
       for (let i = 0; i < totalSteps; i++) {
         const currentCard = cards[i];
         const nextCard = cards[i + 1];
-        const startTime = i * 1.2;
+        const startTime = i;
 
         const isTransitionToLast = i === totalSteps - 1;
 
