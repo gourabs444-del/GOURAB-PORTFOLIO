@@ -9,6 +9,7 @@ import { AboutManifesto } from "@/components/sections/AboutManifesto";
 import { CreativeMindsSection } from "@/components/sections/CreativeMindsSection";
 import { SelectedWork } from "@/components/sections/SelectedWork";
 import { Showreel } from "@/components/sections/Showreel";
+import { BrandIntegrationSection } from "@/components/sections/BrandIntegrationSection";
 import { ProcessPipeline } from "@/components/sections/ProcessPipeline";
 import { ExperienceTimeline } from "@/components/sections/ExperienceTimeline";
 import { IdeasIntoImpact } from "@/components/sections/IdeasIntoImpact";
@@ -57,6 +58,7 @@ export default function Home() {
         <CreativeMindsSection />
         <SelectedWork />
         <Showreel />
+        <BrandIntegrationSection />
         <ExperienceTimeline />
         <ProcessPipeline />
         <IdeasIntoImpact />

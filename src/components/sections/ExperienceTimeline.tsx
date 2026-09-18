@@ -493,7 +493,7 @@ export function ExperienceTimeline() {
     <section
       id="skills"
       ref={sectionRef}
-      className="relative w-full py-24 sm:py-32 md:py-36 px-6 sm:px-12 md:px-16 lg:px-24 bg-[#E5DAF7] bg-gradient-to-br from-[#ECE3FC] via-[#E5DAF7] to-[#C8B8F7] text-neutral-900 overflow-hidden select-none"
+      className="relative w-full py-24 sm:py-32 md:py-36 px-6 sm:px-12 md:px-16 lg:px-24 bg-[#FAF6F0] bg-gradient-to-br from-[#FDFBF7] via-[#FAF6F0] to-[#F3EDE2] text-neutral-900 overflow-hidden select-none"
     >
       <div className="max-w-6xl mx-auto flex flex-col gap-16 sm:gap-20 relative z-10">
         {/* ========================================================= */}
@@ -532,11 +532,11 @@ export function ExperienceTimeline() {
             {devSkills.map((s) => (
               <div
                 key={s.name}
-                className="skill-item-row group flex items-center justify-between gap-3 py-2.5 px-3 rounded-xl transition-colors duration-200 hover:bg-neutral-50 will-change-transform"
+                className="skill-item-row flex items-center justify-between gap-3 py-2.5 px-3 rounded-xl will-change-transform"
               >
                 {/* Left: Original Small Software Logo + Name */}
                 <div className="flex items-center gap-3 min-w-0">
-                  <div className="w-6 h-6 shrink-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+                  <div className="w-6 h-6 shrink-0 flex items-center justify-center">
                     {s.icon}
                   </div>
                   <div className="flex flex-col min-w-0">
@@ -590,11 +590,11 @@ export function ExperienceTimeline() {
             {designSkills.map((s) => (
               <div
                 key={s.name}
-                className="skill-item-row group flex items-center justify-between gap-3 py-2.5 px-3 rounded-xl transition-colors duration-200 hover:bg-neutral-50 will-change-transform"
+                className="skill-item-row flex items-center justify-between gap-3 py-2.5 px-3 rounded-xl will-change-transform"
               >
                 {/* Left: Original Small Software Logo + Name */}
                 <div className="flex items-center gap-3 min-w-0">
-                  <div className="w-6 h-6 shrink-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+                  <div className="w-6 h-6 shrink-0 flex items-center justify-center">
                     {s.icon}
                   </div>
                   <div className="flex flex-col min-w-0">
@@ -648,11 +648,11 @@ export function ExperienceTimeline() {
             {creativeSkills.map((s) => (
               <div
                 key={s.name}
-                className="skill-item-row group flex items-center justify-between gap-3 py-2.5 px-3 rounded-xl transition-colors duration-200 hover:bg-neutral-50 will-change-transform"
+                className="skill-item-row flex items-center justify-between gap-3 py-2.5 px-3 rounded-xl will-change-transform"
               >
                 {/* Left: Original Small Software Logo + Name */}
                 <div className="flex items-center gap-3 min-w-0">
-                  <div className="w-6 h-6 shrink-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+                  <div className="w-6 h-6 shrink-0 flex items-center justify-center">
                     {s.icon}
                   </div>
                   <div className="flex flex-col min-w-0">
@@ -690,7 +690,7 @@ export function ExperienceTimeline() {
             <span className="font-medium text-neutral-600">Validated through</span>
             
             {/* Pluralsight Brand Logo */}
-            <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-white border border-neutral-200/80 shadow-[0_1px_3px_rgba(0,0,0,0.05)] transition-transform duration-200 hover:scale-105">
+            <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-white border border-neutral-200/80 shadow-[0_1px_3px_rgba(0,0,0,0.05)]">
               <svg viewBox="0 0 100 100" className="w-4 h-4 shrink-0">
                 <defs>
                   <linearGradient id="ps-badge-grad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -710,7 +710,7 @@ export function ExperienceTimeline() {
             <span className="font-bold text-neutral-400">&amp;</span>
 
             {/* HackerRank Brand Logo */}
-            <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-white border border-neutral-200/80 shadow-[0_1px_3px_rgba(0,0,0,0.05)] transition-transform duration-200 hover:scale-105">
+            <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-white border border-neutral-200/80 shadow-[0_1px_3px_rgba(0,0,0,0.05)]">
               <svg viewBox="0 0 100 100" className="w-4 h-4 shrink-0">
                 <path
                   d="M50 5 L88 27 L88 73 L50 95 L12 73 L12 27 Z"

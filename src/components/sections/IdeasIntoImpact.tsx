@@ -55,7 +55,7 @@ export function IdeasIntoImpact() {
           trigger: containerRef.current,
           start: "top bottom",
           end: "bottom bottom",
-          scrub: 1,
+          scrub: 0.4,
           invalidateOnRefresh: true,
         },
       });
@@ -901,7 +901,7 @@ export function IdeasIntoImpact() {
       }
 
       // -----------------------------------------------------------------------      // -----------------------------------------------------------------------
-      // 8. SLIDE 3: SINGLE CENTERED LUXURY THANK YOU DISPLAY (Time: 15.4 -> 20.6)
+      // 8. SLIDE 3: 2-PHASE LUXURY THANK YOU DISPLAY (Time: 15.4 -> 19.5)
       // -----------------------------------------------------------------------
       if (slide3LayerRef.current) {
         tl.fromTo(
@@ -913,7 +913,7 @@ export function IdeasIntoImpact() {
           {
             opacity: 1,
             pointerEvents: "auto",
-            duration: 0.8,
+            duration: 0.6,
             ease: "none",
           },
           15.4
@@ -925,15 +925,13 @@ export function IdeasIntoImpact() {
           slide3BgRef.current,
           {
             opacity: 0,
-            scale: 1.2,
-            filter: "blur(20px)",
+            scale: 1.05,
           },
           {
             opacity: 1,
             scale: 1,
-            filter: "blur(0px)",
-            duration: 1.6,
-            ease: "power3.inOut",
+            duration: 0.8,
+            ease: "power1.out",
           },
           15.4
         );
@@ -942,52 +940,119 @@ export function IdeasIntoImpact() {
       if (slide3LayerRef.current) {
         const headerGroup = slide3LayerRef.current.querySelector(".slide3-header-group");
         const heyThere = slide3LayerRef.current.querySelector(".slide3-hey-there");
-        const ctaBtn = slide3LayerRef.current.querySelector(".slide3-cta-btn");
+        const line2 = slide3LayerRef.current.querySelector(".slide3-line-2");
+        const subtitle = slide3LayerRef.current.querySelector(".slide3-subtitle");
+        const desc = slide3LayerRef.current.querySelector(".slide3-desc");
+        const bottomGrid = slide3LayerRef.current.querySelector(".slide3-bottom-grid");
 
+        // Set initial hidden positions for Phase 2 elements
+        if (line2) gsap.set(line2, { opacity: 0, y: 15 });
+        if (subtitle) gsap.set(subtitle, { opacity: 0, x: isMobile ? -40 : -90 });
+        if (desc) gsap.set(desc, { opacity: 0, x: isMobile ? 40 : 90 });
+        if (bottomGrid) gsap.set(bottomGrid, { opacity: 0, y: 35, pointerEvents: "none" });
+
+        // Phase 1 (15.4 -> 16.0): Centered THANK YOU Header appears dead-centered
         if (headerGroup) {
           tl.fromTo(
             headerGroup,
             {
               opacity: 0,
-              scale: 0.88,
-              y: isMobile ? 20 : 35,
-              filter: "blur(14px)",
+              scale: 0.92,
+              y: isMobile ? 15 : 25,
             },
             {
               opacity: 1,
               scale: 1,
               y: 0,
-              filter: "blur(0px)",
-              duration: 1.4,
-              ease: "power3.out",
+              duration: 0.8,
+              ease: "power2.out",
             },
-            15.6
+            15.4
           );
         }
 
         if (heyThere) {
           tl.fromTo(
             heyThere,
-            { opacity: 0, scale: 0.6, y: -15 },
-            { opacity: 1, scale: 1, y: 0, duration: 1.0, ease: "back.out(1.8)" },
-            15.8
+            { opacity: 0, scale: 0.7, y: -10 },
+            { opacity: 1, scale: 1, y: 0, duration: 0.6, ease: "back.out(1.5)" },
+            15.5
           );
         }
 
-        if (ctaBtn) {
-          tl.fromTo(
-            ctaBtn,
-            { opacity: 0, scale: 0.85, y: 20, filter: "blur(8px)" },
-            { opacity: 1, scale: 1, y: 0, filter: "blur(0px)", duration: 1.2, ease: "back.out(1.4)" },
+        // Phase 2 Scroll Animation (16.2 -> 17.8):
+        // IMMEDIATELY on scroll: Header shifts UP from dead-center and scales down, side texts fly in, and bottom 3-column footer assembles!
+        if (headerGroup) {
+          tl.to(
+            headerGroup,
+            {
+              y: isMobile ? -135 : -210,
+              scale: isMobile ? 0.82 : 0.78,
+              duration: 1.4,
+              ease: "power1.inOut",
+            },
             16.2
+          );
+        }
+
+        if (line2) {
+          tl.to(
+            line2,
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.9,
+              ease: "power1.out",
+            },
+            16.4
+          );
+        }
+
+        if (subtitle) {
+          tl.to(
+            subtitle,
+            {
+              opacity: 1,
+              x: 0,
+              duration: 1.1,
+              ease: "power1.out",
+            },
+            16.5
+          );
+        }
+
+        if (desc) {
+          tl.to(
+            desc,
+            {
+              opacity: 1,
+              x: 0,
+              duration: 1.1,
+              ease: "power1.out",
+            },
+            16.5
+          );
+        }
+
+        if (bottomGrid) {
+          tl.to(
+            bottomGrid,
+            {
+              opacity: 1,
+              y: 0,
+              pointerEvents: "auto",
+              duration: 1.2,
+              ease: "power1.out",
+            },
+            16.7
           );
         }
       }
 
       // -----------------------------------------------------------------------
-      // 9. HOLD SLIDE 3 (Time: 18.6 -> 20.6)
+      // 9. HOLD SLIDE 3 (Time: 17.8 -> 19.5)
       // -----------------------------------------------------------------------
-      tl.to({}, { duration: 2.0 }, 18.6);
+      tl.to({}, { duration: 1.7 }, 17.8);
 
       return () => {
         window.removeEventListener("resize", updateCardSpotlight);
@@ -2217,60 +2282,108 @@ export function IdeasIntoImpact() {
         {/* ========================================================= */}
         <div
           ref={slide3LayerRef}
-          className="absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center overflow-hidden z-30 select-none pointer-events-none"
+          className="absolute inset-0 w-full h-full flex flex-col items-center justify-between text-center overflow-hidden z-30 select-none pointer-events-none py-8 sm:py-12 px-6 sm:px-12"
         >
-          {/* Ambient Luxury Milk White Background Canvas */}
+          {/* Ambient Luxury Premium Cream Background Canvas */}
           <div
             ref={slide3BgRef}
-            className="absolute inset-0 w-full h-full will-change-transform z-0 overflow-hidden bg-[#FAF9F6] shadow-[0_-20px_50px_rgba(0,0,0,0.15)] flex items-center justify-center"
+            className="absolute inset-0 w-full h-full will-change-transform z-0 overflow-hidden bg-[#FAF6F0] bg-gradient-to-br from-[#FDFBF7] via-[#FAF6F0] to-[#F3EDE2] shadow-[0_-20px_50px_rgba(0,0,0,0.15)] flex items-center justify-center"
           >
-            {/* Soft atmospheric ambient glow on pristine milk white */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,_rgba(255,255,255,0.95)_0%,_rgba(250,249,246,1)_75%)] pointer-events-none" />
-            <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[600px] bg-[radial-gradient(ellipse_at_center,_rgba(245,243,238,0.6)_0%,_rgba(238,235,227,0.3)_45%,_transparent_75%)] rounded-full blur-[100px]" />
+            {/* Soft atmospheric ambient glow on pristine cream */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,_rgba(253,251,247,0.95)_0%,_rgba(250,246,240,1)_75%)] pointer-events-none" />
+            <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[600px] bg-[radial-gradient(ellipse_at_center,_rgba(245,238,225,0.6)_0%,_rgba(235,222,205,0.3)_45%,_transparent_75%)] rounded-full blur-[100px]" />
           </div>
 
-          {/* Foreground Editorial Centered Content */}
+          {/* Foreground Editorial Content Container */}
           <div
             ref={slide3ContentRef}
-            className="relative z-10 w-full max-w-4xl mx-auto px-6 sm:px-10 flex flex-col items-center justify-center h-full pointer-events-auto"
+            className="relative z-10 w-full max-w-5xl mx-auto h-full pointer-events-auto flex flex-col items-center justify-center"
           >
-            {/* Single Dead-Center Thank You Display (Matching reference image) */}
-            <div className="slide3-header-group flex flex-col items-center justify-center text-center w-full">
-              
+            {/* 1. Header Group (Starts Dead-Center in Phase 1 via flexbox, moves UP & scales down in Phase 2) */}
+            <div className="slide3-header-group flex flex-col items-center justify-center text-center w-full transition-transform will-change-transform">
               {/* Floating "hey there!" header flanked by leaf branch SVGs */}
-              <div className="slide3-hey-there flex items-center justify-center gap-3 sm:gap-4 mb-3 sm:mb-4">
+              <div className="slide3-hey-there flex items-center justify-center gap-3 sm:gap-4 mb-2 sm:mb-3">
                 {/* Left Leaf Accent */}
-                <svg className="w-7 h-11 sm:w-8 sm:h-12 text-[#090714]/30 transform -rotate-12" viewBox="0 0 40 80" fill="currentColor">
+                <svg className="w-7 h-11 sm:w-8 sm:h-12 text-[#090714]/35 transform -rotate-12" viewBox="0 0 40 80" fill="currentColor">
                   <path d="M20 0 C20 40, 20 60, 20 80 M20 15 C10 10, 2 15, 5 25 C10 25, 18 20, 20 15 M20 30 C30 25, 38 30, 35 40 C30 40, 22 35, 20 30 M20 45 C10 40, 2 45, 5 55 C10 55, 18 50, 20 45" stroke="currentColor" strokeWidth="2.5" fill="none" />
                 </svg>
 
-                <span className="font-bodoni italic text-2xl sm:text-3xl md:text-4xl text-[#090714]/85 tracking-wide">
+                <span className="font-bodoni italic text-2xl sm:text-3xl md:text-4xl text-[#090714]/90 tracking-wide">
                   hey there!
                 </span>
 
                 {/* Right Leaf Accent */}
-                <svg className="w-7 h-11 sm:w-8 sm:h-12 text-[#090714]/30 transform rotate-12" viewBox="0 0 40 80" fill="currentColor">
+                <svg className="w-7 h-11 sm:w-8 sm:h-12 text-[#090714]/35 transform rotate-12" viewBox="0 0 40 80" fill="currentColor">
                   <path d="M20 0 C20 40, 20 60, 20 80 M20 15 C30 10, 38 15, 35 25 C30 25, 22 20, 20 15 M20 30 C10 25, 2 30, 5 40 C10 40, 18 35, 20 30 M20 45 C30 40, 38 45, 35 55 C30 55, 22 50, 20 45" stroke="currentColor" strokeWidth="2.5" fill="none" />
                 </svg>
               </div>
 
               {/* Headline: "THANK YOU" */}
-              <h2 className="text-center max-w-4xl overflow-visible flex flex-col items-center justify-center">
+              <h2 className="text-center max-w-5xl overflow-visible flex flex-col items-center justify-center">
                 <span className="slide3-line-1 block font-syne font-black text-6xl sm:text-8xl md:text-9xl lg:text-[8.5rem] text-[#090714] tracking-tight uppercase leading-none drop-shadow-xs">
                   THANK YOU
                 </span>
               </h2>
 
-              {/* Action CTA Button */}
-              <div className="slide3-cta-btn mt-8 sm:mt-10 flex items-center justify-center">
+              {/* Cursive Subline (Reveals in Phase 2 under THANK YOU) */}
+              <div className="slide3-line-2 opacity-0 mt-2 sm:mt-3">
+                <span className="font-bodoni italic text-2xl sm:text-3xl md:text-4xl text-[#090714]/80 tracking-wide">
+                  for your time &amp; vision
+                </span>
+              </div>
+            </div>
+
+            {/* 2. Middle Text Group (Flies in from sides in Phase 2) */}
+            <div className="slide3-middle-group absolute top-[54%] sm:top-[52%] left-0 right-0 mx-auto flex flex-col items-center justify-center text-center w-full max-w-3xl px-4 gap-3 sm:gap-4 pointer-events-none">
+              {/* Subtitle (Flies in from Left) */}
+              <h3 className="slide3-subtitle opacity-0 font-mono text-xs sm:text-sm font-extrabold tracking-[0.22em] text-[#090714]/85 uppercase">
+                AND FOR SUPPORTING OUR CREATIVE JOURNEY
+              </h3>
+
+              {/* Description Paragraph (Flies in from Right) */}
+              <p className="slide3-desc opacity-0 font-sans text-xs sm:text-sm md:text-base text-[#090714]/70 leading-relaxed font-normal max-w-2xl">
+                We craft digital products and visual stories driven by passion, elegance, and unyielding attention to detail. Thank you for being a part of this story.
+              </p>
+            </div>
+
+            {/* 3. Bottom 3-Column Assembled Footer Layout (Assembles from bottom in Phase 2) */}
+            <div className="slide3-bottom-grid opacity-0 absolute bottom-6 sm:bottom-10 left-0 right-0 mx-auto w-full grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 items-center pt-6 border-t border-[#090714]/15 px-6 sm:px-12 pointer-events-none">
+              {/* Left Column: Handwritten Signature */}
+              <div className="flex flex-col items-center md:items-start text-center md:text-left gap-1">
+                {/* SVG Handwritten Signature Graphic */}
+                <div className="h-10 sm:h-12 text-[#090714]">
+                  <svg viewBox="0 0 200 60" className="h-full w-auto" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M15 45 C25 15, 35 10, 45 25 C55 40, 60 50, 70 30 C75 20, 85 20, 90 35 C95 45, 105 25, 115 30 C125 35, 135 20, 145 40 C155 45, 175 35, 185 30" />
+                    <path d="M40 38 Q80 48 160 38" strokeWidth="1.5" opacity="0.7" />
+                  </svg>
+                </div>
+                <span className="font-mono text-[10px] sm:text-[11px] font-bold tracking-wider text-[#090714]/80 uppercase">
+                  Gourab S. &mdash; Lead Engineer &amp; Designer
+                </span>
+              </div>
+
+              {/* Center Column: Collaboration Note / Quote */}
+              <div className="flex flex-col items-center text-center px-2">
+                <p className="font-bodoni italic text-sm sm:text-base text-[#090714]/85 font-medium leading-snug">
+                  &ldquo;Building meaningful digital experiences through design, performance, and code.&rdquo;
+                </p>
+              </div>
+
+              {/* Right Column: CTA Button + Social Links / Contact */}
+              <div className="flex flex-col items-center md:items-end gap-3">
                 <a
                   href="#contact"
                   onMouseEnter={() => playHover()}
-                  className="pointer-events-auto inline-flex items-center gap-2.5 px-8 sm:px-10 py-4 rounded-full bg-[#090714] text-white hover:bg-black font-sans font-bold text-xs sm:text-sm tracking-tight transition-all duration-300 shadow-[0_10px_35px_rgba(9,7,20,0.25)] hover:shadow-[0_15px_45px_rgba(9,7,20,0.4)] hover:scale-105 active:scale-95 cursor-pointer border border-[#090714]/20"
+                  className="pointer-events-auto inline-flex items-center gap-2 px-6 sm:px-7 py-3 rounded-full bg-[#090714] text-white hover:bg-black font-sans font-bold text-xs tracking-tight transition-all duration-300 shadow-[0_8px_25px_rgba(9,7,20,0.2)] hover:shadow-[0_12px_35px_rgba(9,7,20,0.35)] hover:scale-105 active:scale-95 cursor-pointer border border-[#090714]/20"
                 >
                   <span>Get In Touch</span>
-                  <ArrowUpRight className="w-4 h-4 text-white" />
+                  <ArrowUpRight className="w-3.5 h-3.5 text-white" />
                 </a>
+                <div className="flex items-center gap-3 text-[10px] font-mono font-semibold tracking-wider text-[#090714]/60 uppercase">
+                  <a href="mailto:gourabs444@gmail.com" className="hover:text-[#090714] transition-colors">gourabs444@gmail.com</a>
+                  <span>&bull;</span>
+                  <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#090714] transition-colors">LinkedIn</a>
+                </div>
               </div>
             </div>
           </div>
