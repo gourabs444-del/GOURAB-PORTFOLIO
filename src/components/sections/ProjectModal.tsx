@@ -145,6 +145,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             src={currentProject.heroImage}
             alt={currentProject.title}
             fill
+            unoptimized
             className="object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0E0E14] via-transparent to-black/40" />

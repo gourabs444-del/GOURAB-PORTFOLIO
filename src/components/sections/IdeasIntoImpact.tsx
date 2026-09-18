@@ -5,7 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "@/lib/gsap";
 import { ArrowUpRight } from "lucide-react";
 import { useAudioFeedback } from "@/hooks/useAudioFeedback";
-import { ArtisticDnaCanvas } from "@/components/ambient/ArtisticDnaCanvas";
+import { VerticalCardsGridBackground } from "@/components/ambient/VerticalCardsGridBackground";
 
 export function IdeasIntoImpact() {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -78,13 +78,7 @@ export function IdeasIntoImpact() {
 
       if (ctaLayerRef.current) gsap.set(ctaLayerRef.current, { opacity: 0, pointerEvents: "none" });
       if (slide2LayerRef.current) gsap.set(slide2LayerRef.current, { opacity: 0, pointerEvents: "none" });
-      if (slide3LayerRef.current) {
-        gsap.set(slide3LayerRef.current, { opacity: 0, pointerEvents: "none" });
-        const initialSlide3Items = slide3LayerRef.current.querySelectorAll(".slide3-assemble-item");
-        if (initialSlide3Items.length > 0) {
-          gsap.set(initialSlide3Items, { opacity: 0, y: isMobile ? 35 : 60, filter: "blur(10px)" });
-        }
-      }
+      if (slide3LayerRef.current) gsap.set(slide3LayerRef.current, { opacity: 0, pointerEvents: "none" });
       if (slide3BgRef.current) gsap.set(slide3BgRef.current, { opacity: 0, scale: 1.08, filter: "blur(12px)" });
 
       // -----------------------------------------------------------------------
@@ -114,8 +108,8 @@ export function IdeasIntoImpact() {
           cardSpacing = Math.abs(r1.left - r0.left) || 320;
         }
 
-        // Smooth focus radius across card spacing for 100% continuous interpolation
-        const focusRadius = cardSpacing * 1.15;
+        // Focus radius across card spacing for ultra-smooth center card spotlight
+        const focusRadius = cardSpacing * 1.3;
 
         // 1. Find closest card index to center for zIndex & shadow prioritization
         let minDist = Infinity;
@@ -132,7 +126,7 @@ export function IdeasIntoImpact() {
           }
         }
 
-        // 2. Apply continuous fluid spotlight to every card with zero sharp jumps
+        // 2. Apply continuous fluid spotlight to every card
         for (let i = 0; i < count; i++) {
           const cardEl = cardElements[i] as HTMLElement;
           const inner = cardEl.querySelector<HTMLElement>(".card-inner-spotlight");
@@ -145,30 +139,30 @@ export function IdeasIntoImpact() {
           // Normalized distance from center (0 at center -> 1 at focusRadius)
           const normDist = Math.min(dist / focusRadius, 1);
           
-          // Ultra-smooth Cosine curve (1.0 at center -> 0.0 at focusRadius)
+          // Smooth Cosine curve (1.0 at center -> 0.0 at focusRadius)
           const rawFocus = Math.cos((normDist * Math.PI) / 2);
-          const tightFocus = Math.pow(rawFocus, 1.35); // Silky cubic falloff curve
+          const tightFocus = Math.pow(rawFocus, 1.3);
 
-          // Scale: 1.0 at center, 0.72 at side
-          const scale = 0.72 + tightFocus * 0.28;
+          // Scale: 1.08 at center (makes card grow big & pop out smoothly), 0.72 at side
+          const scale = 0.72 + tightFocus * 0.36;
 
-          // Grayscale: 0% (vivid full color) at center, 100% (desaturated) at sides
-          const grayscale = (1 - tightFocus) * 100;
+          // Grayscale: 0% (vivid full color) at center, 85% (desaturated) at sides
+          const grayscale = (1 - tightFocus) * 85;
 
-          // Opacity: 1.0 at center, 0.24 at sides
-          const opacity = 0.24 + tightFocus * 0.76;
+          // Opacity: 1.0 at center, 0.32 at sides
+          const opacity = 0.32 + tightFocus * 0.68;
 
-          // Brightness: 1.0 at center, 0.42 at sides
-          const brightness = 0.42 + tightFocus * 0.58;
+          // Brightness: 1.08 at center, 0.48 at sides
+          const brightness = 0.48 + tightFocus * 0.60;
 
-          inner.style.transform = `scale(${scale.toFixed(3)})`;
+          inner.style.transform = `scale3d(${scale.toFixed(3)}, ${scale.toFixed(3)}, 1)`;
           inner.style.filter = `grayscale(${grayscale.toFixed(1)}%) brightness(${brightness.toFixed(2)})`;
           inner.style.opacity = `${opacity.toFixed(3)}`;
-          inner.style.zIndex = i === closestIdx ? "30" : `${Math.max(1, Math.round(tightFocus * 20))}`;
+          inner.style.zIndex = i === closestIdx ? "40" : `${Math.max(1, Math.round(tightFocus * 25))}`;
 
-          if (tightFocus > 0.55) {
-            const shadowAlpha = ((tightFocus - 0.55) / 0.45) * 0.85;
-            inner.style.boxShadow = `0 24px 48px -10px rgba(0,0,0,${shadowAlpha.toFixed(2)})`;
+          if (tightFocus > 0.5) {
+            const shadowAlpha = ((tightFocus - 0.5) / 0.5) * 0.85;
+            inner.style.boxShadow = `0 28px 60px -10px rgba(0,0,0,${shadowAlpha.toFixed(2)}), 0 0 35px rgba(236,72,153,${(shadowAlpha * 0.35).toFixed(2)}), 0 0 15px rgba(255,255,255,${(shadowAlpha * 0.2).toFixed(2)})`;
           } else {
             inner.style.boxShadow = "none";
           }
@@ -726,10 +720,10 @@ export function IdeasIntoImpact() {
           {
             opacity: 1,
             pointerEvents: "auto",
-            duration: 1.2,
+            duration: 0.8,
             ease: "power2.out",
           },
-          12.2
+          11.8
         );
       }
 
@@ -738,33 +732,63 @@ export function IdeasIntoImpact() {
           slide2AuraRef.current,
           {
             opacity: 0,
-            scale: 0.5,
+            scale: 0.7,
           },
           {
             opacity: 1,
             scale: 1,
-            duration: 1.4,
+            duration: 0.9,
             ease: "power2.out",
           },
-          12.3
+          11.8
         );
       }
 
+      // Assemble & Scroll-driven parallax for 6-Column Vertical Cards Grid
       if (slide2WatermarkRef.current) {
-        tl.fromTo(
-          slide2WatermarkRef.current,
-          {
-            scale: 0.9,
-            opacity: 0,
-          },
-          {
-            scale: 1,
-            opacity: 1,
-            duration: 2.2,
-            ease: "power2.out",
-          },
-          12.3
-        );
+        const cols = slide2WatermarkRef.current.querySelectorAll(".vertical-card-col");
+        if (cols.length > 0) {
+          // 1. ASSEMBLE ANIMATION (Time 11.6 -> 12.5) - Columns assemble immediately as Slide 2 appears
+          cols.forEach((col, idx) => {
+            const isOdd = idx % 2 === 0;
+            tl.fromTo(
+              col,
+              {
+                opacity: 0,
+                y: isOdd ? (isMobile ? 40 : 70) : (isMobile ? -40 : -70),
+                scale: 0.92,
+                rotateZ: 0,
+              },
+              {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                rotateZ: 0,
+                duration: 0.9,
+                ease: "power2.out",
+              },
+              11.6 + idx * 0.025
+            );
+
+            // 2. SCROLL-DRIVEN PARALLAX MOVEMENT (Time 12.2 -> 15.0) - Smooth movement on scroll
+            tl.to(
+              col,
+              {
+                y: isOdd ? (isMobile ? -80 : -180) : (isMobile ? 80 : 180),
+                ease: "none",
+                duration: 2.8,
+              },
+              12.2
+            );
+          });
+        } else {
+          tl.fromTo(
+            slide2WatermarkRef.current,
+            { scale: 0.92, opacity: 0 },
+            { scale: 1, opacity: 1, duration: 1.0, ease: "power2.out" },
+            11.6
+          );
+        }
       }
 
       const slide2Items = slide2ContentRef.current
@@ -818,17 +842,37 @@ export function IdeasIntoImpact() {
         );
       }
 
+      // DISASSEMBLE ANIMATION (Time 15.0 -> 16.2) - Columns fly out top/bottom
       if (slide2WatermarkRef.current) {
-        tl.to(
-          slide2WatermarkRef.current,
-          {
-            opacity: 0,
-            xPercent: -30,
-            duration: 1.2,
-            ease: "none",
-          },
-          15.0
-        );
+        const cols = slide2WatermarkRef.current.querySelectorAll(".vertical-card-col");
+        if (cols.length > 0) {
+          cols.forEach((col, idx) => {
+            const isOdd = idx % 2 === 0;
+            tl.to(
+              col,
+              {
+                opacity: 0,
+                y: isOdd ? (isMobile ? -150 : -320) : (isMobile ? 150 : 320),
+                scale: 0.75,
+                filter: "blur(10px)",
+                duration: 1.2,
+                ease: "power2.in",
+              },
+              15.0 + idx * 0.04
+            );
+          });
+        } else {
+          tl.to(
+            slide2WatermarkRef.current,
+            {
+              opacity: 0,
+              y: -80,
+              duration: 1.2,
+              ease: "none",
+            },
+            15.0
+          );
+        }
       }
 
       if (slide2AuraRef.current) {
@@ -856,9 +900,8 @@ export function IdeasIntoImpact() {
         );
       }
 
-      // -----------------------------------------------------------------------
-      // 8. SLIDE 3 ASSEMBLES: 3D LAVENDER RIPPLE IMAGE REVEALS FIRST (Time: 15.4 -> 18.6)
-      // Background reveals first, and THEN the Thank You text gracefully animates in
+      // -----------------------------------------------------------------------      // -----------------------------------------------------------------------
+      // 8. SLIDE 3: SINGLE CENTERED LUXURY THANK YOU DISPLAY (Time: 15.4 -> 20.6)
       // -----------------------------------------------------------------------
       if (slide3LayerRef.current) {
         tl.fromTo(
@@ -877,51 +920,68 @@ export function IdeasIntoImpact() {
         );
       }
 
-      // Step 1: Background image scales and fades in FIRST
       if (slide3BgRef.current) {
         tl.fromTo(
           slide3BgRef.current,
           {
             opacity: 0,
-            scale: 1.08,
-            filter: "blur(12px)",
+            scale: 1.2,
+            filter: "blur(20px)",
           },
           {
             opacity: 1,
             scale: 1,
             filter: "blur(0px)",
             duration: 1.6,
-            ease: "power2.out",
+            ease: "power3.inOut",
           },
-          15.5
+          15.4
         );
       }
 
-      // Step 2: Thank You text & CTAs assemble AFTER background image is fully revealed
-      const allSlide3Items = slide3LayerRef.current
-        ? slide3LayerRef.current.querySelectorAll(".slide3-assemble-item")
-        : [];
+      if (slide3LayerRef.current) {
+        const headerGroup = slide3LayerRef.current.querySelector(".slide3-header-group");
+        const heyThere = slide3LayerRef.current.querySelector(".slide3-hey-there");
+        const ctaBtn = slide3LayerRef.current.querySelector(".slide3-cta-btn");
 
-      if (allSlide3Items.length > 0) {
-        tl.fromTo(
-          allSlide3Items,
-          {
-            opacity: 0,
-            y: isMobile ? 35 : 60,
-            scale: 0.94,
-            filter: "blur(10px)",
-          },
-          {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            filter: "blur(0px)",
-            stagger: 0.1,
-            duration: 1.5,
-            ease: "power3.out",
-          },
-          16.9
-        );
+        if (headerGroup) {
+          tl.fromTo(
+            headerGroup,
+            {
+              opacity: 0,
+              scale: 0.88,
+              y: isMobile ? 20 : 35,
+              filter: "blur(14px)",
+            },
+            {
+              opacity: 1,
+              scale: 1,
+              y: 0,
+              filter: "blur(0px)",
+              duration: 1.4,
+              ease: "power3.out",
+            },
+            15.6
+          );
+        }
+
+        if (heyThere) {
+          tl.fromTo(
+            heyThere,
+            { opacity: 0, scale: 0.6, y: -15 },
+            { opacity: 1, scale: 1, y: 0, duration: 1.0, ease: "back.out(1.8)" },
+            15.8
+          );
+        }
+
+        if (ctaBtn) {
+          tl.fromTo(
+            ctaBtn,
+            { opacity: 0, scale: 0.85, y: 20, filter: "blur(8px)" },
+            { opacity: 1, scale: 1, y: 0, filter: "blur(0px)", duration: 1.2, ease: "back.out(1.4)" },
+            16.2
+          );
+        }
       }
 
       // -----------------------------------------------------------------------
@@ -946,24 +1006,27 @@ export function IdeasIntoImpact() {
       category: "FULLSTACK",
       color: {
         border: "border-sky-400/35 hover:border-sky-400/80",
-        bg: "from-[#0a1829] via-[#12253d] to-[#06101c]",
+        bg: "from-[#081b33] via-[#0f2e54] to-[#040c17]",
         badge: "text-sky-200 bg-sky-500/20 border-sky-400/35",
         beam: "from-transparent via-sky-400 to-transparent",
         iconWrap: "text-sky-300 bg-sky-500/20 border border-sky-400/35",
         glowDot: "bg-sky-400 shadow-[0_0_10px_#38bdf8]",
         bgLayer: (
           <>
-            {/* Swiss Alps Twilight Haze & Mountain Silhouettes (Ref 1) */}
-            <div className="absolute top-0 right-0 w-44 h-44 bg-[radial-gradient(ellipse_at_top_right,_rgba(56,189,248,0.3)_0%,_transparent_65%)]" />
-            <div className="absolute bottom-0 right-0 w-36 h-28 opacity-25">
+            {/* Graphic Artwork: Swiss Cyber Alps & 3D Tech Blueprint Grid */}
+            <div className="absolute top-0 right-0 w-48 h-48 bg-[radial-gradient(ellipse_at_top_right,_rgba(56,189,248,0.4)_0%,_rgba(14,165,233,0.15)_40%,_transparent_70%)]" />
+            <div className="absolute bottom-0 right-0 w-40 h-32 opacity-35">
               <svg viewBox="0 0 200 120" className="w-full h-full text-sky-200" fill="currentColor">
-                <polygon points="20,120 70,40 120,120" opacity="0.6" />
-                <polygon points="80,120 130,20 180,120" opacity="0.9" />
-                <polygon points="120,120 160,50 200,120" opacity="0.4" />
-                <polyline points="130,20 138,45 125,50 142,65" stroke="white" strokeWidth="2" fill="none" opacity="0.8" />
+                <polygon points="20,120 70,35 120,120" opacity="0.5" />
+                <polygon points="75,120 130,15 185,120" opacity="0.85" />
+                <polygon points="120,120 160,45 200,120" opacity="0.35" />
+                <polyline points="130,15 138,40 125,48 142,62" stroke="#ffffff" strokeWidth="2.5" fill="none" opacity="0.9" />
+                <circle cx="130" cy="15" r="4" fill="#38bdf8" />
               </svg>
             </div>
-            <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[#06101c] via-[#06101c]/80 to-transparent" />
+            {/* Tech Grid Pattern Lines */}
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(56,189,248,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(56,189,248,0.05)_1px,transparent_1px)] bg-[size:16px_16px] opacity-40" />
+            <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[#040c17] via-[#040c17]/80 to-transparent" />
           </>
         ),
       },
@@ -982,26 +1045,28 @@ export function IdeasIntoImpact() {
       category: "DESIGN",
       color: {
         border: "border-purple-400/35 hover:border-purple-400/80",
-        bg: "from-[#24083d] via-[#170329] to-[#090112]",
+        bg: "from-[#2e094d] via-[#48126b] to-[#120324]",
         badge: "text-purple-200 bg-purple-500/20 border-purple-400/35",
         beam: "from-transparent via-purple-400 to-transparent",
         iconWrap: "text-purple-300 bg-purple-500/20 border border-purple-400/35",
         glowDot: "bg-purple-400 shadow-[0_0_10px_#c084fc]",
         bgLayer: (
           <>
-            {/* Holographic Iridescent Liquid & Chrome Violet (Ref 2) */}
-            <div className="absolute top-0 right-0 w-48 h-48 bg-[radial-gradient(circle_at_80%_20%,_rgba(168,85,247,0.38)_0%,_rgba(236,72,153,0.2)_40%,_transparent_70%)]" />
-            <div className="absolute -bottom-6 -right-6 w-36 h-36 opacity-30">
+            {/* Graphic Artwork: Holographic Fluid Orb & Chromatic Waves */}
+            <div className="absolute top-0 right-0 w-52 h-52 bg-[radial-gradient(circle_at_80%_20%,_rgba(192,132,252,0.45)_0%,_rgba(236,72,153,0.25)_40%,_transparent_70%)]" />
+            <div className="absolute -bottom-6 -right-6 w-40 h-40 opacity-40">
               <svg viewBox="0 0 100 100" className="w-full h-full">
                 <defs>
-                  <linearGradient id="holoFluid" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <linearGradient id="holoFluidGraphic" x1="0%" y1="0%" x2="100%" y2="100%">
                     <stop offset="0%" stopColor="#c084fc" />
                     <stop offset="50%" stopColor="#38bdf8" />
                     <stop offset="100%" stopColor="#f472b6" />
                   </linearGradient>
                 </defs>
-                <circle cx="50" cy="50" r="40" fill="url(#holoFluid)" opacity="0.6" filter="blur(4px)" />
-                <path d="M20,50 Q50,10 80,50 T140,50" stroke="url(#holoFluid)" strokeWidth="8" fill="none" opacity="0.7" />
+                <circle cx="50" cy="50" r="38" fill="url(#holoFluidGraphic)" opacity="0.65" filter="blur(3px)" />
+                <path d="M15,50 C35,20 65,80 85,50" stroke="url(#holoFluidGraphic)" strokeWidth="6" strokeLinecap="round" fill="none" opacity="0.85" />
+                <circle cx="35" cy="35" r="6" fill="#ffffff" opacity="0.7" />
+                <circle cx="65" cy="65" r="4" fill="#38bdf8" opacity="0.9" />
               </svg>
             </div>
           </>
@@ -1019,23 +1084,34 @@ export function IdeasIntoImpact() {
     },
     {
       num: "03",
+      cardImg: "/assets/cards/card-03-automation.png",
       title: "Intelligent Automation",
       desc: "Smart workflow engines to save time and scale fast.",
       category: "SYSTEMS",
       color: {
         border: "border-amber-400/35 hover:border-amber-400/80",
-        bg: "from-[#2d0a24] via-[#1c0418] to-[#0d010c]",
+        bg: "from-[#380e2b] via-[#52153f] to-[#14040e]",
         badge: "text-amber-200 bg-amber-500/20 border-amber-400/35",
         beam: "from-transparent via-amber-400 to-transparent",
         iconWrap: "text-amber-300 bg-amber-500/20 border border-amber-400/35",
         glowDot: "bg-amber-400 shadow-[0_0_10px_#f59e0b]",
         bgLayer: (
           <>
-            {/* Studio Sunset UI & 3D Glass Spheres (Ref 3) */}
-            <div className="absolute top-0 left-0 w-44 h-44 bg-[radial-gradient(circle_at_20%_20%,_rgba(244,63,94,0.35)_0%,_rgba(251,146,60,0.25)_45%,_transparent_70%)]" />
-            <div className="absolute bottom-2 right-2 flex gap-1.5 opacity-35">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-200 via-rose-300 to-purple-400 shadow-inner" />
-              <div className="w-6 h-6 rounded-full bg-gradient-to-br from-pink-200 to-amber-400 shadow-inner -mt-2" />
+            {/* Graphic Artwork: Magenta & Sunset Orbs with Energy Lightning Arc */}
+            <div className="absolute top-0 left-0 w-48 h-48 bg-[radial-gradient(circle_at_20%_20%,_rgba(244,63,94,0.4)_0%,_rgba(251,146,60,0.3)_45%,_transparent_70%)]" />
+            <div className="absolute bottom-1 right-1 w-36 h-36 opacity-45">
+              <svg viewBox="0 0 100 100" className="w-full h-full">
+                <defs>
+                  <linearGradient id="sunsetOrbGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#f59e0b" />
+                    <stop offset="50%" stopColor="#f43f5e" />
+                    <stop offset="100%" stopColor="#c084fc" />
+                  </linearGradient>
+                </defs>
+                <circle cx="65" cy="65" r="28" fill="url(#sunsetOrbGrad)" opacity="0.75" />
+                <circle cx="35" cy="40" r="16" fill="#fb923c" opacity="0.6" />
+                <path d="M20,80 Q50,40 85,25" stroke="#f59e0b" strokeWidth="2.5" strokeDasharray="3 3" fill="none" opacity="0.85" />
+              </svg>
             </div>
           </>
         ),
@@ -1048,24 +1124,27 @@ export function IdeasIntoImpact() {
     },
     {
       num: "04",
+      cardImg: "/assets/cards/card-04-creative-direction.jpg",
       title: "Creative Direction",
       desc: "Tailored concepts that give digital brands an edge.",
       category: "BRANDING",
       color: {
         border: "border-emerald-400/35 hover:border-emerald-400/80",
-        bg: "from-[#042115] via-[#083020] to-[#02110b]",
+        bg: "from-[#063321] via-[#0d4f34] to-[#02140c]",
         badge: "text-emerald-200 bg-emerald-500/20 border-emerald-400/35",
         beam: "from-transparent via-emerald-400 to-transparent",
         iconWrap: "text-emerald-300 bg-emerald-500/20 border border-emerald-400/35",
         glowDot: "bg-emerald-400 shadow-[0_0_10px_#10b981]",
         bgLayer: (
           <>
-            {/* Emerald Aurora & Frosted Geometric Prisms */}
-            <div className="absolute top-0 right-0 w-44 h-44 bg-[radial-gradient(circle_at_80%_30%,_rgba(16,185,129,0.32)_0%,_transparent_65%)]" />
-            <div className="absolute -bottom-4 -right-4 w-32 h-32 opacity-25">
-              <svg viewBox="0 0 100 100" className="w-full h-full text-emerald-300" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <polygon points="50,10 90,80 10,80" />
-                <polygon points="50,25 80,75 20,75" />
+            {/* Graphic Artwork: Emerald Aurora & 3D Glass Prism Structure */}
+            <div className="absolute top-0 right-0 w-48 h-48 bg-[radial-gradient(circle_at_80%_30%,_rgba(16,185,129,0.4)_0%,_rgba(52,211,153,0.18)_45%,_transparent_70%)]" />
+            <div className="absolute -bottom-3 -right-3 w-36 h-36 opacity-35">
+              <svg viewBox="0 0 100 100" className="w-full h-full text-emerald-300" fill="none" stroke="currentColor">
+                <polygon points="50,10 90,80 10,80" strokeWidth="2" fill="rgba(16,185,129,0.15)" />
+                <polygon points="50,28 78,74 22,74" strokeWidth="1.5" fill="rgba(52,211,153,0.25)" />
+                <line x1="50" y1="10" x2="50" y2="80" strokeWidth="1.5" strokeDasharray="2 2" />
+                <circle cx="50" cy="10" r="3" fill="#ffffff" />
               </svg>
             </div>
           </>
@@ -1084,23 +1163,25 @@ export function IdeasIntoImpact() {
       title: "3D Web & WebGL",
       desc: "Interactive spatial 3D shaders and immersive Three.js worlds.",
       category: "GRAPHICS",
+      cardImg: "/assets/cards/card-05-3d-webgl.png",
       color: {
         border: "border-rose-400/35 hover:border-rose-400/80",
-        bg: "from-[#290717] via-[#1b030f] to-[#0b0106]",
+        bg: "from-[#3d0a21] via-[#5c0f32] to-[#14020a]",
         badge: "text-rose-200 bg-rose-500/20 border-rose-400/35",
         beam: "from-transparent via-rose-400 to-transparent",
         iconWrap: "text-rose-300 bg-rose-500/20 border border-rose-400/35",
         glowDot: "bg-rose-400 shadow-[0_0_10px_#f43f5e]",
         bgLayer: (
           <>
-            {/* Cyberpunk Crimson Laser Core & 3D Wireframe */}
-            <div className="absolute top-0 right-0 w-44 h-44 bg-[radial-gradient(circle_at_80%_20%,_rgba(244,63,94,0.35)_0%,_transparent_65%)]" />
-            <div className="absolute bottom-1 right-2 w-28 h-28 opacity-25">
-              <svg viewBox="0 0 100 100" className="w-full h-full text-rose-300" fill="none" stroke="currentColor" strokeWidth="1.2">
-                <polygon points="50,15 85,35 85,75 50,95 15,75 15,35" />
-                <line x1="50" y1="15" x2="50" y2="95" />
+            {/* Graphic Artwork: Crimson Laser Core & 3D Wireframe Cube Mesh */}
+            <div className="absolute top-0 right-0 w-48 h-48 bg-[radial-gradient(circle_at_80%_20%,_rgba(244,63,94,0.42)_0%,_rgba(225,29,72,0.2)_45%,_transparent_70%)]" />
+            <div className="absolute bottom-1 right-2 w-32 h-32 opacity-35">
+              <svg viewBox="0 0 100 100" className="w-full h-full text-rose-300" fill="none" stroke="currentColor" strokeWidth="1.4">
+                <polygon points="50,15 85,35 85,75 50,95 15,75 15,35" fill="rgba(244,63,94,0.12)" />
+                <line x1="50" y1="15" x2="50" y2="95" strokeWidth="1.8" />
                 <line x1="15" y1="35" x2="85" y2="75" />
                 <line x1="15" y1="75" x2="85" y2="35" />
+                <circle cx="50" cy="55" r="6" fill="#f43f5e" />
               </svg>
             </div>
           </>
@@ -1119,59 +1200,116 @@ export function IdeasIntoImpact() {
       title: "Fullstack Architecture",
       desc: "Robust backend engines, distributed APIs and low-latency data.",
       category: "ENGINEERING",
+      cardImg: "/assets/cards/card-06-fullstack.png",
       color: {
-        border: "border-indigo-400/35 hover:border-indigo-400/80",
-        bg: "from-[#07132e] via-[#0d1d42] to-[#030713]",
-        badge: "text-indigo-200 bg-indigo-500/20 border-indigo-400/35",
-        beam: "from-transparent via-indigo-400 to-transparent",
-        iconWrap: "text-indigo-300 bg-indigo-500/20 border border-indigo-400/35",
-        glowDot: "bg-indigo-400 shadow-[0_0_10px_#6366f1]",
+        border: "border-slate-200/90 hover:border-indigo-500/80 shadow-[0_12px_36px_rgba(0,0,0,0.06)] hover:shadow-[0_20px_45px_rgba(79,70,229,0.18)]",
+        bg: "from-[#ffffff] via-[#f8fafc] to-[#f1f5f9]",
+        badge: "text-indigo-700 bg-indigo-50/90 border-indigo-200/80 font-bold shadow-2xs",
+        beam: "from-transparent via-indigo-500 to-transparent",
+        iconWrap: "text-indigo-600 bg-indigo-50 border border-indigo-200/80 shadow-xs",
+        glowDot: "bg-indigo-600 shadow-[0_0_10px_#4f46e5]",
+        textTitle: "text-slate-900 drop-shadow-none font-black",
+        textDesc: "text-slate-600 font-medium",
+        textBottom: "border-slate-200/90 text-slate-500 font-semibold",
         bgLayer: (
           <>
-            {/* Deep Sapphire Cobalt Circuit Constellation */}
-            <div className="absolute top-0 right-0 w-44 h-44 bg-[radial-gradient(circle_at_80%_30%,_rgba(99,102,241,0.32)_0%,_transparent_65%)]" />
-            <div className="absolute -bottom-2 -right-2 w-32 h-32 opacity-25">
-              <svg viewBox="0 0 100 100" className="w-full h-full text-indigo-300" fill="none" stroke="currentColor" strokeWidth="1.2">
-                <circle cx="20" cy="80" r="4" fill="currentColor" />
-                <circle cx="80" cy="30" r="4" fill="currentColor" />
-                <circle cx="60" cy="70" r="4" fill="currentColor" />
-                <polyline points="20,80 50,80 60,70 80,70 80,30" />
-                <line x1="60" y1="70" x2="60" y2="40" />
+            {/* White Card Luxury Ambient Glow & Blueprint Grid */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[radial-gradient(circle_at_80%_20%,_rgba(99,102,241,0.14)_0%,_rgba(59,130,246,0.08)_45%,_transparent_70%)]" />
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(99,102,241,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(99,102,241,0.06)_1px,transparent_1px)] bg-[size:16px_16px] opacity-60" />
+
+            {/* Official Tech Stack Architecture SVG Diagram */}
+            <div className="absolute -bottom-1 -right-1 w-44 h-44 pointer-events-none select-none">
+              <svg viewBox="0 0 160 160" className="w-full h-full">
+                <defs>
+                  <filter id="whiteCardLogoGlow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="4" stdDeviation="3" floodColor="#4f46e5" floodOpacity="0.12" />
+                  </filter>
+                </defs>
+
+                {/* Microservice Architecture Interconnect Circuit Lines */}
+                <path d="M 30,120 L 70,120 L 95,85 L 130,85" fill="none" stroke="#6366f1" strokeWidth="1.8" opacity="0.3" />
+                <path d="M 70,120 L 70,50 L 120,50" fill="none" stroke="#3b82f6" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.4" />
+                <path d="M 95,85 L 95,130 L 135,130" fill="none" stroke="#e535ab" strokeWidth="1.5" opacity="0.3" />
+
+                {/* 1. Official Node.js Hexagon Logo */}
+                <g transform="translate(15, 95)" filter="url(#whiteCardLogoGlow)">
+                  <path fill="#339933" d="M20 3L3 12.8v19.4L20 42l17-9.8V12.8L20 3z" />
+                  <path fill="#FFFFFF" d="M20 11c-4.2 0-6.8 2.3-6.8 5.6 0 2.8 1.8 4.4 4.9 5.1l1.5.4c1.6.3 2.3 1 2.3 1.8 0 1-.9 1.7-2.6 1.7-1.8 0-3.5-.7-4.7-1.9l-1.5 2c1.6 1.6 4.1 2.5 6.3 2.5 4.4 0 7.2-2.3 7.2-5.7 0-3.1-2.1-4.6-5.1-5.3l-1.5-.4c-1.6-.3-2.2-.8-2.2-1.7 0-.9.9-1.5 2.3-1.5 1.5 0 3 .5 4.1 1.6l1.4-1.9c-1.4-1.4-3.5-2-5.6-2z" />
+                </g>
+
+                {/* 2. Official React Orbital Atom Logo */}
+                <g transform="translate(100, 25)" filter="url(#whiteCardLogoGlow)">
+                  <circle cx="16" cy="16" r="3.2" fill="#0284c7" />
+                  <g stroke="#0284c7" strokeWidth="1.8" fill="none">
+                    <ellipse cx="16" cy="16" rx="14" ry="5.5" />
+                    <ellipse cx="16" cy="16" rx="14" ry="5.5" transform="rotate(60 16 16)" />
+                    <ellipse cx="16" cy="16" rx="14" ry="5.5" transform="rotate(120 16 16)" />
+                  </g>
+                </g>
+
+                {/* 3. Official PostgreSQL Database Engine Logo */}
+                <g transform="translate(90, 65)" filter="url(#whiteCardLogoGlow)">
+                  <rect x="2" y="2" width="36" height="36" rx="10" fill="#ffffff" stroke="#e2e8f0" strokeWidth="1.5" />
+                  <ellipse cx="20" cy="13" rx="11" ry="4" fill="#336791" opacity="0.85" />
+                  <path d="M31 13v7c0 2.2-4.9 4-11 4s-11-1.8-11-4v-7" fill="none" stroke="#336791" strokeWidth="2" />
+                  <path d="M31 20v7c0 2.2-4.9 4-11 4s-11-1.8-11-4v-7" fill="none" stroke="#336791" strokeWidth="2" />
+                </g>
+
+                {/* 4. Official TypeScript Badge Logo */}
+                <g transform="translate(50, 35)" filter="url(#whiteCardLogoGlow)">
+                  <rect x="0" y="0" width="28" height="28" rx="6" fill="#3178C6" />
+                  <path fill="#ffffff" d="M11 12H7.5v2.5H11V22h3v-7.5h3.5V12H11zm12.5 3c-1-.6-2.2-1-3.3-1-1.4 0-2.2.6-2.2 1.5 0 .9.8 1.4 2.4 1.9 2.8 1 4.4 2.1 4.4 4.5 0 2.7-2.2 4.3-5.5 4.3-1.8 0-3.5-.5-4.9-1.4l1-2.4c1.1.7 2.6 1.2 3.9 1.2 1.5 0 2.4-.6 2.4-1.6 0-.9-.7-1.4-2.4-2-2.7-1-4.1-2.1-4.1-4.3 0-2.6 2.1-4.3 5.3-4.3 1.6 0 3.1.4 4.2 1l-1 2.6z" transform="scale(0.85) translate(0, 1)" />
+                </g>
+
+                {/* 5. Official GraphQL Hex Logo */}
+                <g transform="translate(105, 110)" filter="url(#whiteCardLogoGlow)">
+                  <polygon points="15,2 26,8 26,20 15,26 4,20 4,8" fill="none" stroke="#e535ab" strokeWidth="2" />
+                  <polygon points="15,5 23,19 7,19" fill="none" stroke="#e535ab" strokeWidth="1.8" />
+                  <circle cx="15" cy="5" r="2.5" fill="#e535ab" />
+                  <circle cx="23" cy="19" r="2.5" fill="#e535ab" />
+                  <circle cx="7" cy="19" r="2.5" fill="#e535ab" />
+                </g>
+
+                {/* Live Node Pulse Indicators */}
+                <circle cx="95" cy="85" r="3.5" fill="#6366f1" className="animate-ping" opacity="0.7" />
+                <circle cx="95" cy="85" r="3" fill="#6366f1" />
               </svg>
             </div>
           </>
         ),
       },
       icon: (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-          <polyline points="16 18 22 12 16 6" />
-          <polyline points="8 6 2 12 8 18" />
-          <line x1="14" y1="4" x2="10" y2="20" />
+        /* Official Node.js Hexagon SVG Brand Logo */
+        <svg viewBox="0 0 32 32" fill="none" className="w-5 h-5">
+          <path fill="#339933" d="M16 2L3 9.5v15L16 32l13-7.5v-15L16 2z" />
+          <path fill="#FFFFFF" d="M16 8.5c-3.6 0-5.8 2-5.8 4.8 0 2.4 1.5 3.8 4.2 4.4l1.3.3c1.4.3 1.9.8 1.9 1.5 0 .8-.8 1.4-2.2 1.4-1.5 0-3-.6-4-1.6l-1.3 1.7c1.4 1.4 3.5 2.1 5.4 2.1 3.8 0 6.2-2 6.2-4.9 0-2.6-1.8-3.9-4.4-4.5l-1.3-.3c-1.3-.3-1.9-.7-1.9-1.4 0-.8.8-1.3 2-1.3 1.3 0 2.6.4 3.5 1.4l1.2-1.6c-1.2-1.2-3-1.7-4.8-1.7z" />
         </svg>
       ),
     },
     {
       num: "07",
+      cardImg: "/assets/cards/card-07-ai-llm.jpg",
       title: "AI & LLM Integration",
       desc: "Autonomous agentic pipelines, RAG systems & model orchestration.",
       category: "INTELLIGENCE",
       color: {
         border: "border-teal-400/35 hover:border-teal-400/80",
-        bg: "from-[#032123] via-[#063136] to-[#021011]",
+        bg: "from-[#052b2e] via-[#0a4247] to-[#021213]",
         badge: "text-teal-200 bg-teal-500/20 border-teal-400/35",
         beam: "from-transparent via-teal-400 to-transparent",
         iconWrap: "text-teal-300 bg-teal-500/20 border border-teal-400/35",
         glowDot: "bg-teal-400 shadow-[0_0_10px_#14b8a6]",
         bgLayer: (
           <>
-            {/* Quantum Synaptic Neural Matrix */}
-            <div className="absolute top-0 right-0 w-44 h-44 bg-[radial-gradient(circle_at_80%_20%,_rgba(20,184,166,0.32)_0%,_transparent_65%)]" />
-            <div className="absolute bottom-1 right-1 w-32 h-32 opacity-25">
+            {/* Graphic Artwork: Quantum Synaptic Neural Plexus & Holographic Radar */}
+            <div className="absolute top-0 right-0 w-48 h-48 bg-[radial-gradient(circle_at_80%_20%,_rgba(20,184,166,0.4)_0%,_rgba(45,212,191,0.2)_45%,_transparent_70%)]" />
+            <div className="absolute bottom-1 right-1 w-36 h-36 opacity-35">
               <svg viewBox="0 0 100 100" className="w-full h-full text-teal-300">
-                <circle cx="50" cy="50" r="35" stroke="currentColor" strokeWidth="1" strokeDasharray="4 4" fill="none" />
-                <circle cx="50" cy="50" r="20" stroke="currentColor" strokeWidth="1.5" fill="none" />
-                <circle cx="50" cy="50" r="5" fill="currentColor" />
-                <line x1="15" y1="50" x2="85" y2="50" stroke="currentColor" strokeWidth="1" />
+                <circle cx="50" cy="50" r="38" stroke="currentColor" strokeWidth="1.2" strokeDasharray="5 4" fill="none" />
+                <circle cx="50" cy="50" r="24" stroke="currentColor" strokeWidth="1.8" fill="rgba(20,184,166,0.1)" />
+                <circle cx="50" cy="50" r="7" fill="#2dd4bf" />
+                <line x1="10" y1="50" x2="90" y2="50" stroke="currentColor" strokeWidth="1" opacity="0.6" />
+                <line x1="50" y1="10" x2="50" y2="90" stroke="currentColor" strokeWidth="1" opacity="0.6" />
               </svg>
             </div>
           </>
@@ -1186,25 +1324,27 @@ export function IdeasIntoImpact() {
     },
     {
       num: "08",
+      cardImg: "/assets/cards/card-08-motion.png",
       title: "Motion & Interactions",
       desc: "Kinetic typography, GSAP physics and 60fps micro-interactions.",
       category: "EXPERIENCE",
       color: {
         border: "border-orange-400/35 hover:border-orange-400/80",
-        bg: "from-[#2b1103] via-[#3d1805] to-[#120501]",
+        bg: "from-[#3b1704] via-[#572306] to-[#140701]",
         badge: "text-orange-200 bg-orange-500/20 border-orange-400/35",
         beam: "from-transparent via-orange-400 to-transparent",
         iconWrap: "text-orange-300 bg-orange-500/20 border border-orange-400/35",
         glowDot: "bg-orange-400 shadow-[0_0_10px_#f97316]",
         bgLayer: (
           <>
-            {/* Solar Flare Corona & Kinetic Speed Stream */}
-            <div className="absolute top-0 right-0 w-44 h-44 bg-[radial-gradient(circle_at_80%_30%,_rgba(249,115,22,0.32)_0%,_transparent_65%)]" />
-            <div className="absolute -bottom-4 -right-4 w-36 h-36 opacity-25">
-              <svg viewBox="0 0 100 100" className="w-full h-full text-orange-300" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <path d="M0,80 Q50,20 100,60" />
-                <path d="M10,95 Q60,35 100,75" />
-                <path d="M20,110 Q70,50 100,90" />
+            {/* Graphic Artwork: Solar Orange Corona & Kinetic Swoop Curves */}
+            <div className="absolute top-0 right-0 w-48 h-48 bg-[radial-gradient(circle_at_80%_30%,_rgba(249,115,22,0.42)_0%,_rgba(251,146,60,0.2)_45%,_transparent_70%)]" />
+            <div className="absolute -bottom-4 -right-4 w-40 h-40 opacity-35">
+              <svg viewBox="0 0 100 100" className="w-full h-full text-orange-300" fill="none" stroke="currentColor">
+                <path d="M-10,90 Q50,10 110,60" strokeWidth="2.5" />
+                <path d="M0,105 Q60,25 110,75" strokeWidth="1.8" strokeDasharray="4 3" />
+                <path d="M10,120 Q70,40 110,90" strokeWidth="1.2" />
+                <circle cx="70" cy="35" r="4" fill="#fb923c" />
               </svg>
             </div>
           </>
@@ -1220,24 +1360,67 @@ export function IdeasIntoImpact() {
     },
     {
       num: "09",
-      title: "Brand Strategy",
-      desc: "Cohesive visual narratives that position products as market leaders.",
-      category: "STRATEGY",
+      cardImg: "/assets/cards/card-09-security-engineering.png",
+      title: "Security Engineering",
+      desc: "Designing, building and protecting systems for a safer digital world.",
+      category: "CYBERSECURITY",
       color: {
-        border: "border-red-400/35 hover:border-red-400/80",
-        bg: "from-[#280606] via-[#380909] to-[#110202]",
-        badge: "text-red-200 bg-red-500/20 border-red-400/35",
-        beam: "from-transparent via-red-400 to-transparent",
-        iconWrap: "text-red-300 bg-red-500/20 border border-red-400/35",
-        glowDot: "bg-red-400 shadow-[0_0_10px_#ef4444]",
+        border: "border-sky-400/40 hover:border-sky-400/90 shadow-[0_16px_36px_rgba(0,0,0,0.55)]",
+        bg: "from-[#04132e] via-[#092659] to-[#020a1a]",
+        badge: "text-sky-200 bg-sky-500/20 border-sky-400/40 font-bold uppercase backdrop-blur-md",
+        beam: "from-transparent via-sky-400 to-transparent",
+        iconWrap: "text-sky-300 bg-sky-500/20 border border-sky-400/40 shadow-xs backdrop-blur-md",
+        glowDot: "bg-sky-400 shadow-[0_0_10px_#38bdf8]",
+        textTitle: "text-white font-bold drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]",
+        textDesc: "text-slate-300/90 font-medium",
+        textBottom: "border-white/10 text-white/70",
         bgLayer: (
           <>
-            {/* Crimson Luxe Velvet & Specular Starburst */}
-            <div className="absolute top-0 right-0 w-44 h-44 bg-[radial-gradient(circle_at_80%_20%,_rgba(239,68,68,0.32)_0%,_transparent_65%)]" />
-            <div className="absolute bottom-2 right-2 w-28 h-28 opacity-25">
-              <svg viewBox="0 0 100 100" className="w-full h-full text-red-300">
-                <path d="M50,10 L55,45 L90,50 L55,55 L50,90 L45,55 L10,50 L45,45 Z" fill="currentColor" opacity="0.6" />
-                <circle cx="50" cy="50" r="12" fill="white" opacity="0.8" />
+            {/* Ambient Sapphire Glow & Blueprint Grid */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[radial-gradient(circle_at_80%_20%,_rgba(56,189,248,0.35)_0%,_rgba(37,99,235,0.15)_45%,_transparent_70%)]" />
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(56,189,248,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(56,189,248,0.06)_1px,transparent_1px)] bg-[size:16px_16px] opacity-40" />
+
+            {/* Top Micro Sub-Header */}
+            <div className="absolute top-3 left-16 text-[8px] font-mono tracking-widest text-sky-300/60 uppercase select-none pointer-events-none">
+              GUIDE IDEAS • SHAPE MARKETS
+            </div>
+
+            {/* Right Side Watermark Column */}
+            <div className="absolute top-12 right-3 text-[7.5px] font-mono tracking-widest text-sky-200/15 flex flex-col gap-1 items-end uppercase select-none pointer-events-none">
+              <span>IDEAS</span>
+              <span>BRANDS</span>
+              <span>MARKETS</span>
+              <span>IMPACT</span>
+            </div>
+
+            {/* 3D Geometric "A" Strategy Blueprint Artwork */}
+            <div className="absolute -bottom-1 -right-1 w-44 h-44 pointer-events-none select-none">
+              <svg viewBox="0 0 160 160" className="w-full h-full">
+                <defs>
+                  <linearGradient id="brandA3dGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#38bdf8" />
+                    <stop offset="60%" stopColor="#2563eb" />
+                    <stop offset="100%" stopColor="#1d4ed8" />
+                  </linearGradient>
+                  <filter id="brandAGlow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="8" stdDeviation="6" floodColor="#38bdf8" floodOpacity="0.35" />
+                  </filter>
+                </defs>
+
+                {/* Radar Crosshair Target Circles */}
+                <circle cx="80" cy="80" r="55" stroke="#38bdf8" strokeWidth="1" strokeDasharray="4 4" opacity="0.3" fill="none" />
+                <line x1="80" y1="15" x2="80" y2="145" stroke="#38bdf8" strokeWidth="0.8" opacity="0.25" />
+                <line x1="15" y1="80" x2="145" y2="80" stroke="#38bdf8" strokeWidth="0.8" opacity="0.25" />
+
+                {/* 3D "A" Logo Emblem */}
+                <g filter="url(#brandAGlow)">
+                  <polygon points="80,25 125,120 102,120 80,72 58,120 35,120" fill="url(#brandA3dGrad)" />
+                  <polygon points="80,25 102,120 80,72" fill="#60a5fa" opacity="0.45" />
+                  <line x1="52" y1="95" x2="108" y2="95" stroke="#ffffff" strokeWidth="2.5" opacity="0.95" />
+                </g>
+
+                {/* Glowing Target Node */}
+                <circle cx="132" cy="120" r="4.5" fill="#38bdf8" className="animate-pulse" />
               </svg>
             </div>
           </>
@@ -1252,24 +1435,96 @@ export function IdeasIntoImpact() {
     },
     {
       num: "10",
+      cardImg: "/assets/cards/card-10-cloud.png",
       title: "Cloud Architecture",
       desc: "Serverless deployments, edge computing and high-availability stacks.",
       category: "INFRA",
       color: {
-        border: "border-blue-400/35 hover:border-blue-400/80",
-        bg: "from-[#091a33] via-[#10274a] to-[#040c19]",
-        badge: "text-blue-200 bg-blue-500/20 border-blue-400/35",
+        border: "border-blue-400/40 hover:border-blue-400/90 shadow-[0_16px_36px_rgba(0,0,0,0.55)]",
+        bg: "from-[#061838] via-[#0b295c] to-[#030e24]",
+        badge: "text-blue-200 bg-blue-500/20 border-blue-400/40 font-bold uppercase backdrop-blur-md",
         beam: "from-transparent via-blue-400 to-transparent",
-        iconWrap: "text-blue-300 bg-blue-500/20 border border-blue-400/35",
+        iconWrap: "text-blue-300 bg-blue-500/20 border border-blue-400/40 shadow-xs backdrop-blur-md",
         glowDot: "bg-blue-400 shadow-[0_0_10px_#3b82f6]",
+        textTitle: "text-white font-bold drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]",
+        textDesc: "text-slate-300/90 font-medium",
+        textBottom: "border-white/10 text-white/70",
         bgLayer: (
           <>
-            {/* Arctic Stratosphere Clouds & Crystal Polygons */}
-            <div className="absolute top-0 right-0 w-44 h-44 bg-[radial-gradient(circle_at_80%_30%,_rgba(59,130,246,0.32)_0%,_transparent_65%)]" />
-            <div className="absolute -bottom-2 -right-2 w-32 h-32 opacity-25">
-              <svg viewBox="0 0 100 100" className="w-full h-full text-blue-300" fill="none" stroke="currentColor" strokeWidth="1.2">
-                <polygon points="20,40 50,20 80,40 80,70 50,90 20,70" />
-                <polygon points="35,50 50,40 65,50 65,65 50,75 35,65" />
+            {/* Arctic Blue Ambient Glow & Isometric Grid */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[radial-gradient(circle_at_80%_20%,_rgba(59,130,246,0.38)_0%,_rgba(96,165,250,0.15)_45%,_transparent_70%)]" />
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(59,130,246,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(59,130,246,0.06)_1px,transparent_1px)] bg-[size:16px_16px] opacity-40" />
+
+            {/* Top Micro Sub-Header */}
+            <div className="absolute top-3 left-16 text-[8px] font-mono tracking-widest text-blue-300/60 uppercase select-none pointer-events-none">
+              DEPLOY • SCALE • MONITOR
+            </div>
+
+            {/* 3D Glass Cloud & Dual Server Racks Artwork */}
+            <div className="absolute -bottom-2 -right-2 w-48 h-48 pointer-events-none select-none">
+              <svg viewBox="0 0 180 180" className="w-full h-full">
+                <defs>
+                  <linearGradient id="cloud3dGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#60a5fa" />
+                    <stop offset="50%" stopColor="#3b82f6" />
+                    <stop offset="100%" stopColor="#1d4ed8" />
+                  </linearGradient>
+                  <filter id="cloud3dGlow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="8" stdDeviation="6" floodColor="#3b82f6" floodOpacity="0.4" />
+                  </filter>
+                </defs>
+
+                {/* Isometric Server Racks */}
+                <g transform="translate(65, 80)">
+                  {/* Top Server Slab */}
+                  <polygon points="40,10 80,30 40,50 0,30" fill="#1e40af" stroke="#60a5fa" strokeWidth="1.2" opacity="0.9" />
+                  <polygon points="0,30 40,50 40,62 0,42" fill="#1d4ed8" />
+                  <polygon points="40,50 80,30 80,42 40,62" fill="#1e3a8a" />
+                  <circle cx="20" cy="38" r="1.5" fill="#60a5fa" />
+                  <circle cx="26" cy="41" r="1.5" fill="#60a5fa" />
+
+                  {/* Bottom Server Slab */}
+                  <g transform="translate(0, 22)">
+                    <polygon points="40,10 80,30 40,50 0,30" fill="#1e40af" stroke="#60a5fa" strokeWidth="1.2" opacity="0.9" />
+                    <polygon points="0,30 40,50 40,62 0,42" fill="#1d4ed8" />
+                    <polygon points="40,50 80,30 80,42 40,62" fill="#1e3a8a" />
+                    <circle cx="20" cy="38" r="1.5" fill="#38bdf8" />
+                    <circle cx="26" cy="41" r="1.5" fill="#38bdf8" />
+                  </g>
+                </g>
+
+                {/* Floating 3D Cloud Emblem */}
+                <g transform="translate(45, 20)" filter="url(#cloud3dGlow)">
+                  <path fill="url(#cloud3dGrad)" d="M52 35c0-11-9-20-20-20-8.5 0-16 5.3-18.7 13.1C10.5 29 8 32.5 8 37c0 6.6 5.4 12 12 12h32c7.7 0 14-6.3 14-14 0-7.2-5.5-13.2-12.6-13.9-.9-.1-1.4-.1-1.4-.1z" />
+                  <path fill="#93c5fd" opacity="0.4" d="M32 17c9.5 0 17.5 6.7 19.3 16.1C49.9 33 48.5 33 47 33c-1.2 0-2.3.1-3.4.4-1.8-6.6-7.8-11.4-14.9-11.4-6.3 0-11.8 3.8-14 9.5C12.4 28 9.5 29 8.2 31c2-8 9.1-14 17.8-14z" />
+                </g>
+
+                {/* Floating Status Badges SVG Elements */}
+                <g transform="translate(15, 30)">
+                  <rect x="0" y="0" width="42" height="18" rx="5" fill="#0f172a" opacity="0.75" stroke="#3b82f6" strokeWidth="0.8" />
+                  <text x="21" y="12" fill="#bfdbfe" fontSize="8" fontFamily="sans-serif" textAnchor="middle">🌐 Edge</text>
+                </g>
+
+                <g transform="translate(100, 35)">
+                  <rect x="0" y="0" width="70" height="18" rx="5" fill="#0f172a" opacity="0.75" stroke="#3b82f6" strokeWidth="0.8" />
+                  <text x="35" y="12" fill="#bfdbfe" fontSize="7.5" fontFamily="sans-serif" textAnchor="middle">🛡️ High Avail.</text>
+                </g>
+
+                <g transform="translate(10, 85)">
+                  <rect x="0" y="0" width="56" height="18" rx="5" fill="#0f172a" opacity="0.75" stroke="#3b82f6" strokeWidth="0.8" />
+                  <text x="28" y="12" fill="#bfdbfe" fontSize="7.5" fontFamily="sans-serif" textAnchor="middle">📦 Serverless</text>
+                </g>
+
+                <g transform="translate(105, 115)">
+                  <rect x="0" y="0" width="50" height="18" rx="5" fill="#0f172a" opacity="0.75" stroke="#3b82f6" strokeWidth="0.8" />
+                  <text x="25" y="12" fill="#bfdbfe" fontSize="7.5" fontFamily="sans-serif" textAnchor="middle">📊 Scalable</text>
+                </g>
+
+                {/* Interconnecting Circuit Lines */}
+                <path d="M 36,48 L 50,48 L 65,35" fill="none" stroke="#60a5fa" strokeWidth="1" strokeDasharray="2 2" />
+                <path d="M 100,44 L 85,44 L 75,35" fill="none" stroke="#60a5fa" strokeWidth="1" strokeDasharray="2 2" />
+                <circle cx="65" cy="35" r="2.5" fill="#60a5fa" />
+                <circle cx="75" cy="35" r="2.5" fill="#60a5fa" />
               </svg>
             </div>
           </>
@@ -1283,24 +1538,79 @@ export function IdeasIntoImpact() {
     },
     {
       num: "11",
+      cardImg: "/assets/cards/card-11-mobile.png",
       title: "Cross-Platform Mobile",
       desc: "Silky smooth React Native & Flutter apps that feel truly native.",
       category: "MOBILE",
       color: {
-        border: "border-lime-400/35 hover:border-lime-400/80",
-        bg: "from-[#101f03] via-[#182e05] to-[#060c01]",
-        badge: "text-lime-200 bg-lime-500/20 border-lime-400/35",
-        beam: "from-transparent via-lime-400 to-transparent",
-        iconWrap: "text-lime-300 bg-lime-500/20 border border-lime-400/35",
-        glowDot: "bg-lime-400 shadow-[0_0_10px_#84cc16]",
+        border: "border-violet-200/90 hover:border-violet-400/80 shadow-[0_12px_36px_rgba(0,0,0,0.06)] hover:shadow-[0_20px_45px_rgba(124,58,237,0.18)]",
+        bg: "from-[#ffffff] via-[#f5f3ff] to-[#eef2ff]",
+        badge: "text-violet-700 bg-violet-50/90 border-violet-200/80 font-bold shadow-2xs",
+        beam: "from-transparent via-violet-500 to-transparent",
+        iconWrap: "text-violet-600 bg-violet-50 border border-violet-200/80 shadow-xs",
+        glowDot: "bg-violet-600 shadow-[0_0_10px_#7c3aed]",
+        textTitle: "text-slate-900 drop-shadow-none font-black",
+        textDesc: "text-slate-600 font-medium",
+        textBottom: "border-violet-200/90 text-slate-500 font-semibold",
         bgLayer: (
           <>
-            {/* Cyber Device Wave & Neon Chartreuse Ripples */}
-            <div className="absolute top-0 right-0 w-44 h-44 bg-[radial-gradient(circle_at_80%_20%,_rgba(132,204,22,0.32)_0%,_transparent_65%)]" />
-            <div className="absolute -bottom-4 -right-4 w-32 h-32 opacity-25">
-              <svg viewBox="0 0 100 100" className="w-full h-full text-lime-300" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <rect x="30" y="20" width="45" height="70" rx="10" />
-                <circle cx="52.5" cy="78" r="3" fill="currentColor" />
+            {/* Ethereal Lilac Ambient Glow & Blueprint Grid */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[radial-gradient(circle_at_80%_20%,_rgba(124,58,237,0.14)_0%,_rgba(99,102,241,0.08)_45%,_transparent_70%)]" />
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(124,58,237,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(124,58,237,0.05)_1px,transparent_1px)] bg-[size:16px_16px] opacity-60" />
+
+            {/* Top Micro Sub-Header */}
+            <div className="absolute top-3 left-16 text-[8px] font-mono tracking-widest text-violet-600/70 uppercase select-none pointer-events-none">
+              BUILD ONCE • RUN EVERYWHERE
+            </div>
+
+            {/* Feature Badges Grid SVG Elements */}
+            <div className="absolute bottom-10 left-4 flex flex-wrap gap-1.5 max-w-[140px] pointer-events-none select-none z-10">
+              <span className="text-[7.5px] font-sans font-semibold text-slate-700 bg-white/90 border border-violet-200 px-2 py-0.5 rounded-md shadow-2xs">⚡ Native Performance</span>
+              <span className="text-[7.5px] font-sans font-semibold text-slate-700 bg-white/90 border border-violet-200 px-2 py-0.5 rounded-md shadow-2xs">&lt;/&gt; Single Codebase</span>
+              <span className="text-[7.5px] font-sans font-semibold text-slate-700 bg-white/90 border border-violet-200 px-2 py-0.5 rounded-md shadow-2xs">📱 iOS &amp; Android</span>
+            </div>
+
+            {/* Dual 3D iPhone Devices Graphic Artwork */}
+            <div className="absolute -bottom-1 -right-1 w-48 h-48 pointer-events-none select-none">
+              <svg viewBox="0 0 180 180" className="w-full h-full">
+                <defs>
+                  <filter id="phoneShadow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="4" dy="10" stdDeviation="6" floodColor="#4c1d95" floodOpacity="0.2" />
+                  </filter>
+                  <linearGradient id="phoneScreenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#090d16" />
+                    <stop offset="50%" stopColor="#1e1b4b" />
+                    <stop offset="100%" stopColor="#31103f" />
+                  </linearGradient>
+                </defs>
+
+                {/* Back 3D iPhone (White Glass) */}
+                <g transform="translate(100, 30) rotate(4)" filter="url(#phoneShadow)">
+                  <rect x="0" y="0" width="56" height="110" rx="14" fill="#ffffff" stroke="#cbd5e1" strokeWidth="2" />
+                  <rect x="3" y="3" width="50" height="104" rx="12" fill="#f8fafc" />
+                  {/* Dynamic Island Notch */}
+                  <rect x="19" y="7" width="18" height="4" rx="2" fill="#0f172a" />
+                  {/* UI Preview Card */}
+                  <rect x="8" y="20" width="40" height="24" rx="6" fill="#ede9fe" />
+                  <text x="28" y="34" fill="#6d28d9" fontSize="6" fontFamily="sans-serif" textAnchor="middle" fontWeight="bold">One App</text>
+                  <rect x="8" y="48" width="40" height="12" rx="4" fill="#e2e8f0" />
+                  <rect x="8" y="64" width="40" height="12" rx="4" fill="#e2e8f0" />
+                </g>
+
+                {/* Front 3D iPhone (Dark Sapphire Glass) */}
+                <g transform="translate(48, 15)" filter="url(#phoneShadow)">
+                  <rect x="0" y="0" width="62" height="122" rx="16" fill="#1e1b4b" stroke="#818cf8" strokeWidth="2.5" />
+                  <rect x="3.5" y="3.5" width="55" height="115" rx="13" fill="url(#phoneScreenGrad)" />
+                  {/* Dynamic Island Notch */}
+                  <rect x="21" y="8" width="20" height="5" rx="2.5" fill="#000000" />
+                  {/* UI Screen Content */}
+                  <text x="31" y="30" fill="#a5b4fc" fontSize="6" fontFamily="monospace" textAnchor="middle">SAME IDEA EVERY SCREEN</text>
+                  <text x="31" y="44" fill="#ffffff" fontSize="8" fontFamily="sans-serif" fontWeight="bold" textAnchor="middle">Build Without</text>
+                  <text x="31" y="54" fill="#818cf8" fontSize="8" fontFamily="sans-serif" fontWeight="bold" textAnchor="middle">Limits</text>
+                  {/* React Native / Flutter Sub-badge */}
+                  <rect x="10" y="64" width="42" height="16" rx="8" fill="#4338ca" opacity="0.8" />
+                  <text x="31" y="74" fill="#ffffff" fontSize="5.5" fontFamily="sans-serif" textAnchor="middle" fontWeight="bold">Get Started →</text>
+                </g>
               </svg>
             </div>
           </>
@@ -1315,24 +1625,98 @@ export function IdeasIntoImpact() {
     },
     {
       num: "12",
+      cardImg: "/assets/cards/card-12-nextgen.png",
       title: "Next-Gen Products",
       desc: "Turnkey software prototypes shipped with speed and polish.",
       category: "INNOVATION",
       color: {
-        border: "border-fuchsia-400/35 hover:border-fuchsia-400/80",
-        bg: "from-[#26062b] via-[#38093e] to-[#0f0112]",
-        badge: "text-fuchsia-200 bg-fuchsia-500/20 border-fuchsia-400/35",
-        beam: "from-transparent via-fuchsia-400 to-transparent",
-        iconWrap: "text-fuchsia-300 bg-fuchsia-500/20 border border-fuchsia-400/35",
-        glowDot: "bg-fuchsia-400 shadow-[0_0_10px_#d946ef]",
+        border: "border-amber-500/40 hover:border-amber-400/90 shadow-[0_16px_36px_rgba(0,0,0,0.55)]",
+        bg: "from-[#141210] via-[#241f18] to-[#0a0a08]",
+        badge: "text-amber-300 bg-amber-500/20 border-amber-400/40 font-bold uppercase backdrop-blur-md",
+        beam: "from-transparent via-amber-400 to-transparent",
+        iconWrap: "text-amber-300 bg-amber-500/20 border border-amber-400/40 shadow-xs backdrop-blur-md",
+        glowDot: "bg-amber-400 shadow-[0_0_10px_#f59e0b]",
+        textTitle: "text-white font-bold drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]",
+        textDesc: "text-amber-100/80 font-medium",
+        textBottom: "border-white/10 text-white/70",
         bgLayer: (
           <>
-            {/* Galactic Supernova & Orchid Nebula Vortex */}
-            <div className="absolute top-0 right-0 w-44 h-44 bg-[radial-gradient(circle_at_80%_30%,_rgba(217,70,239,0.35)_0%,_transparent_65%)]" />
-            <div className="absolute bottom-2 right-2 w-28 h-28 opacity-30">
-              <svg viewBox="0 0 100 100" className="w-full h-full text-fuchsia-300">
-                <polygon points="50,15 58,42 85,50 58,58 50,85 42,58 15,50 42,42" fill="currentColor" opacity="0.8" />
-                <circle cx="50" cy="50" r="4" fill="white" />
+            {/* Dark Obsidian Gold Ambient Glow & Grid */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[radial-gradient(circle_at_80%_20%,_rgba(245,158,11,0.35)_0%,_rgba(217,119,6,0.15)_45%,_transparent_70%)]" />
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(245,158,11,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(245,158,11,0.05)_1px,transparent_1px)] bg-[size:16px_16px] opacity-40" />
+
+            {/* Top Micro Sub-Header */}
+            <div className="absolute top-3 left-16 text-[8px] font-mono tracking-widest text-amber-300/60 uppercase select-none pointer-events-none">
+              IDEATE • BUILD • LAUNCH
+            </div>
+
+            {/* 3D Gold Star & Layered Glass Platform Artwork */}
+            <div className="absolute -bottom-1 -right-1 w-48 h-48 pointer-events-none select-none">
+              <svg viewBox="0 0 180 180" className="w-full h-full">
+                <defs>
+                  <linearGradient id="goldStarGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#fef08a" />
+                    <stop offset="40%" stopColor="#f59e0b" />
+                    <stop offset="100%" stopColor="#b45309" />
+                  </linearGradient>
+                  <filter id="goldStarGlow" x="-30%" y="-30%" width="160%" height="160%">
+                    <feDropShadow dx="0" dy="8" stdDeviation="8" floodColor="#f59e0b" floodOpacity="0.5" />
+                  </filter>
+                </defs>
+
+                {/* Concentric Gold Orbit Rings */}
+                <circle cx="95" cy="85" r="60" stroke="#f59e0b" strokeWidth="0.8" strokeDasharray="3 3" opacity="0.25" fill="none" />
+                <circle cx="95" cy="85" r="42" stroke="#f59e0b" strokeWidth="0.8" opacity="0.2" fill="none" />
+
+                {/* Layered Isometric Glass Platforms Stack */}
+                <g transform="translate(60, 65)">
+                  {/* Bottom Platform */}
+                  <polygon points="35,30 70,45 35,60 0,45" fill="#26221b" stroke="#d97706" strokeWidth="1" opacity="0.8" />
+                  <polygon points="0,45 35,60 35,68 0,53" fill="#1c1914" />
+                  <polygon points="35,60 70,45 70,53 35,68" fill="#14120e" />
+
+                  {/* Middle Platform */}
+                  <g transform="translate(0, -12)">
+                    <polygon points="35,30 70,45 35,60 0,45" fill="#383023" stroke="#f59e0b" strokeWidth="1.2" opacity="0.9" />
+                    <polygon points="0,45 35,60 35,68 0,53" fill="#241e15" />
+                    <polygon points="35,60 70,45 70,53 35,68" fill="#1a150e" />
+                  </g>
+
+                  {/* Top Platform */}
+                  <g transform="translate(0, -24)">
+                    <polygon points="35,30 70,45 35,60 0,45" fill="#453a29" stroke="#fbbf24" strokeWidth="1.5" />
+                    <polygon points="0,45 35,60 35,68 0,53" fill="#2e261a" />
+                    <polygon points="35,60 70,45 70,53 35,68" fill="#211b11" />
+                  </g>
+                </g>
+
+                {/* Floating 3D 4-Point Gold Starburst Emblem */}
+                <g transform="translate(70, 20)" filter="url(#goldStarGlow)">
+                  <path fill="url(#goldStarGrad)" d="M25 0 L29 18 L47 22 L29 26 L25 44 L21 26 L3 22 L21 18 Z" />
+                  <circle cx="25" cy="22" r="4" fill="#ffffff" />
+                </g>
+
+                {/* Floating Status Badges SVG Elements */}
+                <g transform="translate(10, 40)">
+                  <rect x="0" y="0" width="58" height="18" rx="5" fill="#1c1914" opacity="0.85" stroke="#f59e0b" strokeWidth="0.8" />
+                  <text x="29" y="12" fill="#fef08a" fontSize="7" fontFamily="sans-serif" textAnchor="middle">⚡ Prototype</text>
+                </g>
+
+                <g transform="translate(110, 45)">
+                  <rect x="0" y="0" width="54" height="18" rx="5" fill="#1c1914" opacity="0.85" stroke="#f59e0b" strokeWidth="0.8" />
+                  <text x="27" y="12" fill="#fef08a" fontSize="7" fontFamily="sans-serif" textAnchor="middle">📈 Polish</text>
+                </g>
+
+                <g transform="translate(15, 105)">
+                  <rect x="0" y="0" width="62" height="18" rx="5" fill="#1c1914" opacity="0.85" stroke="#f59e0b" strokeWidth="0.8" />
+                  <text x="31" y="12" fill="#fef08a" fontSize="7" fontFamily="sans-serif" textAnchor="middle">📦 Real Impact</text>
+                </g>
+
+                {/* Connecting Starlight Sparks */}
+                <circle cx="39" cy="58" r="2.5" fill="#fbbf24" className="animate-ping" opacity="0.8" />
+                <circle cx="39" cy="58" r="2" fill="#fbbf24" />
+                <circle cx="120" cy="72" r="2.5" fill="#fbbf24" className="animate-ping" opacity="0.8" />
+                <circle cx="120" cy="72" r="2" fill="#fbbf24" />
               </svg>
             </div>
           </>
@@ -1403,31 +1787,6 @@ export function IdeasIntoImpact() {
                   Impact
                 </span>
               </h2>
-
-              {/* Sub-headline / Manifesto snippet */}
-              <p className="assemble-item font-sans text-xs sm:text-sm text-[#94a3b8] font-normal leading-relaxed max-w-md mb-6">
-                I design and build digital experiences that look good, work flawlessly, and make a difference.
-              </p>
-
-              {/* Action Buttons */}
-              <div className="assemble-item flex flex-wrap items-center gap-3.5 mb-6">
-                <a
-                  href="#work"
-                  onMouseEnter={() => playHover()}
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-black hover:bg-[#c4b5fd] font-sans font-bold text-xs sm:text-sm tracking-tight transition-all duration-300 shadow-[0_0_25px_rgba(255,255,255,0.2)] active:scale-95 cursor-pointer"
-                >
-                  <span>View My Work</span>
-                  <ArrowUpRight className="w-4 h-4" />
-                </a>
-
-                <a
-                  href="#contact"
-                  onMouseEnter={() => playHover()}
-                  className="inline-flex items-center justify-center px-6 py-3 rounded-full bg-white/[0.04] border border-white/15 hover:border-white/30 text-white font-sans font-semibold text-xs sm:text-sm tracking-tight transition-all duration-300 hover:bg-white/[0.08] active:scale-95 cursor-pointer"
-                >
-                  Get In Touch
-                </a>
-              </div>
 
               {/* Availability Status */}
               <div className="assemble-item flex items-center gap-2.5 mb-6">
@@ -1600,7 +1959,7 @@ export function IdeasIntoImpact() {
               {/* Right Shoulder Floating Editorial Paragraph (Beside shoulder, ultra-tiny white text) */}
               <div
                 ref={shoulderBadgeRef}
-                className="hidden sm:flex absolute right-[-48px] sm:right-[-42px] lg:right-[-36px] xl:right-[-28px] top-[64%] sm:top-[62%] lg:top-[59%] -translate-y-1/2 z-25 flex-col gap-1 max-w-[130px] sm:max-w-[145px] lg:max-w-[160px] will-change-transform pointer-events-none select-none text-left"
+                className="hidden sm:flex absolute right-[-35px] sm:right-[-50px] lg:right-[-65px] xl:right-[-80px] top-[64%] sm:top-[62%] lg:top-[59%] -translate-y-1/2 z-25 flex-col gap-1 max-w-[130px] sm:max-w-[145px] lg:max-w-[160px] will-change-transform pointer-events-none select-none text-left"
               >
                 <div className="text-white/50">
                   <svg viewBox="0 0 24 24" fill="currentColor" className="w-2.5 h-2.5">
@@ -1626,56 +1985,76 @@ export function IdeasIntoImpact() {
               {carouselCards.map((s, idx) => (
                 <div
                   key={`${s.num}-${idx}`}
-                  className="service-card-anim flex-shrink-0 w-[265px] sm:w-[295px] lg:w-[315px] will-change-transform py-2"
+                  className="service-card-anim flex-shrink-0 w-[285px] sm:w-[320px] lg:w-[345px] will-change-transform py-2"
                 >
-                  <div
-                    onMouseEnter={() => playHover()}
-                    className={`card-inner-spotlight group relative flex flex-col justify-between gap-3 p-4 sm:p-5 rounded-2xl bg-gradient-to-br ${s.color.bg} border ${s.color.border} shadow-[0_16px_36px_rgba(0,0,0,0.55)] cursor-default overflow-hidden will-change-transform transform-gpu origin-center transition-shadow duration-300 backdrop-blur-xl`}
-                    style={{
-                      transition: "transform 0.08s ease-out, filter 0.08s ease-out, opacity 0.08s ease-out, border-color 0.3s ease, box-shadow 0.3s ease",
-                    }}
-                  >
-                    {/* Unique Ambient Visual Layer (Swiss Alps, Neon Chrome, Studio UI Orbs, etc.) */}
-                    <div className="absolute inset-0 pointer-events-none overflow-hidden select-none z-0">
-                      {s.color.bgLayer}
-                      {/* Top Glass Frost Highlight */}
-                      <div className="absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
-                    </div>
-
-                    {/* Top Laser Accent Hover Beam */}
+                  {(s as any).cardImg ? (
                     <div
-                      className={`absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r ${s.color.beam} opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10`}
-                    />
-
-                    <div className="relative z-10 flex flex-col gap-2.5">
-                      {/* Header: Icon & Category Badge */}
-                      <div className="flex items-center justify-between">
-                        <div className={`w-8 h-8 rounded-xl flex items-center justify-center ${s.color.iconWrap} transition-transform duration-300 group-hover:scale-110 shadow-xs backdrop-blur-md`}>
-                          {s.icon}
-                        </div>
-
-                        <span className={`text-[9px] font-mono font-bold tracking-wider px-2.5 py-0.5 rounded-full border ${s.color.badge} uppercase backdrop-blur-md`}>
-                          {s.category}
-                        </span>
+                      onMouseEnter={() => playHover()}
+                      className="card-inner-spotlight group relative w-full rounded-2xl overflow-hidden shadow-[0_16px_36px_rgba(0,0,0,0.5)] cursor-default will-change-transform transform-gpu origin-center border border-white/20 hover:border-white/50 hover:shadow-[0_20px_45px_rgba(236,72,153,0.3)]"
+                      style={{
+                        transition: "transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), filter 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.3s ease, box-shadow 0.4s cubic-bezier(0.25, 1, 0.5, 1)",
+                      }}
+                    >
+                      <img
+                        src={(s as any).cardImg}
+                        alt={s.title}
+                        className="w-full h-auto object-cover rounded-2xl block select-none pointer-events-none"
+                      />
+                      {/* Top Laser Accent Hover Beam */}
+                      <div
+                        className={`absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r ${s.color.beam} opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10`}
+                      />
+                    </div>
+                  ) : (
+                    <div
+                      onMouseEnter={() => playHover()}
+                      className={`card-inner-spotlight group relative flex flex-col justify-between gap-3 p-4 sm:p-5 rounded-2xl bg-gradient-to-br ${s.color.bg} border ${s.color.border} shadow-[0_16px_36px_rgba(0,0,0,0.55)] cursor-default overflow-hidden will-change-transform transform-gpu origin-center backdrop-blur-xl`}
+                      style={{
+                        transition: "transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), filter 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.3s ease, box-shadow 0.4s cubic-bezier(0.25, 1, 0.5, 1)",
+                      }}
+                    >
+                      {/* Unique Ambient Visual Layer (Swiss Alps, Neon Chrome, Studio UI Orbs, etc.) */}
+                      <div className="absolute inset-0 pointer-events-none overflow-hidden select-none z-0">
+                        {s.color.bgLayer}
+                        {/* Top Glass Frost Highlight */}
+                        <div className="absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-white/[0.08] to-transparent pointer-events-none" />
                       </div>
 
-                      {/* Title */}
-                      <h3 className="font-sans font-bold text-base sm:text-lg text-white tracking-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]">
-                        {s.title}
-                      </h3>
+                      {/* Top Laser Accent Hover Beam */}
+                      <div
+                        className={`absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r ${s.color.beam} opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10`}
+                      />
 
-                      {/* Description */}
-                      <p className="font-sans text-xs sm:text-[13px] text-white/80 leading-relaxed line-clamp-2">
-                        {s.desc}
-                      </p>
-                    </div>
+                      <div className="relative z-10 flex flex-col gap-2.5">
+                        {/* Header: Icon & Category Badge */}
+                        <div className="flex items-center justify-between">
+                          <div className={`w-8 h-8 rounded-xl flex items-center justify-center ${s.color.iconWrap} transition-transform duration-300 group-hover:scale-110 shadow-xs backdrop-blur-md`}>
+                            {s.icon}
+                          </div>
 
-                    {/* Bottom Status Tag */}
-                    <div className="relative z-10 pt-2 border-t border-white/10 flex items-center justify-between text-[10px] font-mono text-white/60 uppercase tracking-widest font-medium">
-                      <span>{s.num} // CAPABILITY</span>
-                      <span className={`w-1.5 h-1.5 rounded-full ${s.color.glowDot} opacity-75 group-hover:opacity-100 transition-opacity`} />
+                          <span className={`text-[9px] font-mono font-bold tracking-wider px-2.5 py-0.5 rounded-full border ${s.color.badge} uppercase backdrop-blur-md`}>
+                            {s.category}
+                          </span>
+                        </div>
+
+                        {/* Title */}
+                        <h3 className={`font-sans font-bold text-base sm:text-lg tracking-tight ${(s.color as any).textTitle || "text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]"}`}>
+                          {s.title}
+                        </h3>
+
+                        {/* Description */}
+                        <p className={`font-sans text-xs sm:text-[13px] leading-relaxed line-clamp-2 ${(s.color as any).textDesc || "text-white/80"}`}>
+                          {s.desc}
+                        </p>
+                      </div>
+
+                      {/* Bottom Status Tag */}
+                      <div className={`relative z-10 pt-2 border-t flex items-center justify-between text-[10px] font-mono uppercase tracking-widest font-medium ${(s.color as any).textBottom || "border-white/10 text-white/60"}`}>
+                        <span>{s.num} // CAPABILITY</span>
+                        <span className={`w-1.5 h-1.5 rounded-full ${s.color.glowDot} opacity-75 group-hover:opacity-100 transition-opacity`} />
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -1729,14 +2108,35 @@ export function IdeasIntoImpact() {
               </span>
             </h2>
 
-            <div className="mt-8 sm:mt-10 flex items-center gap-4">
+            {/* Hand-drawn Sketch Layout: [Start a Project] | (A) Algora Logo */}
+            <div className="mt-8 sm:mt-10 flex items-center justify-center gap-3 sm:gap-4 pointer-events-auto">
+              {/* Left: Start a Project Rectangular Clean White Button */}
               <a
                 href="#contact"
                 onMouseEnter={() => playHover()}
-                className="pointer-events-auto inline-flex items-center gap-2 px-6 sm:px-8 py-3.5 rounded-full bg-gradient-to-r from-amber-400 to-amber-500 text-black hover:from-amber-300 hover:to-amber-400 font-sans font-bold text-xs sm:text-sm tracking-tight transition-all duration-300 shadow-[0_0_30px_rgba(245,158,11,0.35)] hover:shadow-[0_0_40px_rgba(245,158,11,0.55)] active:scale-95 cursor-pointer"
+                className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 rounded-xl bg-white text-black hover:bg-neutral-100 font-sans font-bold text-xs sm:text-sm tracking-tight transition-all duration-300 shadow-[0_0_25px_rgba(255,255,255,0.3)] hover:shadow-[0_0_40px_rgba(255,255,255,0.55)] border border-white/40 active:scale-95 cursor-pointer"
               >
                 <span>Start a Project</span>
-                <ArrowUpRight className="w-4 h-4" />
+                <ArrowUpRight className="w-4 h-4 text-black" />
+              </a>
+
+              {/* Center Vertical Divider | */}
+              <div className="w-[1.5px] h-6 bg-gradient-to-b from-transparent via-white/50 to-transparent select-none" />
+
+              {/* Right: Standalone Official Algora Logo Icon */}
+              <a
+                href="https://algora.io"
+                target="_blank"
+                rel="noopener noreferrer"
+                onMouseEnter={() => playHover()}
+                className="group relative flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-black border border-white/30 hover:border-white/80 transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.4)] hover:shadow-[0_0_25px_rgba(255,255,255,0.4)] cursor-pointer overflow-hidden p-0.5"
+                title="Algora Official Logo"
+              >
+                <img
+                  src="/assets/algora-icon.png"
+                  alt="Algora Official Logo"
+                  className="w-full h-full object-contain rounded-lg group-hover:scale-110 transition-transform duration-300"
+                />
               </a>
             </div>
           </div>
@@ -1756,48 +2156,53 @@ export function IdeasIntoImpact() {
             aria-hidden="true"
           />
 
-          {/* Background Artistic 3D DNA Canvas */}
+          {/* Background 6-Column Vertical Cards Grid */}
           <div
             ref={slide2WatermarkRef}
             className="pointer-events-none absolute inset-0 w-full h-full flex items-center justify-center select-none z-0 overflow-hidden"
             aria-hidden="true"
           >
-            <ArtisticDnaCanvas />
+            <VerticalCardsGridBackground />
           </div>
 
-          {/* Foreground Luxury Bodoni Typography Content */}
+          {/* Foreground Luxury Client Testimonial Typography Content */}
           <div
             ref={slide2ContentRef}
             className="relative z-10 flex flex-col items-center max-w-6xl mx-auto overflow-visible py-4"
           >
-            {/* Foreground 3-Line Bodoni Headline (Capsule removed as requested) */}
-            <h2 className="slide2-assemble-item font-bodoni font-medium text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.4rem] text-white tracking-tight leading-[1.3] sm:leading-[1.34] text-center px-4 overflow-visible will-change-transform mb-4">
-              <span className="block whitespace-nowrap overflow-visible">Crafting experiences</span>
-              <span className="block whitespace-nowrap overflow-visible py-1">
-                that{" "}
-                <span className="font-bodoni italic font-normal bg-gradient-to-r from-purple-200 via-fuchsia-300 to-pink-300 bg-clip-text text-transparent inline-block pr-4 pl-0.5 pt-1 pb-3 leading-[1.3] overflow-visible drop-shadow-[0_0_35px_rgba(232,121,249,0.35)]">
-                  transcend
-                </span>
+            {/* Foreground Big Headline: Client Feedback & Experiences */}
+            <h2 className="slide2-assemble-item font-sans font-bold text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[5.4rem] text-white tracking-tight leading-[1.2] text-center px-4 overflow-visible will-change-transform mb-4">
+              <span className="block whitespace-nowrap overflow-visible">
+                Client Feedback
               </span>
-              <span className="block font-bodoni italic font-normal bg-gradient-to-r from-teal-200 via-cyan-300 to-emerald-300 bg-clip-text text-transparent whitespace-nowrap overflow-visible pr-4 pl-0.5 pt-1 pb-3 leading-[1.3] drop-shadow-[0_0_35px_rgba(45,212,191,0.35)]">
-                pixels &amp; code.
+              <span className="block whitespace-nowrap overflow-visible py-1">
+                &amp;{" "}
+                <span className="font-bodoni italic font-normal bg-gradient-to-r from-purple-200 via-fuchsia-300 to-pink-300 bg-clip-text text-transparent inline-block pr-3 pl-0.5 pt-1 pb-2 leading-[1.2] overflow-visible drop-shadow-[0_0_35px_rgba(232,121,249,0.4)]">
+                  Experiences.
+                </span>
               </span>
             </h2>
 
-            {/* Sub-headline */}
-            <p className="slide2-assemble-item font-sans text-xs sm:text-sm md:text-base text-neutral-400 max-w-xl mx-auto leading-relaxed mb-8 font-light">
-              Bridging radical imagination with high-performance engineering to shape tomorrow&apos;s digital benchmarks.
+            {/* Super Micro Testimonial Quote */}
+            <p className="slide2-assemble-item font-sans text-[11px] sm:text-xs text-neutral-300/80 max-w-xl mx-auto leading-relaxed mb-4 font-normal tracking-wide text-center italic">
+              &ldquo;Delivered a product that didn&apos;t just launch &mdash; it redefined our entire market.&rdquo;
             </p>
 
-            {/* Action CTA */}
-            <div className="slide2-assemble-item flex items-center gap-4">
+            {/* Super Micro Endorsement & Action (No box, pure clean typography) */}
+            <div className="slide2-assemble-item flex flex-col items-center gap-3">
+              <div className="flex items-center justify-center gap-2 text-center">
+                <span className="font-mono text-[9px] text-neutral-400 tracking-widest uppercase font-medium">
+                  VENTURETECH LEADERSHIP &bull; <span className="text-amber-400 tracking-tighter">★★★★★</span> &bull; GLOBAL SAAS &amp; AI ENDORSEMENT
+                </span>
+              </div>
+
               <a
                 href="#contact"
                 onMouseEnter={() => playHover()}
-                className="pointer-events-auto inline-flex items-center gap-2 px-7 sm:px-9 py-3.5 rounded-full bg-gradient-to-r from-purple-400 via-fuchsia-500 to-pink-500 text-white hover:from-purple-300 hover:to-pink-400 font-sans font-bold text-xs sm:text-sm tracking-tight transition-all duration-300 shadow-[0_0_30px_rgba(217,70,239,0.35)] hover:shadow-[0_0_40px_rgba(217,70,239,0.55)] active:scale-95 cursor-pointer"
+                className="pointer-events-auto inline-flex items-center gap-2 text-[11px] font-mono font-bold tracking-widest text-white hover:text-fuchsia-300 transition-colors uppercase pt-1"
               >
-                <span>Get In Touch</span>
-                <ArrowUpRight className="w-4 h-4" />
+                <span>Work With Us</span>
+                <ArrowUpRight className="w-3.5 h-3.5" />
               </a>
             </div>
           </div>
@@ -1810,36 +2215,60 @@ export function IdeasIntoImpact() {
           ref={slide3LayerRef}
           className="absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center overflow-hidden z-30 select-none pointer-events-none"
         >
-          {/* Pure White Luxury Background Canvas */}
+          {/* Ambient Luxury Background Canvas */}
           <div
             ref={slide3BgRef}
-            className="absolute inset-0 w-full h-full will-change-transform z-0 overflow-hidden bg-[#fbfbfd] shadow-[0_-20px_50px_rgba(0,0,0,0.15)]"
+            className="absolute inset-0 w-full h-full will-change-transform z-0 overflow-hidden bg-[#fbfbfd] shadow-[0_-20px_50px_rgba(0,0,0,0.15)] flex items-center justify-center"
           >
-            {/* Subtle atmospheric ambient glow on white */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,_rgba(240,238,255,0.8)_0%,_rgba(251,251,253,1)_70%)] pointer-events-none" />
-
-
+            {/* Subtle atmospheric ambient glow on light canvas */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_rgba(238,242,255,0.95)_0%,_rgba(251,251,253,1)_75%)] pointer-events-none" />
+            <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[550px] bg-[radial-gradient(ellipse_at_center,_rgba(99,102,241,0.16)_0%,_rgba(217,70,239,0.09)_45%,_transparent_75%)] rounded-full blur-[100px]" />
           </div>
 
-          {/* Foreground Editorial Text Content */}
+          {/* Foreground Editorial Centered Content */}
           <div
             ref={slide3ContentRef}
-            className="relative z-10 max-w-4xl mx-auto px-6 sm:px-10 md:px-14 flex flex-col items-center justify-center pointer-events-auto py-6"
+            className="relative z-10 w-full max-w-4xl mx-auto px-6 sm:px-10 flex flex-col items-center justify-center h-full pointer-events-auto"
           >
-            {/* Ultra-Luxury Editorial Headline */}
-            <h2 className="slide3-assemble-item text-center mb-3 sm:mb-4 max-w-4xl overflow-visible">
-              <span className="block font-editorial font-bold text-3xl sm:text-5xl md:text-6xl lg:text-[4.2rem] text-[#0a0717] tracking-[-0.04em] leading-[1.1]">
-                Thank you for
-              </span>
-              <span className="block font-serif italic font-normal text-4xl sm:text-6xl md:text-7xl lg:text-[5.4rem] leading-[1.06] bg-gradient-to-r from-[#1e1347] via-[#4338ca] to-[#7c3aed] bg-clip-text text-transparent drop-shadow-[0_4px_28px_rgba(67,56,202,0.18)] py-0.5">
-                your time &amp; vision.
-              </span>
-            </h2>
+            {/* Single Dead-Center Thank You Display (Matching reference image) */}
+            <div className="slide3-header-group flex flex-col items-center justify-center text-center w-full">
+              
+              {/* Floating "hey there!" header flanked by leaf branch SVGs */}
+              <div className="slide3-hey-there flex items-center justify-center gap-3 sm:gap-4 mb-3 sm:mb-4">
+                {/* Left Leaf Accent */}
+                <svg className="w-7 h-11 sm:w-8 sm:h-12 text-[#090714]/30 transform -rotate-12" viewBox="0 0 40 80" fill="currentColor">
+                  <path d="M20 0 C20 40, 20 60, 20 80 M20 15 C10 10, 2 15, 5 25 C10 25, 18 20, 20 15 M20 30 C30 25, 38 30, 35 40 C30 40, 22 35, 20 30 M20 45 C10 40, 2 45, 5 55 C10 55, 18 50, 20 45" stroke="currentColor" strokeWidth="2.5" fill="none" />
+                </svg>
 
-            {/* Tiny, Refined Sub-headline with Sophisticated Contrast */}
-            <p className="slide3-assemble-item font-sans text-[11.5px] sm:text-[12.5px] text-[#4a426f] font-medium max-w-lg mx-auto leading-relaxed tracking-wider text-center">
-              Whether you have a breakthrough project, want to collaborate on ambitious digital experiences, or simply want to connect — let&apos;s create something remarkable together.
-            </p>
+                <span className="font-bodoni italic text-2xl sm:text-3xl md:text-4xl text-[#090714]/85 tracking-wide">
+                  hey there!
+                </span>
+
+                {/* Right Leaf Accent */}
+                <svg className="w-7 h-11 sm:w-8 sm:h-12 text-[#090714]/30 transform rotate-12" viewBox="0 0 40 80" fill="currentColor">
+                  <path d="M20 0 C20 40, 20 60, 20 80 M20 15 C30 10, 38 15, 35 25 C30 25, 22 20, 20 15 M20 30 C10 25, 2 30, 5 40 C10 40, 18 35, 20 30 M20 45 C30 40, 38 45, 35 55 C30 55, 22 50, 20 45" stroke="currentColor" strokeWidth="2.5" fill="none" />
+                </svg>
+              </div>
+
+              {/* Headline: "THANK YOU" */}
+              <h2 className="text-center max-w-4xl overflow-visible flex flex-col items-center justify-center">
+                <span className="slide3-line-1 block font-syne font-black text-6xl sm:text-8xl md:text-9xl lg:text-[8.5rem] text-[#090714] tracking-tight uppercase leading-none drop-shadow-xs">
+                  THANK YOU
+                </span>
+              </h2>
+
+              {/* Action CTA Button */}
+              <div className="slide3-cta-btn mt-8 sm:mt-10 flex items-center justify-center">
+                <a
+                  href="#contact"
+                  onMouseEnter={() => playHover()}
+                  className="pointer-events-auto inline-flex items-center gap-2.5 px-8 sm:px-10 py-4 rounded-full bg-[#090714] text-white hover:bg-black font-sans font-bold text-xs sm:text-sm tracking-tight transition-all duration-300 shadow-[0_10px_35px_rgba(9,7,20,0.25)] hover:shadow-[0_15px_45px_rgba(9,7,20,0.4)] hover:scale-105 active:scale-95 cursor-pointer border border-[#090714]/20"
+                >
+                  <span>Get In Touch</span>
+                  <ArrowUpRight className="w-4 h-4 text-white" />
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </div>

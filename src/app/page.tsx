@@ -6,6 +6,7 @@ import { Preloader } from "@/components/sections/Preloader";
 import { Header } from "@/components/navigation/Header";
 import { Hero } from "@/components/sections/Hero";
 import { AboutManifesto } from "@/components/sections/AboutManifesto";
+import { CreativeMindsSection } from "@/components/sections/CreativeMindsSection";
 import { SelectedWork } from "@/components/sections/SelectedWork";
 import { Showreel } from "@/components/sections/Showreel";
 import { ProcessPipeline } from "@/components/sections/ProcessPipeline";
@@ -53,6 +54,7 @@ export default function Home() {
         className="relative z-30 -mt-[100vh] bg-[#050507] rounded-t-[2.5rem] sm:rounded-t-[3.5rem] border-t border-white/10 overflow-clip"
       >
         <AboutManifesto />
+        <CreativeMindsSection />
         <SelectedWork />
         <Showreel />
         <ExperienceTimeline />

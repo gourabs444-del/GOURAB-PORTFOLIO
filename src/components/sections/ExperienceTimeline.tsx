@@ -14,62 +14,116 @@ export function ExperienceTimeline() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Header Reveal
+      // 1. Top Editorial Header Assemble from Distance
       if (headerRef.current) {
+        const reveals = headerRef.current.querySelectorAll(".skill-reveal");
         gsap.fromTo(
-          headerRef.current.querySelectorAll(".skill-reveal"),
-          { opacity: 0, y: 24 },
+          reveals,
+          {
+            opacity: 0,
+            y: 80,
+            scale: 0.75,
+            filter: "blur(14px)",
+          },
           {
             opacity: 1,
             y: 0,
-            duration: 0.8,
-            stagger: 0.08,
-            ease: "power2.out",
+            scale: 1,
+            filter: "blur(0px)",
+            duration: 1.1,
+            stagger: 0.1,
+            ease: "power3.out",
             scrollTrigger: {
               trigger: headerRef.current,
               start: "top 88%",
+              toggleActions: "play none none reverse",
             },
           }
         );
       }
 
-      // Skill items reveal and progress bar fill
-      const sections = [devRef.current, designRef.current, creativeRef.current];
-      sections.forEach((sec) => {
-        if (!sec) return;
-        const items = sec.querySelectorAll(".skill-item-row");
-        const fills = sec.querySelectorAll(".skill-bar-fill");
+      // 2. Section Headings & Skill Items Assemble + 0% Level Fill Animation
+      const sections = [
+        { ref: devRef.current },
+        { ref: designRef.current },
+        { ref: creativeRef.current },
+      ];
 
-        gsap.fromTo(
-          items,
-          { opacity: 0, y: 18 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            stagger: 0.05,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: sec,
-              start: "top 85%",
-            },
-          }
-        );
+      sections.forEach(({ ref }) => {
+        if (!ref) return;
 
-        gsap.fromTo(
-          fills,
-          { width: "0%" },
-          {
-            width: (i, target) => target.getAttribute("data-level") || "80%",
-            duration: 1.1,
-            stagger: 0.05,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: sec,
-              start: "top 85%",
+        const heading = ref.querySelector(".category-heading-anim");
+        const items = ref.querySelectorAll(".skill-item-row");
+        const fills = ref.querySelectorAll(".skill-bar-fill");
+
+        // Master timeline per section
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: ref,
+            start: "top 85%",
+            toggleActions: "play none none reverse",
+          },
+        });
+
+        // Category heading assemble from distance
+        if (heading) {
+          tl.fromTo(
+            heading,
+            {
+              opacity: 0,
+              y: 45,
+              scale: 0.85,
+              filter: "blur(10px)",
             },
-          }
-        );
+            {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              filter: "blur(0px)",
+              duration: 0.8,
+              ease: "power3.out",
+            },
+            0
+          );
+        }
+
+        // Skill cards assemble from distance
+        if (items.length > 0) {
+          tl.fromTo(
+            items,
+            {
+              opacity: 0,
+              y: 35,
+              scale: 0.9,
+              filter: "blur(6px)",
+            },
+            {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              filter: "blur(0px)",
+              duration: 0.65,
+              stagger: 0.04,
+              ease: "power3.out",
+            },
+            0.12
+          );
+        }
+
+        // Level progress bar animation starting from 0%
+        if (fills.length > 0) {
+          tl.fromTo(
+            fills,
+            { width: "0%" },
+            {
+              width: (i, target) => target.getAttribute("data-level") || "80%",
+              duration: 1.2,
+              stagger: 0.04,
+              ease: "power3.out",
+            },
+            0.22
+          );
+        }
       });
     }, sectionRef);
 
@@ -446,16 +500,11 @@ export function ExperienceTimeline() {
         {/* HEADER: CLEAN EDITORIAL SKILLS TITLE                      */}
         {/* ========================================================= */}
         <div ref={headerRef} className="flex flex-col gap-3 text-left sm:text-center items-start sm:items-center">
-          <div className="skill-reveal inline-flex items-center gap-2 text-[11px] font-mono tracking-[0.25em] text-neutral-400 uppercase">
-            <span className="w-1.5 h-1.5 rounded-full bg-neutral-900" />
-            <span>04 // CORE COMPETENCIES &amp; TECH STACK</span>
-          </div>
-
-          <h2 className="skill-reveal font-display font-black text-4xl sm:text-6xl md:text-7xl text-neutral-950 tracking-tight uppercase">
+          <h2 className="skill-reveal font-bodoni font-black text-5xl sm:text-7xl md:text-8xl text-neutral-950 tracking-tight uppercase leading-none">
             SKILLS
           </h2>
 
-          <p className="skill-reveal font-sans text-xs sm:text-sm md:text-base text-neutral-500 max-w-2xl leading-relaxed font-normal">
+          <p className="skill-reveal font-sans text-[11px] sm:text-xs text-neutral-400 max-w-md leading-relaxed font-medium tracking-wide">
             Specialized competencies spanning high-performance fullstack engineering, human-centered UI/UX systems, and cinematic post-production toolkits.
           </p>
         </div>
@@ -464,7 +513,7 @@ export function ExperienceTimeline() {
         {/* 1. ENGINEERING & FULL-STACK (3 COLUMNS GRID)              */}
         {/* ========================================================= */}
         <div ref={devRef} className="flex flex-col gap-6">
-          <div className="flex items-center gap-3 border-b border-neutral-200/80 pb-3">
+          <div className="category-heading-anim flex items-center gap-3 border-b border-neutral-200/80 pb-3 will-change-transform">
             <div className="w-7 h-7 flex items-center justify-center text-neutral-800">
               <Code2 className="w-4 h-4" />
             </div>
@@ -483,7 +532,7 @@ export function ExperienceTimeline() {
             {devSkills.map((s) => (
               <div
                 key={s.name}
-                className="skill-item-row group flex items-center justify-between gap-3 py-2.5 px-3 rounded-xl transition-all duration-200 hover:bg-neutral-50"
+                className="skill-item-row group flex items-center justify-between gap-3 py-2.5 px-3 rounded-xl transition-colors duration-200 hover:bg-neutral-50 will-change-transform"
               >
                 {/* Left: Original Small Software Logo + Name */}
                 <div className="flex items-center gap-3 min-w-0">
@@ -506,7 +555,7 @@ export function ExperienceTimeline() {
                     <div
                       data-level={s.level}
                       className={`skill-bar-fill h-full rounded-full ${s.barColor}`}
-                      style={{ width: s.level }}
+                      style={{ width: "0%" }}
                     />
                   </div>
                   <span className="font-mono text-xs font-bold text-neutral-800 w-8 text-right">
@@ -522,7 +571,7 @@ export function ExperienceTimeline() {
         {/* 2. DESIGN & MOTION SYSTEMS (3 COLUMNS GRID)               */}
         {/* ========================================================= */}
         <div ref={designRef} className="flex flex-col gap-6">
-          <div className="flex items-center gap-3 border-b border-neutral-200/80 pb-3">
+          <div className="category-heading-anim flex items-center gap-3 border-b border-neutral-200/80 pb-3 will-change-transform">
             <div className="w-7 h-7 flex items-center justify-center text-neutral-800">
               <Palette className="w-4 h-4" />
             </div>
@@ -541,7 +590,7 @@ export function ExperienceTimeline() {
             {designSkills.map((s) => (
               <div
                 key={s.name}
-                className="skill-item-row group flex items-center justify-between gap-3 py-2.5 px-3 rounded-xl transition-all duration-200 hover:bg-neutral-50"
+                className="skill-item-row group flex items-center justify-between gap-3 py-2.5 px-3 rounded-xl transition-colors duration-200 hover:bg-neutral-50 will-change-transform"
               >
                 {/* Left: Original Small Software Logo + Name */}
                 <div className="flex items-center gap-3 min-w-0">
@@ -564,7 +613,7 @@ export function ExperienceTimeline() {
                     <div
                       data-level={s.level}
                       className={`skill-bar-fill h-full rounded-full ${s.barColor}`}
-                      style={{ width: s.level }}
+                      style={{ width: "0%" }}
                     />
                   </div>
                   <span className="font-mono text-xs font-bold text-neutral-800 w-8 text-right">
@@ -580,7 +629,7 @@ export function ExperienceTimeline() {
         {/* 3. CREATIVE POST-PRODUCTION SUITE (3 COLUMNS GRID)        */}
         {/* ========================================================= */}
         <div ref={creativeRef} className="flex flex-col gap-6">
-          <div className="flex items-center gap-3 border-b border-neutral-200/80 pb-3">
+          <div className="category-heading-anim flex items-center gap-3 border-b border-neutral-200/80 pb-3 will-change-transform">
             <div className="w-7 h-7 flex items-center justify-center text-neutral-800">
               <Film className="w-4 h-4" />
             </div>
@@ -599,7 +648,7 @@ export function ExperienceTimeline() {
             {creativeSkills.map((s) => (
               <div
                 key={s.name}
-                className="skill-item-row group flex items-center justify-between gap-3 py-2.5 px-3 rounded-xl transition-all duration-200 hover:bg-neutral-50"
+                className="skill-item-row group flex items-center justify-between gap-3 py-2.5 px-3 rounded-xl transition-colors duration-200 hover:bg-neutral-50 will-change-transform"
               >
                 {/* Left: Original Small Software Logo + Name */}
                 <div className="flex items-center gap-3 min-w-0">
@@ -622,7 +671,7 @@ export function ExperienceTimeline() {
                     <div
                       data-level={s.level}
                       className={`skill-bar-fill h-full rounded-full ${s.barColor}`}
-                      style={{ width: s.level }}
+                      style={{ width: "0%" }}
                     />
                   </div>
                   <span className="font-mono text-xs font-bold text-neutral-800 w-8 text-right">
@@ -635,8 +684,8 @@ export function ExperienceTimeline() {
         </div>
 
         {/* Validation Footnote */}
-        <div className="skill-reveal mt-2 pt-6 border-t border-neutral-200/80 flex items-center justify-center sm:justify-start">
-          <div className="inline-flex items-center flex-wrap gap-2.5 px-4 py-2.5 rounded-xl bg-neutral-100/90 border border-neutral-200/80 shadow-sm transition-all duration-200 hover:border-emerald-500/40 hover:bg-emerald-50/40 text-xs text-neutral-700 font-sans">
+        <div className="skill-reveal mt-4 pt-6 border-t border-neutral-200/80 flex items-center justify-center text-center w-full">
+          <div className="inline-flex items-center flex-wrap justify-center gap-2.5 text-xs sm:text-sm text-neutral-700 font-sans">
             <BadgeCheck className="w-4.5 h-4.5 text-emerald-600 shrink-0" />
             <span className="font-medium text-neutral-600">Validated through</span>
             

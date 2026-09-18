@@ -131,3 +131,72 @@ body {
   animation-play-state: paused;
 }
 
+/* Vertical Hardware-Accelerated Marquee Animations */
+@keyframes vertical-marquee-up {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, -50%, 0);
+  }
+}
+
+@keyframes vertical-marquee-down {
+  0% {
+    transform: translate3d(0, -50%, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Column-Specific Staggered Asynchronous Cinematic Marquees */
+.animate-vertical-col-0 {
+  display: flex;
+  flex-direction: column;
+  height: max-content;
+  will-change: transform;
+  animation: vertical-marquee-up 110s linear infinite;
+}
+
+.animate-vertical-col-1 {
+  display: flex;
+  flex-direction: column;
+  height: max-content;
+  will-change: transform;
+  animation: vertical-marquee-down 85s linear infinite;
+}
+
+.animate-vertical-col-2 {
+  display: flex;
+  flex-direction: column;
+  height: max-content;
+  will-change: transform;
+  animation: vertical-marquee-up 130s linear infinite;
+}
+
+.animate-vertical-col-3 {
+  display: flex;
+  flex-direction: column;
+  height: max-content;
+  will-change: transform;
+  animation: vertical-marquee-down 95s linear infinite;
+}
+
+.animate-vertical-col-4 {
+  display: flex;
+  flex-direction: column;
+  height: max-content;
+  will-change: transform;
+  animation: vertical-marquee-up 120s linear infinite;
+}
+
+.animate-vertical-col-5 {
+  display: flex;
+  flex-direction: column;
+  height: max-content;
+  will-change: transform;
+  animation: vertical-marquee-down 75s linear infinite;
+}
+
+
