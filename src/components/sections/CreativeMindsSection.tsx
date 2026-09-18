@@ -291,7 +291,7 @@ export function CreativeMindsSection() {
       // 8 total cards, with 2 extra scroll steps allocated for arch-carousel spinning
       // Total units = 9 (0 to 9)
       const totalUnits = 9;
-      const scrollDistance = totalUnits * 650; // 5850px scroll height
+      const scrollDistance = totalUnits * 620;
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -299,52 +299,53 @@ export function CreativeMindsSection() {
           start: "top top",
           end: `+=${scrollDistance}`,
           pin: true,
-          scrub: 0.2, // Zero-lag fluid scrub
+          scrub: 0.3, // Butter-smooth Lenis-synced fluid scrub
           snap: {
-            snapTo: (progress) => {
-              const roundedStep = Math.round(progress * totalUnits);
-              return roundedStep / totalUnits;
-            },
-            duration: { min: 0.15, max: 0.35 },
-            delay: 0.01,
-            ease: "power1.out",
+            snapTo: (progress) => Math.round(progress * totalUnits) / totalUnits,
+            duration: { min: 0.25, max: 0.5 },
+            delay: 0, // Instant responsive snap
+            ease: "power2.out", // Clean, zero-overshoot dead-center lock
           },
         },
       });
 
-      const animDuration = 0.8;
-
       // 1. Slides 0 to 5 (poster-1 through poster-7 -> arch-carousel)
+      // Brand-new ultra-smooth editorial slide transition with subtle depth & rotation
       for (let i = 0; i < 6; i++) {
         const currentCard = cards[i];
         const nextCard = cards[i + 1];
         const startTime = i * 1.0;
 
+        // Current card exits: slides left to -100%, scales down to 0.92, rotates -1.5deg
         tl.to(
           currentCard,
           {
             xPercent: -100,
-            scale: 0.94,
+            scale: 0.92,
+            rotate: -1.5,
             opacity: 0,
-            ease: "power1.inOut",
-            duration: animDuration,
+            ease: "power2.inOut",
+            duration: 1.0,
           },
           startTime
         );
 
+        // Next card enters: slides in from +100%, scales from 1.06 to 1.0, rotates 1.5deg -> 0deg dead-center
         tl.fromTo(
           nextCard,
           {
             xPercent: 100,
-            scale: 0.94,
+            scale: 1.06,
+            rotate: 1.5,
             opacity: 0,
           },
           {
             xPercent: 0,
             scale: 1,
+            rotate: 0,
             opacity: 1,
-            ease: "power1.out",
-            duration: animDuration,
+            ease: "power2.out",
+            duration: 1.0,
           },
           startTime
         );
@@ -373,10 +374,11 @@ export function CreativeMindsSection() {
         archCard,
         {
           xPercent: -100,
-          scale: 0.94,
+          scale: 0.92,
+          rotate: -1.5,
           opacity: 0,
-          ease: "power1.inOut",
-          duration: animDuration,
+          ease: "power2.inOut",
+          duration: 1.0,
         },
         8.0
       );
@@ -385,15 +387,17 @@ export function CreativeMindsSection() {
         poster8Card,
         {
           xPercent: 100,
-          scale: 0.94,
+          scale: 1.06,
+          rotate: 1.5,
           opacity: 0,
         },
         {
           xPercent: 0,
           scale: 1,
+          rotate: 0,
           opacity: 1,
-          ease: "power1.out",
-          duration: animDuration,
+          ease: "power2.out",
+          duration: 1.0,
         },
         8.0
       );

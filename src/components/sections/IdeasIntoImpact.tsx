@@ -2316,11 +2316,12 @@ export function IdeasIntoImpact() {
               <div className="flex items-center gap-4 sm:gap-6">
                 {/* Handwritten Signature */}
                 <div className="flex flex-col items-start gap-0.5">
-                  <div className="h-6 sm:h-7 text-[#090714]">
-                    <svg viewBox="0 0 200 60" className="h-full w-auto" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M15 45 C25 15, 35 10, 45 25 C55 40, 60 50, 70 30 C75 20, 85 20, 90 35 C95 45, 105 25, 115 30 C125 35, 135 20, 145 40 C155 45, 175 35, 185 30" />
-                      <path d="M40 38 Q80 48 160 38" strokeWidth="1.5" opacity="0.7" />
-                    </svg>
+                  <div className="h-7 sm:h-9 flex items-center">
+                    <img
+                      src="/assets/gourab-signature.png"
+                      alt="Gourab Signature"
+                      className="h-full w-auto object-contain pointer-events-none select-none filter contrast-125"
+                    />
                   </div>
                   <span className="font-mono text-[8px] sm:text-[9px] font-bold tracking-[0.12em] text-[#090714]/75 uppercase">
                     Gourab S. &mdash; Lead Engineer &amp; Designer

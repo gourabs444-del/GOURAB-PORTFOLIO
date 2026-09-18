@@ -233,19 +233,19 @@ export function AboutManifesto() {
             <span>CREATIVE DISCIPLINES &amp; INFLUENCES</span>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3.5 sm:gap-4 w-full max-w-4xl mx-auto">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 sm:gap-8 w-full max-w-4xl mx-auto">
             {CREATIVE_DISCIPLINES.map((item, idx) => {
               const Icon = item.icon;
               return (
                 <div
                   key={idx}
-                  className="group relative p-4 sm:p-5 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-cyan-400/40 hover:bg-white/[0.05] transition-all duration-300 flex flex-col items-center text-center cursor-pointer backdrop-blur-md shadow-md hover:scale-[1.04]"
+                  className="group flex flex-col items-center text-center cursor-pointer transition-transform duration-300 hover:-translate-y-1"
                 >
-                  <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-white/[0.04] border border-white/10 text-white/80 flex items-center justify-center mb-3 group-hover:text-white group-hover:border-cyan-400/40 group-hover:bg-cyan-400/10 group-hover:shadow-[0_0_20px_rgba(56,189,248,0.25)] transition-all duration-300">
-                    <Icon className="w-5 h-5 stroke-[1.75]" />
+                  <div className="mb-2.5 sm:mb-3 text-white/70 group-hover:text-white group-hover:scale-110 transition-all duration-300">
+                    <Icon className="w-6 h-6 stroke-[1.75]" />
                   </div>
 
-                  <span className="font-sans font-extrabold text-xs sm:text-sm text-white tracking-tight uppercase mb-0.5 group-hover:text-cyan-300 transition-colors">
+                  <span className="font-sans font-bold text-xs sm:text-sm text-white tracking-tight uppercase mb-1 group-hover:text-cyan-300 transition-colors">
                     {item.title}
                   </span>
 
