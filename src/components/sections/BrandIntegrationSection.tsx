@@ -698,49 +698,59 @@ export function BrandIntegrationSection() {
         </div>
 
         {/* ========================================================= */}
-        {/* ACT 09 — VISION                                           */}
+        {/* ACT 09 — VISION (HIGH-END EDITORIAL TYPOGRAPHY)           */}
         {/* ========================================================= */}
         <div className="act-09 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6 transition-transform">
-          <div className="vision-text max-w-3xl flex flex-col items-center">
-            <span className="font-mono text-xs font-semibold tracking-[0.25em] text-amber-400 uppercase mb-3">
-              NEXT HORIZON
+          <div className="vision-text max-w-4xl flex flex-col items-center">
+            {/* Top Micro Monospace Category Tag */}
+            <span className="font-mono text-[11px] font-bold tracking-[0.3em] text-neutral-400 uppercase mb-5 flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+              <span>NEXT HORIZON</span>
             </span>
-            <h3 className="font-display font-black text-3xl sm:text-5xl md:text-6xl text-white tracking-tight uppercase leading-tight mb-4">
-              THIS IS ONLY THE BEGINNING.
+
+            {/* High-Contrast Editorial Headline */}
+            <h3 className="font-sans font-extrabold text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-white tracking-tight uppercase leading-none mb-6">
+              THIS IS ONLY THE <span className="font-bodoni italic font-normal text-amber-200 lowercase tracking-normal">beginning.</span>
             </h3>
-            <p className="font-sans text-xs sm:text-sm text-neutral-400 max-w-xl font-light leading-relaxed">
+
+            {/* Refined Subtext Paragraph */}
+            <p className="font-sans text-sm sm:text-base text-neutral-300 max-w-xl font-light leading-relaxed tracking-wide">
               Building toward autonomous creative systems and seamless cinematic digital experiences.
             </p>
           </div>
         </div>
 
         {/* ========================================================= */}
-        {/* ACT 10 — FINAL BRAND LOCKUP                               */}
+        {/* ACT 10 — FINAL BRAND LOCKUP (OPEN MINIMAL EDITORIAL)     */}
         {/* ========================================================= */}
         <div className="act-10 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6 transition-transform">
-          <div className="act-10-logo mb-6 w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center">
-            <svg viewBox="315 85 394 450" className="w-full h-full text-white overflow-visible">
+          {/* Open Vector Emblem */}
+          <div className="act-10-logo mb-6 w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center">
+            <svg viewBox="315 85 394 450" className="w-full h-full text-white overflow-visible drop-shadow-[0_0_25px_rgba(255,255,255,0.3)]">
               <circle cx="512" cy="284.5" r="175" fill="none" stroke="currentColor" strokeWidth="20" />
               <polygon points="512,197 483,243.5 550,368 604,368" fill="white" stroke="none" />
               <path d="M 408.00 368.00 C 411.41 362.36, 433.32 326.42, 437.03 320.96 C 443.94 310.78, 453.24 304.05, 464.86 300.83 C 469.89 299.43, 474.99 299.00, 486.33 299.00 L 500.00 299.00 C 484.32 328.00, 470.51 351.92, 455.50 363.06 C 452.20 364.68, 446.35 366.68, 442.50 367.49 L 408.00 368.00 Z" fill="white" stroke="none" />
             </svg>
           </div>
 
-          <h2 className="act-10-name font-sans font-extrabold text-4xl sm:text-6xl md:text-7xl tracking-[0.32em] text-white uppercase mb-6">
+          {/* Open Brand Title */}
+          <h2 className="act-10-name font-sans font-black text-5xl sm:text-7xl md:text-8xl tracking-[0.35em] text-white uppercase mb-4 leading-none">
             ALGORA
           </h2>
 
-          <span className="act-10-founder font-mono text-xs text-neutral-400 uppercase tracking-widest mb-8">
+          {/* Open Founder Credit */}
+          <span className="act-10-founder font-mono text-xs sm:text-sm font-semibold text-neutral-400 uppercase tracking-[0.3em] mb-10 block">
             FOUNDED &amp; BUILT BY GOURAB
           </span>
 
+          {/* Cool Modern Minimal Text CTA (No Capsule / Box) */}
           <a
             href="#skills"
             onMouseEnter={() => playHover()}
-            className="act-10-cta inline-flex items-center gap-2 px-7 py-3 rounded-none bg-white text-black hover:bg-neutral-100 font-sans font-bold text-xs sm:text-sm tracking-wide transition-all duration-300 shadow-[0_0_25px_rgba(255,255,255,0.3)] hover:shadow-[0_0_40px_rgba(255,255,255,0.6)] border border-white cursor-pointer active:scale-95"
+            className="act-10-cta pointer-events-auto inline-flex items-center gap-2.5 text-xs sm:text-sm font-mono font-bold tracking-[0.25em] text-white hover:text-amber-300 uppercase transition-all duration-300 pb-1.5 border-b border-white/30 hover:border-amber-300 cursor-pointer"
           >
             <span>EXPLORE TECH STACK</span>
-            <ArrowUpRight className="w-4 h-4 text-black" />
+            <ArrowUpRight className="w-4 h-4 text-white hover:text-amber-300" />
           </a>
         </div>
       </div>

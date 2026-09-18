@@ -3,7 +3,7 @@
 import React, { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "@/lib/gsap";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, ArrowUp, Github, Linkedin, Twitter, Instagram, Mail } from "lucide-react";
 import { useAudioFeedback } from "@/hooks/useAudioFeedback";
 import { VerticalCardsGridBackground } from "@/components/ambient/VerticalCardsGridBackground";
 
@@ -2310,44 +2310,122 @@ export function IdeasIntoImpact() {
               </p>
             </div>
 
-            {/* 3. Bottom 3-Column Assembled Footer Layout (Assembles from bottom in Phase 2) */}
-            <div className="slide3-bottom-grid opacity-0 absolute bottom-4 sm:bottom-7 left-0 right-0 mx-auto w-full grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 items-center pt-3.5 sm:pt-4 border-t border-[#090714]/15 px-6 sm:px-12 pointer-events-none">
-              {/* Left Column: Handwritten Signature */}
-              <div className="flex flex-col items-center md:items-start text-center md:text-left gap-0.5">
-                {/* SVG Handwritten Signature Graphic */}
-                <div className="h-6 sm:h-7 text-[#090714]">
-                  <svg viewBox="0 0 200 60" className="h-full w-auto" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M15 45 C25 15, 35 10, 45 25 C55 40, 60 50, 70 30 C75 20, 85 20, 90 35 C95 45, 105 25, 115 30 C125 35, 135 20, 145 40 C155 45, 175 35, 185 30" />
-                    <path d="M40 38 Q80 48 160 38" strokeWidth="1.5" opacity="0.7" />
-                  </svg>
+            {/* 3. Bottom Assembled Footer Layout (Assembles from bottom in Phase 2) */}
+            <div className="slide3-bottom-grid opacity-0 absolute bottom-3 sm:bottom-6 left-0 right-0 mx-auto w-full flex flex-col md:flex-row items-center justify-between gap-4 border-t border-[#090714]/15 pt-3.5 pb-1 px-6 sm:px-12 pointer-events-none">
+              {/* Item 1: Left Group — Signature & Real Algora Brand Logo */}
+              <div className="flex items-center gap-4 sm:gap-6">
+                {/* Handwritten Signature */}
+                <div className="flex flex-col items-start gap-0.5">
+                  <div className="h-6 sm:h-7 text-[#090714]">
+                    <svg viewBox="0 0 200 60" className="h-full w-auto" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M15 45 C25 15, 35 10, 45 25 C55 40, 60 50, 70 30 C75 20, 85 20, 90 35 C95 45, 105 25, 115 30 C125 35, 135 20, 145 40 C155 45, 175 35, 185 30" />
+                      <path d="M40 38 Q80 48 160 38" strokeWidth="1.5" opacity="0.7" />
+                    </svg>
+                  </div>
+                  <span className="font-mono text-[8px] sm:text-[9px] font-bold tracking-[0.12em] text-[#090714]/75 uppercase">
+                    Gourab S. &mdash; Lead Engineer &amp; Designer
+                  </span>
                 </div>
-                <span className="font-mono text-[8px] sm:text-[9px] font-bold tracking-[0.14em] text-[#090714]/75 uppercase">
-                  Gourab S. &mdash; Lead Engineer &amp; Designer
-                </span>
-              </div>
 
-              {/* Center Column: Collaboration Note / Quote */}
-              <div className="flex flex-col items-center text-center px-2">
-                <p className="font-bodoni italic text-xs sm:text-[13px] text-[#090714]/75 font-medium leading-relaxed max-w-sm">
-                  &ldquo;Building meaningful digital experiences through design, performance, and code.&rdquo;
-                </p>
-              </div>
+                {/* Vertical Divider */}
+                <div className="h-7 w-[1px] bg-[#090714]/15 hidden sm:block" />
 
-              {/* Right Column: CTA Button + Social Links / Contact */}
-              <div className="flex flex-col items-center md:items-end gap-2">
+                {/* Real Algora Logo */}
                 <a
-                  href="#contact"
+                  href="https://algora.io"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onMouseEnter={() => playHover()}
-                  className="pointer-events-auto inline-flex items-center gap-1.5 px-4 sm:px-4.5 py-1.5 rounded-full bg-[#090714] text-white hover:bg-black font-sans font-bold text-[10px] sm:text-[11px] tracking-tight transition-all duration-300 shadow-[0_4px_15px_rgba(9,7,20,0.18)] hover:shadow-[0_8px_25px_rgba(9,7,20,0.3)] hover:scale-105 active:scale-95 cursor-pointer border border-[#090714]/20"
+                  className="pointer-events-auto flex items-center gap-2 group cursor-pointer"
+                  title="Algora Official"
+                >
+                  <img
+                    src="/assets/algora-icon.png"
+                    alt="Algora Logo"
+                    className="w-5.5 h-5.5 sm:w-6.5 sm:h-6.5 object-contain rounded-full shadow-xs group-hover:scale-110 transition-transform duration-300"
+                  />
+                  <span className="font-sans font-black text-[11px] sm:text-xs tracking-[0.18em] text-[#090714] uppercase group-hover:text-black transition-colors">
+                    ALGORA
+                  </span>
+                </a>
+              </div>
+
+              {/* Item 2: Center Group — Micro Social App Icons */}
+              <div className="flex items-center gap-2 pointer-events-auto">
+                <a
+                  href="https://github.com/gourabs444-del"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onMouseEnter={() => playHover()}
+                  className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#090714]/[0.06] hover:bg-[#090714] text-[#090714] hover:text-white flex items-center justify-center transition-all duration-300 border border-[#090714]/10 hover:scale-110"
+                  title="GitHub"
+                >
+                  <Github className="w-3.5 h-3.5" />
+                </a>
+                <a
+                  href="https://linkedin.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onMouseEnter={() => playHover()}
+                  className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#090714]/[0.06] hover:bg-[#090714] text-[#090714] hover:text-white flex items-center justify-center transition-all duration-300 border border-[#090714]/10 hover:scale-110"
+                  title="LinkedIn"
+                >
+                  <Linkedin className="w-3.5 h-3.5" />
+                </a>
+                <a
+                  href="https://x.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onMouseEnter={() => playHover()}
+                  className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#090714]/[0.06] hover:bg-[#090714] text-[#090714] hover:text-white flex items-center justify-center transition-all duration-300 border border-[#090714]/10 hover:scale-110"
+                  title="Twitter / X"
+                >
+                  <Twitter className="w-3.5 h-3.5" />
+                </a>
+                <a
+                  href="https://instagram.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onMouseEnter={() => playHover()}
+                  className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#090714]/[0.06] hover:bg-[#090714] text-[#090714] hover:text-white flex items-center justify-center transition-all duration-300 border border-[#090714]/10 hover:scale-110"
+                  title="Instagram"
+                >
+                  <Instagram className="w-3.5 h-3.5" />
+                </a>
+                <a
+                  href="mailto:gourabs444@gmail.com"
+                  onMouseEnter={() => playHover()}
+                  className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#090714]/[0.06] hover:bg-[#090714] text-[#090714] hover:text-white flex items-center justify-center transition-all duration-300 border border-[#090714]/10 hover:scale-110"
+                  title="Email"
+                >
+                  <Mail className="w-3.5 h-3.5" />
+                </a>
+              </div>
+
+              {/* Item 3: Right Group — Get In Touch CTA & Scroll-to-Top Button */}
+              <div className="flex items-center gap-2.5 pointer-events-auto">
+                <a
+                  href="mailto:gourabs444@gmail.com"
+                  onMouseEnter={() => playHover()}
+                  className="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-1.5 rounded-full bg-[#090714] text-white hover:bg-black font-sans font-bold text-[10px] sm:text-[11px] tracking-tight transition-all duration-300 shadow-[0_4px_15px_rgba(9,7,20,0.18)] hover:shadow-[0_8px_25px_rgba(9,7,20,0.3)] hover:scale-105 active:scale-95 cursor-pointer border border-[#090714]/20"
                 >
                   <span>Get In Touch</span>
                   <ArrowUpRight className="w-3 h-3 text-white" />
                 </a>
-                <div className="flex items-center gap-2.5 text-[8px] sm:text-[9px] font-mono font-semibold tracking-[0.14em] text-[#090714]/50 uppercase">
-                  <a href="mailto:gourabs444@gmail.com" className="hover:text-[#090714] transition-colors">gourabs444@gmail.com</a>
-                  <span>&bull;</span>
-                  <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#090714] transition-colors">LinkedIn</a>
-                </div>
+
+                {/* Sabse Upr Jane Ka Button (Scroll to Top) */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  }}
+                  onMouseEnter={() => playHover()}
+                  className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-[#090714]/[0.08] hover:bg-[#090714] text-[#090714] hover:text-white font-mono font-bold text-[9px] sm:text-[10px] tracking-wider uppercase transition-all duration-300 border border-[#090714]/15 hover:scale-105 active:scale-95 cursor-pointer"
+                  title="Scroll to Top"
+                >
+                  <span>TOP</span>
+                  <ArrowUp className="w-3 h-3" />
+                </button>
               </div>
             </div>
           </div>
