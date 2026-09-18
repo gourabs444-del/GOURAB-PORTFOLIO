@@ -88,19 +88,19 @@ export function Hero({ isLoaded }: HeroProps) {
         {/* Main 2-Line Layered Typography & Centered Cutout Portrait Scene */}
         <div className="relative my-auto w-full max-w-7xl mx-auto flex flex-col items-center justify-center py-2 sm:py-4 min-h-[320px] xs:min-h-[360px] sm:min-h-[440px] md:min-h-[500px] lg:min-h-[540px]">
           {/* Background Typography Container */}
-          <div className="relative z-10 w-full max-w-5xl lg:max-w-6xl mx-auto flex flex-col items-center justify-center text-center select-none -translate-y-4 xs:-translate-y-6 sm:-translate-y-10 md:-translate-y-14 lg:-translate-y-16 px-2 sm:px-4">
-            {/* Line 1: WEB DEVELOPER (Shifted lower down & made taller) */}
-            <div className="w-full relative z-10 translate-y-2 xs:translate-y-3 sm:translate-y-4 md:translate-y-6 lg:translate-y-8 mb-1 sm:mb-2 transform scale-y-[1.75] sm:scale-y-[1.95] md:scale-y-[2.15] lg:scale-y-[2.35] origin-bottom">
+          <div className="relative z-10 w-full max-w-5xl lg:max-w-6xl mx-auto flex flex-col items-center justify-center text-center select-none -translate-y-10 xs:-translate-y-14 sm:-translate-y-20 md:-translate-y-28 lg:-translate-y-32 px-2 sm:px-4">
+            {/* Line 1: WEB DEVELOPER (Taller and shifted lower down toward Line 2) */}
+            <div className="w-full relative z-10 translate-y-2 xs:translate-y-3 sm:translate-y-4 md:translate-y-6 lg:translate-y-8 mb-1 sm:mb-2 transform scale-y-[1.65] sm:scale-y-[1.85] md:scale-y-[2.05] lg:scale-y-[2.2] origin-bottom">
               <svg viewBox="0 0 1000 95" className="w-full h-auto overflow-visible" preserveAspectRatio="none">
                 <text
                   x="0"
-                  y="82"
+                  y="80"
                   textLength="1000"
                   lengthAdjust="spacingAndGlyphs"
                   className="font-oswald font-black uppercase"
                   style={{
                     fontFamily: "var(--font-oswald), sans-serif",
-                    fontSize: "115px",
+                    fontSize: "110px",
                     fontWeight: "800",
                     fill: "#111111",
                   }}
@@ -110,8 +110,8 @@ export function Hero({ isLoaded }: HeroProps) {
               </svg>
             </div>
 
-            {/* Line 2 (Outlined Stroked Text Behind Portrait): & DESIGNER */}
-            <div className="w-full relative z-10 translate-y-1 xs:translate-y-2 sm:translate-y-3 md:translate-y-4 transform scale-y-[2.1] sm:scale-y-[2.3] md:scale-y-[2.5] lg:scale-y-[2.65] origin-top">
+            {/* Line 2 (Outlined Stroked Text Behind Portrait): & DESIGNER (Original Untouched) */}
+            <div className="w-full relative z-10 -translate-y-2 xs:-translate-y-3 sm:-translate-y-4 md:-translate-y-5 transform scale-y-[2.1] sm:scale-y-[2.3] md:scale-y-[2.5] lg:scale-y-[2.65] origin-top">
               <svg viewBox="0 0 1000 120" className="w-full h-auto overflow-visible" preserveAspectRatio="none">
                 <text
                   x="0"

@@ -102,7 +102,7 @@ export const metadata: Metadata = {
     siteName: `${siteConfig.name} Portfolio`,
     images: [
       {
-        url: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1200&auto=format&fit=crop",
+        url: "/assets/aethel-iceberg-ui.png",
         width: 1200,
         height: 630,
         alt: `${siteConfig.name} — ${siteConfig.title}`,
@@ -114,7 +114,7 @@ export const metadata: Metadata = {
     title: `${siteConfig.name} — ${siteConfig.title}`,
     description: siteConfig.tagline,
     creator: "@gourab_x",
-    images: ["https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1200&auto=format&fit=crop"],
+    images: ["/assets/aethel-iceberg-ui.png"],
   },
   icons: {
     icon: "/favicon.ico",

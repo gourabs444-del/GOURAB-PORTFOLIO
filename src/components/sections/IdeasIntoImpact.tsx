@@ -2336,15 +2336,17 @@ export function IdeasIntoImpact() {
                   target="_blank"
                   rel="noopener noreferrer"
                   onMouseEnter={() => playHover()}
-                  className="pointer-events-auto flex items-center gap-2 group cursor-pointer"
+                  className="pointer-events-auto flex items-center gap-2 group cursor-pointer shrink-0"
                   title="Algora Official"
                 >
-                  <img
-                    src="/assets/algora-icon.png"
-                    alt="Algora Logo"
-                    className="w-5.5 h-5.5 sm:w-6.5 sm:h-6.5 object-contain rounded-full shadow-xs group-hover:scale-110 transition-transform duration-300"
-                  />
-                  <span className="font-sans font-black text-[11px] sm:text-xs tracking-[0.18em] text-[#090714] uppercase group-hover:text-black transition-colors">
+                  <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full overflow-hidden shrink-0 flex items-center justify-center border border-[#090714]/15 bg-black shadow-xs p-1">
+                    <img
+                      src="/assets/algora-icon.png"
+                      alt="Algora Logo"
+                      className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
+                    />
+                  </div>
+                  <span className="font-sans font-black text-[11px] sm:text-xs tracking-[0.18em] text-[#090714] uppercase group-hover:text-black transition-colors whitespace-nowrap">
                     ALGORA
                   </span>
                 </a>
