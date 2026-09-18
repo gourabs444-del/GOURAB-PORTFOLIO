@@ -493,7 +493,7 @@ export function ExperienceTimeline() {
     <section
       id="skills"
       ref={sectionRef}
-      className="relative w-full py-24 sm:py-32 md:py-36 px-6 sm:px-12 md:px-16 lg:px-24 bg-white text-neutral-900 overflow-hidden select-none"
+      className="relative w-full py-24 sm:py-32 md:py-36 px-6 sm:px-12 md:px-16 lg:px-24 bg-[#E5DAF7] bg-gradient-to-br from-[#ECE3FC] via-[#E5DAF7] to-[#C8B8F7] text-neutral-900 overflow-hidden select-none"
     >
       <div className="max-w-6xl mx-auto flex flex-col gap-16 sm:gap-20 relative z-10">
         {/* ========================================================= */}

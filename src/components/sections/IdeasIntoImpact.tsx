@@ -2109,20 +2109,25 @@ export function IdeasIntoImpact() {
             </h2>
 
             {/* Clean Minimal Layout: [Start a Project] | (A) Algora Logo */}
-            <div className="mt-8 sm:mt-10 flex items-center justify-center gap-6 sm:gap-8 pointer-events-auto">
-              {/* Left: Compact Tightly Fitted White Button (Radius 0) */}
+            <div className="mt-14 sm:mt-20 md:mt-24 flex items-center justify-center gap-6 sm:gap-8 pointer-events-auto">
+              {/* Left: Ultra-Premium Sharp White Button (Radius 0) */}
               <a
                 href="#contact"
                 onMouseEnter={() => playHover()}
-                className="inline-flex items-center justify-center px-4 py-2 sm:px-4.5 sm:py-2 rounded-none bg-white text-black hover:bg-neutral-100 font-sans font-bold text-xs tracking-tight transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.25)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] border border-white active:scale-95 cursor-pointer"
+                className="group relative inline-flex items-center justify-center px-5.5 py-2.5 sm:px-6.5 sm:py-3 rounded-none bg-white text-black hover:bg-neutral-100 font-sans font-bold text-xs sm:text-[13px] tracking-[0.08em] uppercase transition-all duration-300 shadow-[0_0_30px_rgba(255,255,255,0.35),0_8px_25px_rgba(0,0,0,0.6)] hover:shadow-[0_0_45px_rgba(255,255,255,0.6)] border border-white active:scale-95 cursor-pointer overflow-hidden"
               >
-                <span>Start a Project</span>
+                {/* Subtle Specular Sheen Sweep */}
+                <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/40 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-[300%] transition-transform duration-750 ease-out pointer-events-none" />
+                <span className="relative z-10 flex items-center gap-2">
+                  <span>Start a Project</span>
+                  <ArrowUpRight className="w-3.5 h-3.5 text-black transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </span>
               </a>
 
               {/* Center Vertical Divider | */}
-              <div className="w-[1px] h-4 bg-white/30 select-none" />
+              <div className="w-[1px] h-5 bg-gradient-to-b from-transparent via-white/40 to-transparent select-none" />
 
-              {/* Right: Frameless Clean Algora Logo Icon (No Outer Box) */}
+              {/* Right: Frameless Clean Algora Logo Icon */}
               <a
                 href="https://algora.io"
                 target="_blank"
@@ -2134,7 +2139,7 @@ export function IdeasIntoImpact() {
                 <img
                   src="/assets/algora-icon.png"
                   alt="Algora Official Logo"
-                  className="w-7 h-7 sm:w-8 sm:h-8 object-contain rounded-full shadow-[0_0_15px_rgba(255,255,255,0.2)] group-hover:shadow-[0_0_25px_rgba(255,255,255,0.5)] transition-all duration-300"
+                  className="w-7 h-7 sm:w-8.5 sm:h-8.5 object-contain rounded-full shadow-[0_0_18px_rgba(255,255,255,0.25)] group-hover:shadow-[0_0_30px_rgba(255,255,255,0.6)] transition-all duration-300"
                 />
               </a>
             </div>
@@ -2217,11 +2222,11 @@ export function IdeasIntoImpact() {
           {/* Ambient Luxury Background Canvas */}
           <div
             ref={slide3BgRef}
-            className="absolute inset-0 w-full h-full will-change-transform z-0 overflow-hidden bg-[#fbfbfd] shadow-[0_-20px_50px_rgba(0,0,0,0.15)] flex items-center justify-center"
+            className="absolute inset-0 w-full h-full will-change-transform z-0 overflow-hidden bg-[#E5DAF7] bg-gradient-to-br from-[#ECE3FC] via-[#E5DAF7] to-[#C8B8F7] shadow-[0_-20px_50px_rgba(0,0,0,0.15)] flex items-center justify-center"
           >
-            {/* Subtle atmospheric ambient glow on light canvas */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_rgba(238,242,255,0.95)_0%,_rgba(251,251,253,1)_75%)] pointer-events-none" />
-            <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[550px] bg-[radial-gradient(ellipse_at_center,_rgba(99,102,241,0.16)_0%,_rgba(217,70,239,0.09)_45%,_transparent_75%)] rounded-full blur-[100px]" />
+            {/* Soft lavender atmospheric ambient glow matching reference image */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,_rgba(237,220,248,0.85)_0%,_rgba(229,218,247,0.95)_50%,_rgba(200,184,247,1)_100%)] pointer-events-none" />
+            <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[600px] bg-[radial-gradient(ellipse_at_center,_rgba(168,139,250,0.3)_0%,_rgba(217,70,239,0.18)_45%,_transparent_75%)] rounded-full blur-[110px]" />
           </div>
 
           {/* Foreground Editorial Centered Content */}
