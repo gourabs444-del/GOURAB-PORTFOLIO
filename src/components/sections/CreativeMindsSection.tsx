@@ -321,21 +321,41 @@ export function CreativeMindsSection() {
         },
       });
 
+      // Set initial card states (Center card is full scale & full color; side cards are smaller, desaturated, faded)
+      gsap.set(cards, {
+        transformOrigin: "center center",
+      });
+      gsap.set(cards[0], {
+        xPercent: 0,
+        scale: 1,
+        filter: "grayscale(0%)",
+        opacity: 1,
+      });
+      if (cards.length > 1) {
+        gsap.set(cards.slice(1), {
+          xPercent: 85,
+          scale: 0.82,
+          filter: "grayscale(100%)",
+          opacity: 0,
+        });
+      }
+
       // 1. Build transitions between poster slides (0 to 5) and into Arch Carousel (5 to 6)
       const stepDuration = 1.0;
-      const animDuration = 0.35; // 35% transition motion, 65% frozen center plateau!
+      const animDuration = 0.45; // Smooth cinematic transition motion with stable center hold plateau
 
       for (let i = 0; i < numPosters; i++) {
         const currentCard = cards[i];
         const nextCard = cards[i + 1];
         const startTime = i * stepDuration;
 
-        // Current card slides OUT left to -100%
+        // Current card leaves center: shrinks to 0.82, desaturates to grayscale(100%), fades out, slides left
         tl.to(
           currentCard,
           {
-            xPercent: -100,
-            scale: 0.94,
+            xPercent: -85,
+            scale: 0.82,
+            filter: "grayscale(100%)",
             opacity: 0,
             ease: "power2.inOut",
             duration: animDuration,
@@ -343,17 +363,20 @@ export function CreativeMindsSection() {
           startTime
         );
 
-        // Next card slides IN from +100% directly to 0% (DEAD CENTER)
+        // Next card enters from side: starts smaller (0.82), desaturated (grayscale 100%), faded (opacity 0)
+        // Reaches dead center: scales up to 1.0 (middle wala bada), saturates to full color (grayscale 0%), full opacity (1.0)
         tl.fromTo(
           nextCard,
           {
-            xPercent: 100,
-            scale: 0.94,
+            xPercent: 85,
+            scale: 0.82,
+            filter: "grayscale(100%)",
             opacity: 0,
           },
           {
             xPercent: 0,
             scale: 1,
+            filter: "grayscale(0%)",
             opacity: 1,
             ease: "power2.out",
             duration: animDuration,
@@ -363,15 +386,15 @@ export function CreativeMindsSection() {
       }
 
       // 2. Extra 2-scroll hold plateau for Arch Carousel (slide index 6)
-      // Keeps Arch Carousel (cards[6]) centered for 2 full scroll steps so cards spin fast on scroll!
       const archStartTime = numPosters * stepDuration;
       tl.to(
         cards[numPosters],
         {
           xPercent: 0,
           scale: 1,
+          filter: "grayscale(0%)",
           opacity: 1,
-          duration: 2.0, // Holds for 2 full scroll steps!
+          duration: 2.0, // Holds for 2 full scroll steps
         },
         archStartTime
       );
@@ -395,8 +418,12 @@ export function CreativeMindsSection() {
               cardRefs.current[index] = el;
             }}
             className={`absolute inset-0 m-auto w-full h-full flex items-center justify-center will-change-transform transform-gpu z-10 ${
-              index > 0 ? "opacity-0" : ""
+              index > 0 ? "opacity-0 pointer-events-none" : "opacity-100"
             }`}
+            style={{
+              filter: index === 0 ? "grayscale(0%)" : "grayscale(100%)",
+              transform: index === 0 ? "scale(1)" : "scale(0.82)",
+            }}
           >
             {slide.type === "arch-carousel" ? (
               <ArchCarouselComponent />
@@ -413,19 +440,6 @@ export function CreativeMindsSection() {
         ))}
       </div>
 
-      {/* Bottom Carousel Navigation Dots Indicator */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2 px-4 py-2 rounded-full bg-black/5 backdrop-blur-md border border-black/10">
-        {SLIDES.map((_, idx) => (
-          <div
-            key={idx}
-            className={`h-1.5 rounded-full transition-all duration-300 ${
-              activeSlide === idx
-                ? "w-6 bg-black shadow-sm"
-                : "w-1.5 bg-black/20"
-            }`}
-          />
-        ))}
-      </div>
     </section>
   );
 }
