@@ -2339,13 +2339,14 @@ export function IdeasIntoImpact() {
                   className="pointer-events-auto flex items-center gap-2 group cursor-pointer shrink-0"
                   title="Algora Official"
                 >
-                  <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full overflow-hidden shrink-0 flex items-center justify-center border border-[#090714]/15 bg-black shadow-xs p-1">
-                    <img
-                      src="/assets/algora-icon.png"
-                      alt="Algora Logo"
-                      className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
-                    />
-                  </div>
+                  <svg
+                    viewBox="315 85 394 394"
+                    className="w-6 h-6 sm:w-7 sm:h-7 text-[#090714] shrink-0 group-hover:scale-110 transition-transform duration-300"
+                  >
+                    <circle cx="512" cy="284.5" r="175" fill="none" stroke="currentColor" strokeWidth="24" />
+                    <polygon points="512,197 483,243.5 550,368 604,368" fill="currentColor" stroke="currentColor" strokeWidth="6" strokeLinejoin="round" />
+                    <path d="M 408.00 368.00 C 411.41 362.36, 433.32 326.42, 437.03 320.96 C 443.94 310.78, 453.24 304.05, 464.86 300.83 C 469.89 299.43, 474.99 299.00, 486.33 299.00 L 500.00 299.00 C 484.32 328.00, 470.51 351.92, 455.50 363.06 C 452.20 364.68, 446.35 366.68, 442.50 367.49 L 408.00 368.00 Z" fill="currentColor" stroke="currentColor" strokeWidth="6" strokeLinejoin="round" />
+                  </svg>
                   <span className="font-sans font-black text-[11px] sm:text-xs tracking-[0.18em] text-[#090714] uppercase group-hover:text-black transition-colors whitespace-nowrap">
                     ALGORA
                   </span>

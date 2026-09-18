@@ -89,8 +89,8 @@ export function Hero({ isLoaded }: HeroProps) {
         <div className="relative my-auto w-full max-w-7xl mx-auto flex flex-col items-center justify-center py-2 sm:py-4 min-h-[320px] xs:min-h-[360px] sm:min-h-[440px] md:min-h-[500px] lg:min-h-[540px]">
           {/* Background Typography Container */}
           <div className="relative z-10 w-full max-w-5xl lg:max-w-6xl mx-auto flex flex-col items-center justify-center text-center select-none -translate-y-10 xs:-translate-y-14 sm:-translate-y-20 md:-translate-y-28 lg:-translate-y-32 px-2 sm:px-4">
-            {/* Line 1: WEB DEVELOPER (Taller and shifted lower down toward Line 2) */}
-            <div className="w-full relative z-10 translate-y-2 xs:translate-y-3 sm:translate-y-4 md:translate-y-6 lg:translate-y-8 mb-1 sm:mb-2 transform scale-y-[1.65] sm:scale-y-[1.85] md:scale-y-[2.05] lg:scale-y-[2.2] origin-bottom">
+            {/* Line 1: WEB DEVELOPER (Lifted slightly up to create clean gap above Line 2) */}
+            <div className="w-full relative z-10 -translate-y-1 xs:-translate-y-2 sm:-translate-y-3 md:-translate-y-4 lg:-translate-y-5 mb-1 sm:mb-2 transform scale-y-[1.65] sm:scale-y-[1.85] md:scale-y-[2.05] lg:scale-y-[2.2] origin-bottom">
               <svg viewBox="0 0 1000 95" className="w-full h-auto overflow-visible" preserveAspectRatio="none">
                 <text
                   x="0"

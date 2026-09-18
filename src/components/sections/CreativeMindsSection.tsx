@@ -59,9 +59,9 @@ export function CreativeMindsSection() {
       const cards = cardRefs.current.filter(Boolean) as HTMLDivElement[];
       if (cards.length < 2) return;
 
-      // Master ScrollTrigger timeline for buttery smooth presentation sequence
+      // Master ScrollTrigger timeline for fast, 1-scroll graphic transitions
       const totalSteps = cards.length - 1;
-      const scrollDistance = totalSteps * 950; // Fluid scroll distance per card
+      const scrollDistance = totalSteps * 420; // 420px per card transition (1 clean scroll gesture)
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -69,7 +69,7 @@ export function CreativeMindsSection() {
           start: "top top",
           end: `+=${scrollDistance}`,
           pin: true,
-          scrub: 1.2, // Buttery smooth dampening
+          scrub: 0.5, // Responsive, instantaneous dampening
         },
       });
 
