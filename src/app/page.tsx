@@ -13,7 +13,6 @@ import { BrandIntegrationSection } from "@/components/sections/BrandIntegrationS
 import { ProcessPipeline } from "@/components/sections/ProcessPipeline";
 import { ExperienceTimeline } from "@/components/sections/ExperienceTimeline";
 import { IdeasIntoImpact } from "@/components/sections/IdeasIntoImpact";
-import { ContactFooter } from "@/components/sections/ContactFooter";
 import { FilmGrain } from "@/components/ambient/FilmGrain";
 import { AmbientCanvas } from "@/components/ambient/AmbientCanvas";
 
@@ -62,7 +61,6 @@ export default function Home() {
         <ExperienceTimeline />
         <ProcessPipeline />
         <IdeasIntoImpact />
-        <ContactFooter />
       </div>
     </main>
   );

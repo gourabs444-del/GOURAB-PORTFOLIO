@@ -570,14 +570,14 @@ export function BrandIntegrationSection() {
         </div>
 
         {/* ========================================================= */}
-        {/* ACT 07 — ENGINE / ARCHITECTURE                             */}
+        {/* ACT 07 — ENGINE / ARCHITECTURE (CLEAN ISOLATED NODES)     */}
         {/* ========================================================= */}
         <div className="act-07 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6 transition-transform">
-          <span className="font-mono text-xs font-bold tracking-[0.25em] text-neutral-400 uppercase mb-6">
+          <span className="font-mono text-xs font-bold tracking-[0.25em] text-neutral-400 uppercase mb-8">
             ENGINEERED FROM THE GROUND UP
           </span>
 
-          <div className="engine-graph relative w-full max-w-4xl p-8 rounded-3xl bg-black/80 border border-white/15 backdrop-blur-2xl">
+          <div className="engine-graph relative w-full max-w-5xl p-6 sm:p-10 rounded-2xl bg-black/40 border border-white/10 backdrop-blur-md">
             {/* SVG Connecting Signal Lines */}
             <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 800 300">
               <line className="engine-line" x1="150" y1="150" x2="300" y2="150" stroke="#f59e0b" strokeWidth="2" strokeDasharray="6 6" />
@@ -587,66 +587,113 @@ export function BrandIntegrationSection() {
 
             {/* Architecture Node Grid */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 relative z-10">
-              <div className="engine-node p-4 rounded-xl bg-white/5 border border-amber-400/30 flex flex-col items-center">
-                <Code className="w-6 h-6 text-amber-400 mb-2" />
-                <span className="font-sans font-bold text-xs text-white">NEXT.JS 15</span>
-                <span className="font-mono text-[10px] text-neutral-400">REACT 19 / TS</span>
+              {/* Node 1 */}
+              <div className="engine-node p-6 rounded-2xl bg-white/[0.02] border border-white/10 backdrop-blur-xl hover:bg-white/[0.04] hover:border-white/20 transition-all duration-300 flex flex-col items-center group shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
+                <div className="w-10 h-10 rounded-xl bg-amber-400/10 border border-amber-400/20 text-amber-400 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform duration-300">
+                  <Code className="w-5 h-5" />
+                </div>
+                <span className="font-sans font-extrabold text-xs text-white tracking-wide uppercase mb-1">
+                  NEXT.JS 15
+                </span>
+                <span className="font-mono text-[10px] text-neutral-400 uppercase tracking-wider">
+                  REACT 19 / TS
+                </span>
               </div>
 
-              <div className="engine-node p-4 rounded-xl bg-white/5 border border-sky-400/30 flex flex-col items-center">
-                <Layers className="w-6 h-6 text-sky-400 mb-2" />
-                <span className="font-sans font-bold text-xs text-white">GSAP &amp; WEBGLEngine</span>
-                <span className="font-mono text-[10px] text-neutral-400">60FPS SHADERS</span>
+              {/* Node 2 */}
+              <div className="engine-node p-6 rounded-2xl bg-white/[0.02] border border-white/10 backdrop-blur-xl hover:bg-white/[0.04] hover:border-white/20 transition-all duration-300 flex flex-col items-center group shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
+                <div className="w-10 h-10 rounded-xl bg-sky-400/10 border border-sky-400/20 text-sky-400 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform duration-300">
+                  <Layers className="w-5 h-5" />
+                </div>
+                <span className="font-sans font-extrabold text-xs text-white tracking-wide uppercase mb-1">
+                  GSAP &amp; WEBGLEngine
+                </span>
+                <span className="font-mono text-[10px] text-neutral-400 uppercase tracking-wider">
+                  60FPS SHADERS
+                </span>
               </div>
 
-              <div className="engine-node p-4 rounded-xl bg-white/5 border border-purple-400/30 flex flex-col items-center">
-                <Cpu className="w-6 h-6 text-purple-400 mb-2" />
-                <span className="font-sans font-bold text-xs text-white">NODE.JS API</span>
-                <span className="font-mono text-[10px] text-neutral-400">EDGE ROUTING</span>
+              {/* Node 3 */}
+              <div className="engine-node p-6 rounded-2xl bg-white/[0.02] border border-white/10 backdrop-blur-xl hover:bg-white/[0.04] hover:border-white/20 transition-all duration-300 flex flex-col items-center group shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
+                <div className="w-10 h-10 rounded-xl bg-purple-400/10 border border-purple-400/20 text-purple-400 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform duration-300">
+                  <Cpu className="w-5 h-5" />
+                </div>
+                <span className="font-sans font-extrabold text-xs text-white tracking-wide uppercase mb-1">
+                  NODE.JS API
+                </span>
+                <span className="font-mono text-[10px] text-neutral-400 uppercase tracking-wider">
+                  EDGE ROUTING
+                </span>
               </div>
 
-              <div className="engine-node p-4 rounded-xl bg-white/5 border border-emerald-400/30 flex flex-col items-center">
-                <Database className="w-6 h-6 text-emerald-400 mb-2" />
-                <span className="font-sans font-bold text-xs text-white">POSTGRES &amp; AI</span>
-                <span className="font-mono text-[10px] text-neutral-400">NEURAL VECTOR DB</span>
+              {/* Node 4 */}
+              <div className="engine-node p-6 rounded-2xl bg-white/[0.02] border border-white/10 backdrop-blur-xl hover:bg-white/[0.04] hover:border-white/20 transition-all duration-300 flex flex-col items-center group shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
+                <div className="w-10 h-10 rounded-xl bg-emerald-400/10 border border-emerald-400/20 text-emerald-400 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform duration-300">
+                  <Database className="w-5 h-5" />
+                </div>
+                <span className="font-sans font-extrabold text-xs text-white tracking-wide uppercase mb-1">
+                  POSTGRES &amp; AI
+                </span>
+                <span className="font-mono text-[10px] text-neutral-400 uppercase tracking-wider">
+                  NEURAL VECTOR DB
+                </span>
               </div>
             </div>
           </div>
         </div>
 
         {/* ========================================================= */}
-        {/* ACT 08 — FOUNDER CONNECTION                               */}
+        {/* ACT 08 — FOUNDER CONNECTION (EXECUTIVE PROFESSIONAL LOCKUP) */}
         {/* ========================================================= */}
         <div className="act-08 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6 transition-transform">
-          <div className="founder-header flex flex-col items-center mb-8">
-            <div className="w-14 h-14 sm:w-16 sm:h-16 mb-4 flex items-center justify-center">
-              <svg viewBox="315 85 394 450" className="w-full h-full text-white overflow-visible">
+          <div className="founder-header flex flex-col items-center mb-8 max-w-3xl">
+            {/* Clean Vector Emblem */}
+            <div className="w-12 h-12 sm:w-14 sm:h-14 mb-4 flex items-center justify-center">
+              <svg viewBox="315 85 394 450" className="w-full h-full text-white overflow-visible drop-shadow-[0_0_20px_rgba(255,255,255,0.3)]">
                 <circle cx="512" cy="284.5" r="175" fill="none" stroke="currentColor" strokeWidth="20" />
                 <polygon points="512,197 483,243.5 550,368 604,368" fill="white" stroke="none" />
                 <path d="M 408.00 368.00 C 411.41 362.36, 433.32 326.42, 437.03 320.96 C 443.94 310.78, 453.24 304.05, 464.86 300.83 C 469.89 299.43, 474.99 299.00, 486.33 299.00 L 500.00 299.00 C 484.32 328.00, 470.51 351.92, 455.50 363.06 C 452.20 364.68, 446.35 366.68, 442.50 367.49 L 408.00 368.00 Z" fill="white" stroke="none" />
               </svg>
             </div>
-            <h3 className="font-display font-black text-4xl sm:text-6xl text-white uppercase tracking-tight">
+
+            <span className="font-mono text-[11px] font-bold tracking-[0.3em] text-neutral-400 uppercase mb-2">
+              CREATIVE DIRECTION &amp; LEADERSHIP
+            </span>
+
+            <h3 className="font-sans font-extrabold text-4xl sm:text-6xl md:text-7xl text-white tracking-tight uppercase leading-none">
               BUILT BY GOURAB.
             </h3>
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-3 max-w-2xl">
-            <span className="founder-pill px-4 py-2 rounded-full bg-white/5 border border-white/15 font-mono text-xs font-bold tracking-widest text-amber-400 uppercase">
-              FOUNDER
-            </span>
-            <span className="font-mono text-neutral-600">&bull;</span>
-            <span className="founder-pill px-4 py-2 rounded-full bg-white/5 border border-white/15 font-mono text-xs font-bold tracking-widest text-sky-400 uppercase">
-              PRODUCT ARCHITECT
-            </span>
-            <span className="font-mono text-neutral-600">&bull;</span>
-            <span className="founder-pill px-4 py-2 rounded-full bg-white/5 border border-white/15 font-mono text-xs font-bold tracking-widest text-purple-400 uppercase">
-              DESIGNER
-            </span>
-            <span className="font-mono text-neutral-600">&bull;</span>
-            <span className="founder-pill px-4 py-2 rounded-full bg-white/5 border border-white/15 font-mono text-xs font-bold tracking-widest text-emerald-400 uppercase">
-              ENGINEER
-            </span>
+          {/* Professional Executive Roles Container */}
+          <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.02] border border-white/10 backdrop-blur-xl max-w-3xl w-full flex flex-wrap items-center justify-center gap-3 shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
+            <div className="founder-pill px-4 py-2 rounded-xl bg-white/[0.03] border border-white/10 flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+              <span className="font-mono text-xs font-bold tracking-widest text-white uppercase">
+                FOUNDER &amp; ARCHITECT
+              </span>
+            </div>
+
+            <div className="founder-pill px-4 py-2 rounded-xl bg-white/[0.03] border border-white/10 flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-sky-400" />
+              <span className="font-mono text-xs font-bold tracking-widest text-white uppercase">
+                LEAD PRODUCT ENGINEER
+              </span>
+            </div>
+
+            <div className="founder-pill px-4 py-2 rounded-xl bg-white/[0.03] border border-white/10 flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-purple-400" />
+              <span className="font-mono text-xs font-bold tracking-widest text-white uppercase">
+                UI/UX &amp; MOTION SYSTEMS
+              </span>
+            </div>
+
+            <div className="founder-pill px-4 py-2 rounded-xl bg-white/[0.03] border border-white/10 flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+              <span className="font-mono text-xs font-bold tracking-widest text-white uppercase">
+                CREATIVE TECHNOLOGIST
+              </span>
+            </div>
           </div>
         </div>
 
