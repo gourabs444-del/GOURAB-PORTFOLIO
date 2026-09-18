@@ -35,7 +35,7 @@ export function BrandIntegrationSection() {
     const ctx = gsap.context(() => {
       const isMobile = window.innerWidth < 768;
 
-      // Master Scroll-Driven Timeline over 800vh track
+      // Master Continuous Scroll-Driven Timeline over 800vh track
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
@@ -47,8 +47,8 @@ export function BrandIntegrationSection() {
         },
       });
 
-      // Class selectors scoped inside gsap.context
-      const allActs = [
+      // Class selectors for all 10 acts
+      const allActClasses = [
         ".act-01",
         ".act-02",
         ".act-03",
@@ -61,22 +61,20 @@ export function BrandIntegrationSection() {
         ".act-10",
       ];
 
-      // =======================================================================
-      // INITIAL STATES
-      // =======================================================================
-      gsap.set(allActs, {
+      // Initial state: Opacity 0, pointer-events none
+      gsap.set(allActClasses, {
         opacity: 0,
-        display: "none",
+        pointerEvents: "none",
       });
 
-      // -----------------------------------------------------------------------
-      // ACT 01 — THE INTERRUPTION (Time: 0.0 -> 1.0)
-      // -----------------------------------------------------------------------
-      tl.set(".act-01", { display: "flex", opacity: 1 }, 0.0);
+      // =======================================================================
+      // 01 — THE INTERRUPTION (Time: 0.0 -> 1.0, Exits 0.7 -> 1.1)
+      // =======================================================================
+      tl.to(".act-01", { opacity: 1, duration: 0.2 }, 0.0);
 
       tl.fromTo(
         ".act-01-text",
-        { opacity: 0, filter: "blur(14px)", y: 30 },
+        { opacity: 0, filter: "blur(14px)", y: 35 },
         { opacity: 1, filter: "blur(0px)", y: 0, duration: 0.5, ease: "power2.out" },
         0.05
       );
@@ -88,250 +86,244 @@ export function BrandIntegrationSection() {
         0.4
       );
 
+      // Morphing Exit into Act 02 (0.7 -> 1.1)
       tl.to(
         ".act-01-text",
-        { opacity: 0, filter: "blur(12px)", y: -30, duration: 0.3, ease: "power2.in" },
-        0.75
+        { opacity: 0, filter: "blur(10px)", y: -45, scale: 0.95, duration: 0.4, ease: "power2.in" },
+        0.7
       );
+      tl.to(".act-01", { opacity: 0, duration: 0.3 }, 0.85);
 
-      tl.set(".act-01", { display: "none" }, 1.0);
-
-      // -----------------------------------------------------------------------
-      // ACT 02 — THE SIGNAL (Time: 1.0 -> 2.0)
-      // -----------------------------------------------------------------------
-      tl.set(".act-02", { display: "flex", opacity: 1 }, 1.0);
+      // =======================================================================
+      // 02 — THE SIGNAL (Time: 0.8 -> 2.0, Exits 1.7 -> 2.1)
+      // =======================================================================
+      tl.to(".act-02", { opacity: 1, duration: 0.3 }, 0.8);
 
       tl.fromTo(
         ".signal-dot",
         { scale: 0, opacity: 0 },
         { scale: 1, opacity: 1, duration: 0.25, ease: "back.out(2)" },
-        1.05
+        0.85
       );
 
-      tl.to(".signal-dot", { scale: 3, opacity: 0, duration: 0.2 }, 1.25);
+      tl.to(".signal-dot", { scale: 2.5, opacity: 0, duration: 0.25 }, 1.1);
 
       tl.fromTo(
         ".svg-circle",
         { strokeDasharray: 1100, strokeDashoffset: 1100, opacity: 0 },
-        { strokeDashoffset: 0, opacity: 1, duration: 0.4, ease: "power2.out" },
-        1.3
+        { strokeDashoffset: 0, opacity: 1, duration: 0.45, ease: "power2.out" },
+        1.15
       );
 
       tl.fromTo(
         [".svg-poly", ".svg-path"],
         { strokeDasharray: 600, strokeDashoffset: 600, opacity: 0 },
-        { strokeDashoffset: 0, opacity: 1, duration: 0.4, ease: "power2.out", stagger: 0.1 },
-        1.45
+        { strokeDashoffset: 0, opacity: 1, duration: 0.45, ease: "power2.out", stagger: 0.1 },
+        1.3
       );
 
-      tl.to(".act-02", { opacity: 0, scale: 0.96, duration: 0.2 }, 1.85);
-      tl.set(".act-02", { display: "none" }, 2.0);
+      // Morphing Exit into Act 03 (1.7 -> 2.1)
+      tl.to(".act-02", { opacity: 0, y: -40, scale: 0.92, duration: 0.4, ease: "power2.inOut" }, 1.7);
 
-      // -----------------------------------------------------------------------
-      // ACT 03 — BRAND REVEAL (Time: 2.0 -> 3.0)
-      // -----------------------------------------------------------------------
-      tl.set(".act-03", { display: "flex", opacity: 1 }, 2.0);
+      // =======================================================================
+      // 03 — BRAND REVEAL (Time: 1.8 -> 3.0, Exits 2.7 -> 3.1)
+      // =======================================================================
+      tl.to(".act-03", { opacity: 1, duration: 0.3 }, 1.8);
 
       tl.fromTo(
         ".brand-name",
         { opacity: 0, y: 35, clipPath: "inset(0% 0% 100% 0%)" },
-        { opacity: 1, y: 0, clipPath: "inset(0% 0% 0% 0%)", duration: 0.4, ease: "power3.out" },
-        2.1
+        { opacity: 1, y: 0, clipPath: "inset(0% 0% 0% 0%)", duration: 0.45, ease: "power3.out" },
+        1.95
       );
 
       tl.fromTo(
         ".brand-tagline",
         { opacity: 0, y: 20 },
         { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" },
-        2.35
+        2.2
       );
 
-      tl.fromTo(
-        ".act-03",
-        { scale: 0.98 },
-        { scale: 1.02, duration: 0.4, ease: "none" },
-        2.4
-      );
+      // Morphing Exit into Act 04 (2.7 -> 3.1)
+      tl.to(".act-03", { opacity: 0, y: -50, scale: 0.94, duration: 0.4, ease: "power2.inOut" }, 2.7);
 
-      tl.to(".act-03", { opacity: 0, y: -40, duration: 0.25, ease: "power2.in" }, 2.8);
-      tl.set(".act-03", { display: "none" }, 3.0);
-
-      // -----------------------------------------------------------------------
-      // ACT 04 — WHY (Time: 3.0 -> 4.0)
-      // -----------------------------------------------------------------------
-      tl.set(".act-04", { display: "flex", opacity: 1 }, 3.0);
+      // =======================================================================
+      // 04 — WHY (Time: 2.8 -> 4.0, Exits 3.6 -> 4.1)
+      // =======================================================================
+      tl.to(".act-04", { opacity: 1, duration: 0.3 }, 2.8);
 
       tl.fromTo(
         ".act-04-text",
         { opacity: 0, y: 45 },
-        { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" },
-        3.08
+        { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" },
+        2.9
       );
 
       tl.fromTo(
         ".act-04-sub",
         { opacity: 0, y: 25 },
         { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" },
-        3.25
+        3.1
       );
 
       tl.fromTo(
         ".act-04-light",
         { xPercent: -100 },
-        { xPercent: 100, duration: 0.5, ease: "power1.inOut" },
-        3.2
+        { xPercent: 100, duration: 0.6, ease: "power1.inOut" },
+        3.0
       );
 
+      // Continuous Zoom-Through Camera Transition into Product (3.6 -> 4.1)
       tl.to(
         [".act-04-text", ".act-04-sub"],
-        { scale: isMobile ? 3 : 5.5, opacity: 0, filter: "blur(16px)", duration: 0.4, ease: "power2.in" },
+        { scale: isMobile ? 3 : 5.5, opacity: 0, filter: "blur(18px)", duration: 0.5, ease: "power2.in" },
         3.6
       );
+      tl.to(".act-04", { opacity: 0, duration: 0.3 }, 3.85);
 
-      tl.set(".act-04", { display: "none" }, 4.0);
-
-      // -----------------------------------------------------------------------
-      // ACT 05 — PRODUCT REVEAL (Time: 4.0 -> 5.0)
-      // -----------------------------------------------------------------------
-      tl.set(".act-05", { display: "flex", opacity: 1 }, 4.0);
+      // =======================================================================
+      // 05 — PRODUCT REVEAL (Time: 3.8 -> 5.0, Exits 4.7 -> 5.1)
+      // =======================================================================
+      tl.to(".act-05", { opacity: 1, pointerEvents: "auto", duration: 0.3 }, 3.8);
 
       tl.fromTo(
         ".product-layer-bg",
-        { opacity: 0, y: 60, scale: 0.9 },
-        { opacity: 0.5, y: 0, scale: 1, duration: 0.35, ease: "power2.out" },
-        4.05
+        { opacity: 0, y: 60, scale: 0.88 },
+        { opacity: 0.5, y: 0, scale: 1, duration: 0.4, ease: "power2.out" },
+        3.9
       );
 
       tl.fromTo(
         ".product-frame",
-        { opacity: 0, y: 40, scale: 0.94 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: "power3.out" },
-        4.15
+        { opacity: 0, y: 45, scale: 0.92 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: "power3.out" },
+        4.0
       );
 
       tl.fromTo(
         ".product-layer-fg",
-        { opacity: 0, y: 25, scale: 0.96 },
+        { opacity: 0, y: 25, scale: 0.95 },
         { opacity: 1, y: 0, scale: 1, duration: 0.35, ease: "power3.out" },
-        4.3
+        4.15
       );
 
-      tl.to(".act-05", { opacity: 0, scale: 0.95, duration: 0.25, ease: "power2.in" }, 4.8);
-      tl.set(".act-05", { display: "none" }, 5.0);
+      // Morphing Exit into Act 06 (4.7 -> 5.1)
+      tl.to(".act-05", { opacity: 0, scale: 0.93, y: -30, pointerEvents: "none", duration: 0.4, ease: "power2.inOut" }, 4.7);
 
-      // -----------------------------------------------------------------------
-      // ACT 06 — EXPERIENCE (Time: 5.0 -> 6.0)
-      // -----------------------------------------------------------------------
-      tl.set(".act-06", { display: "flex", opacity: 1 }, 5.0);
+      // =======================================================================
+      // 06 — EXPERIENCE (Time: 4.8 -> 6.0, Exits 5.7 -> 6.1)
+      // =======================================================================
+      tl.to(".act-06", { opacity: 1, duration: 0.3 }, 4.8);
 
       tl.fromTo(
         ".exp-flow",
-        { opacity: 0, y: 40 },
-        { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" },
-        5.1
+        { opacity: 0, y: 45, scale: 0.95 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: "power3.out" },
+        4.95
       );
 
-      tl.to(".act-06", { opacity: 0, y: -30, duration: 0.25 }, 5.8);
-      tl.set(".act-06", { display: "none" }, 6.0);
+      // Morphing Exit into Act 07 (5.7 -> 6.1)
+      tl.to(".act-06", { opacity: 0, y: -40, scale: 0.94, duration: 0.4, ease: "power2.inOut" }, 5.7);
 
-      // -----------------------------------------------------------------------
-      // ACT 07 — ENGINE / ARCHITECTURE (Time: 6.0 -> 7.0)
-      // -----------------------------------------------------------------------
-      tl.set(".act-07", { display: "flex", opacity: 1 }, 6.0);
+      // =======================================================================
+      // 07 — ENGINE / ARCHITECTURE (Time: 5.8 -> 7.0, Exits 6.7 -> 7.1)
+      // =======================================================================
+      tl.to(".act-07", { opacity: 1, duration: 0.3 }, 5.8);
 
       tl.fromTo(
         ".engine-graph",
-        { opacity: 0, scale: 0.9 },
-        { opacity: 1, scale: 1, duration: 0.3, ease: "power3.out" },
-        6.05
+        { opacity: 0, scale: 0.88 },
+        { opacity: 1, scale: 1, duration: 0.4, ease: "power3.out" },
+        5.9
       );
 
       tl.fromTo(
         ".engine-line",
         { strokeDasharray: 300, strokeDashoffset: 300, opacity: 0 },
-        { strokeDashoffset: 0, opacity: 1, duration: 0.35, stagger: 0.05, ease: "power2.out" },
-        6.15
+        { strokeDashoffset: 0, opacity: 1, duration: 0.4, stagger: 0.05, ease: "power2.out" },
+        6.05
       );
 
       tl.fromTo(
         ".engine-node",
-        { opacity: 0, scale: 0.7, y: 20 },
-        { opacity: 1, scale: 1, y: 0, duration: 0.35, stagger: 0.06, ease: "back.out(1.5)" },
-        6.25
+        { opacity: 0, scale: 0.7, y: 25 },
+        { opacity: 1, scale: 1, y: 0, duration: 0.4, stagger: 0.06, ease: "back.out(1.5)" },
+        6.15
       );
 
-      tl.to(".act-07", { opacity: 0, scale: 0.9, duration: 0.25 }, 6.8);
-      tl.set(".act-07", { display: "none" }, 7.0);
+      // Morphing Exit into Act 08 (6.7 -> 7.1)
+      tl.to(".act-07", { opacity: 0, scale: 0.88, y: -30, duration: 0.4, ease: "power2.inOut" }, 6.7);
 
-      // -----------------------------------------------------------------------
-      // ACT 08 — FOUNDER CONNECTION (Time: 7.0 -> 8.0)
-      // -----------------------------------------------------------------------
-      tl.set(".act-08", { display: "flex", opacity: 1 }, 7.0);
+      // =======================================================================
+      // 08 — FOUNDER CONNECTION (Time: 6.8 -> 8.0, Exits 7.7 -> 8.1)
+      // =======================================================================
+      tl.to(".act-08", { opacity: 1, duration: 0.3 }, 6.8);
 
       tl.fromTo(
         ".founder-header",
-        { opacity: 0, y: 35 },
-        { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" },
-        7.1
+        { opacity: 0, y: 40 },
+        { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" },
+        6.95
       );
 
       tl.fromTo(
         ".founder-pill",
-        { opacity: 0, y: 20, scale: 0.9 },
+        { opacity: 0, y: 20, scale: 0.88 },
         { opacity: 1, y: 0, scale: 1, duration: 0.35, stagger: 0.08, ease: "power3.out" },
-        7.3
+        7.15
       );
 
-      tl.to(".act-08", { opacity: 0, y: -30, duration: 0.25 }, 7.8);
-      tl.set(".act-08", { display: "none" }, 8.0);
+      // Morphing Exit into Act 09 (7.7 -> 8.1)
+      tl.to(".act-08", { opacity: 0, y: -40, scale: 0.94, duration: 0.4, ease: "power2.inOut" }, 7.7);
 
-      // -----------------------------------------------------------------------
-      // ACT 09 — VISION (Time: 8.0 -> 8.8)
-      // -----------------------------------------------------------------------
-      tl.set(".act-09", { display: "flex", opacity: 1 }, 8.0);
+      // =======================================================================
+      // 09 — VISION (Time: 7.8 -> 8.8, Exits 8.6 -> 9.0)
+      // =======================================================================
+      tl.to(".act-09", { opacity: 1, duration: 0.3 }, 7.8);
 
       tl.fromTo(
         ".vision-text",
-        { opacity: 0, scale: 0.95, y: 30 },
-        { opacity: 1, scale: 1, y: 0, duration: 0.4, ease: "power3.out" },
-        8.1
+        { opacity: 0, scale: 0.94, y: 35 },
+        { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: "power3.out" },
+        7.95
       );
 
-      tl.to(".act-09", { opacity: 0, scale: 0.96, filter: "blur(8px)", duration: 0.25 }, 8.6);
-      tl.set(".act-09", { display: "none" }, 8.8);
+      // Morphing Exit into Act 10 (8.6 -> 9.0)
+      tl.to(".act-09", { opacity: 0, scale: 0.94, filter: "blur(10px)", duration: 0.4, ease: "power2.inOut" }, 8.6);
 
-      // -----------------------------------------------------------------------
-      // ACT 10 — FINAL BRAND LOCKUP (Time: 8.8 -> 10.0)
-      // -----------------------------------------------------------------------
-      tl.set(".act-10", { display: "flex", opacity: 1 }, 8.8);
+      // =======================================================================
+      // 10 — FINAL BRAND LOCKUP (Time: 8.8 -> 10.0)
+      // =======================================================================
+      tl.to(".act-10", { opacity: 1, pointerEvents: "auto", duration: 0.3 }, 8.8);
 
       tl.fromTo(
         ".act-10-logo",
-        { opacity: 0, scale: 0.9 },
-        { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(1.4)" },
-        8.9
+        { opacity: 0, scale: 0.88, y: 30 },
+        { opacity: 1, scale: 1, y: 0, duration: 0.4, ease: "back.out(1.4)" },
+        8.95
       );
 
       tl.fromTo(
         ".act-10-name",
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" },
-        9.05
+        { opacity: 0, y: 25 },
+        { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" },
+        9.1
       );
 
       tl.fromTo(
         ".act-10-tag",
-        { opacity: 0, y: 15 },
-        { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" },
-        9.2
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" },
+        9.25
       );
 
       tl.fromTo(
         [".act-10-founder", ".act-10-cta"],
-        { opacity: 0, y: 15 },
-        { opacity: 1, y: 0, duration: 0.3, stagger: 0.1, ease: "power2.out" },
-        9.35
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.35, stagger: 0.1, ease: "power2.out" },
+        9.4
       );
+
     }, containerRef);
 
     return () => ctx.revert();
@@ -350,12 +342,12 @@ export function BrandIntegrationSection() {
       >
         {/* Subtle Ambient Background Grid & Lighting */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] pointer-events-none" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-[radial-gradient(ellipse_at_center,_rgba(245,158,11,0.07)_0%,_rgba(56,189,248,0.04)_45%,_transparent_75%)] rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[520px] bg-[radial-gradient(ellipse_at_center,_rgba(245,158,11,0.08)_0%,_rgba(56,189,248,0.05)_45%,_transparent_75%)] rounded-full blur-[130px] pointer-events-none" />
 
         {/* ========================================================= */}
         {/* ACT 01 — THE INTERRUPTION                                 */}
         {/* ========================================================= */}
-        <div className="act-01 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6">
+        <div className="act-01 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6 transition-transform">
           <p className="act-01-text font-display font-medium text-2xl sm:text-4xl md:text-5xl lg:text-6xl text-white/90 tracking-tight leading-snug max-w-4xl">
             AN IDEA IS ONLY THE{" "}
             <span className="act-01-emph font-display font-extrabold bg-gradient-to-r from-amber-200 via-amber-400 to-amber-500 bg-clip-text text-transparent inline-block drop-shadow-[0_0_30px_rgba(245,158,11,0.4)]">
@@ -367,7 +359,7 @@ export function BrandIntegrationSection() {
         {/* ========================================================= */}
         {/* ACT 02 — THE SIGNAL                                       */}
         {/* ========================================================= */}
-        <div className="act-02 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6">
+        <div className="act-02 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6 transition-transform">
           {/* Signal Point */}
           <div className="signal-dot w-4 h-4 rounded-full bg-amber-400 shadow-[0_0_30px_#f59e0b] mb-6" />
 
@@ -406,7 +398,7 @@ export function BrandIntegrationSection() {
         {/* ========================================================= */}
         {/* ACT 03 — BRAND REVEAL                                     */}
         {/* ========================================================= */}
-        <div className="act-03 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6">
+        <div className="act-03 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6 transition-transform">
           <img
             src="/assets/algora-icon.png"
             alt="ALGORA Emblem"
@@ -423,7 +415,7 @@ export function BrandIntegrationSection() {
         {/* ========================================================= */}
         {/* ACT 04 — WHY                                              */}
         {/* ========================================================= */}
-        <div className="act-04 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6 overflow-hidden">
+        <div className="act-04 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6 overflow-hidden transition-transform">
           <div className="relative max-w-4xl">
             <div className="act-04-light absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-amber-400/20 to-transparent blur-xl pointer-events-none" />
             <h3 className="act-04-text font-display font-black text-3xl sm:text-5xl md:text-6xl text-white tracking-tight leading-tight uppercase mb-4">
@@ -438,7 +430,7 @@ export function BrandIntegrationSection() {
         {/* ========================================================= */}
         {/* ACT 05 — PRODUCT REVEAL                                   */}
         {/* ========================================================= */}
-        <div className="act-05 absolute inset-0 w-full h-full flex flex-col items-center justify-center px-4 sm:px-8">
+        <div className="act-05 absolute inset-0 w-full h-full flex flex-col items-center justify-center px-4 sm:px-8 transition-transform">
           <div className="w-full max-w-5xl relative flex flex-col items-center">
             {/* Background Parallax Wireframe Grid */}
             <div className="product-layer-bg absolute -inset-6 rounded-3xl border border-white/10 bg-white/[0.01] backdrop-blur-3xl pointer-events-none" />
@@ -541,7 +533,7 @@ export function BrandIntegrationSection() {
         {/* ========================================================= */}
         {/* ACT 06 — EXPERIENCE                                       */}
         {/* ========================================================= */}
-        <div className="act-06 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6">
+        <div className="act-06 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6 transition-transform">
           <div className="exp-flow w-full max-w-4xl flex flex-col items-center">
             <span className="font-mono text-xs font-bold tracking-[0.2em] text-amber-400 uppercase mb-4">
               EXPERIENCE THE PROCESS
@@ -584,7 +576,7 @@ export function BrandIntegrationSection() {
         {/* ========================================================= */}
         {/* ACT 07 — ENGINE / ARCHITECTURE                             */}
         {/* ========================================================= */}
-        <div className="act-07 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6">
+        <div className="act-07 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6 transition-transform">
           <span className="font-mono text-xs font-bold tracking-[0.25em] text-neutral-400 uppercase mb-6">
             ENGINEERED FROM THE GROUND UP
           </span>
@@ -629,7 +621,7 @@ export function BrandIntegrationSection() {
         {/* ========================================================= */}
         {/* ACT 08 — FOUNDER CONNECTION                               */}
         {/* ========================================================= */}
-        <div className="act-08 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6">
+        <div className="act-08 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6 transition-transform">
           <div className="founder-header flex flex-col items-center mb-8">
             <img
               src="/assets/algora-icon.png"
@@ -663,7 +655,7 @@ export function BrandIntegrationSection() {
         {/* ========================================================= */}
         {/* ACT 09 — VISION                                           */}
         {/* ========================================================= */}
-        <div className="act-09 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6">
+        <div className="act-09 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6 transition-transform">
           <div className="vision-text max-w-3xl flex flex-col items-center">
             <span className="font-mono text-xs font-semibold tracking-[0.25em] text-amber-400 uppercase mb-3">
               NEXT HORIZON
@@ -680,7 +672,7 @@ export function BrandIntegrationSection() {
         {/* ========================================================= */}
         {/* ACT 10 — FINAL BRAND LOCKUP                               */}
         {/* ========================================================= */}
-        <div className="act-10 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6">
+        <div className="act-10 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6 transition-transform">
           <div className="act-10-logo mb-6">
             <img
               src="/assets/algora-icon.png"
