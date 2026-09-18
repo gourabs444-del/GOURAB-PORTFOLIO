@@ -141,19 +141,19 @@ export function IdeasIntoImpact() {
           
           // Smooth Cosine curve (1.0 at center -> 0.0 at focusRadius)
           const rawFocus = Math.cos((normDist * Math.PI) / 2);
-          const tightFocus = Math.pow(rawFocus, 1.3);
+          const tightFocus = Math.pow(rawFocus, 1.35);
 
-          // Scale: 1.08 at center (makes card grow big & pop out smoothly), 0.72 at side
-          const scale = 0.72 + tightFocus * 0.36;
+          // Scale: 1.08 at center (middle card stays 100% same), 0.52 at sides (much smaller for dramatic motion)
+          const scale = 0.52 + tightFocus * 0.56;
 
-          // Grayscale: 0% (vivid full color) at center, 85% (desaturated) at sides
-          const grayscale = (1 - tightFocus) * 85;
+          // Grayscale: 0% (vivid full color) at center, 90% (desaturated) at sides
+          const grayscale = (1 - tightFocus) * 90;
 
-          // Opacity: 1.0 at center, 0.32 at sides
-          const opacity = 0.32 + tightFocus * 0.68;
+          // Opacity: 1.0 at center, 0.20 at sides
+          const opacity = 0.20 + tightFocus * 0.80;
 
-          // Brightness: 1.08 at center, 0.48 at sides
-          const brightness = 0.48 + tightFocus * 0.60;
+          // Brightness: 1.08 at center, 0.40 at sides
+          const brightness = 0.40 + tightFocus * 0.68;
 
           inner.style.transform = `scale3d(${scale.toFixed(3)}, ${scale.toFixed(3)}, 1)`;
           inner.style.filter = `grayscale(${grayscale.toFixed(1)}%) brightness(${brightness.toFixed(2)})`;
@@ -2108,33 +2108,33 @@ export function IdeasIntoImpact() {
               </span>
             </h2>
 
-            {/* Hand-drawn Sketch Layout: [Start a Project] | (A) Algora Logo */}
-            <div className="mt-8 sm:mt-10 flex items-center justify-center gap-3.5 sm:gap-5 pointer-events-auto">
-              {/* Left: Start a Project Sleek Architectural Button (Radius 0, Perfect Proportions) */}
+            {/* Clean Minimal Layout: [Start a Project] | (A) Algora Logo */}
+            <div className="mt-8 sm:mt-10 flex items-center justify-center gap-6 sm:gap-8 pointer-events-auto">
+              {/* Left: Compact Tightly Fitted White Button (Radius 0) */}
               <a
                 href="#contact"
                 onMouseEnter={() => playHover()}
-                className="inline-flex items-center justify-center px-7 sm:px-9 py-3 sm:py-3.5 rounded-none bg-white text-black hover:bg-neutral-100 font-sans font-bold text-xs sm:text-sm tracking-wide transition-all duration-300 shadow-[0_0_25px_rgba(255,255,255,0.3)] hover:shadow-[0_0_40px_rgba(255,255,255,0.6)] border border-white active:scale-95 cursor-pointer"
+                className="inline-flex items-center justify-center px-4 py-2 sm:px-4.5 sm:py-2 rounded-none bg-white text-black hover:bg-neutral-100 font-sans font-bold text-xs tracking-tight transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.25)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] border border-white active:scale-95 cursor-pointer"
               >
                 <span>Start a Project</span>
               </a>
 
               {/* Center Vertical Divider | */}
-              <div className="w-[1.5px] h-7 sm:h-8 bg-gradient-to-b from-transparent via-white/50 to-transparent select-none" />
+              <div className="w-[1px] h-4 bg-white/30 select-none" />
 
-              {/* Right: Standalone Official Algora Logo Icon */}
+              {/* Right: Frameless Clean Algora Logo Icon (No Outer Box) */}
               <a
                 href="https://algora.io"
                 target="_blank"
                 rel="noopener noreferrer"
                 onMouseEnter={() => playHover()}
-                className="group relative flex items-center justify-center w-10 h-10 sm:w-[46px] sm:h-[46px] rounded-none bg-black border border-white/30 hover:border-white/80 transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.4)] hover:shadow-[0_0_25px_rgba(255,255,255,0.4)] cursor-pointer overflow-hidden p-1"
+                className="group relative flex items-center justify-center cursor-pointer transition-transform duration-300 hover:scale-110"
                 title="Algora Official Logo"
               >
                 <img
                   src="/assets/algora-icon.png"
                   alt="Algora Official Logo"
-                  className="w-full h-full object-contain rounded-none group-hover:scale-110 transition-transform duration-300"
+                  className="w-7 h-7 sm:w-8 sm:h-8 object-contain rounded-full shadow-[0_0_15px_rgba(255,255,255,0.2)] group-hover:shadow-[0_0_25px_rgba(255,255,255,0.5)] transition-all duration-300"
                 />
               </a>
             </div>
