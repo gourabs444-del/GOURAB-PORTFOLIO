@@ -55,7 +55,7 @@ export function IdeasIntoImpact() {
           trigger: containerRef.current,
           start: "top bottom",
           end: "bottom bottom",
-          scrub: 0.4,
+          scrub: 0.3,
           invalidateOnRefresh: true,
         },
       });
@@ -900,7 +900,7 @@ export function IdeasIntoImpact() {
         );
       }
 
-      // -----------------------------------------------------------------------      // -----------------------------------------------------------------------
+      // -----------------------------------------------------------------------      // -----------------------------------------------------------------------      // -----------------------------------------------------------------------
       // 8. SLIDE 3: 2-PHASE LUXURY THANK YOU DISPLAY (Time: 15.4 -> 19.5)
       // -----------------------------------------------------------------------
       if (slide3LayerRef.current) {
@@ -931,7 +931,7 @@ export function IdeasIntoImpact() {
             opacity: 1,
             scale: 1,
             duration: 0.8,
-            ease: "power1.out",
+            ease: "none",
           },
           15.4
         );
@@ -946,52 +946,52 @@ export function IdeasIntoImpact() {
         const bottomGrid = slide3LayerRef.current.querySelector(".slide3-bottom-grid");
 
         // Set initial hidden positions for Phase 2 elements
-        if (line2) gsap.set(line2, { opacity: 0, y: 15 });
-        if (subtitle) gsap.set(subtitle, { opacity: 0, x: isMobile ? -40 : -90 });
-        if (desc) gsap.set(desc, { opacity: 0, x: isMobile ? 40 : 90 });
-        if (bottomGrid) gsap.set(bottomGrid, { opacity: 0, y: 35, pointerEvents: "none" });
+        if (line2) gsap.set(line2, { opacity: 0, y: 12 });
+        if (subtitle) gsap.set(subtitle, { opacity: 0, x: isMobile ? -35 : -75 });
+        if (desc) gsap.set(desc, { opacity: 0, x: isMobile ? 35 : 75 });
+        if (bottomGrid) gsap.set(bottomGrid, { opacity: 0, y: 30, pointerEvents: "none" });
 
-        // Phase 1 (15.4 -> 16.0): Centered THANK YOU Header appears dead-centered
+        // Phase 1 (15.2 -> 16.2): Centered THANK YOU Header flies in smoothly from distance & lands dead-centered
         if (headerGroup) {
           tl.fromTo(
             headerGroup,
             {
               opacity: 0,
-              scale: 0.92,
-              y: isMobile ? 15 : 25,
+              scale: 0.6,
+              y: isMobile ? 80 : 130,
             },
             {
               opacity: 1,
               scale: 1,
               y: 0,
-              duration: 0.8,
-              ease: "power2.out",
+              duration: 1.0,
+              ease: "none",
             },
-            15.4
+            15.2
           );
         }
 
         if (heyThere) {
           tl.fromTo(
             heyThere,
-            { opacity: 0, scale: 0.7, y: -10 },
-            { opacity: 1, scale: 1, y: 0, duration: 0.6, ease: "back.out(1.5)" },
-            15.5
+            { opacity: 0, scale: 0.5, y: -25 },
+            { opacity: 1, scale: 1, y: 0, duration: 0.8, ease: "none" },
+            15.4
           );
         }
 
-        // Phase 2 Scroll Animation (16.2 -> 17.8):
-        // IMMEDIATELY on scroll: Header shifts UP from dead-center and scales down, side texts fly in, and bottom 3-column footer assembles!
+        // Phase 2 Scroll Animation (16.8 -> 18.6):
+        // On further scroll: Header lifts UP from dead-center and scales down, side texts fly in, and bottom 3-column footer assembles!
         if (headerGroup) {
           tl.to(
             headerGroup,
             {
-              y: isMobile ? -135 : -210,
+              y: isMobile ? -130 : -205,
               scale: isMobile ? 0.82 : 0.78,
-              duration: 1.4,
-              ease: "power1.inOut",
+              duration: 1.6,
+              ease: "none",
             },
-            16.2
+            16.8
           );
         }
 
@@ -1001,10 +1001,10 @@ export function IdeasIntoImpact() {
             {
               opacity: 1,
               y: 0,
-              duration: 0.9,
-              ease: "power1.out",
+              duration: 1.0,
+              ease: "none",
             },
-            16.4
+            17.0
           );
         }
 
@@ -1014,10 +1014,10 @@ export function IdeasIntoImpact() {
             {
               opacity: 1,
               x: 0,
-              duration: 1.1,
-              ease: "power1.out",
+              duration: 1.2,
+              ease: "none",
             },
-            16.5
+            17.1
           );
         }
 
@@ -1027,10 +1027,10 @@ export function IdeasIntoImpact() {
             {
               opacity: 1,
               x: 0,
-              duration: 1.1,
-              ease: "power1.out",
+              duration: 1.2,
+              ease: "none",
             },
-            16.5
+            17.1
           );
         }
 
@@ -1041,18 +1041,18 @@ export function IdeasIntoImpact() {
               opacity: 1,
               y: 0,
               pointerEvents: "auto",
-              duration: 1.2,
-              ease: "power1.out",
+              duration: 1.3,
+              ease: "none",
             },
-            16.7
+            17.3
           );
         }
       }
 
       // -----------------------------------------------------------------------
-      // 9. HOLD SLIDE 3 (Time: 17.8 -> 19.5)
+      // 9. HOLD SLIDE 3 (Time: 18.6 -> 20.5)
       // -----------------------------------------------------------------------
-      tl.to({}, { duration: 1.7 }, 17.8);
+      tl.to({}, { duration: 1.9 }, 18.6);
 
       return () => {
         window.removeEventListener("resize", updateCardSpotlight);
@@ -2156,7 +2156,7 @@ export function IdeasIntoImpact() {
           </div>
 
           {/* Foreground 3-Line Bodoni Headline */}
-          <div className="relative z-10 flex flex-col items-center max-w-6xl mx-auto overflow-visible py-4">
+          <div className="relative z-10 flex flex-col items-center justify-center max-w-6xl mx-auto overflow-visible py-4 my-auto">
             <h2
               ref={ctaHeadingRef}
               className="font-bodoni font-medium text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.4rem] text-white tracking-tight leading-[1.3] sm:leading-[1.34] text-center px-4 overflow-visible will-change-transform"
@@ -2172,42 +2172,6 @@ export function IdeasIntoImpact() {
                 together.
               </span>
             </h2>
-
-            {/* Clean Minimal Layout: [Start a Project] | (A) Algora Logo */}
-            <div className="mt-14 sm:mt-20 md:mt-24 flex items-center justify-center gap-6 sm:gap-8 pointer-events-auto">
-              {/* Left: Ultra-Premium Sharp White Button (Radius 0) */}
-              <a
-                href="#contact"
-                onMouseEnter={() => playHover()}
-                className="group relative inline-flex items-center justify-center px-5.5 py-2.5 sm:px-6.5 sm:py-3 rounded-none bg-white text-black hover:bg-neutral-100 font-sans font-bold text-xs sm:text-[13px] tracking-[0.08em] uppercase transition-all duration-300 shadow-[0_0_30px_rgba(255,255,255,0.35),0_8px_25px_rgba(0,0,0,0.6)] hover:shadow-[0_0_45px_rgba(255,255,255,0.6)] border border-white active:scale-95 cursor-pointer overflow-hidden"
-              >
-                {/* Subtle Specular Sheen Sweep */}
-                <div className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/40 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-[300%] transition-transform duration-750 ease-out pointer-events-none" />
-                <span className="relative z-10 flex items-center gap-2">
-                  <span>Start a Project</span>
-                  <ArrowUpRight className="w-3.5 h-3.5 text-black transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </span>
-              </a>
-
-              {/* Center Vertical Divider | */}
-              <div className="w-[1px] h-5 bg-gradient-to-b from-transparent via-white/40 to-transparent select-none" />
-
-              {/* Right: Frameless Clean Algora Logo Icon */}
-              <a
-                href="https://algora.io"
-                target="_blank"
-                rel="noopener noreferrer"
-                onMouseEnter={() => playHover()}
-                className="group relative flex items-center justify-center cursor-pointer transition-transform duration-300 hover:scale-110"
-                title="Algora Official Logo"
-              >
-                <img
-                  src="/assets/algora-icon.png"
-                  alt="Algora Official Logo"
-                  className="w-7 h-7 sm:w-8.5 sm:h-8.5 object-contain rounded-full shadow-[0_0_18px_rgba(255,255,255,0.25)] group-hover:shadow-[0_0_30px_rgba(255,255,255,0.6)] transition-all duration-300"
-                />
-              </a>
-            </div>
           </div>
         </div>
 
@@ -2300,7 +2264,7 @@ export function IdeasIntoImpact() {
             className="relative z-10 w-full max-w-5xl mx-auto h-full pointer-events-auto flex flex-col items-center justify-center"
           >
             {/* 1. Header Group (Starts Dead-Center in Phase 1 via flexbox, moves UP & scales down in Phase 2) */}
-            <div className="slide3-header-group flex flex-col items-center justify-center text-center w-full transition-transform will-change-transform">
+            <div className="slide3-header-group flex flex-col items-center justify-center text-center w-full will-change-transform transform-gpu">
               {/* Floating "hey there!" header flanked by leaf branch SVGs */}
               <div className="slide3-hey-there flex items-center justify-center gap-3 sm:gap-4 mb-2 sm:mb-3">
                 {/* Left Leaf Accent */}
@@ -2334,52 +2298,52 @@ export function IdeasIntoImpact() {
             </div>
 
             {/* 2. Middle Text Group (Flies in from sides in Phase 2) */}
-            <div className="slide3-middle-group absolute top-[54%] sm:top-[52%] left-0 right-0 mx-auto flex flex-col items-center justify-center text-center w-full max-w-3xl px-4 gap-3 sm:gap-4 pointer-events-none">
+            <div className="slide3-middle-group absolute top-[53%] sm:top-[51%] left-0 right-0 mx-auto flex flex-col items-center justify-center text-center w-full max-w-3xl px-4 gap-2.5 sm:gap-3 pointer-events-none">
               {/* Subtitle (Flies in from Left) */}
-              <h3 className="slide3-subtitle opacity-0 font-mono text-xs sm:text-sm font-extrabold tracking-[0.22em] text-[#090714]/85 uppercase">
+              <h3 className="slide3-subtitle opacity-0 font-mono text-[9px] sm:text-[10px] font-extrabold tracking-[0.25em] text-[#090714]/80 uppercase">
                 AND FOR SUPPORTING OUR CREATIVE JOURNEY
               </h3>
 
               {/* Description Paragraph (Flies in from Right) */}
-              <p className="slide3-desc opacity-0 font-sans text-xs sm:text-sm md:text-base text-[#090714]/70 leading-relaxed font-normal max-w-2xl">
+              <p className="slide3-desc opacity-0 font-sans text-[11px] sm:text-xs text-[#090714]/65 leading-relaxed font-normal max-w-xl">
                 We craft digital products and visual stories driven by passion, elegance, and unyielding attention to detail. Thank you for being a part of this story.
               </p>
             </div>
 
             {/* 3. Bottom 3-Column Assembled Footer Layout (Assembles from bottom in Phase 2) */}
-            <div className="slide3-bottom-grid opacity-0 absolute bottom-6 sm:bottom-10 left-0 right-0 mx-auto w-full grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 items-center pt-6 border-t border-[#090714]/15 px-6 sm:px-12 pointer-events-none">
+            <div className="slide3-bottom-grid opacity-0 absolute bottom-4 sm:bottom-7 left-0 right-0 mx-auto w-full grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 items-center pt-3.5 sm:pt-4 border-t border-[#090714]/15 px-6 sm:px-12 pointer-events-none">
               {/* Left Column: Handwritten Signature */}
-              <div className="flex flex-col items-center md:items-start text-center md:text-left gap-1">
+              <div className="flex flex-col items-center md:items-start text-center md:text-left gap-0.5">
                 {/* SVG Handwritten Signature Graphic */}
-                <div className="h-10 sm:h-12 text-[#090714]">
+                <div className="h-6 sm:h-7 text-[#090714]">
                   <svg viewBox="0 0 200 60" className="h-full w-auto" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M15 45 C25 15, 35 10, 45 25 C55 40, 60 50, 70 30 C75 20, 85 20, 90 35 C95 45, 105 25, 115 30 C125 35, 135 20, 145 40 C155 45, 175 35, 185 30" />
                     <path d="M40 38 Q80 48 160 38" strokeWidth="1.5" opacity="0.7" />
                   </svg>
                 </div>
-                <span className="font-mono text-[10px] sm:text-[11px] font-bold tracking-wider text-[#090714]/80 uppercase">
+                <span className="font-mono text-[8px] sm:text-[9px] font-bold tracking-[0.14em] text-[#090714]/75 uppercase">
                   Gourab S. &mdash; Lead Engineer &amp; Designer
                 </span>
               </div>
 
               {/* Center Column: Collaboration Note / Quote */}
               <div className="flex flex-col items-center text-center px-2">
-                <p className="font-bodoni italic text-sm sm:text-base text-[#090714]/85 font-medium leading-snug">
+                <p className="font-bodoni italic text-xs sm:text-[13px] text-[#090714]/75 font-medium leading-relaxed max-w-sm">
                   &ldquo;Building meaningful digital experiences through design, performance, and code.&rdquo;
                 </p>
               </div>
 
               {/* Right Column: CTA Button + Social Links / Contact */}
-              <div className="flex flex-col items-center md:items-end gap-3">
+              <div className="flex flex-col items-center md:items-end gap-2">
                 <a
                   href="#contact"
                   onMouseEnter={() => playHover()}
-                  className="pointer-events-auto inline-flex items-center gap-2 px-6 sm:px-7 py-3 rounded-full bg-[#090714] text-white hover:bg-black font-sans font-bold text-xs tracking-tight transition-all duration-300 shadow-[0_8px_25px_rgba(9,7,20,0.2)] hover:shadow-[0_12px_35px_rgba(9,7,20,0.35)] hover:scale-105 active:scale-95 cursor-pointer border border-[#090714]/20"
+                  className="pointer-events-auto inline-flex items-center gap-1.5 px-4 sm:px-4.5 py-1.5 rounded-full bg-[#090714] text-white hover:bg-black font-sans font-bold text-[10px] sm:text-[11px] tracking-tight transition-all duration-300 shadow-[0_4px_15px_rgba(9,7,20,0.18)] hover:shadow-[0_8px_25px_rgba(9,7,20,0.3)] hover:scale-105 active:scale-95 cursor-pointer border border-[#090714]/20"
                 >
                   <span>Get In Touch</span>
-                  <ArrowUpRight className="w-3.5 h-3.5 text-white" />
+                  <ArrowUpRight className="w-3 h-3 text-white" />
                 </a>
-                <div className="flex items-center gap-3 text-[10px] font-mono font-semibold tracking-wider text-[#090714]/60 uppercase">
+                <div className="flex items-center gap-2.5 text-[8px] sm:text-[9px] font-mono font-semibold tracking-[0.14em] text-[#090714]/50 uppercase">
                   <a href="mailto:gourabs444@gmail.com" className="hover:text-[#090714] transition-colors">gourabs444@gmail.com</a>
                   <span>&bull;</span>
                   <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#090714] transition-colors">LinkedIn</a>

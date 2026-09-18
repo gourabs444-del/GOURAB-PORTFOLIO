@@ -95,57 +95,46 @@ export function BrandIntegrationSection() {
       tl.to(".act-01", { opacity: 0, duration: 0.3 }, 0.85);
 
       // =======================================================================
-      // 02 — THE SIGNAL (Time: 0.8 -> 2.0, Exits 1.7 -> 2.1)
+      // 02 & 03 — BRAND REVEAL & LOGO DRAW (Time: 0.8 -> 3.0, Exits 2.7 -> 3.2)
       // =======================================================================
-      tl.to(".act-02", { opacity: 1, duration: 0.3 }, 0.8);
+      tl.to(".act-02", { opacity: 1, duration: 0.4, ease: "power2.out" }, 0.8);
 
-      tl.fromTo(
-        ".signal-dot",
-        { scale: 0, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 0.25, ease: "back.out(2)" },
-        0.85
-      );
-
-      tl.to(".signal-dot", { scale: 2.5, opacity: 0, duration: 0.25 }, 1.1);
-
+      // Smooth, natural vector SVG stroke drawing
       tl.fromTo(
         ".svg-circle",
         { strokeDasharray: 1100, strokeDashoffset: 1100, opacity: 0 },
-        { strokeDashoffset: 0, opacity: 1, duration: 0.45, ease: "power2.out" },
-        1.15
+        { strokeDashoffset: 0, opacity: 1, duration: 0.65, ease: "power2.out" },
+        0.85
       );
 
       tl.fromTo(
         [".svg-poly", ".svg-path"],
         { strokeDasharray: 600, strokeDashoffset: 600, opacity: 0 },
-        { strokeDashoffset: 0, opacity: 1, duration: 0.45, ease: "power2.out", stagger: 0.1 },
-        1.3
+        { strokeDashoffset: 0, opacity: 1, duration: 0.65, ease: "power2.out", stagger: 0.1 },
+        1.0
       );
 
-      // Morphing Exit into Act 03 (1.7 -> 2.1)
-      tl.to(".act-02", { opacity: 0, y: -40, scale: 0.92, duration: 0.4, ease: "power2.inOut" }, 1.7);
+      // Soft, seamless white fill transition for inner emblem
+      tl.to(
+        [".svg-poly", ".svg-path"],
+        { fill: "#ffffff", duration: 0.6, ease: "power2.inOut" },
+        1.45
+      );
 
-      // =======================================================================
-      // 03 — BRAND REVEAL (Time: 1.8 -> 3.0, Exits 2.7 -> 3.1)
-      // =======================================================================
-      tl.to(".act-03", { opacity: 1, duration: 0.3 }, 1.8);
-
+      // Ultra-smooth ALGORA title fade-up directly beneath emblem
       tl.fromTo(
         ".brand-name",
-        { opacity: 0, y: 35, clipPath: "inset(0% 0% 100% 0%)" },
-        { opacity: 1, y: 0, clipPath: "inset(0% 0% 0% 0%)", duration: 0.45, ease: "power3.out" },
-        1.95
+        { opacity: 0, y: 16, filter: "blur(6px)" },
+        { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.65, ease: "power2.out" },
+        1.5
       );
 
-      tl.fromTo(
-        ".brand-tagline",
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" },
-        2.2
+      // Soft, elegant morphing exit into Act 04 (2.7 -> 3.2)
+      tl.to(
+        ".act-02",
+        { opacity: 0, filter: "blur(8px)", scale: 0.96, duration: 0.5, ease: "power2.inOut" },
+        2.7
       );
-
-      // Morphing Exit into Act 04 (2.7 -> 3.1)
-      tl.to(".act-03", { opacity: 0, y: -50, scale: 0.94, duration: 0.4, ease: "power2.inOut" }, 2.7);
 
       // =======================================================================
       // 04 — WHY (Time: 2.8 -> 4.0, Exits 3.6 -> 4.1)
@@ -357,14 +346,11 @@ export function BrandIntegrationSection() {
         </div>
 
         {/* ========================================================= */}
-        {/* ACT 02 — THE SIGNAL                                       */}
+        {/* ACT 02 & 03 — BRAND REVEAL & LOGO DRAW                    */}
         {/* ========================================================= */}
         <div className="act-02 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6 transition-transform">
-          {/* Signal Point */}
-          <div className="signal-dot w-4 h-4 rounded-full bg-amber-400 shadow-[0_0_30px_#f59e0b] mb-6" />
-
-          {/* SVG Vector Logo Drawing */}
-          <div className="w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 flex items-center justify-center">
+          {/* SVG Vector Logo Drawing & Lift-Up Container */}
+          <div className="logo-svg-wrapper w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 flex items-center justify-center transition-transform">
             <svg viewBox="315 85 394 450" className="w-full h-full text-white overflow-visible">
               <circle
                 className="svg-circle"
@@ -393,23 +379,11 @@ export function BrandIntegrationSection() {
               />
             </svg>
           </div>
-        </div>
 
-        {/* ========================================================= */}
-        {/* ACT 03 — BRAND REVEAL                                     */}
-        {/* ========================================================= */}
-        <div className="act-03 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6 transition-transform">
-          <img
-            src="/assets/algora-icon.png"
-            alt="ALGORA Emblem"
-            className="w-20 h-20 sm:w-24 sm:h-24 object-contain mb-6 drop-shadow-[0_0_35px_rgba(255,255,255,0.4)]"
-          />
-          <h2 className="brand-name font-display font-black text-5xl sm:text-7xl md:text-8xl tracking-[0.18em] text-white uppercase mb-3">
+          {/* Clean Typography Title Matching Image 3 */}
+          <h2 className="brand-name font-sans font-extrabold text-4xl sm:text-6xl md:text-7xl tracking-[0.32em] text-white uppercase mt-6 opacity-0">
             ALGORA
           </h2>
-          <p className="brand-tagline font-mono text-xs sm:text-sm font-semibold tracking-[0.25em] text-amber-400 uppercase">
-            CREATIVE ENGINEERING &amp; INTELLIGENT SYSTEMS
-          </p>
         </div>
 
         {/* ========================================================= */}
@@ -428,146 +402,168 @@ export function BrandIntegrationSection() {
         </div>
 
         {/* ========================================================= */}
-        {/* ACT 05 — PRODUCT REVEAL                                   */}
+        {/* ACT 05 — PRODUCT REVEAL (ULTRA-MINIMAL STUDIO TELEMETRY)  */}
         {/* ========================================================= */}
-        <div className="act-05 absolute inset-0 w-full h-full flex flex-col items-center justify-center px-4 sm:px-8 transition-transform">
-          <div className="w-full max-w-5xl relative flex flex-col items-center">
-            {/* Background Parallax Wireframe Grid */}
-            <div className="product-layer-bg absolute -inset-6 rounded-3xl border border-white/10 bg-white/[0.01] backdrop-blur-3xl pointer-events-none" />
-
-            {/* Main Product Interface Frame */}
-            <div className="product-frame relative w-full bg-[#0d0e14] border border-white/15 rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.8)] overflow-hidden">
-              {/* Window Bar */}
-              <div className="flex items-center justify-between px-4 py-3 bg-[#08090d] border-b border-white/10 text-xs font-mono text-neutral-400">
-                <div className="flex items-center gap-2">
-                  <span className="w-3 h-3 rounded-full bg-rose-500/80" />
-                  <span className="w-3 h-3 rounded-full bg-amber-500/80" />
-                  <span className="w-3 h-3 rounded-full bg-emerald-500/80" />
-                  <span className="ml-2 font-semibold text-white/80">ALGORA // STUDIO ENGINE v2.4</span>
-                </div>
-                <div className="flex items-center gap-3 text-[11px] font-mono text-amber-400/90">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+        <div className="act-05 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6 transition-transform">
+          <div className="relative w-full max-w-4xl mx-auto">
+            {/* Minimal Framing Container with Hairline Border */}
+            <div className="product-frame w-full border-y border-white/10 py-6 sm:py-8 px-4 sm:px-8 text-left bg-black/40 backdrop-blur-md">
+              
+              {/* Minimal Header Bar */}
+              <div className="flex items-center justify-between pb-4 border-b border-white/10 mb-6 text-[11px] font-mono tracking-widest text-neutral-400 uppercase">
+                <span className="text-white font-bold tracking-widest">ALGORA // STUDIO ENGINE v2.4</span>
+                <div className="flex items-center gap-2 text-emerald-400 font-semibold">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                   <span>SYSTEM ACTIVE // 60 FPS</span>
                 </div>
               </div>
 
-              {/* Product Body */}
-              <div className="product-layer-fg p-6 sm:p-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-                {/* Control Panel */}
-                <div className="md:col-span-1 flex flex-col gap-4 bg-white/[0.03] p-4 rounded-xl border border-white/10">
-                  <span className="font-mono text-[11px] text-neutral-400 uppercase tracking-wider font-semibold">
-                    1. SELECT WORKFLOW NODE
+              {/* Minimal 2-Column Interface Grid */}
+              <div className="product-layer-fg grid grid-cols-1 md:grid-cols-3 gap-8">
+                {/* Left: Minimal Workflow Nodes List */}
+                <div className="md:col-span-1 flex flex-col gap-3">
+                  <span className="font-mono text-[10px] text-neutral-400 uppercase tracking-widest mb-1">
+                    SELECT WORKFLOW NODE
                   </span>
-                  <div className="flex flex-col gap-2">
+                  
+                  <div className="flex flex-col gap-1.5">
                     <button
                       onClick={() => handleSimulateClick("build")}
-                      className={`px-3.5 py-2.5 rounded-lg text-xs font-mono font-bold text-left transition-all flex items-center justify-between ${
+                      className={`pl-3 py-2 text-xs font-mono font-bold text-left transition-all duration-200 border-l-2 flex items-center justify-between ${
                         activeTab === "build"
-                          ? "bg-amber-400 text-black shadow-[0_0_15px_rgba(245,158,11,0.4)]"
-                          : "bg-white/5 text-neutral-300 hover:bg-white/10"
+                          ? "border-white text-white bg-white/[0.04]"
+                          : "border-transparent text-neutral-400 hover:text-white hover:border-white/30"
                       }`}
                     >
-                      <span className="flex items-center gap-2">
+                      <span className="flex items-center gap-2.5">
                         <Code className="w-3.5 h-3.5" />
                         <span>Architecture Engine</span>
                       </span>
-                      {activeTab === "build" && <Check className="w-3.5 h-3.5" />}
+                      {activeTab === "build" && <Check className="w-3 h-3 text-white" />}
                     </button>
 
                     <button
                       onClick={() => handleSimulateClick("ai")}
-                      className={`px-3.5 py-2.5 rounded-lg text-xs font-mono font-bold text-left transition-all flex items-center justify-between ${
+                      className={`pl-3 py-2 text-xs font-mono font-bold text-left transition-all duration-200 border-l-2 flex items-center justify-between ${
                         activeTab === "ai"
-                          ? "bg-amber-400 text-black shadow-[0_0_15px_rgba(245,158,11,0.4)]"
-                          : "bg-white/5 text-neutral-300 hover:bg-white/10"
+                          ? "border-white text-white bg-white/[0.04]"
+                          : "border-transparent text-neutral-400 hover:text-white hover:border-white/30"
                       }`}
                     >
-                      <span className="flex items-center gap-2">
+                      <span className="flex items-center gap-2.5">
                         <Sparkles className="w-3.5 h-3.5" />
                         <span>Neural Design Matrix</span>
                       </span>
-                      {activeTab === "ai" && <Check className="w-3.5 h-3.5" />}
+                      {activeTab === "ai" && <Check className="w-3 h-3 text-white" />}
                     </button>
 
                     <button
                       onClick={() => handleSimulateClick("deploy")}
-                      className={`px-3.5 py-2.5 rounded-lg text-xs font-mono font-bold text-left transition-all flex items-center justify-between ${
+                      className={`pl-3 py-2 text-xs font-mono font-bold text-left transition-all duration-200 border-l-2 flex items-center justify-between ${
                         activeTab === "deploy"
-                          ? "bg-amber-400 text-black shadow-[0_0_15px_rgba(245,158,11,0.4)]"
-                          : "bg-white/5 text-neutral-300 hover:bg-white/10"
+                          ? "border-white text-white bg-white/[0.04]"
+                          : "border-transparent text-neutral-400 hover:text-white hover:border-white/30"
                       }`}
                     >
-                      <span className="flex items-center gap-2">
+                      <span className="flex items-center gap-2.5">
                         <Zap className="w-3.5 h-3.5" />
                         <span>Edge Deployment</span>
                       </span>
-                      {activeTab === "deploy" && <Check className="w-3.5 h-3.5" />}
+                      {activeTab === "deploy" && <Check className="w-3 h-3 text-white" />}
                     </button>
                   </div>
                 </div>
 
-                {/* Display Output Preview */}
-                <div className="md:col-span-2 flex flex-col justify-between bg-black/60 p-5 rounded-xl border border-white/10 min-h-[220px]">
-                  <div className="flex flex-col gap-2">
-                    <div className="flex items-center justify-between text-[11px] font-mono text-neutral-400">
+                {/* Right: Minimal Live Telemetry Output */}
+                <div className="md:col-span-2 flex flex-col justify-between border-l border-white/10 pl-0 md:pl-8 pt-4 md:pt-0 min-h-[180px]">
+                  <div className="flex flex-col gap-3">
+                    <div className="flex items-center justify-between text-[10px] font-mono tracking-widest text-neutral-400 uppercase pb-2 border-b border-white/10">
                       <span>LIVE TELEMETRY OUTPUT</span>
                       <span className="text-emerald-400 font-bold">STATUS: OK</span>
                     </div>
-                    <div className="p-3 bg-white/5 rounded-lg border border-white/10 font-mono text-xs text-amber-200">
-                      {promptText}
+
+                    <div className="font-mono text-xs text-white py-2 flex items-center gap-2">
+                      <span className="text-neutral-400">&gt;</span>
+                      <span>{promptText}</span>
                     </div>
                   </div>
 
-                  <div className="mt-4 p-4 rounded-lg bg-amber-500/10 border border-amber-400/30 flex items-center justify-between">
-                    <span className="font-mono text-xs text-white font-medium">
-                      {isProcessing ? "Executing Live Pipeline..." : demoResult}
+                  <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono text-neutral-300">
+                    <span className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                      <span>{isProcessing ? "Executing Live Pipeline..." : demoResult}</span>
                     </span>
-                    <ShieldCheck className="w-4 h-4 text-amber-400 shrink-0" />
+                    <ShieldCheck className="w-4 h-4 text-white/60 shrink-0" />
                   </div>
                 </div>
               </div>
+
             </div>
           </div>
         </div>
 
         {/* ========================================================= */}
-        {/* ACT 06 — EXPERIENCE                                       */}
+        {/* ACT 06 — EXPERIENCE (3 CLEAN ISOLATED FROSTED CARDS)      */}
         {/* ========================================================= */}
         <div className="act-06 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6 transition-transform">
-          <div className="exp-flow w-full max-w-4xl flex flex-col items-center">
-            <span className="font-mono text-xs font-bold tracking-[0.2em] text-amber-400 uppercase mb-4">
+          <div className="exp-flow w-full max-w-5xl flex flex-col items-center">
+            <span className="font-mono text-xs font-bold tracking-[0.25em] text-neutral-400 uppercase mb-8">
               EXPERIENCE THE PROCESS
             </span>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full mt-4">
-              <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 flex flex-col items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-amber-400/10 border border-amber-400/30 flex items-center justify-center text-amber-400">
-                  <Terminal className="w-5 h-5" />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full text-left">
+              {/* Card 1: INPUT */}
+              <div className="p-7 sm:p-8 rounded-2xl bg-white/[0.02] border border-white/10 backdrop-blur-xl hover:bg-white/[0.04] hover:border-white/20 transition-all duration-300 flex flex-col justify-between group shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
+                <div>
+                  <div className="w-10 h-10 rounded-xl bg-amber-400/10 border border-amber-400/20 text-amber-400 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform duration-300">
+                    <Terminal className="w-5 h-5" />
+                  </div>
+                  <span className="font-mono text-[11px] text-amber-400/90 font-bold tracking-widest uppercase block mb-1">
+                    1. INPUT
+                  </span>
+                  <h4 className="font-sans font-extrabold text-lg text-white tracking-tight mb-2">
+                    System Specification
+                  </h4>
+                  <p className="font-sans text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
+                    Precise architectural vision &amp; technical specification defined from day one.
+                  </p>
                 </div>
-                <h4 className="font-sans font-bold text-base text-white">1. INPUT</h4>
-                <p className="font-sans text-xs text-neutral-400 font-light leading-relaxed">
-                  Precise architectural vision &amp; technical specification defined from day one.
-                </p>
               </div>
 
-              <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 flex flex-col items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-sky-400/10 border border-sky-400/30 flex items-center justify-center text-sky-400">
-                  <Cpu className="w-5 h-5" />
+              {/* Card 2: ENGINE */}
+              <div className="p-7 sm:p-8 rounded-2xl bg-white/[0.02] border border-white/10 backdrop-blur-xl hover:bg-white/[0.04] hover:border-white/20 transition-all duration-300 flex flex-col justify-between group shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
+                <div>
+                  <div className="w-10 h-10 rounded-xl bg-sky-400/10 border border-sky-400/20 text-sky-400 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform duration-300">
+                    <Cpu className="w-5 h-5" />
+                  </div>
+                  <span className="font-mono text-[11px] text-sky-400/90 font-bold tracking-widest uppercase block mb-1">
+                    2. ENGINE
+                  </span>
+                  <h4 className="font-sans font-extrabold text-lg text-white tracking-tight mb-2">
+                    GPU Render Pipeline
+                  </h4>
+                  <p className="font-sans text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
+                    High-throughput WebGL, React 19, and optimized GPU frame pipelines.
+                  </p>
                 </div>
-                <h4 className="font-sans font-bold text-base text-white">2. ENGINE</h4>
-                <p className="font-sans text-xs text-neutral-400 font-light leading-relaxed">
-                  High-throughput WebGL, React 19, and optimized GPU frame pipelines.
-                </p>
               </div>
 
-              <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 flex flex-col items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-emerald-400/10 border border-emerald-400/30 flex items-center justify-center text-emerald-400">
-                  <Layers className="w-5 h-5" />
+              {/* Card 3: RESULT */}
+              <div className="p-7 sm:p-8 rounded-2xl bg-white/[0.02] border border-white/10 backdrop-blur-xl hover:bg-white/[0.04] hover:border-white/20 transition-all duration-300 flex flex-col justify-between group shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
+                <div>
+                  <div className="w-10 h-10 rounded-xl bg-emerald-400/10 border border-emerald-400/20 text-emerald-400 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform duration-300">
+                    <Layers className="w-5 h-5" />
+                  </div>
+                  <span className="font-mono text-[11px] text-emerald-400/90 font-bold tracking-widest uppercase block mb-1">
+                    3. RESULT
+                  </span>
+                  <h4 className="font-sans font-extrabold text-lg text-white tracking-tight mb-2">
+                    Cinematic Output
+                  </h4>
+                  <p className="font-sans text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
+                    A flawless cinematic digital product engineered to redefine benchmarks.
+                  </p>
                 </div>
-                <h4 className="font-sans font-bold text-base text-white">3. RESULT</h4>
-                <p className="font-sans text-xs text-neutral-400 font-light leading-relaxed">
-                  A flawless cinematic digital product engineered to redefine benchmarks.
-                </p>
               </div>
             </div>
           </div>
@@ -623,11 +619,13 @@ export function BrandIntegrationSection() {
         {/* ========================================================= */}
         <div className="act-08 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6 transition-transform">
           <div className="founder-header flex flex-col items-center mb-8">
-            <img
-              src="/assets/algora-icon.png"
-              alt="ALGORA Emblem"
-              className="w-16 h-16 object-contain mb-4 shadow-[0_0_30px_rgba(255,255,255,0.4)]"
-            />
+            <div className="w-14 h-14 sm:w-16 sm:h-16 mb-4 flex items-center justify-center">
+              <svg viewBox="315 85 394 450" className="w-full h-full text-white overflow-visible">
+                <circle cx="512" cy="284.5" r="175" fill="none" stroke="currentColor" strokeWidth="20" />
+                <polygon points="512,197 483,243.5 550,368 604,368" fill="white" stroke="none" />
+                <path d="M 408.00 368.00 C 411.41 362.36, 433.32 326.42, 437.03 320.96 C 443.94 310.78, 453.24 304.05, 464.86 300.83 C 469.89 299.43, 474.99 299.00, 486.33 299.00 L 500.00 299.00 C 484.32 328.00, 470.51 351.92, 455.50 363.06 C 452.20 364.68, 446.35 366.68, 442.50 367.49 L 408.00 368.00 Z" fill="white" stroke="none" />
+              </svg>
+            </div>
             <h3 className="font-display font-black text-4xl sm:text-6xl text-white uppercase tracking-tight">
               BUILT BY GOURAB.
             </h3>
@@ -673,21 +671,17 @@ export function BrandIntegrationSection() {
         {/* ACT 10 — FINAL BRAND LOCKUP                               */}
         {/* ========================================================= */}
         <div className="act-10 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6 transition-transform">
-          <div className="act-10-logo mb-6">
-            <img
-              src="/assets/algora-icon.png"
-              alt="ALGORA Official Emblem"
-              className="w-20 h-20 sm:w-24 sm:h-24 object-contain shadow-[0_0_40px_rgba(255,255,255,0.45)]"
-            />
+          <div className="act-10-logo mb-6 w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center">
+            <svg viewBox="315 85 394 450" className="w-full h-full text-white overflow-visible">
+              <circle cx="512" cy="284.5" r="175" fill="none" stroke="currentColor" strokeWidth="20" />
+              <polygon points="512,197 483,243.5 550,368 604,368" fill="white" stroke="none" />
+              <path d="M 408.00 368.00 C 411.41 362.36, 433.32 326.42, 437.03 320.96 C 443.94 310.78, 453.24 304.05, 464.86 300.83 C 469.89 299.43, 474.99 299.00, 486.33 299.00 L 500.00 299.00 C 484.32 328.00, 470.51 351.92, 455.50 363.06 C 452.20 364.68, 446.35 366.68, 442.50 367.49 L 408.00 368.00 Z" fill="white" stroke="none" />
+            </svg>
           </div>
 
-          <h2 className="act-10-name font-display font-black text-5xl sm:text-7xl md:text-8xl tracking-[0.18em] text-white uppercase mb-3">
+          <h2 className="act-10-name font-sans font-extrabold text-4xl sm:text-6xl md:text-7xl tracking-[0.32em] text-white uppercase mb-6">
             ALGORA
           </h2>
-
-          <p className="act-10-tag font-mono text-xs sm:text-sm font-semibold tracking-[0.25em] text-amber-400 uppercase mb-8">
-            CREATIVE ENGINEERING &amp; INTELLIGENT SYSTEMS
-          </p>
 
           <span className="act-10-founder font-mono text-xs text-neutral-400 uppercase tracking-widest mb-8">
             FOUNDED &amp; BUILT BY GOURAB
