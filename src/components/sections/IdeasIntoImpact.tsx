@@ -940,15 +940,25 @@ export function IdeasIntoImpact() {
       if (slide3LayerRef.current) {
         const headerGroup = slide3LayerRef.current.querySelector(".slide3-header-group");
         const heyThere = slide3LayerRef.current.querySelector(".slide3-hey-there");
+        const line2 = slide3LayerRef.current.querySelector(".slide3-line-2");
+        const subtitle = slide3LayerRef.current.querySelector(".slide3-subtitle");
+        const desc = slide3LayerRef.current.querySelector(".slide3-desc");
         const bottomGrid = slide3LayerRef.current.querySelector(".slide3-bottom-grid");
 
+        // Set initial hidden positions for Phase 2 elements
+        if (line2) gsap.set(line2, { opacity: 0, y: 12 });
+        if (subtitle) gsap.set(subtitle, { opacity: 0, x: isMobile ? -35 : -75 });
+        if (desc) gsap.set(desc, { opacity: 0, x: isMobile ? 35 : 75 });
+        if (bottomGrid) gsap.set(bottomGrid, { opacity: 0, y: 30, pointerEvents: "none" });
+
+        // Phase 1 (15.2 -> 16.2): Centered THANK YOU Header flies in smoothly from distance & lands dead-centered
         if (headerGroup) {
           tl.fromTo(
             headerGroup,
             {
               opacity: 0,
-              scale: 0.92,
-              y: isMobile ? 25 : 40,
+              scale: 0.6,
+              y: isMobile ? 80 : 130,
             },
             {
               opacity: 1,
@@ -964,27 +974,77 @@ export function IdeasIntoImpact() {
         if (heyThere) {
           tl.fromTo(
             heyThere,
-            { opacity: 0, scale: 0.85, y: -15 },
+            { opacity: 0, scale: 0.5, y: -25 },
             { opacity: 1, scale: 1, y: 0, duration: 0.8, ease: "none" },
-            15.3
+            15.4
+          );
+        }
+
+        // Phase 2 Scroll Animation (16.8 -> 18.6):
+        // On further scroll: Header lifts UP from dead-center and scales down, side texts fly in, and bottom 3-column footer assembles!
+        if (headerGroup) {
+          tl.to(
+            headerGroup,
+            {
+              y: isMobile ? -130 : -205,
+              scale: isMobile ? 0.82 : 0.78,
+              duration: 1.6,
+              ease: "none",
+            },
+            16.8
+          );
+        }
+
+        if (line2) {
+          tl.to(
+            line2,
+            {
+              opacity: 1,
+              y: 0,
+              duration: 1.0,
+              ease: "none",
+            },
+            17.0
+          );
+        }
+
+        if (subtitle) {
+          tl.to(
+            subtitle,
+            {
+              opacity: 1,
+              x: 0,
+              duration: 1.2,
+              ease: "none",
+            },
+            17.1
+          );
+        }
+
+        if (desc) {
+          tl.to(
+            desc,
+            {
+              opacity: 1,
+              x: 0,
+              duration: 1.2,
+              ease: "none",
+            },
+            17.1
           );
         }
 
         if (bottomGrid) {
-          tl.fromTo(
+          tl.to(
             bottomGrid,
-            {
-              opacity: 0,
-              y: 25,
-            },
             {
               opacity: 1,
               y: 0,
               pointerEvents: "auto",
-              duration: 1.0,
+              duration: 1.3,
               ease: "none",
             },
-            15.4
+            17.3
           );
         }
       }
@@ -2201,53 +2261,57 @@ export function IdeasIntoImpact() {
           {/* Foreground Editorial Content Container */}
           <div
             ref={slide3ContentRef}
-            className="relative z-10 w-full max-w-6xl mx-auto h-full pointer-events-auto flex flex-col items-center justify-between py-10 sm:py-14 px-6 sm:px-12"
+            className="relative z-10 w-full max-w-5xl mx-auto h-full pointer-events-auto flex flex-col items-center justify-center"
           >
-            {/* 1. Central Header + Sublines + Paragraph Group */}
-            <div className="slide3-header-group flex flex-col items-center justify-center text-center w-full my-auto gap-3 sm:gap-4">
+            {/* 1. Header Group (Starts Dead-Center in Phase 1 via flexbox, moves UP & scales down in Phase 2) */}
+            <div className="slide3-header-group flex flex-col items-center justify-center text-center w-full will-change-transform transform-gpu">
               {/* Floating "hey there!" header flanked by leaf branch SVGs */}
-              <div className="slide3-hey-there flex items-center justify-center gap-3 sm:gap-4 mb-1">
+              <div className="slide3-hey-there flex items-center justify-center gap-3 sm:gap-4 mb-2 sm:mb-3">
                 {/* Left Leaf Accent */}
-                <svg className="w-6 h-10 sm:w-7 sm:h-11 text-[#090714]/35 transform -rotate-12" viewBox="0 0 40 80" fill="currentColor">
+                <svg className="w-7 h-11 sm:w-8 sm:h-12 text-[#090714]/35 transform -rotate-12" viewBox="0 0 40 80" fill="currentColor">
                   <path d="M20 0 C20 40, 20 60, 20 80 M20 15 C10 10, 2 15, 5 25 C10 25, 18 20, 20 15 M20 30 C30 25, 38 30, 35 40 C30 40, 22 35, 20 30 M20 45 C10 40, 2 45, 5 55 C10 55, 18 50, 20 45" stroke="currentColor" strokeWidth="2.5" fill="none" />
                 </svg>
 
-                <span className="font-bodoni italic text-2xl sm:text-3xl text-[#090714]/90 tracking-wide">
+                <span className="font-bodoni italic text-2xl sm:text-3xl md:text-4xl text-[#090714]/90 tracking-wide">
                   hey there!
                 </span>
 
                 {/* Right Leaf Accent */}
-                <svg className="w-6 h-10 sm:w-7 sm:h-11 text-[#090714]/35 transform rotate-12" viewBox="0 0 40 80" fill="currentColor">
+                <svg className="w-7 h-11 sm:w-8 sm:h-12 text-[#090714]/35 transform rotate-12" viewBox="0 0 40 80" fill="currentColor">
                   <path d="M20 0 C20 40, 20 60, 20 80 M20 15 C30 10, 38 15, 35 25 C30 25, 22 20, 20 15 M20 30 C10 25, 2 30, 5 40 C10 40, 18 35, 20 30 M20 45 C30 40, 38 45, 35 55 C30 55, 22 50, 20 45" stroke="currentColor" strokeWidth="2.5" fill="none" />
                 </svg>
               </div>
 
               {/* Headline: "THANK YOU" */}
               <h2 className="text-center max-w-5xl overflow-visible flex flex-col items-center justify-center">
-                <span className="slide3-line-1 block font-syne font-black text-6xl sm:text-8xl md:text-9xl text-[#090714] tracking-tight uppercase leading-none drop-shadow-xs">
+                <span className="slide3-line-1 block font-syne font-black text-6xl sm:text-8xl md:text-9xl lg:text-[8.5rem] text-[#090714] tracking-tight uppercase leading-none drop-shadow-xs">
                   THANK YOU
                 </span>
               </h2>
 
-              {/* Cursive Subline: "for your time & vision" */}
-              <div className="slide3-line-2 font-bodoni italic text-2xl sm:text-3xl text-[#090714]/85 tracking-wide mt-1">
-                for your time &amp; vision
-              </div>
-
-              {/* Middle Subtitle & Description */}
-              <div className="flex flex-col items-center gap-2 max-w-2xl mx-auto mt-4 sm:mt-6">
-                <h3 className="slide3-subtitle font-mono text-[10px] sm:text-[11px] font-extrabold tracking-[0.25em] text-[#090714]/80 uppercase">
-                  AND FOR SUPPORTING OUR CREATIVE JOURNEY
-                </h3>
-
-                <p className="slide3-desc font-sans text-xs sm:text-sm text-[#090714]/70 leading-relaxed font-normal max-w-xl">
-                  We craft digital products and visual stories driven by passion, elegance, and unyielding attention to detail. Thank you for being a part of this story.
-                </p>
+              {/* Cursive Subline (Reveals in Phase 2 under THANK YOU) */}
+              <div className="slide3-line-2 opacity-0 mt-2 sm:mt-3">
+                <span className="font-bodoni italic text-2xl sm:text-3xl md:text-4xl text-[#090714]/80 tracking-wide">
+                  for your time &amp; vision
+                </span>
               </div>
             </div>
 
-            {/* 2. Bottom Assembled Footer Layout (Pinned at Bottom) */}
-            <div className="slide3-bottom-grid w-full flex flex-col md:flex-row items-center justify-between gap-4 border-t border-[#090714]/15 pt-4 pb-2 px-4 sm:px-8">
+            {/* 2. Middle Text Group (Flies in from sides in Phase 2) */}
+            <div className="slide3-middle-group absolute top-[53%] sm:top-[51%] left-0 right-0 mx-auto flex flex-col items-center justify-center text-center w-full max-w-3xl px-4 gap-2.5 sm:gap-3 pointer-events-none">
+              {/* Subtitle (Flies in from Left) */}
+              <h3 className="slide3-subtitle opacity-0 font-mono text-[9px] sm:text-[10px] font-extrabold tracking-[0.25em] text-[#090714]/80 uppercase">
+                AND FOR SUPPORTING OUR CREATIVE JOURNEY
+              </h3>
+
+              {/* Description Paragraph (Flies in from Right) */}
+              <p className="slide3-desc opacity-0 font-sans text-[11px] sm:text-xs text-[#090714]/65 leading-relaxed font-normal max-w-xl">
+                We craft digital products and visual stories driven by passion, elegance, and unyielding attention to detail. Thank you for being a part of this story.
+              </p>
+            </div>
+
+            {/* 3. Bottom Assembled Footer Layout (Assembles from bottom in Phase 2) */}
+            <div className="slide3-bottom-grid opacity-0 absolute bottom-3 sm:bottom-6 left-0 right-0 mx-auto w-full flex flex-col md:flex-row items-center justify-between gap-4 border-t border-[#090714]/15 pt-3.5 pb-1 px-6 sm:px-12 pointer-events-none">
               {/* Item 1: Left Group — Signature & Real Algora Brand Logo */}
               <div className="flex items-center gap-4 sm:gap-6">
                 {/* Handwritten Signature */}
