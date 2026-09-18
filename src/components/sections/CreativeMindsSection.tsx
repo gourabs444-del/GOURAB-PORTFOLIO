@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import { ScrollTrigger, Observer } from "@/lib/gsap";
+import { ScrollTrigger } from "@/lib/gsap";
 import { ArrowRight } from "lucide-react";
 
 // Slide Item Interfaces
@@ -63,20 +63,10 @@ const SLIDES: SlideItem[] = [
     type: "arch-carousel",
     alt: "3D Arch Carousel - Create Stunning AI Generated Visuals Instantly",
   },
-  {
-    id: 9,
-    type: "image",
-    src: "/assets/creative-minds-poster-8.jpg",
-    alt: "Ideas Are Shaped Through Strategy, Design, and Execution",
-  },
 ];
 
-interface ArchCarouselProps {
-  scrollRotationRef?: React.MutableRefObject<number>;
-}
-
-// Zero-Re-Render 120FPS GPU Hardware Accelerated Sunrise/Sunset 3D Arch Carousel
-function ArchCarouselComponent({ scrollRotationRef }: ArchCarouselProps) {
+// 120FPS GPU Hardware Accelerated Sunrise/Sunset 3D Arch Carousel
+function ArchCarouselComponent() {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   const cards = [
@@ -98,15 +88,14 @@ function ArchCarouselComponent({ scrollRotationRef }: ArchCarouselProps) {
     let currentRotation = 0;
     let velocity = 0;
 
-    // Scroll wheel listener for interactive rotation
-    // ALWAYS CLOCKWISE: Math.abs(e.deltaY) guarantees clockwise rotation regardless of scroll direction
+    // Scroll wheel listener for interactive high-speed rotation ("zor se ghumega")
     const handleWheel = (e: WheelEvent) => {
-      velocity += Math.abs(e.deltaY) * 0.08;
+      velocity += Math.abs(e.deltaY) * 0.12;
     };
 
     window.addEventListener("wheel", handleWheel, { passive: true });
 
-    // Mobile touch swipe listener - ALWAYS CLOCKWISE
+    // Mobile touch swipe listener
     let lastTouchY = 0;
     const handleTouchStart = (e: TouchEvent) => {
       if (e.touches.length > 0) lastTouchY = e.touches[0].clientY;
@@ -115,7 +104,7 @@ function ArchCarouselComponent({ scrollRotationRef }: ArchCarouselProps) {
       if (e.touches.length > 0) {
         const deltaY = Math.abs(lastTouchY - e.touches[0].clientY);
         lastTouchY = e.touches[0].clientY;
-        velocity += deltaY * 0.14;
+        velocity += deltaY * 0.2;
       }
     };
 
@@ -129,23 +118,19 @@ function ArchCarouselComponent({ scrollRotationRef }: ArchCarouselProps) {
       const delta = (now - lastTime) / 1000;
       lastTime = now;
 
-      // Friction velocity decay (0.91 per frame)
-      velocity *= 0.91;
+      // Friction velocity decay for high-momentum spin
+      velocity *= 0.92;
 
-      // Base idle rotation (12 deg/sec) + ALWAYS CLOCKWISE scroll velocity boost
-      const rotationStep = delta * 12 + velocity * delta * 15;
+      // Base idle rotation (12 deg/sec) + fast scroll velocity boost
+      const rotationStep = delta * 12 + velocity * delta * 16;
       currentRotation = (currentRotation + rotationStep) % 360;
-
-      // Add scrollRotationRef value driven by GSAP timeline scrub
-      const scrollRot = scrollRotationRef?.current || 0;
-      const totalRotation = currentRotation + scrollRot;
 
       const container = containerRef.current;
       if (container) {
         const children = container.children;
         for (let i = 0; i < children.length; i++) {
           const el = children[i] as HTMLElement;
-          const rawAngle = i * angleStep + totalRotation;
+          const rawAngle = i * angleStep + currentRotation;
           let normAngle = ((rawAngle + 180) % 360) - 180;
           const absAngle = Math.abs(normAngle);
 
@@ -155,20 +140,16 @@ function ArchCarouselComponent({ scrollRotationRef }: ArchCarouselProps) {
           const x = Math.sin(rad) * rx;
           const y = -Math.cos(rad) * ry - 25; // overhead arc height offset
 
-          // Sunrise / Sunset Horizon Curve Math (Zero abrupt cuts)
+          // Sunrise / Sunset Horizon Curve Math
           let opacity = 0;
           let scale = 0.35;
 
           if (absAngle <= 75) {
-            // Peak Overhead Zone: Full opacity 1.0, scale 1.0 -> 0.78
             opacity = 1.0;
             scale = 0.78 + 0.22 * Math.cos((absAngle / 75) * (Math.PI / 2));
           } else if (absAngle <= 145) {
-            // Horizon Sunrise / Sunset Zone (75deg to 145deg)
-            const progress = (absAngle - 75) / 70; // 0.0 at horizon -> 1.0 below horizon
-            // Smooth Cosine S-curve fade into twilight
+            const progress = (absAngle - 75) / 70;
             opacity = 0.5 * (1 + Math.cos(progress * Math.PI));
-            // Sunrise / Sunset scaling curve
             scale = 0.78 * (1 - progress * 0.55);
           } else {
             opacity = 0;
@@ -192,7 +173,7 @@ function ArchCarouselComponent({ scrollRotationRef }: ArchCarouselProps) {
       window.removeEventListener("touchmove", handleTouchMove);
       cancelAnimationFrame(animId);
     };
-  }, [cards.length, scrollRotationRef]);
+  }, [cards.length]);
 
   return (
     <div className="relative w-full h-full flex flex-col items-center justify-center bg-[#FFFFFF] select-none pointer-events-auto overflow-hidden px-4">
@@ -278,7 +259,7 @@ function ArchCarouselComponent({ scrollRotationRef }: ArchCarouselProps) {
 export function CreativeMindsSection() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const archRotationRef = useRef(0);
+  const [activeSlide, setActiveSlide] = useState(0);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -288,118 +269,111 @@ export function CreativeMindsSection() {
       const cards = cardRefs.current.filter(Boolean) as HTMLDivElement[];
       if (cards.length < 2) return;
 
-      // 8 total cards, with 2 extra scroll steps allocated for arch-carousel spinning
-      // Total units = 9 (0 to 9)
-      const totalUnits = 9;
-      const scrollDistance = totalUnits * 620;
+      // 6 poster transitions + 2 scroll steps for 3D Arch Carousel rotation = 8 scroll steps
+      const numPosters = SLIDES.length - 1; // 6
+      const totalSteps = numPosters + 2; // 8 steps total (0..7)
+      const scrollDistance = totalSteps * 650;
 
+      // Master ScrollTrigger pinned timeline
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
           start: "top top",
           end: `+=${scrollDistance}`,
           pin: true,
-          scrub: 0.3, // Butter-smooth Lenis-synced fluid scrub
+          scrub: 0.15,
           snap: {
-            snapTo: (progress) => Math.round(progress * totalUnits) / totalUnits,
-            duration: { min: 0.25, max: 0.5 },
-            delay: 0, // Instant responsive snap
-            ease: "power2.out", // Clean, zero-overshoot dead-center lock
+            snapTo: (progress, self) => {
+              const stepFraction = 1 / totalSteps;
+              const rawStep = progress * totalSteps;
+              const velocity = self ? self.getVelocity() : 0;
+              const absVelocity = Math.abs(velocity);
+
+              let targetStep = Math.round(rawStep);
+
+              // Velocity-based slide skipping on posters:
+              if (rawStep < numPosters) {
+                if (absVelocity > 2400) {
+                  const dir = velocity > 0 ? 3 : -3;
+                  targetStep = Math.round(rawStep + dir);
+                } else if (absVelocity > 1200) {
+                  const dir = velocity > 0 ? 2 : -2;
+                  targetStep = Math.round(rawStep + dir);
+                } else if (absVelocity > 500) {
+                  const dir = velocity > 0 ? 1 : -1;
+                  targetStep = Math.round(rawStep + dir);
+                }
+              }
+
+              // Clamp target step between 0 and totalSteps
+              targetStep = Math.max(0, Math.min(totalSteps, targetStep));
+              return targetStep * stepFraction;
+            },
+            duration: { min: 0.18, max: 0.38 },
+            delay: 0.01,
+            ease: "power2.out",
+          },
+          onUpdate: (self) => {
+            const rawStep = Math.round(self.progress * totalSteps);
+            const currentIdx = Math.min(SLIDES.length - 1, rawStep);
+            setActiveSlide(currentIdx);
           },
         },
       });
 
-      // 1. Slides 0 to 5 (poster-1 through poster-7 -> arch-carousel)
-      // Brand-new ultra-smooth editorial slide transition with subtle depth & rotation
-      for (let i = 0; i < 6; i++) {
+      // 1. Build transitions between poster slides (0 to 5) and into Arch Carousel (5 to 6)
+      const stepDuration = 1.0;
+      const animDuration = 0.35; // 35% transition motion, 65% frozen center plateau!
+
+      for (let i = 0; i < numPosters; i++) {
         const currentCard = cards[i];
         const nextCard = cards[i + 1];
-        const startTime = i * 1.0;
+        const startTime = i * stepDuration;
 
-        // Current card exits: slides left to -100%, scales down to 0.92, rotates -1.5deg
+        // Current card slides OUT left to -100%
         tl.to(
           currentCard,
           {
             xPercent: -100,
-            scale: 0.92,
-            rotate: -1.5,
+            scale: 0.94,
             opacity: 0,
             ease: "power2.inOut",
-            duration: 1.0,
+            duration: animDuration,
           },
           startTime
         );
 
-        // Next card enters: slides in from +100%, scales from 1.06 to 1.0, rotates 1.5deg -> 0deg dead-center
+        // Next card slides IN from +100% directly to 0% (DEAD CENTER)
         tl.fromTo(
           nextCard,
           {
             xPercent: 100,
-            scale: 1.06,
-            rotate: 1.5,
+            scale: 0.94,
             opacity: 0,
           },
           {
             xPercent: 0,
             scale: 1,
-            rotate: 0,
             opacity: 1,
             ease: "power2.out",
-            duration: 1.0,
+            duration: animDuration,
           },
           startTime
         );
       }
 
-      // 2. Fast AI Cards Spinning Phase during 2 scroll steps (t = 6.0 to t = 8.0)
-      const rotationProxy = { angle: 0 };
+      // 2. Extra 2-scroll hold plateau for Arch Carousel (slide index 6)
+      // Keeps Arch Carousel (cards[6]) centered for 2 full scroll steps so cards spin fast on scroll!
+      const archStartTime = numPosters * stepDuration;
       tl.to(
-        rotationProxy,
-        {
-          angle: 720, // 2 full 360-degree fast rotations as user scrolls
-          ease: "none",
-          duration: 2.0,
-          onUpdate: () => {
-            archRotationRef.current = rotationProxy.angle;
-          },
-        },
-        6.0
-      );
-
-      // 3. Slide 6 (arch-carousel) -> Slide 7 (poster-8: Ideas Are Shaped...)
-      const archCard = cards[6];
-      const poster8Card = cards[7];
-
-      tl.to(
-        archCard,
-        {
-          xPercent: -100,
-          scale: 0.92,
-          rotate: -1.5,
-          opacity: 0,
-          ease: "power2.inOut",
-          duration: 1.0,
-        },
-        8.0
-      );
-
-      tl.fromTo(
-        poster8Card,
-        {
-          xPercent: 100,
-          scale: 1.06,
-          rotate: 1.5,
-          opacity: 0,
-        },
+        cards[numPosters],
         {
           xPercent: 0,
           scale: 1,
-          rotate: 0,
           opacity: 1,
-          ease: "power2.out",
-          duration: 1.0,
+          duration: 2.0, // Holds for 2 full scroll steps!
         },
-        8.0
+        archStartTime
       );
     }, sectionRef);
 
@@ -410,7 +384,7 @@ export function CreativeMindsSection() {
     <section
       id="creative-minds"
       ref={sectionRef}
-      className="relative w-full h-screen bg-[#FFFFFF] text-black overflow-hidden select-none pointer-events-none"
+      className="relative w-full h-screen bg-[#FFFFFF] text-black overflow-hidden select-none"
     >
       {/* 100% Pure White (#FFFFFF) Canvas Stage */}
       <div className="relative z-10 w-full h-full flex items-center justify-center bg-[#FFFFFF]">
@@ -425,7 +399,7 @@ export function CreativeMindsSection() {
             }`}
           >
             {slide.type === "arch-carousel" ? (
-              <ArchCarouselComponent scrollRotationRef={archRotationRef} />
+              <ArchCarouselComponent />
             ) : (
               <div className="relative w-full max-w-xl sm:max-w-2xl lg:max-w-3xl h-full flex items-center justify-center px-4 bg-[#FFFFFF]">
                 <img
@@ -438,7 +412,20 @@ export function CreativeMindsSection() {
           </div>
         ))}
       </div>
+
+      {/* Bottom Carousel Navigation Dots Indicator */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2 px-4 py-2 rounded-full bg-black/5 backdrop-blur-md border border-black/10">
+        {SLIDES.map((_, idx) => (
+          <div
+            key={idx}
+            className={`h-1.5 rounded-full transition-all duration-300 ${
+              activeSlide === idx
+                ? "w-6 bg-black shadow-sm"
+                : "w-1.5 bg-black/20"
+            }`}
+          />
+        ))}
+      </div>
     </section>
   );
 }
-

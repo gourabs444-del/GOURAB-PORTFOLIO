@@ -6,6 +6,7 @@ import { ScrollTrigger } from "@/lib/gsap";
 import { ArrowUpRight, ArrowUp, Github, Linkedin, Twitter, Instagram, Mail } from "lucide-react";
 import { useAudioFeedback } from "@/hooks/useAudioFeedback";
 import { VerticalCardsGridBackground } from "@/components/ambient/VerticalCardsGridBackground";
+import { GourabSignatureSvg } from "@/components/ui/GourabSignatureSvg";
 
 export function IdeasIntoImpact() {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -2317,11 +2318,7 @@ export function IdeasIntoImpact() {
                 {/* Handwritten Signature */}
                 <div className="flex flex-col items-start gap-0.5">
                   <div className="h-7 sm:h-9 flex items-center">
-                    <img
-                      src="/assets/gourab-signature.png"
-                      alt="Gourab Signature"
-                      className="h-full w-auto object-contain pointer-events-none select-none filter contrast-125"
-                    />
+                    <GourabSignatureSvg className="h-full w-auto text-[#090714]" />
                   </div>
                   <span className="font-mono text-[8px] sm:text-[9px] font-bold tracking-[0.12em] text-[#090714]/75 uppercase">
                     Gourab S. &mdash; Lead Engineer &amp; Designer

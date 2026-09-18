@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
-import { Headphones, Film, Gamepad2, Video, Globe } from "lucide-react";
+import { Music, Gamepad2, Film, Clapperboard, Compass } from "lucide-react";
 
 export function AboutManifesto() {
   const containerRef = useRef<HTMLElement | null>(null);
@@ -60,32 +60,12 @@ export function AboutManifesto() {
     return () => ctx.revert();
   }, []);
 
-  const CREATIVE_DISCIPLINES = [
-    {
-      icon: Headphones,
-      title: "Audio & Sound",
-      desc: "Composition & Acoustics",
-    },
-    {
-      icon: Film,
-      title: "Cinematography",
-      desc: "Visual & Narrative Direction",
-    },
-    {
-      icon: Gamepad2,
-      title: "Interactive Engine",
-      desc: "3D & Real-Time Graphics",
-    },
-    {
-      icon: Video,
-      title: "Motion Direction",
-      desc: "Cinematic Film Production",
-    },
-    {
-      icon: Globe,
-      title: "Global Research",
-      desc: "Spatial & Cultural Insights",
-    },
+  const PERSONAL_INTERESTS = [
+    { icon: Music, label: "Music" },
+    { icon: Gamepad2, label: "Games" },
+    { icon: Film, label: "Movies" },
+    { icon: Clapperboard, label: "Filmmaking" },
+    { icon: Compass, label: "Travelling" },
   ];
 
   return (
@@ -226,31 +206,27 @@ export function AboutManifesto() {
           </div>
         </div>
 
-        {/* SECTION 3: CREATIVE DISCIPLINES & INFLUENCES */}
+        {/* SECTION 3: PASSIONS & CREATIVE INFLUENCES */}
         <div className="fade-trigger pt-12 sm:pt-16 border-t border-white/10 flex flex-col items-center justify-center text-center">
-          <div className="inline-flex items-center gap-2.5 text-xs font-mono font-bold tracking-[0.25em] text-neutral-400 uppercase mb-8">
-            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_#38bdf8] animate-pulse" />
-            <span>CREATIVE DISCIPLINES &amp; INFLUENCES</span>
+          <div className="inline-flex items-center gap-2.5 text-xs font-mono font-bold tracking-[0.25em] text-neutral-400 uppercase mb-8 sm:mb-10">
+            <span className="w-1.5 h-1.5 rounded-full bg-white/70 shadow-[0_0_8px_rgba(255,255,255,0.6)] animate-pulse" />
+            <span>PASSIONS &amp; CREATIVE INFLUENCES</span>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 sm:gap-8 w-full max-w-4xl mx-auto">
-            {CREATIVE_DISCIPLINES.map((item, idx) => {
+          <div className="flex items-center justify-center gap-8 sm:gap-12 md:gap-16 flex-wrap">
+            {PERSONAL_INTERESTS.map((item, idx) => {
               const Icon = item.icon;
               return (
                 <div
                   key={idx}
-                  className="group flex flex-col items-center text-center cursor-pointer transition-transform duration-300 hover:-translate-y-1"
+                  className="group flex flex-col items-center text-center gap-2.5 cursor-pointer transition-transform duration-300 hover:-translate-y-1"
                 >
-                  <div className="mb-2.5 sm:mb-3 text-white/70 group-hover:text-white group-hover:scale-110 transition-all duration-300">
-                    <Icon className="w-6 h-6 stroke-[1.75]" />
+                  <div className="text-white/70 group-hover:text-white group-hover:scale-110 transition-all duration-300">
+                    <Icon className="w-6 h-6 sm:w-7 sm:h-7 stroke-[1.6]" />
                   </div>
 
-                  <span className="font-sans font-bold text-xs sm:text-sm text-white tracking-tight uppercase mb-1 group-hover:text-cyan-300 transition-colors">
-                    {item.title}
-                  </span>
-
-                  <span className="font-mono text-[9px] sm:text-[10px] text-neutral-400 font-normal tracking-wide">
-                    {item.desc}
+                  <span className="font-sans font-medium text-xs sm:text-sm text-neutral-300 group-hover:text-white tracking-wide transition-colors">
+                    {item.label}
                   </span>
                 </div>
               );
