@@ -162,42 +162,48 @@ export function BrandIntegrationSection() {
         3.0
       );
 
-      // Continuous Zoom-Through Camera Transition into Product (3.6 -> 4.1)
+      // Continuous Zoom-Through Camera Transition:
+      // Subtitle blurs away, and the main white text zooms forward dramatically into the lens.
+      // As the white letters expand across the entire screen, the white canvas blooms to full opacity,
+      // transitioning the stage seamlessly into a luxury white world for the next scene!
       tl.to(
-        [".act-04-text", ".act-04-sub"],
-        { scale: isMobile ? 3 : 5.5, opacity: 0, filter: "blur(18px)", duration: 0.5, ease: "power2.in" },
-        3.6
+        ".act-04-sub",
+        { opacity: 0, scale: 1.8, filter: "blur(12px)", duration: 0.35, ease: "power2.in" },
+        3.4
       );
-      tl.to(".act-04", { opacity: 0, duration: 0.3 }, 3.85);
+      tl.to(
+        ".act-04-text",
+        {
+          scale: isMobile ? 30 : 55,
+          filter: "blur(3px) drop-shadow(0 0 50px rgba(255,255,255,0.9))",
+          duration: 0.55,
+          ease: "power3.in",
+        },
+        3.45
+      );
+      tl.to(
+        ".act-white-canvas",
+        { opacity: 1, duration: 0.45, ease: "power2.inOut" },
+        3.65
+      );
+      tl.to(".act-04-text", { opacity: 0, duration: 0.15 }, 3.9);
+      tl.to(".act-04", { opacity: 0, duration: 0.2 }, 3.9);
 
       // =======================================================================
-      // 05 — PRODUCT REVEAL (Time: 3.8 -> 5.0, Exits 4.7 -> 5.1)
+      // 05 — PRODUCT REVEAL ON WHITE BACKGROUND (Time: 3.85 -> 5.0, Exits 4.7 -> 5.1)
       // =======================================================================
-      tl.to(".act-05", { opacity: 1, pointerEvents: "auto", duration: 0.3 }, 3.8);
+      tl.to(".act-05", { opacity: 1, pointerEvents: "auto", duration: 0.35 }, 3.85);
 
       tl.fromTo(
-        ".product-layer-bg",
-        { opacity: 0, y: 60, scale: 0.88 },
-        { opacity: 0.5, y: 0, scale: 1, duration: 0.4, ease: "power2.out" },
-        3.9
-      );
-
-      tl.fromTo(
-        ".product-frame",
-        { opacity: 0, y: 45, scale: 0.92 },
+        ".product-layer-fg",
+        { opacity: 0, y: 35, scale: 0.95 },
         { opacity: 1, y: 0, scale: 1, duration: 0.45, ease: "power3.out" },
         4.0
       );
 
-      tl.fromTo(
-        ".product-layer-fg",
-        { opacity: 0, y: 25, scale: 0.95 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.35, ease: "power3.out" },
-        4.15
-      );
-
-      // Morphing Exit into Act 06 (4.7 -> 5.1)
-      tl.to(".act-05", { opacity: 0, scale: 0.93, y: -30, pointerEvents: "none", duration: 0.4, ease: "power2.inOut" }, 4.7);
+      // Morphing Exit into Act 06 (4.7 -> 5.1): White canvas gently returns to dark for Act 06
+      tl.to(".act-05", { opacity: 0, scale: 0.94, y: -30, pointerEvents: "none", duration: 0.4, ease: "power2.inOut" }, 4.7);
+      tl.to(".act-white-canvas", { opacity: 0, duration: 0.45, ease: "power2.inOut" }, 4.75);
 
       // =======================================================================
       // 06 — EXPERIENCE (Time: 4.8 -> 6.0, Exits 5.7 -> 6.1)
@@ -326,10 +332,13 @@ export function BrandIntegrationSection() {
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] pointer-events-none" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[520px] bg-[radial-gradient(ellipse_at_center,_rgba(245,158,11,0.08)_0%,_rgba(56,189,248,0.05)_45%,_transparent_75%)] rounded-full blur-[130px] pointer-events-none" />
 
+        {/* Cinematic White Canvas Layer (Revealed when Act 04 white text zooms into camera) */}
+        <div className="act-white-canvas absolute inset-0 w-full h-full bg-[#FAF7F2] bg-gradient-to-br from-[#FFFFFF] via-[#FAF6F0] to-[#F4ECE1] opacity-0 pointer-events-none z-[5] will-change-transform" />
+
         {/* ========================================================= */}
         {/* ACT 01 — THE INTERRUPTION                                 */}
         {/* ========================================================= */}
-        <div className="act-01 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6 transition-transform">
+        <div className="act-01 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6 transition-transform z-10">
           <p className="act-01-text font-display font-medium text-2xl sm:text-4xl md:text-5xl lg:text-6xl text-white/90 tracking-tight leading-snug max-w-4xl">
             AN IDEA IS ONLY THE{" "}
             <span className="act-01-emph font-display font-extrabold bg-gradient-to-r from-amber-200 via-amber-400 to-amber-500 bg-clip-text text-transparent inline-block drop-shadow-[0_0_30px_rgba(245,158,11,0.4)]">
@@ -341,7 +350,7 @@ export function BrandIntegrationSection() {
         {/* ========================================================= */}
         {/* ACT 02 & 03 — BRAND REVEAL & LOGO DRAW                    */}
         {/* ========================================================= */}
-        <div className="act-02 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6 transition-transform">
+        <div className="act-02 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6 transition-transform z-10">
           {/* SVG Vector Logo Drawing & Lift-Up Container */}
           <div className="logo-svg-wrapper w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 flex items-center justify-center transition-transform">
             <svg viewBox="315 85 394 450" className="w-full h-full text-white overflow-visible">
@@ -380,62 +389,62 @@ export function BrandIntegrationSection() {
         </div>
 
         {/* ========================================================= */}
-        {/* ACT 04 — WHY                                              */}
+        {/* ACT 04 — WHY (ZOOMS WHITE TEXT INTO CAMERA TO BLOOM WHITE) */}
         {/* ========================================================= */}
-        <div className="act-04 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6 overflow-hidden transition-transform">
-          <div className="relative max-w-4xl">
+        <div className="act-04 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6 overflow-hidden transition-transform z-20">
+          <div className="relative max-w-4xl flex flex-col items-center justify-center">
             <div className="act-04-light absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-amber-400/20 to-transparent blur-xl pointer-events-none" />
-            <h3 className="act-04-text font-display font-black text-3xl sm:text-5xl md:text-6xl text-white tracking-tight leading-tight uppercase mb-4">
+            <h3 className="act-04-text font-display font-black text-3xl sm:text-5xl md:text-6xl text-white tracking-tight leading-tight uppercase mb-4 origin-center will-change-transform">
               BUILT FOR INTENTIONAL DIGITAL ENGINEERING.
             </h3>
-            <p className="act-04-sub font-sans text-sm sm:text-base md:text-lg text-neutral-400 max-w-2xl mx-auto font-light leading-relaxed">
+            <p className="act-04-sub font-sans text-sm sm:text-base md:text-lg text-neutral-400 max-w-2xl mx-auto font-light leading-relaxed origin-center will-change-transform">
               A simpler, highly disciplined way to architect, design, and deploy next-generation web applications.
             </p>
           </div>
         </div>
 
         {/* ========================================================= */}
-        {/* ACT 05 — PRODUCT REVEAL (COOL TYPOGRAPHY + SLEEK CARDS)   */}
+        {/* ACT 05 — PRODUCT REVEAL (LUXURY WHITE CANVAS HUD)         */}
         {/* ========================================================= */}
-        <div className="act-05 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6 transition-transform">
+        <div className="act-05 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6 transition-transform z-10">
           <div className="relative w-full max-w-5xl mx-auto flex flex-col items-center">
             
-            {/* Ambient Multi-Color Radial Aura (No Outer Box) */}
-            <div className="pointer-events-none absolute -top-32 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[radial-gradient(ellipse_at_center,_rgba(56,189,248,0.12)_0%,_rgba(232,121,249,0.1)_45%,_transparent_75%)] rounded-full blur-[100px]" />
+            {/* Ambient Multi-Color Radial Aura tuned for White Canvas */}
+            <div className="pointer-events-none absolute -top-32 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[radial-gradient(ellipse_at_center,_rgba(56,189,248,0.15)_0%,_rgba(232,121,249,0.12)_45%,_transparent_75%)] rounded-full blur-[100px]" />
 
-            {/* 1. Cool Kinetic Typography Headline */}
+            {/* 1. Cool Kinetic Typography Headline on White Background */}
             <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-10 sm:mb-14">
-              <span className="font-mono text-xs font-extrabold tracking-[0.3em] text-cyan-400 uppercase mb-3 flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+              <span className="font-mono text-xs font-extrabold tracking-[0.3em] text-[#090714] bg-black/[0.05] border border-black/10 px-3.5 py-1 rounded-full uppercase mb-3 flex items-center gap-2 shadow-xs">
+                <span className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse" />
                 ALGORA ENGINE // SYSTEM ARCHITECTURE
               </span>
               
-              <h3 className="font-display font-black text-3xl sm:text-5xl md:text-6xl text-white tracking-tight leading-tight uppercase mb-4">
+              <h3 className="font-display font-black text-3xl sm:text-5xl md:text-6xl text-[#090714] tracking-tight leading-tight uppercase mb-4">
                 ENGINEERED WITH{" "}
-                <span className="font-bodoni italic font-normal bg-gradient-to-r from-cyan-200 via-fuchsia-300 to-amber-300 bg-clip-text text-transparent inline-block pr-2">
+                <span className="font-bodoni italic font-normal bg-gradient-to-r from-cyan-600 via-fuchsia-600 to-amber-600 bg-clip-text text-transparent inline-block pr-2">
                   Precision &amp; Intelligence.
                 </span>
               </h3>
 
-              <p className="font-sans text-sm sm:text-base text-neutral-400 font-light max-w-xl leading-relaxed">
+              <p className="font-sans text-sm sm:text-base text-neutral-600 font-normal max-w-xl leading-relaxed">
                 Three specialized spatial nodes powering real-time WebGL rendering, neural design matrices, and zero-latency global edge deployment.
               </p>
             </div>
 
-            {/* 2. 3 Sleek Modern Visual Graphic Cards */}
+            {/* 2. 3 Sleek Modern Visual Graphic Cards on Luxury White Surface */}
             <div className="product-layer-fg w-full grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
               
               {/* Card 1: Architecture Engine */}
               <button
                 type="button"
                 onClick={() => handleSimulateClick("build")}
-                className={`group relative rounded-2xl transition-all duration-300 text-left cursor-pointer overflow-hidden border ${
+                className={`group relative rounded-2xl transition-all duration-300 text-left cursor-pointer overflow-hidden border bg-white/80 backdrop-blur-md ${
                   activeTab === "build"
-                    ? "border-cyan-400/60 shadow-[0_15px_40px_rgba(56,189,248,0.3)] scale-[1.03] ring-1 ring-cyan-400/40"
-                    : "border-white/10 hover:border-white/30 hover:scale-[1.01]"
+                    ? "border-cyan-500/70 shadow-[0_20px_45px_rgba(56,189,248,0.28)] scale-[1.03] ring-2 ring-cyan-400/40"
+                    : "border-black/10 hover:border-black/25 shadow-[0_12px_35px_rgba(0,0,0,0.06)] hover:scale-[1.01]"
                 }`}
               >
-                <div className="relative aspect-[16/10] w-full overflow-hidden bg-black/40">
+                <div className="relative aspect-[16/10] w-full overflow-hidden bg-black/5">
                   <img
                     src="/assets/card-architecture-engine.jpg"
                     alt="Architecture Engine"
@@ -444,7 +453,7 @@ export function BrandIntegrationSection() {
                 </div>
 
                 {activeTab === "build" && (
-                  <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent shadow-[0_0_15px_#38bdf8]" />
+                  <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-cyan-500 to-transparent shadow-[0_0_15px_#38bdf8]" />
                 )}
               </button>
 
@@ -452,13 +461,13 @@ export function BrandIntegrationSection() {
               <button
                 type="button"
                 onClick={() => handleSimulateClick("ai")}
-                className={`group relative rounded-2xl transition-all duration-300 text-left cursor-pointer overflow-hidden border ${
+                className={`group relative rounded-2xl transition-all duration-300 text-left cursor-pointer overflow-hidden border bg-white/80 backdrop-blur-md ${
                   activeTab === "ai"
-                    ? "border-fuchsia-400/60 shadow-[0_15px_40px_rgba(232,121,249,0.3)] scale-[1.03] ring-1 ring-fuchsia-400/40"
-                    : "border-white/10 hover:border-white/30 hover:scale-[1.01]"
+                    ? "border-fuchsia-500/70 shadow-[0_20px_45px_rgba(232,121,249,0.28)] scale-[1.03] ring-2 ring-fuchsia-400/40"
+                    : "border-black/10 hover:border-black/25 shadow-[0_12px_35px_rgba(0,0,0,0.06)] hover:scale-[1.01]"
                 }`}
               >
-                <div className="relative aspect-[16/10] w-full overflow-hidden bg-black/40">
+                <div className="relative aspect-[16/10] w-full overflow-hidden bg-black/5">
                   <img
                     src="/assets/card-neural-matrix.png"
                     alt="Neural Design Matrix"
@@ -467,7 +476,7 @@ export function BrandIntegrationSection() {
                 </div>
 
                 {activeTab === "ai" && (
-                  <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-fuchsia-400 to-transparent shadow-[0_0_15px_#e879f9]" />
+                  <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-fuchsia-500 to-transparent shadow-[0_0_15px_#e879f9]" />
                 )}
               </button>
 
@@ -475,13 +484,13 @@ export function BrandIntegrationSection() {
               <button
                 type="button"
                 onClick={() => handleSimulateClick("deploy")}
-                className={`group relative rounded-2xl transition-all duration-300 text-left cursor-pointer overflow-hidden border ${
+                className={`group relative rounded-2xl transition-all duration-300 text-left cursor-pointer overflow-hidden border bg-white/80 backdrop-blur-md ${
                   activeTab === "deploy"
-                    ? "border-amber-400/60 shadow-[0_15px_40px_rgba(245,158,11,0.3)] scale-[1.03] ring-1 ring-amber-400/40"
-                    : "border-white/10 hover:border-white/30 hover:scale-[1.01]"
+                    ? "border-amber-500/70 shadow-[0_20px_45px_rgba(245,158,11,0.28)] scale-[1.03] ring-2 ring-amber-400/40"
+                    : "border-black/10 hover:border-black/25 shadow-[0_12px_35px_rgba(0,0,0,0.06)] hover:scale-[1.01]"
                 }`}
               >
-                <div className="relative aspect-[16/10] w-full overflow-hidden bg-black/40">
+                <div className="relative aspect-[16/10] w-full overflow-hidden bg-black/5">
                   <img
                     src="/assets/card-edge-deployment.jpg"
                     alt="Edge Deployment"
@@ -490,7 +499,7 @@ export function BrandIntegrationSection() {
                 </div>
 
                 {activeTab === "deploy" && (
-                  <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-amber-400 to-transparent shadow-[0_0_15px_#f59e0b]" />
+                  <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-amber-500 to-transparent shadow-[0_0_15px_#f59e0b]" />
                 )}
               </button>
 

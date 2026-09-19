@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "@/lib/gsap";
 import { ArrowRight } from "lucide-react";
@@ -259,7 +259,6 @@ function ArchCarouselComponent() {
 export function CreativeMindsSection() {
   const sectionRef = useRef<HTMLElement | null>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const [activeSlide, setActiveSlide] = useState(0);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -269,93 +268,45 @@ export function CreativeMindsSection() {
       const cards = cardRefs.current.filter(Boolean) as HTMLDivElement[];
       if (cards.length < 2) return;
 
-      // 6 poster transitions + 2 scroll steps for 3D Arch Carousel rotation = 8 scroll steps
-      const numPosters = SLIDES.length - 1; // 6
-      const totalSteps = numPosters + 2; // 8 steps total (0..7)
+      const numPosters = SLIDES.length - 1; // 6 poster images
+      const totalSteps = numPosters + 2; // 6 poster steps + 2 hold steps for 3D Arch Carousel = 8 steps
       const scrollDistance = totalSteps * 650;
 
-      // Master ScrollTrigger pinned timeline
+      // Clean hardware-accelerated initial states
+      cards.forEach((card, idx) => {
+        if (idx === 0) {
+          gsap.set(card, { xPercent: 0, opacity: 1, scale: 1, zIndex: 10 });
+        } else {
+          gsap.set(card, { xPercent: 100, opacity: 0, scale: 0.95, zIndex: 1 });
+        }
+      });
+
+      // Master ScrollTrigger Timeline with Ultra-Premium Liquid Scrub
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
           start: "top top",
           end: `+=${scrollDistance}`,
           pin: true,
-          scrub: 0.15,
-          snap: {
-            snapTo: (progress, self) => {
-              const stepFraction = 1 / totalSteps;
-              const rawStep = progress * totalSteps;
-              const velocity = self ? self.getVelocity() : 0;
-              const absVelocity = Math.abs(velocity);
-
-              let targetStep = Math.round(rawStep);
-
-              // Velocity-based slide skipping on posters:
-              if (rawStep < numPosters) {
-                if (absVelocity > 2400) {
-                  const dir = velocity > 0 ? 3 : -3;
-                  targetStep = Math.round(rawStep + dir);
-                } else if (absVelocity > 1200) {
-                  const dir = velocity > 0 ? 2 : -2;
-                  targetStep = Math.round(rawStep + dir);
-                } else if (absVelocity > 500) {
-                  const dir = velocity > 0 ? 1 : -1;
-                  targetStep = Math.round(rawStep + dir);
-                }
-              }
-
-              // Clamp target step between 0 and totalSteps
-              targetStep = Math.max(0, Math.min(totalSteps, targetStep));
-              return targetStep * stepFraction;
-            },
-            duration: { min: 0.18, max: 0.38 },
-            delay: 0.01,
-            ease: "power2.out",
-          },
-          onUpdate: (self) => {
-            const rawStep = Math.round(self.progress * totalSteps);
-            const currentIdx = Math.min(SLIDES.length - 1, rawStep);
-            setActiveSlide(currentIdx);
-          },
+          scrub: 0.7, // Weightless, ultra-smooth Lenis liquid momentum
         },
       });
 
-      // Set initial card states (Center card is full scale & full color; side cards are smaller, desaturated, faded)
-      gsap.set(cards, {
-        transformOrigin: "center center",
-      });
-      gsap.set(cards[0], {
-        xPercent: 0,
-        scale: 1,
-        filter: "grayscale(0%)",
-        opacity: 1,
-      });
-      if (cards.length > 1) {
-        gsap.set(cards.slice(1), {
-          xPercent: 85,
-          scale: 0.82,
-          filter: "grayscale(100%)",
-          opacity: 0,
-        });
-      }
-
-      // 1. Build transitions between poster slides (0 to 5) and into Arch Carousel (5 to 6)
+      // 1. Ultra-Premium Depth & Scale Transitions for Posters
       const stepDuration = 1.0;
-      const animDuration = 0.45; // Smooth cinematic transition motion with stable center hold plateau
+      const animDuration = 0.85; // 85% liquid sweep, 15% subtle center focus
 
       for (let i = 0; i < numPosters; i++) {
         const currentCard = cards[i];
         const nextCard = cards[i + 1];
         const startTime = i * stepDuration;
 
-        // Current card leaves center: shrinks to 0.82, desaturates to grayscale(100%), fades out, slides left
+        // Outgoing poster glides left to -90%, smoothly scaling down to 0.88 & fading out
         tl.to(
           currentCard,
           {
-            xPercent: -85,
-            scale: 0.82,
-            filter: "grayscale(100%)",
+            xPercent: -90,
+            scale: 0.88,
             opacity: 0,
             ease: "power2.inOut",
             duration: animDuration,
@@ -363,20 +314,17 @@ export function CreativeMindsSection() {
           startTime
         );
 
-        // Next card enters from side: starts smaller (0.82), desaturated (grayscale 100%), faded (opacity 0)
-        // Reaches dead center: scales up to 1.0 (middle wala bada), saturates to full color (grayscale 0%), full opacity (1.0)
+        // Incoming poster glides from +90% to 0% (DEAD CENTER), smoothly scaling up from 0.88 to 1.0 & fading in
         tl.fromTo(
           nextCard,
           {
-            xPercent: 85,
-            scale: 0.82,
-            filter: "grayscale(100%)",
+            xPercent: 90,
+            scale: 0.88,
             opacity: 0,
           },
           {
             xPercent: 0,
             scale: 1,
-            filter: "grayscale(0%)",
             opacity: 1,
             ease: "power2.out",
             duration: animDuration,
@@ -385,16 +333,16 @@ export function CreativeMindsSection() {
         );
       }
 
-      // 2. Extra 2-scroll hold plateau for Arch Carousel (slide index 6)
+      // 2. Arch Carousel 2-Scroll Hold Plateau
+      // Slide index 6 (ArchCarouselComponent) stays pinned & centered for 2 scroll steps
       const archStartTime = numPosters * stepDuration;
       tl.to(
         cards[numPosters],
         {
           xPercent: 0,
           scale: 1,
-          filter: "grayscale(0%)",
           opacity: 1,
-          duration: 2.0, // Holds for 2 full scroll steps
+          duration: 2.0, // 2 full scroll steps of rotation
         },
         archStartTime
       );
@@ -417,13 +365,7 @@ export function CreativeMindsSection() {
             ref={(el) => {
               cardRefs.current[index] = el;
             }}
-            className={`absolute inset-0 m-auto w-full h-full flex items-center justify-center will-change-transform transform-gpu z-10 ${
-              index > 0 ? "opacity-0 pointer-events-none" : "opacity-100"
-            }`}
-            style={{
-              filter: index === 0 ? "grayscale(0%)" : "grayscale(100%)",
-              transform: index === 0 ? "scale(1)" : "scale(0.82)",
-            }}
+            className="absolute inset-0 m-auto w-full h-full flex items-center justify-center will-change-transform transform-gpu z-10"
           >
             {slide.type === "arch-carousel" ? (
               <ArchCarouselComponent />
@@ -439,7 +381,6 @@ export function CreativeMindsSection() {
           </div>
         ))}
       </div>
-
     </section>
   );
 }
