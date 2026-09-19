@@ -3,6 +3,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "@/lib/gsap";
+import { ArrowUpRight } from "lucide-react";
 import { useAudioFeedback } from "@/hooks/useAudioFeedback";
 import { RotatingPurpleEarth } from "./RotatingPurpleEarth";
 import { EngineArchitectureGrid } from "./EngineArchitectureGrid";

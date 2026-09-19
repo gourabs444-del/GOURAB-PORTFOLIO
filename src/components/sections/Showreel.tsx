@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "@/lib/gsap";
-import { Play, Pause, Volume2, VolumeX, Maximize2, Film, Sparkles } from "lucide-react";
+import { Play, Pause, Volume2, VolumeX } from "lucide-react";
 import { useAudioFeedback } from "@/hooks/useAudioFeedback";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 

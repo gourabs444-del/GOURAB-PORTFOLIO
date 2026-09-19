@@ -491,10 +491,11 @@ export function ExperienceTimeline() {
 
   return (
     <section
-      id="skills"
+      id="experience"
       ref={sectionRef}
       className="relative w-full py-24 sm:py-32 md:py-36 px-6 sm:px-12 md:px-16 lg:px-24 bg-[#FAF6F0] bg-gradient-to-br from-[#FDFBF7] via-[#FAF6F0] to-[#F3EDE2] text-neutral-900 overflow-hidden select-none"
     >
+      <div id="skills" className="absolute top-0" />
       <div className="max-w-6xl mx-auto flex flex-col gap-16 sm:gap-20 relative z-10">
         {/* ========================================================= */}
         {/* HEADER: CLEAN EDITORIAL SKILLS TITLE                      */}

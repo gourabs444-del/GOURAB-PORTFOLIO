@@ -1806,9 +1806,10 @@ export function IdeasIntoImpact() {
     <div
       ref={containerRef}
       data-pinned-container="true"
-      id="impact-scroll-stage"
+      id="contact"
       className="relative w-full h-[600vh] bg-[#020204] text-white select-none border-t border-white/[0.08]"
     >
+      <div id="impact-scroll-stage" className="absolute top-0" />
       {/* Sticky Fullscreen Pinned Stage */}
       <div
         ref={stageRef}

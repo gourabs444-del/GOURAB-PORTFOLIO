@@ -77,6 +77,7 @@ const fontJetBrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://gourab.dev"),
   title: `${siteConfig.name} — ${siteConfig.title}`,
   description: siteConfig.tagline,
   keywords: [

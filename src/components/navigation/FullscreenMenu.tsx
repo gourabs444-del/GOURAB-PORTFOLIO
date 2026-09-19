@@ -23,9 +23,9 @@ export function FullscreenMenu({ isOpen, onClose, onNavigate }: FullscreenMenuPr
   const navLinks = [
     { number: "01", label: "SELECTED WORK", target: "work", previewImage: projects[0]?.heroImage },
     { number: "02", label: "MANIFESTO", target: "about", previewImage: projects[1]?.heroImage },
-    { number: "03", label: "EXPERTISE", target: "expertise", previewImage: projects[2]?.heroImage },
+    { number: "03", label: "INTEGRATION", target: "brand-integration", previewImage: projects[2]?.heroImage },
     { number: "04", label: "THE PIPELINE", target: "process", previewImage: projects[3]?.heroImage },
-    { number: "05", label: "JOURNEY", target: "experience", previewImage: projects[0]?.secondaryImage },
+    { number: "05", label: "SKILLS & MATRIX", target: "skills", previewImage: projects[0]?.secondaryImage },
     { number: "06", label: "INITIATE CONTACT", target: "contact", previewImage: projects[1]?.secondaryImage },
   ];
 
