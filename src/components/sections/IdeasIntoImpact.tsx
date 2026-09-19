@@ -2348,7 +2348,7 @@ export function IdeasIntoImpact() {
                     <GourabSignatureSvg className="h-full w-auto text-[#090714]" />
                   </div>
                   <span className="font-mono text-[8px] sm:text-[9px] font-bold tracking-[0.12em] text-[#090714]/75 uppercase">
-                    Gourab S. &mdash; Lead Engineer &amp; Designer
+                    Gourab Maji &mdash; Lead Engineer &amp; Designer
                   </span>
                 </div>
 

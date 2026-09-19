@@ -26,11 +26,10 @@ export function Header() {
             onClick={() => scrollToSection("hero")}
             onMouseEnter={() => playHover()}
             data-cursor="pointer"
-            className="flex items-center gap-1 text-left group cursor-pointer"
+            className="flex items-center text-left group cursor-pointer"
           >
-            <span className="w-2.5 h-2.5 rounded-full bg-amber-400 group-hover:scale-125 transition-transform" />
             <span className="font-display font-extrabold text-2xl tracking-tighter text-white">
-              Gourab<span className="text-amber-400">.</span>
+              Gourab
             </span>
           </button>
         </div>

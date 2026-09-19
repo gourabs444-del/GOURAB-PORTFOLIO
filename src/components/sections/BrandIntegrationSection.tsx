@@ -825,31 +825,26 @@ export function BrandIntegrationSection() {
         <div className="act-why-us absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6 transition-transform z-10 pointer-events-none">
           <div className="why-us-content flex flex-col items-center max-w-4xl select-none">
             {/* Clean White Title */}
-            <h2 className="why-us-title font-sans font-bold text-3xl sm:text-4xl md:text-5xl text-white tracking-tight leading-tight mb-4">
+            <h2 className="why-us-title font-sans font-bold text-3xl sm:text-4xl md:text-5xl text-white tracking-tight leading-tight">
               Why Choose Us?
             </h2>
-
-            {/* Clean Micro Subtext Description */}
-            <p className="why-us-sub font-sans text-xs sm:text-sm text-neutral-400 font-normal leading-relaxed max-w-xl px-4">
-              In a crowded market overflowing with generic templates and unverified code, why do ambitious founders and visionary teams choose Algora to build their most critical digital systems?
-            </p>
           </div>
         </div>
 
         {/* ========================================================= */}
         {/* ACT WHY CHOOSE — DIGITAL EXPLANATION // CLEAN & SECURE    */}
         {/* ========================================================= */}
-        <div className="act-why-choose absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-4 sm:px-6 transition-transform z-10 pointer-events-auto">
+        <div className="act-why-choose absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-2.5 sm:px-6 transition-transform z-10 pointer-events-auto overflow-y-auto lg:overflow-visible py-3 sm:py-0">
           {/* Header */}
-          <div className="why-choose-header flex flex-col items-center mb-5 sm:mb-7 relative z-20 select-none">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.04] border border-white/10 text-neutral-400 font-mono text-[10px] tracking-[0.25em] uppercase mb-2.5 shadow-[0_0_20px_rgba(255,255,255,0.03)] backdrop-blur-md">
+          <div className="why-choose-header flex flex-col items-center mb-2.5 sm:mb-5 lg:mb-7 relative z-20 select-none">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 sm:px-3.5 sm:py-1 rounded-full bg-white/[0.04] border border-white/10 text-neutral-400 font-mono text-[8.5px] sm:text-[10px] tracking-[0.2em] sm:tracking-[0.25em] uppercase mb-1 sm:mb-2.5 shadow-[0_0_20px_rgba(255,255,255,0.03)] backdrop-blur-md">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#10b981]" />
               <span>THE ALGORA DIFFERENCE // 06 PILLARS</span>
             </div>
-            <h3 className="font-sans font-extrabold text-2xl sm:text-3xl md:text-4xl text-white tracking-tight uppercase">
+            <h3 className="font-sans font-extrabold text-base sm:text-2xl md:text-3xl lg:text-4xl text-white tracking-tight uppercase">
               WHY ENTRUST YOUR PROJECT TO US
             </h3>
-            <p className="font-sans text-xs sm:text-sm text-neutral-400 mt-1 max-w-xl">
+            <p className="font-sans text-[10px] sm:text-xs md:text-sm text-neutral-400 mt-0.5 sm:mt-1 max-w-xl">
               Digitally engineered with clean architecture, enterprise-grade security, and deterministic on-time delivery.
             </p>
           </div>

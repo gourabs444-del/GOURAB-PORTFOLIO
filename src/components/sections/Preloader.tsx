@@ -153,7 +153,7 @@ export function Preloader({ onComplete }: PreloaderProps) {
           ref={introNameRef}
           className="font-display font-extrabold text-5xl xs:text-6xl sm:text-7xl md:text-8xl lg:text-9xl tracking-tight text-white leading-none my-1 select-none drop-shadow-[0_4px_30px_rgba(0,0,0,0.8)]"
         >
-          Gourab<span className="text-amber-400 inline-block animate-bounce">.</span>
+          Gourab
         </h1>
 
         {/* Subtitle / Role Tagline */}
