@@ -72,22 +72,22 @@ export function BrandIntegrationSection() {
       // =======================================================================
       tl.to(".act-01", { opacity: 1, duration: 0.2 }, 0.0);
 
-      // Text enters spaced out ("abhi itne dur rhne do")
+      // Text enters on a single line spaced out ("abhi itne dur rhne do")
       tl.fromTo(
         ".act-01-text",
-        { opacity: 0, filter: "blur(14px)", y: 35, letterSpacing: "0.14em", wordSpacing: "0.28em" },
+        { opacity: 0, filter: "blur(14px)", y: 35, letterSpacing: "0.1em", wordSpacing: "0.2em" },
         { opacity: 1, filter: "blur(0px)", y: 0, duration: 0.35, ease: "power2.out" },
         0.05
       );
 
       tl.fromTo(
         ".act-01-emph",
-        { opacity: 0.7, scale: 0.96, letterSpacing: "0.14em" },
+        { opacity: 0.7, scale: 0.96, letterSpacing: "0.1em" },
         { opacity: 1, scale: 1.02, duration: 0.35, ease: "power1.out" },
         0.05
       );
 
-      // Kinetic inward compression: letters & words pull together ("animte krke nazdik ajayega")
+      // Kinetic inward compression: letters & words pull together on 1 single line ("animte krke nazdik ajayega")
       tl.to(
         [".act-01-text", ".act-01-emph"],
         {
@@ -101,7 +101,7 @@ export function BrandIntegrationSection() {
       tl.to(
         ".act-01-text",
         {
-          wordSpacing: "0.06em",
+          wordSpacing: "0.05em",
           duration: 0.45,
           ease: "power2.inOut",
         },
@@ -109,9 +109,9 @@ export function BrandIntegrationSection() {
       );
 
       tl.to(
-        ".act-01-emph",
+        ".act-01-gap",
         {
-          marginLeft: "0.35rem",
+          width: "0.55rem",
           duration: 0.45,
           ease: "power2.inOut",
         },
@@ -370,10 +370,11 @@ export function BrandIntegrationSection() {
         {/* ========================================================= */}
         {/* ACT 01 — THE INTERRUPTION                                 */}
         {/* ========================================================= */}
-        <div className="act-01 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6 transition-transform z-10">
-          <p className="act-01-text font-display font-medium text-2xl sm:text-4xl md:text-5xl lg:text-6xl text-white/95 tracking-[0.14em] [word-spacing:0.28em] leading-snug max-w-5xl will-change-transform">
-            AN IDEA IS ONLY THE
-            <span className="act-01-emph font-display font-extrabold tracking-[0.14em] ml-3 sm:ml-4 bg-gradient-to-r from-cyan-200 via-[#00F0FF] to-teal-300 bg-clip-text text-transparent inline-block drop-shadow-[0_0_35px_rgba(0,240,255,0.65)] will-change-transform">
+        <div className="act-01 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-4 sm:px-6 transition-transform z-10 pointer-events-none">
+          <p className="act-01-text font-display font-medium text-xl sm:text-3xl md:text-5xl lg:text-6xl text-white/95 tracking-[0.1em] [word-spacing:0.2em] leading-none whitespace-nowrap flex items-center justify-center will-change-transform">
+            <span>AN IDEA IS ONLY THE</span>
+            <span className="act-01-gap inline-block w-3 sm:w-4 md:w-5 shrink-0" />
+            <span className="act-01-emph font-display font-extrabold tracking-[0.1em] bg-gradient-to-r from-cyan-200 via-[#00F0FF] to-teal-300 bg-clip-text text-transparent inline-block drop-shadow-[0_0_35px_rgba(0,240,255,0.65)] will-change-transform">
               BEGINNING.
             </span>
           </p>
