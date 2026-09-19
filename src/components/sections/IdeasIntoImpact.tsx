@@ -569,6 +569,7 @@ export function IdeasIntoImpact() {
         heroLayerRef.current,
         {
           opacity: 0,
+          pointerEvents: "none",
           duration: 0.6,
           ease: "none",
         },
@@ -700,6 +701,7 @@ export function IdeasIntoImpact() {
           ctaLayerRef.current,
           {
             opacity: 0,
+            pointerEvents: "none",
             duration: 0.6,
             ease: "none",
           },
@@ -894,6 +896,7 @@ export function IdeasIntoImpact() {
           slide2LayerRef.current,
           {
             opacity: 0,
+            pointerEvents: "none",
             duration: 0.6,
             ease: "none",
           },
@@ -1829,7 +1832,7 @@ export function IdeasIntoImpact() {
         {/* ========================================================= */}
         <div
           ref={heroLayerRef}
-          className="max-w-7xl mx-auto w-full flex flex-col justify-between h-full relative z-10 py-0 -translate-y-4 sm:-translate-y-7 lg:-translate-y-9 will-change-transform transform-gpu"
+          className="max-w-7xl mx-auto w-full flex flex-col justify-between h-full relative z-20 pointer-events-auto py-0 -translate-y-4 sm:-translate-y-7 lg:-translate-y-9 will-change-transform transform-gpu"
         >
           {/* ========================================================= */}
           {/* 1. HERO SECTION: ASSEMBLED CONTENT & PORTRAIT            */}
@@ -1838,7 +1841,7 @@ export function IdeasIntoImpact() {
             {/* Left Column: Assembling Headline & Interactive Actions */}
             <div
               ref={leftContentRef}
-              className="w-full lg:w-[42%] flex flex-col justify-center z-20"
+              className="w-full lg:w-[42%] flex flex-col justify-center relative z-30 pointer-events-auto"
             >
               {/* Category Tag */}
               <div className="assemble-item flex items-center gap-2 text-xs font-mono tracking-[0.2em] text-[#94a3b8] uppercase mb-3">
@@ -1866,21 +1869,27 @@ export function IdeasIntoImpact() {
               </div>
 
               {/* Connect With Me Socials */}
-              <div className="flex flex-col gap-3 mt-1">
+              <div className="flex flex-col gap-3 mt-1 relative z-50 pointer-events-auto">
                 <div className="social-label-anim flex items-center gap-2.5 text-[11px] font-mono font-semibold tracking-[0.18em] text-[#94a3b8] uppercase will-change-transform">
                   <span className="social-line-anim w-5 h-[1.5px] bg-gradient-to-r from-purple-400 to-indigo-400 shadow-[0_0_8px_rgba(192,132,252,0.6)]" />
                   <span className="text-neutral-400">CONNECT WITH ME</span>
                 </div>
 
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 relative z-50 pointer-events-auto">
                   {/* LinkedIn */}
-                  <div className="social-icon-item will-change-transform">
+                  <div className="social-icon-item will-change-transform relative z-50 pointer-events-auto">
                     <a
                       href="https://www.linkedin.com/in/gourab-maji-4964a4397/"
                       target="_blank"
                       rel="noopener noreferrer"
+                      data-cursor="pointer"
+                      data-cursor-text="LINKEDIN"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        window.open("https://www.linkedin.com/in/gourab-maji-4964a4397/", "_blank", "noopener,noreferrer");
+                      }}
                       onMouseEnter={() => playHover()}
-                      className="group relative w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#0e1018]/90 backdrop-blur-md border border-white/10 hover:border-[#0a66c2]/70 hover:bg-[#0a66c2]/15 flex items-center justify-center transition-all duration-300 shadow-[0_4px_16px_rgba(0,0,0,0.5)] hover:shadow-[0_8px_25px_rgba(10,102,194,0.45)] hover:-translate-y-1 hover:scale-105 active:scale-95 cursor-pointer overflow-visible"
+                      className="group relative w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#0e1018]/90 backdrop-blur-md border border-white/10 hover:border-[#0a66c2]/70 hover:bg-[#0a66c2]/15 flex items-center justify-center transition-all duration-300 shadow-[0_4px_16px_rgba(0,0,0,0.5)] hover:shadow-[0_8px_25px_rgba(10,102,194,0.45)] hover:-translate-y-1 hover:scale-105 active:scale-95 cursor-pointer overflow-visible relative z-50 pointer-events-auto"
                       aria-label="LinkedIn"
                     >
                       {/* Tooltip Badge */}
@@ -1901,13 +1910,19 @@ export function IdeasIntoImpact() {
                   </div>
 
                   {/* GitHub */}
-                  <div className="social-icon-item will-change-transform">
+                  <div className="social-icon-item will-change-transform relative z-50 pointer-events-auto">
                     <a
                       href="https://github.com/gourabs444-del"
                       target="_blank"
                       rel="noopener noreferrer"
+                      data-cursor="pointer"
+                      data-cursor-text="GITHUB"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        window.open("https://github.com/gourabs444-del", "_blank", "noopener,noreferrer");
+                      }}
                       onMouseEnter={() => playHover()}
-                      className="group relative w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#0e1018]/90 backdrop-blur-md border border-white/10 hover:border-white/60 hover:bg-white/15 flex items-center justify-center transition-all duration-300 shadow-[0_4px_16px_rgba(0,0,0,0.5)] hover:shadow-[0_8px_25px_rgba(255,255,255,0.3)] hover:-translate-y-1 hover:scale-105 active:scale-95 cursor-pointer overflow-visible"
+                      className="group relative w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#0e1018]/90 backdrop-blur-md border border-white/10 hover:border-white/60 hover:bg-white/15 flex items-center justify-center transition-all duration-300 shadow-[0_4px_16px_rgba(0,0,0,0.5)] hover:shadow-[0_8px_25px_rgba(255,255,255,0.3)] hover:-translate-y-1 hover:scale-105 active:scale-95 cursor-pointer overflow-visible relative z-50 pointer-events-auto"
                       aria-label="GitHub"
                     >
                       {/* Tooltip Badge */}
@@ -1928,13 +1943,19 @@ export function IdeasIntoImpact() {
                   </div>
 
                   {/* Instagram */}
-                  <div className="social-icon-item will-change-transform">
+                  <div className="social-icon-item will-change-transform relative z-50 pointer-events-auto">
                     <a
                       href="https://www.instagram.com/01env/"
                       target="_blank"
                       rel="noopener noreferrer"
+                      data-cursor="pointer"
+                      data-cursor-text="INSTAGRAM"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        window.open("https://www.instagram.com/01env/", "_blank", "noopener,noreferrer");
+                      }}
                       onMouseEnter={() => playHover()}
-                      className="group relative w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#0e1018]/90 backdrop-blur-md border border-white/10 hover:border-[#e1306c]/70 hover:bg-[#e1306c]/15 flex items-center justify-center transition-all duration-300 shadow-[0_4px_16px_rgba(0,0,0,0.5)] hover:shadow-[0_8px_25px_rgba(225,48,108,0.45)] hover:-translate-y-1 hover:scale-105 active:scale-95 cursor-pointer overflow-visible"
+                      className="group relative w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#0e1018]/90 backdrop-blur-md border border-white/10 hover:border-[#e1306c]/70 hover:bg-[#e1306c]/15 flex items-center justify-center transition-all duration-300 shadow-[0_4px_16px_rgba(0,0,0,0.5)] hover:shadow-[0_8px_25px_rgba(225,48,108,0.45)] hover:-translate-y-1 hover:scale-105 active:scale-95 cursor-pointer overflow-visible relative z-50 pointer-events-auto"
                       aria-label="Instagram"
                     >
                       {/* Tooltip Badge */}
@@ -1962,11 +1983,17 @@ export function IdeasIntoImpact() {
                   </div>
 
                   {/* Gmail */}
-                  <div className="social-icon-item will-change-transform">
+                  <div className="social-icon-item will-change-transform relative z-50 pointer-events-auto">
                     <a
                       href="mailto:gourabs444@gmail.com"
+                      data-cursor="pointer"
+                      data-cursor-text="EMAIL"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        window.location.href = "mailto:gourabs444@gmail.com";
+                      }}
                       onMouseEnter={() => playHover()}
-                      className="group relative w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#0e1018]/90 backdrop-blur-md border border-white/10 hover:border-[#ea4335]/70 hover:bg-[#ea4335]/15 flex items-center justify-center transition-all duration-300 shadow-[0_4px_16px_rgba(0,0,0,0.5)] hover:shadow-[0_8px_25px_rgba(234,67,53,0.45)] hover:-translate-y-1 hover:scale-105 active:scale-95 cursor-pointer overflow-visible"
+                      className="group relative w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#0e1018]/90 backdrop-blur-md border border-white/10 hover:border-[#ea4335]/70 hover:bg-[#ea4335]/15 flex items-center justify-center transition-all duration-300 shadow-[0_4px_16px_rgba(0,0,0,0.5)] hover:shadow-[0_8px_25px_rgba(234,67,53,0.45)] hover:-translate-y-1 hover:scale-105 active:scale-95 cursor-pointer overflow-visible relative z-50 pointer-events-auto"
                       aria-label="Email"
                     >
                       {/* Tooltip Badge */}
@@ -2262,7 +2289,7 @@ export function IdeasIntoImpact() {
           {/* Foreground Editorial Content Container */}
           <div
             ref={slide3ContentRef}
-            className="relative z-10 w-full max-w-5xl mx-auto h-full pointer-events-auto flex flex-col items-center justify-center"
+            className="relative z-10 w-full max-w-5xl mx-auto h-full pointer-events-none flex flex-col items-center justify-center"
           >
             {/* 1. Header Group (Starts Dead-Center in Phase 1 via flexbox, moves UP & scales down in Phase 2) */}
             <div className="slide3-header-group flex flex-col items-center justify-center text-center w-full will-change-transform transform-gpu">

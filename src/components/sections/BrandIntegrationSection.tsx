@@ -6,6 +6,8 @@ import { ScrollTrigger } from "@/lib/gsap";
 import { ArrowUpRight, Cpu, Layers, Terminal, Sparkles, Check, Database, Zap, Code, ShieldCheck, ChevronRight } from "lucide-react";
 import { useAudioFeedback } from "@/hooks/useAudioFeedback";
 import { RotatingPurpleEarth } from "./RotatingPurpleEarth";
+import { EngineArchitectureGrid } from "./EngineArchitectureGrid";
+import { WhyChooseAlgoraGrid } from "./WhyChooseAlgoraGrid";
 
 export function BrandIntegrationSection() {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -57,6 +59,8 @@ export function BrandIntegrationSection() {
         ".act-05",
         ".act-06",
         ".act-07",
+        ".act-why-us",
+        ".act-why-choose",
         ".act-08",
         ".act-09",
         ".act-10",
@@ -259,90 +263,156 @@ export function BrandIntegrationSection() {
       tl.to(".act-07", { opacity: 1, duration: 0.3 }, 5.8);
 
       tl.fromTo(
+        ".engine-header",
+        { opacity: 0, y: -25, scale: 0.95 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.35, ease: "power2.out" },
+        5.85
+      );
+
+      tl.fromTo(
+        ".engine-bus-track",
+        { opacity: 0 },
+        { opacity: 1, duration: 0.45, ease: "power2.out" },
+        5.9
+      );
+
+      tl.fromTo(
         ".engine-graph",
-        { opacity: 0, scale: 0.92 },
+        { opacity: 0, scale: 0.94 },
         { opacity: 1, scale: 1, duration: 0.4, ease: "power3.out" },
         5.9
       );
 
       tl.fromTo(
         ".engine-node",
-        { opacity: 0, scale: 0.85, y: 20 },
-        { opacity: 1, scale: 1, y: 0, duration: 0.4, stagger: 0.07, ease: "power3.out" },
-        6.05
+        { opacity: 0, scale: 0.88, y: 30 },
+        { opacity: 1, scale: 1, y: 0, duration: 0.45, stagger: 0.08, ease: "power3.out" },
+        6.0
       );
 
-      // Morphing Exit into Act 08 (6.7 -> 7.1)
-      tl.to(".act-07", { opacity: 0, scale: 0.92, y: -30, duration: 0.4, ease: "power2.inOut" }, 6.7);
+      // Morphing Exit into Act WHY US (6.7 -> 7.0)
+      tl.to(".act-07", { opacity: 0, scale: 0.92, y: -30, duration: 0.35, ease: "power2.inOut" }, 6.7);
 
       // =======================================================================
-      // 08 — FOUNDER CONNECTION (Time: 6.8 -> 8.0, Exits 7.7 -> 8.1)
+      // WHY US?? — DRAMATIC INQUIRY (Time: 6.95 -> 8.0, Exits 7.8 -> 8.2)
       // =======================================================================
-      tl.to(".act-08", { opacity: 1, duration: 0.3 }, 6.8);
+      tl.to(".act-why-us", { opacity: 1, duration: 0.3 }, 6.95);
+
+      tl.fromTo(
+        ".why-us-content",
+        { opacity: 0, scale: 0.9, y: 35 },
+        { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: "power3.out" },
+        7.05
+      );
+
+      tl.fromTo(
+        ".why-us-laser",
+        { scaleX: 0 },
+        { scaleX: 1, duration: 0.4, ease: "power2.out" },
+        7.15
+      );
+
+      // Morphing Exit into WHY CHOOSE (7.8 -> 8.2)
+      tl.to(
+        ".act-why-us",
+        { opacity: 0, scale: 1.12, filter: "blur(8px)", duration: 0.35, ease: "power2.in" },
+        7.8
+      );
+
+      // =======================================================================
+      // WHY CHOOSE ALGORA // DIGITAL EXPLANATION (Time: 7.95 -> 9.4, Exits 9.25 -> 9.6)
+      // =======================================================================
+      tl.to(".act-why-choose", { opacity: 1, pointerEvents: "auto", duration: 0.3 }, 7.95);
+
+      tl.fromTo(
+        ".why-choose-header",
+        { opacity: 0, y: -25 },
+        { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" },
+        8.05
+      );
+
+      tl.fromTo(
+        ".why-choose-content .why-card",
+        { opacity: 0, scale: 0.9, y: 30 },
+        { opacity: 1, scale: 1, y: 0, duration: 0.45, stagger: 0.08, ease: "power3.out" },
+        8.15
+      );
+
+      // Morphing Exit into Act 08 (9.25 -> 9.6)
+      tl.to(
+        ".act-why-choose",
+        { opacity: 0, scale: 0.92, y: -30, pointerEvents: "none", duration: 0.35, ease: "power2.inOut" },
+        9.25
+      );
+
+      // =======================================================================
+      // 08 — FOUNDER CONNECTION (Time: 9.35 -> 10.4, Exits 10.25 -> 10.6)
+      // =======================================================================
+      tl.to(".act-08", { opacity: 1, duration: 0.3 }, 9.35);
 
       tl.fromTo(
         ".founder-header",
         { opacity: 0, y: 40 },
         { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" },
-        6.95
+        9.45
       );
 
       tl.fromTo(
         ".founder-roles",
         { opacity: 0, y: 20 },
         { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" },
-        7.15
+        9.65
       );
 
-      // Morphing Exit into Act 09 (7.7 -> 8.1)
-      tl.to(".act-08", { opacity: 0, y: -40, scale: 0.94, duration: 0.4, ease: "power2.inOut" }, 7.7);
+      // Morphing Exit into Act 09 (10.25 -> 10.6)
+      tl.to(".act-08", { opacity: 0, y: -40, scale: 0.94, duration: 0.35, ease: "power2.inOut" }, 10.25);
 
       // =======================================================================
-      // 09 — VISION (Time: 7.8 -> 8.8, Exits 8.6 -> 9.0)
+      // 09 — VISION (Time: 10.4 -> 11.4, Exits 11.25 -> 11.6)
       // =======================================================================
-      tl.to(".act-09", { opacity: 1, duration: 0.3 }, 7.8);
+      tl.to(".act-09", { opacity: 1, duration: 0.3 }, 10.4);
 
       tl.fromTo(
         ".vision-text",
         { opacity: 0, scale: 0.94, y: 35 },
         { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: "power3.out" },
-        7.95
+        10.5
       );
 
-      // Morphing Exit into Act 10 (8.6 -> 9.0)
-      tl.to(".act-09", { opacity: 0, scale: 0.94, filter: "blur(10px)", duration: 0.4, ease: "power2.inOut" }, 8.6);
+      // Morphing Exit into Act 10 (11.25 -> 11.6)
+      tl.to(".act-09", { opacity: 0, scale: 0.94, filter: "blur(10px)", duration: 0.35, ease: "power2.inOut" }, 11.25);
 
       // =======================================================================
-      // 10 — FINAL BRAND LOCKUP (Time: 8.8 -> 10.0)
+      // 10 — FINAL BRAND LOCKUP (Time: 11.4 -> 12.6)
       // =======================================================================
-      tl.to(".act-10", { opacity: 1, pointerEvents: "auto", duration: 0.3 }, 8.8);
+      tl.to(".act-10", { opacity: 1, pointerEvents: "auto", duration: 0.3 }, 11.4);
 
       tl.fromTo(
         ".act-10-logo",
         { opacity: 0, scale: 0.88, y: 30 },
         { opacity: 1, scale: 1, y: 0, duration: 0.4, ease: "back.out(1.4)" },
-        8.95
+        11.55
       );
 
       tl.fromTo(
         ".act-10-name",
         { opacity: 0, y: 25 },
         { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" },
-        9.1
+        11.7
       );
 
       tl.fromTo(
         ".act-10-tag",
         { opacity: 0, y: 20 },
         { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" },
-        9.25
+        11.85
       );
 
       tl.fromTo(
         [".act-10-founder", ".act-10-cta"],
         { opacity: 0, y: 20 },
         { opacity: 1, y: 0, duration: 0.35, stagger: 0.1, ease: "power2.out" },
-        9.4
+        12.0
       );
 
     }, containerRef);
@@ -354,7 +424,7 @@ export function BrandIntegrationSection() {
     <section
       ref={containerRef}
       id="brand-integration"
-      className="relative w-full h-[800vh] bg-[#030305] text-white select-none overflow-clip border-t border-white/10"
+      className="relative w-full h-[1050vh] bg-[#030305] text-white select-none overflow-clip border-t border-white/10"
     >
       {/* Sticky Fullscreen Pinned Viewport */}
       <div
@@ -730,73 +800,61 @@ export function BrandIntegrationSection() {
         </div>
 
         {/* ========================================================= */}
-        {/* ACT 07 — ENGINE / ARCHITECTURE (ULTRA-CLEAN BOXLESS NODES) */}
+        {/* ACT 07 — ENGINE / ARCHITECTURE (AI CYBERNETIC CORES)      */}
         {/* ========================================================= */}
-        <div className="act-07 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6 transition-transform">
-          <div className="flex items-center gap-3 text-xs font-mono font-bold tracking-[0.35em] text-neutral-400 uppercase mb-12 sm:mb-16">
-            <span className="w-8 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-            <span>ENGINEERED FROM THE GROUND UP</span>
-            <span className="w-8 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-          </div>
-
-          <div className="engine-graph relative w-full max-w-5xl mx-auto">
-            {/* Ultra-Clean Boxless Grid with Minimal Dividers */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 divide-y md:divide-y-0 md:divide-x divide-white/10 relative z-10">
-              
-              {/* Node 1: NEXT.JS 15 */}
-              <div className="engine-node flex flex-col items-center text-center group pt-6 md:pt-0 md:px-6 first:pl-0">
-                <div className="w-12 h-12 rounded-2xl bg-amber-400/10 text-amber-400 flex items-center justify-center mb-5 group-hover:scale-110 group-hover:bg-amber-400/20 group-hover:shadow-[0_0_25px_rgba(245,158,11,0.4)] transition-all duration-300">
-                  <Code className="w-6 h-6 stroke-[1.75]" />
-                </div>
-                <span className="font-sans font-extrabold text-base sm:text-lg text-white tracking-wide uppercase mb-1.5 group-hover:text-amber-300 transition-colors">
-                  NEXT.JS 15
-                </span>
-                <span className="font-mono text-[10px] text-neutral-400 uppercase tracking-[0.2em] font-medium">
-                  REACT 19 / TS
-                </span>
-              </div>
-
-              {/* Node 2: GSAP & WEBGLEngine */}
-              <div className="engine-node flex flex-col items-center text-center group pt-6 md:pt-0 md:px-6">
-                <div className="w-12 h-12 rounded-2xl bg-sky-400/10 text-sky-400 flex items-center justify-center mb-5 group-hover:scale-110 group-hover:bg-sky-400/20 group-hover:shadow-[0_0_25px_rgba(56,189,248,0.4)] transition-all duration-300">
-                  <Layers className="w-6 h-6 stroke-[1.75]" />
-                </div>
-                <span className="font-sans font-extrabold text-base sm:text-lg text-white tracking-wide uppercase mb-1.5 group-hover:text-sky-300 transition-colors">
-                  GSAP &amp; WEBGLEngine
-                </span>
-                <span className="font-mono text-[10px] text-neutral-400 uppercase tracking-[0.2em] font-medium">
-                  60FPS SHADERS
-                </span>
-              </div>
-
-              {/* Node 3: NODE.JS API */}
-              <div className="engine-node flex flex-col items-center text-center group pt-6 md:pt-0 md:px-6">
-                <div className="w-12 h-12 rounded-2xl bg-purple-400/10 text-purple-400 flex items-center justify-center mb-5 group-hover:scale-110 group-hover:bg-purple-400/20 group-hover:shadow-[0_0_25px_rgba(192,132,252,0.4)] transition-all duration-300">
-                  <Cpu className="w-6 h-6 stroke-[1.75]" />
-                </div>
-                <span className="font-sans font-extrabold text-base sm:text-lg text-white tracking-wide uppercase mb-1.5 group-hover:text-purple-300 transition-colors">
-                  NODE.JS API
-                </span>
-                <span className="font-mono text-[10px] text-neutral-400 uppercase tracking-[0.2em] font-medium">
-                  EDGE ROUTING
-                </span>
-              </div>
-
-              {/* Node 4: POSTGRES & AI */}
-              <div className="engine-node flex flex-col items-center text-center group pt-6 md:pt-0 md:px-6 last:pr-0">
-                <div className="w-12 h-12 rounded-2xl bg-emerald-400/10 text-emerald-400 flex items-center justify-center mb-5 group-hover:scale-110 group-hover:bg-emerald-400/20 group-hover:shadow-[0_0_25px_rgba(16,185,129,0.4)] transition-all duration-300">
-                  <Database className="w-6 h-6 stroke-[1.75]" />
-                </div>
-                <span className="font-sans font-extrabold text-base sm:text-lg text-white tracking-wide uppercase mb-1.5 group-hover:text-emerald-300 transition-colors">
-                  POSTGRES &amp; AI
-                </span>
-                <span className="font-mono text-[10px] text-neutral-400 uppercase tracking-[0.2em] font-medium">
-                  NEURAL VECTOR DB
-                </span>
-              </div>
-
+        <div className="act-07 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-4 sm:px-6 transition-transform z-10 pointer-events-auto">
+          {/* Futuristic Section Header */}
+          <div className="engine-header flex flex-col items-center mb-6 sm:mb-8 relative z-20 select-none">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.04] border border-white/10 text-neutral-400 font-mono text-[10px] tracking-[0.25em] uppercase mb-3 shadow-[0_0_20px_rgba(255,255,255,0.03)] backdrop-blur-md">
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse shadow-[0_0_8px_#f59e0b]" />
+              <span>CORE ARCHITECTURE // 0.4</span>
+            </div>
+            <div className="flex items-center gap-3 text-xs sm:text-sm font-mono font-bold tracking-[0.35em] text-white uppercase">
+              <span className="w-6 sm:w-12 h-[1px] bg-gradient-to-r from-transparent via-amber-400/50 to-amber-400" />
+              <span className="drop-shadow-[0_0_16px_rgba(255,255,255,0.25)]">ENGINEERED FROM THE GROUND UP</span>
+              <span className="w-6 sm:w-12 h-[1px] bg-gradient-to-r from-emerald-400 via-emerald-400/50 to-transparent" />
             </div>
           </div>
+
+          <EngineArchitectureGrid onHoverSound={playHover} />
+        </div>
+
+        {/* ========================================================= */}
+        {/* ACT WHY US — CLEAN INQUIRY (WHY CHOOSE US?)               */}
+        {/* ========================================================= */}
+        <div className="act-why-us absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6 transition-transform z-10 pointer-events-none">
+          <div className="why-us-content flex flex-col items-center max-w-4xl select-none">
+            {/* Clean White Title */}
+            <h2 className="why-us-title font-sans font-bold text-3xl sm:text-4xl md:text-5xl text-white tracking-tight leading-tight mb-4">
+              Why Choose Us?
+            </h2>
+
+            {/* Clean Micro Subtext Description */}
+            <p className="why-us-sub font-sans text-xs sm:text-sm text-neutral-400 font-normal leading-relaxed max-w-xl px-4">
+              In a crowded market overflowing with generic templates and unverified code, why do ambitious founders and visionary teams choose Algora to build their most critical digital systems?
+            </p>
+          </div>
+        </div>
+
+        {/* ========================================================= */}
+        {/* ACT WHY CHOOSE — DIGITAL EXPLANATION // CLEAN & SECURE    */}
+        {/* ========================================================= */}
+        <div className="act-why-choose absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-4 sm:px-6 transition-transform z-10 pointer-events-auto">
+          {/* Header */}
+          <div className="why-choose-header flex flex-col items-center mb-5 sm:mb-7 relative z-20 select-none">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.04] border border-white/10 text-neutral-400 font-mono text-[10px] tracking-[0.25em] uppercase mb-2.5 shadow-[0_0_20px_rgba(255,255,255,0.03)] backdrop-blur-md">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#10b981]" />
+              <span>THE ALGORA DIFFERENCE // 06 PILLARS</span>
+            </div>
+            <h3 className="font-sans font-extrabold text-2xl sm:text-3xl md:text-4xl text-white tracking-tight uppercase">
+              WHY ENTRUST YOUR PROJECT TO US
+            </h3>
+            <p className="font-sans text-xs sm:text-sm text-neutral-400 mt-1 max-w-xl">
+              Digitally engineered with clean architecture, enterprise-grade security, and deterministic on-time delivery.
+            </p>
+          </div>
+
+          <WhyChooseAlgoraGrid onHoverSound={playHover} />
         </div>
 
         {/* ========================================================= */}
