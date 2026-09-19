@@ -27,12 +27,12 @@ export function RotatingPurpleEarth() {
         x: Math.random(),
         y: Math.random(),
         r: Math.random() * 1.2 + 0.4,
-        alpha: Math.random() * 0.4 + 0.15,
+        alpha: Math.random() * 0.35 + 0.12,
         speed: Math.random() * 0.0004 + 0.0001,
       });
     }
 
-    // High-tech pulsed connection hubs on cities
+    // High-tech pulsed connection hubs on major global cities
     const pulseNodes = [
       { lat: 40.7, lon: -74.0, phase: 0 },   // New York
       { lat: 51.5, lon: -0.1, phase: 1.5 },  // London
@@ -56,9 +56,9 @@ export function RotatingPurpleEarth() {
     resize();
     window.addEventListener("resize", resize);
 
-    // Initial orientation showing Americas & Europe
+    // Continuous celestial rotation showing Americas & Europe
     let rot = 0.75;
-    const rotSpeed = 0.0026; // Silky smooth celestial planetary rotation
+    const rotSpeed = 0.0022; // Silky smooth majestic rotation
     const tilt = 19 * (Math.PI / 180); // 19-degree axial tilt
     const sinTilt = Math.sin(tilt);
     const cosTilt = Math.cos(tilt);
@@ -68,10 +68,18 @@ export function RotatingPurpleEarth() {
 
       ctx.clearRect(0, 0, width, height);
 
-      // Sphere radius sized generously to match reference
-      const radius = Math.min(width * 0.42, height * 0.52, 420);
+      // =======================================================================
+      // MONUMENTAL HALF-GLOBE DOME SIZING (Matching Image 2 Reference)
+      // The radius is large and the center is placed low, so the top half arches
+      // across the entire screen from bottom-left to bottom-right!
+      // =======================================================================
+      const isMobile = width < 768;
+      const radius = isMobile
+        ? Math.max(width * 0.65, 420)
+        : Math.max(width * 0.56, height * 0.78, 680);
+
       const cx = width * 0.5;
-      const cy = height * 0.53;
+      const cy = isMobile ? height * 0.84 : height * 0.88;
 
       // 1. Subtle Floating Violet Dust Particles
       for (let i = 0; i < stars.length; i++) {
@@ -84,38 +92,38 @@ export function RotatingPurpleEarth() {
         ctx.fill();
       }
 
-      // 2. Radiant Violet Ambient Aura behind the sphere on white canvas
+      // 2. Radiant Violet Ambient Aura radiating above the dome horizon
       const ambientGlow = ctx.createRadialGradient(
         cx,
-        cy - radius * 0.25,
-        radius * 0.35,
+        cy - radius * 0.95,
+        radius * 0.1,
         cx,
-        cy,
-        radius * 1.65
+        cy - radius * 0.5,
+        radius * 1.1
       );
-      ambientGlow.addColorStop(0, "rgba(168, 85, 247, 0.16)");
-      ambientGlow.addColorStop(0.4, "rgba(192, 132, 252, 0.09)");
-      ambientGlow.addColorStop(0.75, "rgba(232, 121, 249, 0.03)");
+      ambientGlow.addColorStop(0, "rgba(168, 85, 247, 0.24)");
+      ambientGlow.addColorStop(0.35, "rgba(192, 132, 252, 0.13)");
+      ambientGlow.addColorStop(0.7, "rgba(232, 121, 249, 0.04)");
       ambientGlow.addColorStop(1, "transparent");
 
       ctx.fillStyle = ambientGlow;
       ctx.beginPath();
-      ctx.arc(cx, cy, radius * 1.65, 0, Math.PI * 2);
+      ctx.arc(cx, cy, radius * 1.3, 0, Math.PI * 2);
       ctx.fill();
 
-      // 3. Translucent Holographic Base Sphere (Frosted Violet on White)
+      // 3. Translucent Holographic Base Sphere (Frosted Violet Dome on White Canvas)
       const sphereGrad = ctx.createRadialGradient(
-        cx - radius * 0.2,
-        cy - radius * 0.45,
-        radius * 0.08,
+        cx,
+        cy - radius * 0.85,
+        radius * 0.05,
         cx,
         cy,
         radius
       );
-      sphereGrad.addColorStop(0, "rgba(243, 232, 255, 0.65)");
-      sphereGrad.addColorStop(0.45, "rgba(238, 224, 255, 0.35)");
-      sphereGrad.addColorStop(0.85, "rgba(224, 204, 250, 0.16)");
-      sphereGrad.addColorStop(1, "rgba(216, 180, 254, 0.04)");
+      sphereGrad.addColorStop(0, "rgba(243, 232, 255, 0.75)");
+      sphereGrad.addColorStop(0.4, "rgba(238, 224, 255, 0.4)");
+      sphereGrad.addColorStop(0.75, "rgba(224, 204, 250, 0.18)");
+      sphereGrad.addColorStop(1, "rgba(216, 180, 254, 0.03)");
 
       ctx.save();
       ctx.beginPath();
@@ -128,7 +136,7 @@ export function RotatingPurpleEarth() {
 
       // 4. Subtle Orbital Latitudes Grid in Violet
       ctx.strokeStyle = "rgba(147, 51, 234, 0.12)";
-      ctx.lineWidth = 1;
+      ctx.lineWidth = 1.1;
       [-45, -20, 0, 20, 45, 65].forEach((latDeg) => {
         const phi = (latDeg * Math.PI) / 180;
         const latRadius = radius * Math.cos(phi);
@@ -146,7 +154,7 @@ export function RotatingPurpleEarth() {
         ctx.stroke();
       });
 
-      // 5. Render 3D Rotating Dot-Matrix Continents in Vibrant High-Contrast Violet
+      // 5. Render 3D Rotating Dot-Matrix Continents in Rich Violet
       for (let i = 0; i < landCoords.length; i++) {
         const [latDeg, lonDeg] = landCoords[i];
         const lat = (latDeg * Math.PI) / 180;
@@ -168,16 +176,17 @@ export function RotatingPurpleEarth() {
           const px = cx + x1;
           const py = cy + y1;
 
-          const topAura = Math.max(0, 1 - Math.abs(y1 + radius * 0.4) / (radius * 0.9));
-          const dotRadius = Math.max(0.75, 1.2 + depthFactor * 0.95 + topAura * 0.45);
+          // Distance from top crest (to apply intense purple atmospheric bloom near top)
+          const topAura = Math.max(0, 1 - Math.abs(y1 + radius * 0.5) / (radius * 0.8));
+          const dotRadius = Math.max(0.85, 1.35 + depthFactor * 1.15 + topAura * 0.45);
 
           // Deep, saturated violet dots for crisp visibility on white
           let r = 109;
           let g = 40;
           let b = 217;
-          let alpha = Math.min(1, 0.4 + depthFactor * 0.6);
+          let alpha = Math.min(1, 0.38 + depthFactor * 0.62);
 
-          if (topAura > 0.45) {
+          if (topAura > 0.42) {
             // Illuminated by the atmospheric crest in electric magenta-violet
             r = 192;
             g = 38;
@@ -218,47 +227,50 @@ export function RotatingPurpleEarth() {
           const pulse = (Math.sin(time * 0.004 + node.phase) + 1) * 0.5;
 
           ctx.strokeStyle = "rgba(168, 85, 247, " + (0.9 * (1 - pulse)).toFixed(2) + ")";
-          ctx.lineWidth = 1.4;
+          ctx.lineWidth = 1.5;
           ctx.beginPath();
-          ctx.arc(px, py, 2.5 + pulse * 6.5, 0, Math.PI * 2);
+          ctx.arc(px, py, 2.8 + pulse * 7, 0, Math.PI * 2);
           ctx.stroke();
 
           ctx.fillStyle = "#7c3aed";
           ctx.beginPath();
-          ctx.arc(px, py, 2.0, 0, Math.PI * 2);
+          ctx.arc(px, py, 2.2, 0, Math.PI * 2);
           ctx.fill();
         }
       });
 
       ctx.restore(); // Restore clip
 
-      // 7. SIGNATURE ELECTRIC PURPLE ATMOSPHERIC CRESCENT HORIZON
+      // =======================================================================
+      // 7. SIGNATURE ELECTRIC PURPLE ATMOSPHERIC CRESCENT HORIZON DOME
+      // Perfectly frames the monumental dome across the entire section
+      // =======================================================================
       ctx.save();
       // Outer soft atmospheric glow
       ctx.beginPath();
       ctx.arc(cx, cy, radius + 2, Math.PI * 0.84, Math.PI * 2.16);
-      ctx.lineWidth = 16;
-      ctx.strokeStyle = "rgba(168, 85, 247, 0.4)";
+      ctx.lineWidth = 18;
+      ctx.strokeStyle = "rgba(168, 85, 247, 0.38)";
       ctx.shadowColor = "#a855f7";
-      ctx.shadowBlur = 35;
+      ctx.shadowBlur = 40;
       ctx.stroke();
 
       // Sharp electric violet arc
       ctx.beginPath();
       ctx.arc(cx, cy, radius + 1, Math.PI * 0.82, Math.PI * 2.18);
-      ctx.lineWidth = 5.5;
+      ctx.lineWidth = 6;
       ctx.strokeStyle = "rgba(192, 38, 211, 0.95)";
       ctx.shadowColor = "#7c3aed";
-      ctx.shadowBlur = 24;
+      ctx.shadowBlur = 25;
       ctx.stroke();
 
       // Brilliant top magenta highlight crest
       ctx.beginPath();
       ctx.arc(cx, cy, radius + 0.5, Math.PI * 1.05, Math.PI * 1.95);
-      ctx.lineWidth = 2.4;
+      ctx.lineWidth = 2.6;
       ctx.strokeStyle = "rgba(217, 70, 239, 0.95)";
       ctx.shadowColor = "#d946ef";
-      ctx.shadowBlur = 12;
+      ctx.shadowBlur = 14;
       ctx.stroke();
       ctx.restore();
 
@@ -285,8 +297,8 @@ export function RotatingPurpleEarth() {
       />
 
       {/* Subtle Top & Bottom Blending Gradients in White */}
-      <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-[#FFFFFF] via-[#FFFFFF]/80 to-transparent" />
-      <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-[#FAF7F2] via-[#FAF7F2]/85 to-transparent" />
+      <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#FFFFFF] via-[#FFFFFF]/80 to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#FAF7F2] via-[#FAF7F2]/85 to-transparent" />
     </div>
   );
 }
