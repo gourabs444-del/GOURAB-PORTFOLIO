@@ -445,42 +445,42 @@ export function BrandIntegrationSection() {
         <div className="act-05 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6 transition-transform z-10">
           <div className="relative w-full max-w-5xl mx-auto flex flex-col items-center">
             
-            {/* Ambient Multi-Color Radial Aura tuned for Celestial Purple Earth */}
-            <div className="pointer-events-none absolute -top-32 left-1/2 -translate-x-1/2 w-[850px] h-[450px] bg-[radial-gradient(ellipse_at_center,_rgba(168,85,247,0.25)_0%,_rgba(232,121,249,0.12)_45%,_transparent_75%)] rounded-full blur-[110px]" />
+            {/* Ambient Violet Radial Aura tuned for White Canvas */}
+            <div className="pointer-events-none absolute -top-32 left-1/2 -translate-x-1/2 w-[850px] h-[450px] bg-[radial-gradient(ellipse_at_center,_rgba(168,85,247,0.14)_0%,_rgba(232,121,249,0.06)_45%,_transparent_75%)] rounded-full blur-[110px]" />
 
-            {/* 1. Cool Kinetic Typography Headline Matching Image 2 */}
+            {/* 1. Cool Kinetic Typography Headline on White Background with Violet Accents */}
             <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-10 sm:mb-14">
-              <span className="font-mono text-xs font-extrabold tracking-[0.3em] text-purple-300 bg-purple-950/70 border border-purple-500/40 px-3.5 py-1 rounded-full uppercase mb-3 flex items-center gap-2 shadow-[0_0_20px_rgba(168,85,247,0.3)]">
-                <span className="w-2 h-2 rounded-full bg-fuchsia-400 animate-pulse" />
+              <span className="font-mono text-xs font-extrabold tracking-[0.3em] text-purple-900 bg-purple-100/90 border border-purple-300/60 px-3.5 py-1 rounded-full uppercase mb-3 flex items-center gap-2 shadow-xs">
+                <span className="w-2 h-2 rounded-full bg-purple-600 animate-pulse" />
                 ALGORA ENGINE // SYSTEM ARCHITECTURE
               </span>
               
-              <h3 className="font-display font-black text-3xl sm:text-5xl md:text-6xl text-white tracking-tight leading-tight uppercase mb-4 drop-shadow-[0_4px_25px_rgba(0,0,0,0.8)]">
+              <h3 className="font-display font-black text-3xl sm:text-5xl md:text-6xl text-[#090714] tracking-tight leading-tight uppercase mb-4">
                 ENGINEERED WITH{" "}
-                <span className="font-bodoni italic font-normal bg-gradient-to-r from-purple-200 via-fuchsia-300 to-cyan-300 bg-clip-text text-transparent inline-block pr-2">
+                <span className="font-bodoni italic font-normal bg-gradient-to-r from-purple-700 via-fuchsia-600 to-indigo-600 bg-clip-text text-transparent inline-block pr-2">
                   Precision &amp; Intelligence.
                 </span>
               </h3>
 
-              <p className="font-sans text-sm sm:text-base text-purple-100/80 font-normal max-w-xl leading-relaxed drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
+              <p className="font-sans text-sm sm:text-base text-neutral-600 font-normal max-w-xl leading-relaxed">
                 Three specialized spatial nodes powering real-time WebGL rendering, neural design matrices, and zero-latency global edge deployment.
               </p>
             </div>
 
-            {/* 2. 3 Sleek Modern Visual Graphic Cards in Celestial Dark Glass Pods */}
+            {/* 2. 3 Sleek Modern Visual Graphic Cards on White Canvas with Violet Accents */}
             <div className="product-layer-fg w-full grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
               
               {/* Card 1: Architecture Engine */}
               <button
                 type="button"
                 onClick={() => handleSimulateClick("build")}
-                className={`group relative rounded-2xl transition-all duration-300 text-left cursor-pointer overflow-hidden border bg-[#0d0819]/80 backdrop-blur-xl ${
+                className={`group relative rounded-2xl transition-all duration-300 text-left cursor-pointer overflow-hidden border bg-white/85 backdrop-blur-xl ${
                   activeTab === "build"
-                    ? "border-cyan-400/80 shadow-[0_20px_45px_rgba(56,189,248,0.35)] scale-[1.03] ring-2 ring-cyan-400/50"
-                    : "border-white/10 hover:border-purple-400/40 shadow-[0_12px_35px_rgba(0,0,0,0.6)] hover:scale-[1.01]"
+                    ? "border-cyan-500/80 shadow-[0_20px_45px_rgba(56,189,248,0.25)] scale-[1.03] ring-2 ring-cyan-400/40"
+                    : "border-purple-200/70 hover:border-purple-400/60 shadow-[0_15px_35px_rgba(124,58,237,0.08)] hover:scale-[1.01]"
                 }`}
               >
-                <div className="relative aspect-[16/10] w-full overflow-hidden bg-black/40">
+                <div className="relative aspect-[16/10] w-full overflow-hidden bg-black/5">
                   <img
                     src="/assets/card-architecture-engine.jpg"
                     alt="Architecture Engine"
@@ -489,7 +489,7 @@ export function BrandIntegrationSection() {
                 </div>
 
                 {activeTab === "build" && (
-                  <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent shadow-[0_0_15px_#38bdf8]" />
+                  <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-cyan-500 to-transparent shadow-[0_0_15px_#38bdf8]" />
                 )}
               </button>
 
@@ -497,13 +497,13 @@ export function BrandIntegrationSection() {
               <button
                 type="button"
                 onClick={() => handleSimulateClick("ai")}
-                className={`group relative rounded-2xl transition-all duration-300 text-left cursor-pointer overflow-hidden border bg-[#0d0819]/80 backdrop-blur-xl ${
+                className={`group relative rounded-2xl transition-all duration-300 text-left cursor-pointer overflow-hidden border bg-white/85 backdrop-blur-xl ${
                   activeTab === "ai"
-                    ? "border-fuchsia-400/80 shadow-[0_20px_45px_rgba(232,121,249,0.35)] scale-[1.03] ring-2 ring-fuchsia-400/50"
-                    : "border-white/10 hover:border-purple-400/40 shadow-[0_12px_35px_rgba(0,0,0,0.6)] hover:scale-[1.01]"
+                    ? "border-fuchsia-500/80 shadow-[0_20px_45px_rgba(232,121,249,0.25)] scale-[1.03] ring-2 ring-fuchsia-400/40"
+                    : "border-purple-200/70 hover:border-purple-400/60 shadow-[0_15px_35px_rgba(124,58,237,0.08)] hover:scale-[1.01]"
                 }`}
               >
-                <div className="relative aspect-[16/10] w-full overflow-hidden bg-black/40">
+                <div className="relative aspect-[16/10] w-full overflow-hidden bg-black/5">
                   <img
                     src="/assets/card-neural-matrix.png"
                     alt="Neural Design Matrix"
@@ -512,7 +512,7 @@ export function BrandIntegrationSection() {
                 </div>
 
                 {activeTab === "ai" && (
-                  <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-fuchsia-400 to-transparent shadow-[0_0_15px_#e879f9]" />
+                  <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-fuchsia-500 to-transparent shadow-[0_0_15px_#e879f9]" />
                 )}
               </button>
 
@@ -520,13 +520,13 @@ export function BrandIntegrationSection() {
               <button
                 type="button"
                 onClick={() => handleSimulateClick("deploy")}
-                className={`group relative rounded-2xl transition-all duration-300 text-left cursor-pointer overflow-hidden border bg-[#0d0819]/80 backdrop-blur-xl ${
+                className={`group relative rounded-2xl transition-all duration-300 text-left cursor-pointer overflow-hidden border bg-white/85 backdrop-blur-xl ${
                   activeTab === "deploy"
-                    ? "border-purple-400/80 shadow-[0_20px_45px_rgba(168,85,247,0.35)] scale-[1.03] ring-2 ring-purple-400/50"
-                    : "border-white/10 hover:border-purple-400/40 shadow-[0_12px_35px_rgba(0,0,0,0.6)] hover:scale-[1.01]"
+                    ? "border-purple-500/80 shadow-[0_20px_45px_rgba(168,85,247,0.25)] scale-[1.03] ring-2 ring-purple-400/40"
+                    : "border-purple-200/70 hover:border-purple-400/60 shadow-[0_15px_35px_rgba(124,58,237,0.08)] hover:scale-[1.01]"
                 }`}
               >
-                <div className="relative aspect-[16/10] w-full overflow-hidden bg-black/40">
+                <div className="relative aspect-[16/10] w-full overflow-hidden bg-black/5">
                   <img
                     src="/assets/card-edge-deployment.jpg"
                     alt="Edge Deployment"
@@ -535,7 +535,7 @@ export function BrandIntegrationSection() {
                 </div>
 
                 {activeTab === "deploy" && (
-                  <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-purple-400 to-transparent shadow-[0_0_15px_#c084fc]" />
+                  <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-purple-500 to-transparent shadow-[0_0_15px_#c084fc]" />
                 )}
               </button>
 

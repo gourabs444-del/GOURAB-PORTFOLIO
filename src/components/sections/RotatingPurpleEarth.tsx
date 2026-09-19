@@ -19,20 +19,20 @@ export function RotatingPurpleEarth() {
 
     const landCoords: [number, number][] = earthDotsData as [number, number][];
 
-    // Background cosmic stars
-    const numStars = 80;
+    // Subtle floating violet stardust particles
+    const numStars = 60;
     const stars: { x: number; y: number; r: number; alpha: number; speed: number }[] = [];
     for (let i = 0; i < numStars; i++) {
       stars.push({
         x: Math.random(),
         y: Math.random(),
-        r: Math.random() * 1.3 + 0.4,
-        alpha: Math.random() * 0.7 + 0.3,
+        r: Math.random() * 1.2 + 0.4,
+        alpha: Math.random() * 0.4 + 0.15,
         speed: Math.random() * 0.0004 + 0.0001,
       });
     }
 
-    // High-tech pulsed connection hubs on cities (Image 2 style)
+    // High-tech pulsed connection hubs on cities
     const pulseNodes = [
       { lat: 40.7, lon: -74.0, phase: 0 },   // New York
       { lat: 51.5, lon: -0.1, phase: 1.5 },  // London
@@ -56,7 +56,7 @@ export function RotatingPurpleEarth() {
     resize();
     window.addEventListener("resize", resize);
 
-    // Initial orientation showing Americas & Europe like Image 2
+    // Initial orientation showing Americas & Europe
     let rot = 0.75;
     const rotSpeed = 0.0026; // Silky smooth celestial planetary rotation
     const tilt = 19 * (Math.PI / 180); // 19-degree axial tilt
@@ -68,23 +68,23 @@ export function RotatingPurpleEarth() {
 
       ctx.clearRect(0, 0, width, height);
 
-      // Sphere radius sized generously to match Image 2's prominent Earth curve
+      // Sphere radius sized generously to match reference
       const radius = Math.min(width * 0.42, height * 0.52, 420);
       const cx = width * 0.5;
       const cy = height * 0.53;
 
-      // 1. Space Stars
+      // 1. Subtle Floating Violet Dust Particles
       for (let i = 0; i < stars.length; i++) {
         const star = stars[i];
         const currentAlpha =
           star.alpha * (0.6 + 0.4 * Math.sin(time * star.speed * 10 + i));
-        ctx.fillStyle = "rgba(216, 180, 254, " + currentAlpha.toFixed(2) + ")";
+        ctx.fillStyle = "rgba(147, 51, 234, " + currentAlpha.toFixed(2) + ")";
         ctx.beginPath();
         ctx.arc(star.x * width, star.y * height, star.r, 0, Math.PI * 2);
         ctx.fill();
       }
 
-      // 2. Cosmic Ambient Purple Nebula Aura behind the sphere
+      // 2. Radiant Violet Ambient Aura behind the sphere on white canvas
       const ambientGlow = ctx.createRadialGradient(
         cx,
         cy - radius * 0.25,
@@ -93,9 +93,9 @@ export function RotatingPurpleEarth() {
         cy,
         radius * 1.65
       );
-      ambientGlow.addColorStop(0, "rgba(168, 85, 247, 0.32)");
-      ambientGlow.addColorStop(0.4, "rgba(126, 34, 206, 0.18)");
-      ambientGlow.addColorStop(0.75, "rgba(88, 28, 135, 0.08)");
+      ambientGlow.addColorStop(0, "rgba(168, 85, 247, 0.16)");
+      ambientGlow.addColorStop(0.4, "rgba(192, 132, 252, 0.09)");
+      ambientGlow.addColorStop(0.75, "rgba(232, 121, 249, 0.03)");
       ambientGlow.addColorStop(1, "transparent");
 
       ctx.fillStyle = ambientGlow;
@@ -103,7 +103,7 @@ export function RotatingPurpleEarth() {
       ctx.arc(cx, cy, radius * 1.65, 0, Math.PI * 2);
       ctx.fill();
 
-      // 3. Dark Celestial Base Sphere
+      // 3. Translucent Holographic Base Sphere (Frosted Violet on White)
       const sphereGrad = ctx.createRadialGradient(
         cx - radius * 0.2,
         cy - radius * 0.45,
@@ -112,10 +112,10 @@ export function RotatingPurpleEarth() {
         cy,
         radius
       );
-      sphereGrad.addColorStop(0, "#1c0f33");
-      sphereGrad.addColorStop(0.45, "#0e061e");
-      sphereGrad.addColorStop(0.85, "#06030e");
-      sphereGrad.addColorStop(1, "#030107");
+      sphereGrad.addColorStop(0, "rgba(243, 232, 255, 0.65)");
+      sphereGrad.addColorStop(0.45, "rgba(238, 224, 255, 0.35)");
+      sphereGrad.addColorStop(0.85, "rgba(224, 204, 250, 0.16)");
+      sphereGrad.addColorStop(1, "rgba(216, 180, 254, 0.04)");
 
       ctx.save();
       ctx.beginPath();
@@ -126,8 +126,8 @@ export function RotatingPurpleEarth() {
       // Clip inside sphere
       ctx.clip();
 
-      // 4. Subtle Orbital Latitudes Grid
-      ctx.strokeStyle = "rgba(168, 85, 247, 0.07)";
+      // 4. Subtle Orbital Latitudes Grid in Violet
+      ctx.strokeStyle = "rgba(147, 51, 234, 0.12)";
       ctx.lineWidth = 1;
       [-45, -20, 0, 20, 45, 65].forEach((latDeg) => {
         const phi = (latDeg * Math.PI) / 180;
@@ -146,7 +146,7 @@ export function RotatingPurpleEarth() {
         ctx.stroke();
       });
 
-      // 5. Render 3D Rotating Dot-Matrix Continents
+      // 5. Render 3D Rotating Dot-Matrix Continents in Vibrant High-Contrast Violet
       for (let i = 0; i < landCoords.length; i++) {
         const [latDeg, lonDeg] = landCoords[i];
         const lat = (latDeg * Math.PI) / 180;
@@ -169,22 +169,25 @@ export function RotatingPurpleEarth() {
           const py = cy + y1;
 
           const topAura = Math.max(0, 1 - Math.abs(y1 + radius * 0.4) / (radius * 0.9));
-          const dotRadius = Math.max(0.65, 1.1 + depthFactor * 0.9 + topAura * 0.45);
+          const dotRadius = Math.max(0.75, 1.2 + depthFactor * 0.95 + topAura * 0.45);
 
-          let r = 240;
-          let g = 215;
-          let b = 255;
-          let alpha = Math.min(1, 0.22 + depthFactor * 0.75);
+          // Deep, saturated violet dots for crisp visibility on white
+          let r = 109;
+          let g = 40;
+          let b = 217;
+          let alpha = Math.min(1, 0.4 + depthFactor * 0.6);
 
           if (topAura > 0.45) {
-            r = 255;
-            g = 230;
-            b = 255;
-            alpha = Math.min(1, alpha + 0.22);
+            // Illuminated by the atmospheric crest in electric magenta-violet
+            r = 192;
+            g = 38;
+            b = 211;
+            alpha = Math.min(1, alpha + 0.25);
           } else {
-            r = Math.round(180 + 60 * depthFactor);
-            g = Math.round(140 + 80 * depthFactor);
-            b = 255;
+            // Saturated deep violet
+            r = Math.round(109 + 25 * (1 - depthFactor));
+            g = Math.round(40 + 35 * (1 - depthFactor));
+            b = Math.round(217 + 25 * (1 - depthFactor));
           }
 
           ctx.fillStyle = "rgba(" + r + ", " + g + ", " + b + ", " + alpha.toFixed(2) + ")";
@@ -194,7 +197,7 @@ export function RotatingPurpleEarth() {
         }
       }
 
-      // 6. Draw Pulsing Hub Nodes on Global Tech/Finance Centers
+      // 6. Draw Pulsing Hub Nodes on Global Centers in Violet/Magenta
       pulseNodes.forEach((node) => {
         const lat = (node.lat * Math.PI) / 180;
         const lon = (node.lon * Math.PI) / 180 + rot;
@@ -214,47 +217,47 @@ export function RotatingPurpleEarth() {
           const py = cy + y1;
           const pulse = (Math.sin(time * 0.004 + node.phase) + 1) * 0.5;
 
-          ctx.strokeStyle = "rgba(232, 121, 249, " + (0.85 * (1 - pulse)).toFixed(2) + ")";
-          ctx.lineWidth = 1.3;
+          ctx.strokeStyle = "rgba(168, 85, 247, " + (0.9 * (1 - pulse)).toFixed(2) + ")";
+          ctx.lineWidth = 1.4;
           ctx.beginPath();
           ctx.arc(px, py, 2.5 + pulse * 6.5, 0, Math.PI * 2);
           ctx.stroke();
 
-          ctx.fillStyle = "#ffffff";
+          ctx.fillStyle = "#7c3aed";
           ctx.beginPath();
-          ctx.arc(px, py, 1.8, 0, Math.PI * 2);
+          ctx.arc(px, py, 2.0, 0, Math.PI * 2);
           ctx.fill();
         }
       });
 
       ctx.restore(); // Restore clip
 
-      // 7. SIGNATURE ELECTRIC PURPLE ATMOSPHERIC CRESCENT HORIZON (Image 2 Key Visual Feature)
+      // 7. SIGNATURE ELECTRIC PURPLE ATMOSPHERIC CRESCENT HORIZON
       ctx.save();
       // Outer soft atmospheric glow
       ctx.beginPath();
       ctx.arc(cx, cy, radius + 2, Math.PI * 0.84, Math.PI * 2.16);
-      ctx.lineWidth = 15;
-      ctx.strokeStyle = "rgba(168, 85, 247, 0.45)";
-      ctx.shadowColor = "#c084fc";
-      ctx.shadowBlur = 45;
+      ctx.lineWidth = 16;
+      ctx.strokeStyle = "rgba(168, 85, 247, 0.4)";
+      ctx.shadowColor = "#a855f7";
+      ctx.shadowBlur = 35;
       ctx.stroke();
 
       // Sharp electric violet arc
       ctx.beginPath();
       ctx.arc(cx, cy, radius + 1, Math.PI * 0.82, Math.PI * 2.18);
       ctx.lineWidth = 5.5;
-      ctx.strokeStyle = "rgba(217, 70, 239, 0.95)";
-      ctx.shadowColor = "#a855f7";
-      ctx.shadowBlur = 28;
+      ctx.strokeStyle = "rgba(192, 38, 211, 0.95)";
+      ctx.shadowColor = "#7c3aed";
+      ctx.shadowBlur = 24;
       ctx.stroke();
 
-      // Brilliant top white highlight crest
+      // Brilliant top magenta highlight crest
       ctx.beginPath();
       ctx.arc(cx, cy, radius + 0.5, Math.PI * 1.05, Math.PI * 1.95);
-      ctx.lineWidth = 2.2;
-      ctx.strokeStyle = "rgba(255, 245, 255, 0.95)";
-      ctx.shadowColor = "#e879f9";
+      ctx.lineWidth = 2.4;
+      ctx.strokeStyle = "rgba(217, 70, 239, 0.95)";
+      ctx.shadowColor = "#d946ef";
       ctx.shadowBlur = 12;
       ctx.stroke();
       ctx.restore();
@@ -272,8 +275,8 @@ export function RotatingPurpleEarth() {
 
   return (
     <div className="pointer-events-none absolute inset-0 w-full h-full overflow-hidden select-none">
-      {/* Deep Violet Cosmic Base */}
-      <div className="absolute inset-0 bg-[#06030c] bg-[radial-gradient(ellipse_80%_60%_at_50%_45%,_rgba(46,16,101,0.45)_0%,_rgba(15,8,30,0.85)_55%,_#05020A_100%)]" />
+      {/* Clean Luxury White Canvas Background */}
+      <div className="absolute inset-0 bg-[#FAF7F2] bg-gradient-to-b from-[#FFFFFF] via-[#FAF6F0] to-[#F5EFE6]" />
 
       {/* 60fps Real-Time High-Definition Rotating Earth Canvas */}
       <canvas
@@ -281,9 +284,9 @@ export function RotatingPurpleEarth() {
         className="absolute inset-0 w-full h-full block will-change-transform"
       />
 
-      {/* Atmospheric Top & Bottom Vignettes */}
-      <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-[#05020A] via-[#05020A]/70 to-transparent" />
-      <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-[#05020A] via-[#05020A]/85 to-transparent" />
+      {/* Subtle Top & Bottom Blending Gradients in White */}
+      <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-[#FFFFFF] via-[#FFFFFF]/80 to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-[#FAF7F2] via-[#FAF7F2]/85 to-transparent" />
     </div>
   );
 }
