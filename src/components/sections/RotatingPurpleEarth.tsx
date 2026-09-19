@@ -56,7 +56,8 @@ export function RotatingPurpleEarth() {
     const resize = () => {
       if (!canvas) return;
       const rect = canvas.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const isMobileDevice = window.innerWidth < 768;
+      const dpr = isMobileDevice ? 1 : Math.min(window.devicePixelRatio || 1, 2);
       width = rect.width;
       height = rect.height;
       canvas.width = width * dpr;
@@ -156,7 +157,8 @@ export function RotatingPurpleEarth() {
 
       const bottomCutoff = height + 30;
 
-      for (let i = 0; i < numPoints; i++) {
+      const step = isMobile ? 2 : 1;
+      for (let i = 0; i < numPoints; i += step) {
         const lat = lats[i];
         const lon = lons[i] + rot;
 

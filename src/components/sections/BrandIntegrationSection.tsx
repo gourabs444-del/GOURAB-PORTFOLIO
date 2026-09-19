@@ -27,15 +27,18 @@ export function BrandIntegrationSection() {
 
     const ctx = gsap.context(() => {
       const isMobile = window.innerWidth < 768;
+      const b = (px: number) => (isMobile ? "none" : `blur(${px}px)`);
 
-      // Master Continuous Scroll-Driven Timeline over 800vh track
+      // Master Continuous Scroll-Driven Timeline over 1400vh (mobile) / 1050vh (desktop) track
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top top",
           end: "bottom bottom",
-          scrub: 1,
+          scrub: isMobile ? 0.35 : 1,
           pin: stageRef.current,
+          anticipatePin: 1,
+          fastScrollEnd: isMobile,
           invalidateOnRefresh: true,
         },
       });
@@ -70,8 +73,8 @@ export function BrandIntegrationSection() {
       // Text enters on a single line spaced out ("abhi itne dur rhne do")
       tl.fromTo(
         ".act-01-text",
-        { opacity: 0, filter: "blur(14px)", y: 35, letterSpacing: "0.1em", wordSpacing: "0.2em" },
-        { opacity: 1, filter: "blur(0px)", y: 0, duration: 0.35, ease: "power2.out" },
+        { opacity: 0, filter: b(14), y: 35, letterSpacing: "0.1em", wordSpacing: "0.2em" },
+        { opacity: 1, filter: b(0), y: 0, duration: 0.35, ease: "power2.out" },
         0.05
       );
 
@@ -116,7 +119,7 @@ export function BrandIntegrationSection() {
       // Morphing Exit into Act 02 (0.8 -> 1.15)
       tl.to(
         ".act-01-text",
-        { opacity: 0, filter: "blur(10px)", y: -45, scale: 0.95, duration: 0.35, ease: "power2.in" },
+        { opacity: 0, filter: b(10), y: -45, scale: 0.95, duration: 0.35, ease: "power2.in" },
         0.8
       );
       tl.to(".act-01", { opacity: 0, duration: 0.25 }, 0.9);
@@ -151,15 +154,15 @@ export function BrandIntegrationSection() {
       // Ultra-smooth ALGORA title fade-up directly beneath emblem
       tl.fromTo(
         ".brand-name",
-        { opacity: 0, y: 16, filter: "blur(6px)" },
-        { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.65, ease: "power2.out" },
+        { opacity: 0, y: 16, filter: b(6) },
+        { opacity: 1, y: 0, filter: b(0), duration: 0.65, ease: "power2.out" },
         1.6
       );
 
       // Soft, elegant morphing exit into Act 04 (2.7 -> 3.2)
       tl.to(
         ".act-02",
-        { opacity: 0, filter: "blur(8px)", scale: 0.96, duration: 0.5, ease: "power2.inOut" },
+        { opacity: 0, filter: b(8), scale: 0.96, duration: 0.5, ease: "power2.inOut" },
         2.7
       );
 
@@ -195,14 +198,14 @@ export function BrandIntegrationSection() {
       // transitioning the stage seamlessly into a luxury white world for the next scene!
       tl.to(
         ".act-04-sub",
-        { opacity: 0, scale: 1.8, filter: "blur(12px)", duration: 0.35, ease: "power2.in" },
+        { opacity: 0, scale: 1.8, filter: b(12), duration: 0.35, ease: "power2.in" },
         3.4
       );
       tl.to(
         ".act-04-text",
         {
-          scale: isMobile ? 30 : 55,
-          filter: "blur(3px) drop-shadow(0 0 50px rgba(255,255,255,0.9))",
+          scale: isMobile ? 22 : 55,
+          filter: isMobile ? "none" : "blur(3px) drop-shadow(0 0 50px rgba(255,255,255,0.9))",
           duration: 0.55,
           ease: "power3.in",
         },
@@ -305,7 +308,7 @@ export function BrandIntegrationSection() {
       // Morphing Exit into WHY CHOOSE (7.8 -> 8.2)
       tl.to(
         ".act-why-us",
-        { opacity: 0, scale: 1.12, filter: "blur(8px)", duration: 0.35, ease: "power2.in" },
+        { opacity: 0, scale: 1.12, filter: b(8), duration: 0.35, ease: "power2.in" },
         7.8
       );
 
@@ -370,7 +373,7 @@ export function BrandIntegrationSection() {
       );
 
       // Morphing Exit into Act 10 (11.25 -> 11.6)
-      tl.to(".act-09", { opacity: 0, scale: 0.94, filter: "blur(10px)", duration: 0.35, ease: "power2.inOut" }, 11.25);
+      tl.to(".act-09", { opacity: 0, scale: 0.94, filter: b(10), duration: 0.35, ease: "power2.inOut" }, 11.25);
 
       // =======================================================================
       // 10 — FINAL BRAND LOCKUP (Time: 11.4 -> 12.6)
@@ -414,12 +417,13 @@ export function BrandIntegrationSection() {
     <section
       ref={containerRef}
       id="brand-integration"
-      className="relative w-full h-[1050vh] bg-[#030305] text-white select-none overflow-clip border-t border-white/10"
+      className="relative w-full h-[1400vh] sm:h-[1050vh] bg-[#030305] text-white select-none overflow-clip border-t border-white/10"
     >
       {/* Sticky Fullscreen Pinned Viewport */}
       <div
         ref={stageRef}
-        className="sticky top-0 w-full h-screen min-h-screen flex items-center justify-center overflow-hidden px-4 sm:px-8 md:px-12 z-20"
+        className="sticky top-0 w-full h-[100dvh] min-h-[100dvh] lg:h-screen lg:min-h-screen flex items-center justify-center overflow-hidden px-4 sm:px-8 md:px-12 z-20 will-change-transform transform-gpu"
+        style={{ transform: "translateZ(0)" }}
       >
         {/* Subtle Ambient Background Grid & Lighting */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] pointer-events-none" />

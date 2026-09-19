@@ -1842,7 +1842,7 @@ export function IdeasIntoImpact() {
             {/* Left Column: Assembling Headline & Interactive Actions */}
             <div
               ref={leftContentRef}
-              className="w-full lg:w-[42%] flex flex-col justify-center relative z-30 pointer-events-auto"
+              className="w-full lg:w-[42%] flex flex-col justify-center relative z-30 pointer-events-auto pt-3.5 xs:pt-6 sm:pt-0"
             >
               {/* Category Tag */}
               <div className="assemble-item flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-xs font-mono tracking-[0.2em] text-[#94a3b8] uppercase mb-1.5 sm:mb-3">
@@ -2032,10 +2032,10 @@ export function IdeasIntoImpact() {
                 {/* Behind-the-Head Tall Condensed Editorial Typography */}
                 <div
                   ref={ascensionRef}
-                  className="absolute top-[2%] xs:top-[3%] sm:top-[5%] lg:top-[4%] left-1/2 lg:left-[52.8%] -translate-x-1/2 select-none z-10 opacity-90 will-change-transform pointer-events-none"
+                  className="absolute top-[0%] xs:top-[1%] sm:top-[5%] lg:top-[4%] left-1/2 lg:left-[52.8%] -translate-x-1/2 select-none z-10 opacity-90 will-change-transform pointer-events-none"
                   aria-hidden="true"
                 >
-                  <span className="block font-display font-black text-3xl xs:text-4xl sm:text-7xl md:text-9xl lg:text-[8.8rem] xl:text-[10.2rem] tracking-[0.05em] uppercase whitespace-nowrap bg-gradient-to-b from-white/90 via-white/40 to-transparent bg-clip-text text-transparent scale-y-[1.3] xs:scale-y-[1.4] sm:scale-y-[1.65] origin-bottom">
+                  <span className="block font-display font-black text-[2.65rem] xs:text-[3.15rem] sm:text-7xl md:text-9xl lg:text-[8.8rem] xl:text-[10.2rem] tracking-[0.05em] uppercase whitespace-nowrap bg-gradient-to-b from-white/90 via-white/40 to-transparent bg-clip-text text-transparent scale-y-[1.4] xs:scale-y-[1.48] sm:scale-y-[1.65] origin-bottom">
                     ASCENSION
                   </span>
                 </div>
