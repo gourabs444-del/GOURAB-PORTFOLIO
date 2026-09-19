@@ -2343,7 +2343,7 @@ export function IdeasIntoImpact() {
               {/* Item 1: Left Group — Signature & Real Algora Brand Logo */}
               <div className="flex items-center gap-4 sm:gap-6">
                 {/* Handwritten Signature */}
-                <div className="flex flex-col items-start gap-0.5">
+                <div className="flex flex-col items-center gap-0.5">
                   <div className="h-7 sm:h-9 flex items-center">
                     <GourabSignatureSvg className="h-full w-auto text-[#090714]" />
                   </div>

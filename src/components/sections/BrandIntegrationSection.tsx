@@ -858,7 +858,7 @@ export function BrandIntegrationSection() {
             </span>
 
             <h3 className="font-sans font-extrabold text-4xl sm:text-6xl md:text-7xl text-white tracking-tight uppercase leading-none">
-              BUILT BY GOURAB.
+              BUILT BY GOURAB
             </h3>
           </div>
 
