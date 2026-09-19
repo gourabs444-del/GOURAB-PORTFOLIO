@@ -81,8 +81,8 @@ export function BrandIntegrationSection() {
 
       tl.fromTo(
         ".act-01-emph",
-        { opacity: 0.6, scale: 0.98 },
-        { opacity: 1, scale: 1.05, color: "#ffffff", duration: 0.3, ease: "power1.out" },
+        { opacity: 0.7, scale: 0.96 },
+        { opacity: 1, scale: 1.04, duration: 0.35, ease: "power1.out" },
         0.4
       );
 
@@ -330,7 +330,7 @@ export function BrandIntegrationSection() {
       >
         {/* Subtle Ambient Background Grid & Lighting */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] pointer-events-none" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[520px] bg-[radial-gradient(ellipse_at_center,_rgba(245,158,11,0.08)_0%,_rgba(56,189,248,0.05)_45%,_transparent_75%)] rounded-full blur-[130px] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[520px] bg-[radial-gradient(ellipse_at_center,_rgba(0,240,255,0.08)_0%,_rgba(56,189,248,0.04)_45%,_transparent_75%)] rounded-full blur-[130px] pointer-events-none" />
 
         {/* Cinematic White Canvas Layer (Revealed when Act 04 white text zooms into camera) */}
         <div className="act-white-canvas absolute inset-0 w-full h-full bg-[#FAF7F2] bg-gradient-to-br from-[#FFFFFF] via-[#FAF6F0] to-[#F4ECE1] opacity-0 pointer-events-none z-[5] will-change-transform" />
@@ -339,9 +339,9 @@ export function BrandIntegrationSection() {
         {/* ACT 01 — THE INTERRUPTION                                 */}
         {/* ========================================================= */}
         <div className="act-01 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6 transition-transform z-10">
-          <p className="act-01-text font-display font-medium text-2xl sm:text-4xl md:text-5xl lg:text-6xl text-white/90 tracking-tight leading-snug max-w-4xl">
-            AN IDEA IS ONLY THE{" "}
-            <span className="act-01-emph font-display font-extrabold bg-gradient-to-r from-amber-200 via-amber-400 to-amber-500 bg-clip-text text-transparent inline-block drop-shadow-[0_0_30px_rgba(245,158,11,0.4)]">
+          <p className="act-01-text font-display font-medium text-2xl sm:text-4xl md:text-5xl lg:text-6xl text-white/95 tracking-[0.06em] sm:tracking-[0.08em] [word-spacing:0.2em] sm:[word-spacing:0.3em] leading-snug max-w-5xl">
+            AN IDEA IS ONLY THE
+            <span className="act-01-emph font-display font-extrabold tracking-[0.06em] sm:tracking-[0.08em] ml-3 sm:ml-4 bg-gradient-to-r from-cyan-200 via-[#00F0FF] to-teal-300 bg-clip-text text-transparent inline-block drop-shadow-[0_0_35px_rgba(0,240,255,0.65)]">
               BEGINNING.
             </span>
           </p>
