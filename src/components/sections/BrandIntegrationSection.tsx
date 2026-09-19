@@ -800,10 +800,6 @@ export function BrandIntegrationSection() {
         <div className="act-07 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-4 sm:px-6 transition-transform z-10 pointer-events-auto">
           {/* Futuristic Section Header */}
           <div className="engine-header flex flex-col items-center mb-6 sm:mb-8 relative z-20 select-none">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.04] border border-white/10 text-neutral-400 font-mono text-[10px] tracking-[0.25em] uppercase mb-3 shadow-[0_0_20px_rgba(255,255,255,0.03)] backdrop-blur-md">
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse shadow-[0_0_8px_#f59e0b]" />
-              <span>CORE ARCHITECTURE // 0.4</span>
-            </div>
             <div className="flex items-center gap-3 text-xs sm:text-sm font-mono font-bold tracking-[0.35em] text-white uppercase">
               <span className="w-6 sm:w-12 h-[1px] bg-gradient-to-r from-transparent via-amber-400/50 to-amber-400" />
               <span className="drop-shadow-[0_0_16px_rgba(255,255,255,0.25)]">ENGINEERED FROM THE GROUND UP</span>
@@ -832,14 +828,10 @@ export function BrandIntegrationSection() {
         <div className="act-why-choose absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-2.5 sm:px-6 transition-transform z-10 pointer-events-auto overflow-y-auto lg:overflow-visible py-3 sm:py-0">
           {/* Header */}
           <div className="why-choose-header flex flex-col items-center mb-2.5 sm:mb-5 lg:mb-7 relative z-20 select-none">
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 sm:px-3.5 sm:py-1 rounded-full bg-white/[0.04] border border-white/10 text-neutral-400 font-mono text-[8.5px] sm:text-[10px] tracking-[0.2em] sm:tracking-[0.25em] uppercase mb-1 sm:mb-2.5 shadow-[0_0_20px_rgba(255,255,255,0.03)] backdrop-blur-md">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#10b981]" />
-              <span>THE ALGORA DIFFERENCE // 06 PILLARS</span>
-            </div>
             <h3 className="font-sans font-extrabold text-base sm:text-2xl md:text-3xl lg:text-4xl text-white tracking-tight uppercase">
               WHY ENTRUST YOUR PROJECT TO US
             </h3>
-            <p className="font-sans text-[10px] sm:text-xs md:text-sm text-neutral-400 mt-0.5 sm:mt-1 max-w-xl">
+            <p className="font-sans text-[10px] sm:text-xs md:text-sm text-neutral-400 mt-1 max-w-xl">
               Digitally engineered with clean architecture, enterprise-grade security, and deterministic on-time delivery.
             </p>
           </div>

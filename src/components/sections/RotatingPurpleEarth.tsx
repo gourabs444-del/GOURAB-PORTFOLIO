@@ -17,15 +17,17 @@ export function RotatingPurpleEarth() {
     let width = 0;
     let height = 0;
 
-    const landCoords: [number, number][] = earthDotsData as [number, number][];
+    const landCoords: [number, number, number][] = earthDotsData as [number, number, number][];
 
     // Pre-allocate typed arrays for fast trigonometric calculation
     const numPoints = landCoords.length;
     const lats = new Float32Array(numPoints);
     const lons = new Float32Array(numPoints);
+    const isEdges = new Uint8Array(numPoints);
     for (let i = 0; i < numPoints; i++) {
       lats[i] = (landCoords[i][0] * Math.PI) / 180;
       lons[i] = (landCoords[i][1] * Math.PI) / 180;
+      isEdges[i] = landCoords[i][2] || 0;
     }
 
     // Subtle floating violet stardust particles
@@ -67,7 +69,7 @@ export function RotatingPurpleEarth() {
 
     // Continuous celestial rotation - tuned to a slow, majestic planetary drift
     let rot = 0.75;
-    const rotSpeed = 0.00095; // Slowed down by 55% per user request
+    const rotSpeed = 0.00095; // Slowed down per user request
     const tilt = 19 * (Math.PI / 180);
     const sinTilt = Math.sin(tilt);
     const cosTilt = Math.cos(tilt);
@@ -143,12 +145,14 @@ export function RotatingPurpleEarth() {
 
       // ALL GRID LINES HAVE BEEN DELETED PER USER REQUEST (No latitude / longitude lines)
 
-      // 4. High-Density 3D Rotating Dot-Matrix Continents in Vibrant Violet
-      // Organic randomized dots with delicate thin & small radius
-      const bucket0: { px: number; py: number; r: number }[] = [];
-      const bucket1: { px: number; py: number; r: number }[] = [];
-      const bucket2: { px: number; py: number; r: number }[] = [];
-      const bucket3: { px: number; py: number; r: number }[] = [];
+      // 4. Continents & Countries Dot-Matrix (Edges slightly bold, interior delicate stipple)
+      const edgeCrest: { px: number; py: number; r: number }[] = [];
+      const edgeFront: { px: number; py: number; r: number }[] = [];
+      const edgeLimb: { px: number; py: number; r: number }[] = [];
+
+      const intCrest: { px: number; py: number; r: number }[] = [];
+      const intFront: { px: number; py: number; r: number }[] = [];
+      const intLimb: { px: number; py: number; r: number }[] = [];
 
       const bottomCutoff = height + 30;
 
@@ -174,65 +178,95 @@ export function RotatingPurpleEarth() {
             const px = cx + x1;
             const depthFactor = (z1 + radius * 0.05) / (radius * 1.05);
             const topAura = Math.max(0, 1 - Math.abs(y1 + radius * 0.5) / (radius * 0.8));
-            
-            // Ultra-thin, fine, small dot radius ("jyada thin and chota hoga")
-            const dotRadius = Math.max(0.40, 0.62 + depthFactor * 0.50 + topAura * 0.18);
+            const isEdge = isEdges[i] === 1;
 
-            if (topAura > 0.45) {
-              bucket3.push({ px, py, r: dotRadius });
-            } else if (depthFactor > 0.6) {
-              bucket2.push({ px, py, r: dotRadius });
-            } else if (depthFactor > 0.25) {
-              bucket1.push({ px, py, r: dotRadius });
+            if (isEdge) {
+              // Edge dots defining countries & continents: slightly bold ("thoda bold hoga thoda bold jyada nhi")
+              const dotRadius = Math.max(0.65, 0.90 + depthFactor * 0.65 + topAura * 0.25);
+              if (topAura > 0.45) {
+                edgeCrest.push({ px, py, r: dotRadius });
+              } else if (depthFactor > 0.35) {
+                edgeFront.push({ px, py, r: dotRadius });
+              } else {
+                edgeLimb.push({ px, py, r: dotRadius });
+              }
             } else {
-              bucket0.push({ px, py, r: dotRadius });
+              // Interior land dots: delicate, thin, fine stipple
+              const dotRadius = Math.max(0.36, 0.50 + depthFactor * 0.40 + topAura * 0.15);
+              if (topAura > 0.45) {
+                intCrest.push({ px, py, r: dotRadius });
+              } else if (depthFactor > 0.35) {
+                intFront.push({ px, py, r: dotRadius });
+              } else {
+                intLimb.push({ px, py, r: dotRadius });
+              }
             }
           }
         }
       }
 
-      // Draw Bucket 0: Limb / edge dots (soft lavender-violet)
-      if (bucket0.length > 0) {
-        ctx.fillStyle = "rgba(167, 139, 250, 0.20)";
+      // Draw Interior Dots first (subtle background fill)
+      if (intLimb.length > 0) {
+        ctx.fillStyle = "rgba(167, 139, 250, 0.18)";
         ctx.beginPath();
-        for (let i = 0; i < bucket0.length; i++) {
-          const b = bucket0[i];
+        for (let i = 0; i < intLimb.length; i++) {
+          const b = intLimb[i];
           ctx.moveTo(b.px + b.r, b.py);
           ctx.arc(b.px, b.py, b.r, 0, Math.PI * 2);
         }
         ctx.fill();
       }
 
-      // Draw Bucket 1: Mid-depth dots (rich purple-violet)
-      if (bucket1.length > 0) {
-        ctx.fillStyle = "rgba(139, 92, 246, 0.34)";
+      if (intFront.length > 0) {
+        ctx.fillStyle = "rgba(139, 92, 246, 0.30)";
         ctx.beginPath();
-        for (let i = 0; i < bucket1.length; i++) {
-          const b = bucket1[i];
+        for (let i = 0; i < intFront.length; i++) {
+          const b = intFront[i];
           ctx.moveTo(b.px + b.r, b.py);
           ctx.arc(b.px, b.py, b.r, 0, Math.PI * 2);
         }
         ctx.fill();
       }
 
-      // Draw Bucket 2: Front prominent dots (deep royal violet with soft transparency)
-      if (bucket2.length > 0) {
-        ctx.fillStyle = "rgba(109, 40, 217, 0.48)";
+      if (intCrest.length > 0) {
+        ctx.fillStyle = "rgba(192, 38, 211, 0.42)";
         ctx.beginPath();
-        for (let i = 0; i < bucket2.length; i++) {
-          const b = bucket2[i];
+        for (let i = 0; i < intCrest.length; i++) {
+          const b = intCrest[i];
           ctx.moveTo(b.px + b.r, b.py);
           ctx.arc(b.px, b.py, b.r, 0, Math.PI * 2);
         }
         ctx.fill();
       }
 
-      // Draw Bucket 3: Top atmospheric crest dots (radiant fuchsia-violet)
-      if (bucket3.length > 0) {
-        ctx.fillStyle = "rgba(192, 38, 211, 0.58)";
+      // Draw Edge Dots on top (clearly outlining countries & continents, thoda bold!)
+      if (edgeLimb.length > 0) {
+        ctx.fillStyle = "rgba(139, 92, 246, 0.55)";
         ctx.beginPath();
-        for (let i = 0; i < bucket3.length; i++) {
-          const b = bucket3[i];
+        for (let i = 0; i < edgeLimb.length; i++) {
+          const b = edgeLimb[i];
+          ctx.moveTo(b.px + b.r, b.py);
+          ctx.arc(b.px, b.py, b.r, 0, Math.PI * 2);
+        }
+        ctx.fill();
+      }
+
+      if (edgeFront.length > 0) {
+        ctx.fillStyle = "rgba(109, 40, 217, 0.78)"; // Deep crisp violet outline
+        ctx.beginPath();
+        for (let i = 0; i < edgeFront.length; i++) {
+          const b = edgeFront[i];
+          ctx.moveTo(b.px + b.r, b.py);
+          ctx.arc(b.px, b.py, b.r, 0, Math.PI * 2);
+        }
+        ctx.fill();
+      }
+
+      if (edgeCrest.length > 0) {
+        ctx.fillStyle = "rgba(192, 38, 211, 0.85)"; // Radiant fuchsia-violet outline
+        ctx.beginPath();
+        for (let i = 0; i < edgeCrest.length; i++) {
+          const b = edgeCrest[i];
           ctx.moveTo(b.px + b.r, b.py);
           ctx.arc(b.px, b.py, b.r, 0, Math.PI * 2);
         }
