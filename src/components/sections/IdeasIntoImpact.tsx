@@ -189,8 +189,8 @@ export function IdeasIntoImpact() {
         ascensionRef.current,
         {
           opacity: 0,
-          scale: isMobile ? 1.3 : 2.0,
-          y: isMobile ? 40 : 160,
+          scale: isMobile ? 1.15 : 2.0,
+          y: isMobile ? 20 : 160,
           filter: "blur(10px)",
         },
         {
@@ -209,9 +209,9 @@ export function IdeasIntoImpact() {
         portraitRef.current,
         {
           opacity: 0,
-          x: isMobile ? 50 : 240,
-          y: isMobile ? 70 : 300,
-          scale: 0.55,
+          x: isMobile ? 25 : 240,
+          y: isMobile ? 30 : 300,
+          scale: isMobile ? 0.7 : 0.55,
           filter: "grayscale(100%) blur(8px)",
         },
         {
@@ -526,9 +526,9 @@ export function IdeasIntoImpact() {
         portraitRef.current,
         {
           opacity: 0,
-          x: isMobile ? 50 : 240,
-          y: isMobile ? 70 : 280,
-          scale: 0.55,
+          x: isMobile ? 25 : 240,
+          y: isMobile ? 30 : 280,
+          scale: isMobile ? 0.7 : 0.55,
           filter: "grayscale(100%) blur(8px)",
           duration: 1.3,
           ease: "power2.in",
@@ -556,8 +556,8 @@ export function IdeasIntoImpact() {
         ascensionRef.current,
         {
           opacity: 0,
-          scale: isMobile ? 1.3 : 1.8,
-          y: isMobile ? 40 : 160,
+          scale: isMobile ? 1.15 : 1.8,
+          y: isMobile ? 20 : 160,
           filter: "blur(10px)",
           duration: 1.3,
           ease: "power2.in",
@@ -2019,50 +2019,53 @@ export function IdeasIntoImpact() {
             </div>
 
             {/* Right Column: Hero Visual with ASCENSION & Flying Portrait */}
-            <div className="w-full lg:w-[58%] relative flex items-center justify-center min-h-[170px] xs:min-h-[200px] sm:min-h-[350px] lg:min-h-[540px] flex-1 min-h-0 pointer-events-none">
-              {/* Environmental Backlight Glow */}
-              <div
-                ref={auraRef}
-                className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] xs:w-[340px] sm:w-[540px] lg:w-[760px] h-[180px] xs:h-[220px] sm:h-[350px] lg:h-[500px] rounded-full blur-[40px] sm:blur-[70px] bg-[radial-gradient(ellipse_at_center,_rgba(168,85,247,0.42)_0%,_rgba(124,58,237,0.2)_40%,_transparent_70%)]"
-                aria-hidden="true"
-              />
-
-              {/* Behind-the-Head Tall Condensed Editorial Typography */}
-              <div
-                ref={ascensionRef}
-                className="absolute top-[-4%] xs:top-[0%] sm:top-[5%] lg:top-[4%] left-1/2 lg:left-[52.8%] -translate-x-1/2 select-none z-10 opacity-90 will-change-transform pointer-events-none"
-                aria-hidden="true"
-              >
-                <span className="block font-display font-black text-4xl xs:text-5xl sm:text-7xl md:text-9xl lg:text-[8.8rem] xl:text-[10.2rem] tracking-[0.05em] uppercase whitespace-nowrap bg-gradient-to-b from-white/90 via-white/40 to-transparent bg-clip-text text-transparent scale-y-[1.35] xs:scale-y-[1.45] sm:scale-y-[1.65] origin-bottom">
-                  ASCENSION
-                </span>
-              </div>
-
-              {/* Flying Portrait Image */}
-              <div
-                ref={portraitRef}
-                className="relative z-20 w-full max-w-[260px] xs:max-w-[300px] sm:max-w-[520px] lg:max-w-[720px] xl:max-w-[780px] h-[170px] xs:h-[200px] sm:h-[350px] lg:h-[540px] flex items-end justify-center will-change-transform"
-              >
-                <img
-                  src="/assets/hero-hd.png"
-                  alt="Gourab Creative Developer"
-                  className="w-auto h-full max-h-[170px] xs:max-h-[200px] sm:max-h-[350px] lg:max-h-[540px] object-contain object-bottom scale-[1.02] sm:scale-[1.12] lg:scale-[1.15] origin-bottom translate-y-0 sm:translate-y-[20px] lg:translate-y-[45px] translate-x-0 sm:translate-x-4 lg:translate-x-12 [mask-image:linear-gradient(to_bottom,black_60%,transparent_100%)] filter contrast-[1.05] brightness-[1.02]"
+            <div className="w-full lg:w-[58%] relative flex items-center justify-center min-h-[190px] xs:min-h-[220px] sm:min-h-[350px] lg:min-h-[540px] flex-1 min-h-0 pointer-events-none my-auto">
+              {/* Visual Framing Wrapper that binds Glow, ASCENSION, and Portrait together */}
+              <div className="relative w-full max-w-[280px] xs:max-w-[320px] sm:max-w-[520px] lg:max-w-[720px] xl:max-w-[780px] h-[190px] xs:h-[220px] sm:h-[350px] lg:h-[540px] flex items-end justify-center">
+                {/* Environmental Backlight Glow */}
+                <div
+                  ref={auraRef}
+                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[260px] xs:w-[320px] sm:w-[540px] lg:w-[760px] h-[160px] xs:h-[200px] sm:h-[350px] lg:h-[500px] rounded-full blur-[35px] sm:blur-[70px] bg-[radial-gradient(ellipse_at_center,_rgba(168,85,247,0.42)_0%,_rgba(124,58,237,0.2)_40%,_transparent_70%)] pointer-events-none"
+                  aria-hidden="true"
                 />
-              </div>
 
-              {/* Right Shoulder Floating Editorial Paragraph (Beside shoulder, ultra-tiny white text) */}
-              <div
-                ref={shoulderBadgeRef}
-                className="hidden sm:flex absolute right-[-35px] sm:right-[-50px] lg:right-[-65px] xl:right-[-80px] top-[64%] sm:top-[62%] lg:top-[59%] -translate-y-1/2 z-25 flex-col gap-1 max-w-[130px] sm:max-w-[145px] lg:max-w-[160px] will-change-transform pointer-events-none select-none text-left"
-              >
-                <div className="text-white/50">
-                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-2.5 h-2.5">
-                    <path d="M12 0L14 10L24 12L14 14L12 24L10 14L0 12L10 10L12 0Z" />
-                  </svg>
+                {/* Behind-the-Head Tall Condensed Editorial Typography */}
+                <div
+                  ref={ascensionRef}
+                  className="absolute top-[2%] xs:top-[3%] sm:top-[5%] lg:top-[4%] left-1/2 lg:left-[52.8%] -translate-x-1/2 select-none z-10 opacity-90 will-change-transform pointer-events-none"
+                  aria-hidden="true"
+                >
+                  <span className="block font-display font-black text-3xl xs:text-4xl sm:text-7xl md:text-9xl lg:text-[8.8rem] xl:text-[10.2rem] tracking-[0.05em] uppercase whitespace-nowrap bg-gradient-to-b from-white/90 via-white/40 to-transparent bg-clip-text text-transparent scale-y-[1.3] xs:scale-y-[1.4] sm:scale-y-[1.65] origin-bottom">
+                    ASCENSION
+                  </span>
                 </div>
-                <p className="font-sans text-[7.5px] sm:text-[8px] lg:text-[8.5px] text-white/75 leading-[1.5] tracking-tight font-normal">
-                  Architecting scalable digital systems, bespoke WebGL interactions, and high-performance creative interfaces engineered with precision, motion, and distinction.
-                </p>
+
+                {/* Flying Portrait Image */}
+                <div
+                  ref={portraitRef}
+                  className="relative z-20 w-full h-full flex items-end justify-center will-change-transform"
+                >
+                  <img
+                    src="/assets/hero-hd.png"
+                    alt="Gourab Creative Developer"
+                    className="w-auto h-full object-contain object-bottom scale-[1.02] sm:scale-[1.12] lg:scale-[1.15] origin-bottom translate-y-0 sm:translate-y-[20px] lg:translate-y-[45px] translate-x-0 sm:translate-x-4 lg:translate-x-12 [mask-image:linear-gradient(to_bottom,black_65%,transparent_100%)] filter contrast-[1.05] brightness-[1.02]"
+                  />
+                </div>
+
+                {/* Right Shoulder Floating Editorial Paragraph (Beside shoulder, ultra-tiny white text) */}
+                <div
+                  ref={shoulderBadgeRef}
+                  className="hidden sm:flex absolute right-[-35px] sm:right-[-50px] lg:right-[-65px] xl:right-[-80px] top-[64%] sm:top-[62%] lg:top-[59%] -translate-y-1/2 z-25 flex-col gap-1 max-w-[130px] sm:max-w-[145px] lg:max-w-[160px] will-change-transform pointer-events-none select-none text-left"
+                >
+                  <div className="text-white/50">
+                    <svg viewBox="0 0 24 24" fill="currentColor" className="w-2.5 h-2.5">
+                      <path d="M12 0L14 10L24 12L14 14L12 24L10 14L0 12L10 10L12 0Z" />
+                    </svg>
+                  </div>
+                  <p className="font-sans text-[7.5px] sm:text-[8px] lg:text-[8.5px] text-white/75 leading-[1.5] tracking-tight font-normal">
+                    Architecting scalable digital systems, bespoke WebGL interactions, and high-performance creative interfaces engineered with precision, motion, and distinction.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -2161,7 +2164,7 @@ export function IdeasIntoImpact() {
         {/* ========================================================= */}
         <div
           ref={ctaLayerRef}
-          className="absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center overflow-hidden z-20 px-6 sm:px-12 md:px-16 lg:px-24 select-none pointer-events-none"
+          className="absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center overflow-hidden z-20 px-4 sm:px-12 md:px-16 lg:px-24 select-none pointer-events-none"
         >
           {/* Ambient Warm Golden / Cyan Radial Lighting */}
           <div
@@ -2185,19 +2188,21 @@ export function IdeasIntoImpact() {
           </div>
 
           {/* Foreground 3-Line Bodoni Headline */}
-          <div className="relative z-10 flex flex-col items-center justify-center max-w-6xl mx-auto overflow-visible py-4 my-auto">
+          <div className="relative z-10 flex flex-col items-center justify-center w-full max-w-5xl mx-auto overflow-visible py-4 text-center px-2 sm:px-4">
             <h2
               ref={ctaHeadingRef}
-              className="font-bodoni font-medium text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.4rem] text-white tracking-tight leading-[1.3] sm:leading-[1.34] text-center px-4 overflow-visible will-change-transform"
+              className="w-full font-bodoni font-medium text-[22px] xs:text-[27px] sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.4rem] text-white tracking-tight leading-[1.25] sm:leading-[1.34] text-center px-1 sm:px-4 overflow-visible will-change-transform flex flex-col items-center justify-center mx-auto"
             >
-              <span className="block whitespace-nowrap overflow-visible">Let&apos;s build</span>
-              <span className="block whitespace-nowrap overflow-visible py-1">
+              <span className="block text-center whitespace-nowrap overflow-visible">
+                Let&apos;s build
+              </span>
+              <span className="block text-center whitespace-nowrap overflow-visible py-0.5 sm:py-1">
                 something{" "}
-                <span className="font-bodoni italic font-normal bg-gradient-to-r from-amber-200 via-amber-400 to-amber-500 bg-clip-text text-transparent inline-block pr-4 pl-0.5 pt-1 pb-3 leading-[1.3] overflow-visible drop-shadow-[0_0_35px_rgba(245,158,11,0.35)]">
+                <span className="font-bodoni italic font-normal bg-gradient-to-r from-amber-200 via-amber-400 to-amber-500 bg-clip-text text-transparent inline-block pr-1 sm:pr-4 pl-0.5 pt-0.5 sm:pt-1 pb-1 sm:pb-3 leading-[1.2] overflow-visible drop-shadow-[0_0_35px_rgba(245,158,11,0.35)]">
                   extraordinary
                 </span>
               </span>
-              <span className="block font-bodoni italic font-normal bg-gradient-to-r from-sky-200 via-cyan-300 to-teal-300 bg-clip-text text-transparent whitespace-nowrap overflow-visible pr-4 pl-0.5 pt-1 pb-3 leading-[1.3] drop-shadow-[0_0_35px_rgba(56,189,248,0.35)]">
+              <span className="block text-center font-bodoni italic font-normal bg-gradient-to-r from-sky-200 via-cyan-300 to-teal-300 bg-clip-text text-transparent whitespace-nowrap overflow-visible pr-1 sm:pr-4 pl-0.5 pt-0.5 sm:pt-1 pb-1 sm:pb-3 leading-[1.2] drop-shadow-[0_0_35px_rgba(56,189,248,0.35)]">
                 together.
               </span>
             </h2>
