@@ -3,7 +3,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "@/lib/gsap";
-import { ArrowUpRight, Cpu, Layers, Terminal, Sparkles, Check, Database, Zap, Code, ShieldCheck, ChevronRight } from "lucide-react";
 import { useAudioFeedback } from "@/hooks/useAudioFeedback";
 import { RotatingPurpleEarth } from "./RotatingPurpleEarth";
 import { EngineArchitectureGrid } from "./EngineArchitectureGrid";
@@ -16,20 +15,10 @@ export function BrandIntegrationSection() {
 
   // Interactive Product Demo State
   const [activeTab, setActiveTab] = useState<"build" | "ai" | "deploy">("build");
-  const [promptText, setPromptText] = useState("Generate high-performance WebGL portfolio architecture");
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [demoResult, setDemoResult] = useState<string | null>("System Ready // 60FPS Render Pipeline Active");
 
   const handleSimulateClick = (tab: "build" | "ai" | "deploy") => {
     setActiveTab(tab);
-    setIsProcessing(true);
     playHover();
-    setTimeout(() => {
-      setIsProcessing(false);
-      if (tab === "build") setDemoResult("Modular React 19 + GSAP Engine Deployed");
-      if (tab === "ai") setDemoResult("Neural Design Matrix Tokenized [99.8% Precision]");
-      if (tab === "deploy") setDemoResult("Edge Node Sync Complete // Latency 14ms");
-    }, 600);
   };
 
   useEffect(() => {

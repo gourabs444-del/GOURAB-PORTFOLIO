@@ -189,8 +189,8 @@ export function IdeasIntoImpact() {
         ascensionRef.current,
         {
           opacity: 0,
-          scale: isMobile ? 1.5 : 2.0,
-          y: isMobile ? 80 : 160,
+          scale: isMobile ? 1.3 : 2.0,
+          y: isMobile ? 40 : 160,
           filter: "blur(10px)",
         },
         {
@@ -209,8 +209,8 @@ export function IdeasIntoImpact() {
         portraitRef.current,
         {
           opacity: 0,
-          x: isMobile ? 100 : 240,
-          y: isMobile ? 160 : 300,
+          x: isMobile ? 50 : 240,
+          y: isMobile ? 70 : 300,
           scale: 0.55,
           filter: "grayscale(100%) blur(8px)",
         },
@@ -370,7 +370,7 @@ export function IdeasIntoImpact() {
           {
             opacity: 1,
             scale: 1,
-            y: isMobile ? -45 : -85,
+            y: isMobile ? 0 : -85,
             filter: "blur(0px)",
             duration: 3.0,
             ease: "none",
@@ -526,8 +526,8 @@ export function IdeasIntoImpact() {
         portraitRef.current,
         {
           opacity: 0,
-          x: isMobile ? 100 : 240,
-          y: isMobile ? 140 : 280,
+          x: isMobile ? 50 : 240,
+          y: isMobile ? 70 : 280,
           scale: 0.55,
           filter: "grayscale(100%) blur(8px)",
           duration: 1.3,
@@ -556,8 +556,8 @@ export function IdeasIntoImpact() {
         ascensionRef.current,
         {
           opacity: 0,
-          scale: isMobile ? 1.4 : 1.8,
-          y: isMobile ? 70 : 160,
+          scale: isMobile ? 1.3 : 1.8,
+          y: isMobile ? 40 : 160,
           filter: "blur(10px)",
           duration: 1.3,
           ease: "power2.in",
@@ -1812,7 +1812,7 @@ export function IdeasIntoImpact() {
       {/* Sticky Fullscreen Pinned Stage */}
       <div
         ref={stageRef}
-        className="sticky top-0 w-full h-screen min-h-screen flex flex-col justify-between overflow-hidden px-4 sm:px-8 md:px-12 lg:px-16 pt-0 pb-2 sm:pt-1 sm:pb-3 transform-gpu"
+        className="sticky top-0 w-full h-[100dvh] min-h-[100dvh] lg:h-screen lg:min-h-screen flex flex-col justify-between overflow-hidden px-3 sm:px-8 md:px-12 lg:px-16 pt-1 pb-1 sm:pt-1 sm:pb-3 transform-gpu"
       >
         {/* Studio Lighting Ambient Glows */}
         <div
@@ -1832,25 +1832,25 @@ export function IdeasIntoImpact() {
         {/* ========================================================= */}
         <div
           ref={heroLayerRef}
-          className="max-w-7xl mx-auto w-full flex flex-col justify-between h-full relative z-20 pointer-events-auto py-0 -translate-y-4 sm:-translate-y-7 lg:-translate-y-9 will-change-transform transform-gpu"
+          className="max-w-7xl mx-auto w-full flex flex-col justify-between h-full relative z-20 pointer-events-auto py-0 translate-y-0 sm:-translate-y-7 lg:-translate-y-9 will-change-transform transform-gpu"
         >
           {/* ========================================================= */}
           {/* 1. HERO SECTION: ASSEMBLED CONTENT & PORTRAIT            */}
           {/* ========================================================= */}
-          <div className="relative flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-6 flex-1 min-h-0">
+          <div className="relative flex flex-col lg:flex-row items-center justify-between gap-2 xs:gap-3 sm:gap-4 lg:gap-6 flex-1 min-h-0">
             {/* Left Column: Assembling Headline & Interactive Actions */}
             <div
               ref={leftContentRef}
               className="w-full lg:w-[42%] flex flex-col justify-center relative z-30 pointer-events-auto"
             >
               {/* Category Tag */}
-              <div className="assemble-item flex items-center gap-2 text-xs font-mono tracking-[0.2em] text-[#94a3b8] uppercase mb-3">
-                <span className="w-5 h-[1.5px] bg-[#94a3b8]" />
+              <div className="assemble-item flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-xs font-mono tracking-[0.2em] text-[#94a3b8] uppercase mb-1.5 sm:mb-3">
+                <span className="w-3.5 sm:w-5 h-[1.5px] bg-[#94a3b8]" />
                 <span>CREATIVE DEVELOPER</span>
               </div>
 
               {/* Headline */}
-              <h2 className="assemble-item font-sans font-black text-4xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-[1.08] mb-4">
+              <h2 className="assemble-item font-sans font-black text-2xl xs:text-3xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-[1.08] mb-2 sm:mb-4">
                 Ideas into <br />
                 <span className="bg-gradient-to-r from-[#c084fc] via-[#818cf8] to-[#60a5fa] bg-clip-text text-transparent drop-shadow-[0_0_35px_rgba(192,132,252,0.4)]">
                   Impact
@@ -1858,24 +1858,24 @@ export function IdeasIntoImpact() {
               </h2>
 
               {/* Availability Status */}
-              <div className="assemble-item flex items-center gap-2.5 mb-6">
-                <span className="relative flex h-2.5 w-2.5">
+              <div className="assemble-item flex items-center gap-2 sm:gap-2.5 mb-2.5 sm:mb-6">
+                <span className="relative flex h-2 w-2 sm:h-2.5 sm:w-2.5">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 shadow-[0_0_8px_#22c55e]" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 sm:h-2.5 sm:w-2.5 bg-emerald-500 shadow-[0_0_8px_#22c55e]" />
                 </span>
-                <span className="font-mono text-[11px] sm:text-xs font-semibold tracking-[0.15em] text-[#64748b] uppercase">
+                <span className="font-mono text-[9px] xs:text-[10px] sm:text-xs font-semibold tracking-[0.15em] text-[#64748b] uppercase">
                   AVAILABLE FOR FREELANCE
                 </span>
               </div>
 
               {/* Connect With Me Socials */}
-              <div className="flex flex-col gap-3 mt-1 relative z-50 pointer-events-auto">
-                <div className="social-label-anim flex items-center gap-2.5 text-[11px] font-mono font-semibold tracking-[0.18em] text-[#94a3b8] uppercase will-change-transform">
-                  <span className="social-line-anim w-5 h-[1.5px] bg-gradient-to-r from-purple-400 to-indigo-400 shadow-[0_0_8px_rgba(192,132,252,0.6)]" />
+              <div className="flex flex-col gap-1.5 sm:gap-3 mt-0.5 sm:mt-1 relative z-50 pointer-events-auto">
+                <div className="social-label-anim flex items-center gap-2 sm:gap-2.5 text-[9px] xs:text-[10px] sm:text-[11px] font-mono font-semibold tracking-[0.18em] text-[#94a3b8] uppercase will-change-transform">
+                  <span className="social-line-anim w-3.5 sm:w-5 h-[1.5px] bg-gradient-to-r from-purple-400 to-indigo-400 shadow-[0_0_8px_rgba(192,132,252,0.6)]" />
                   <span className="text-neutral-400">CONNECT WITH ME</span>
                 </div>
 
-                <div className="flex items-center gap-3 relative z-50 pointer-events-auto">
+                <div className="flex items-center gap-2 sm:gap-3 relative z-50 pointer-events-auto">
                   {/* LinkedIn */}
                   <div className="social-icon-item will-change-transform relative z-50 pointer-events-auto">
                     <a
@@ -1889,7 +1889,7 @@ export function IdeasIntoImpact() {
                         window.open("https://www.linkedin.com/in/gourab-maji-4964a4397/", "_blank", "noopener,noreferrer");
                       }}
                       onMouseEnter={() => playHover()}
-                      className="group relative w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#0e1018]/90 backdrop-blur-md border border-white/10 hover:border-[#0a66c2]/70 hover:bg-[#0a66c2]/15 flex items-center justify-center transition-all duration-300 shadow-[0_4px_16px_rgba(0,0,0,0.5)] hover:shadow-[0_8px_25px_rgba(10,102,194,0.45)] hover:-translate-y-1 hover:scale-105 active:scale-95 cursor-pointer overflow-visible relative z-50 pointer-events-auto"
+                      className="group relative w-8 h-8 xs:w-9 xs:h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-[#0e1018]/90 backdrop-blur-md border border-white/10 hover:border-[#0a66c2]/70 hover:bg-[#0a66c2]/15 flex items-center justify-center transition-all duration-300 shadow-[0_4px_16px_rgba(0,0,0,0.5)] hover:shadow-[0_8px_25px_rgba(10,102,194,0.45)] hover:-translate-y-1 hover:scale-105 active:scale-95 cursor-pointer overflow-visible relative z-50 pointer-events-auto"
                       aria-label="LinkedIn"
                     >
                       {/* Tooltip Badge */}
@@ -1897,15 +1897,15 @@ export function IdeasIntoImpact() {
                         LinkedIn
                       </span>
                       {/* Ambient Glow Aura Behind */}
-                      <div className="absolute inset-0 rounded-2xl bg-[radial-gradient(circle_at_center,_rgba(10,102,194,0.35)_0%,_transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-                      <svg viewBox="0 0 24 24" width="20" height="20" className="relative z-10 group-hover:scale-115 group-hover:-rotate-3 transition-transform duration-300">
+                      <div className="absolute inset-0 rounded-xl sm:rounded-2xl bg-[radial-gradient(circle_at_center,_rgba(10,102,194,0.35)_0%,_transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                      <svg viewBox="0 0 24 24" className="w-4 h-4 xs:w-[18px] xs:h-[18px] sm:w-5 sm:h-5 relative z-10 group-hover:scale-115 group-hover:-rotate-3 transition-transform duration-300">
                         <path
                           fill="#0A66C2"
                           d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.65 1.65 0 1 0 0-3.3 1.65 1.65 0 0 0 0 3.3m1.4 9.74V10.13H5.06v8.37h2.8z"
                         />
                       </svg>
                       {/* Top Specular Sheen */}
-                      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/25 to-transparent rounded-t-2xl" />
+                      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/25 to-transparent rounded-t-xl sm:rounded-t-2xl" />
                     </a>
                   </div>
 
@@ -1922,15 +1922,15 @@ export function IdeasIntoImpact() {
                         window.open("https://github.com/gourabs444-del", "_blank", "noopener,noreferrer");
                       }}
                       onMouseEnter={() => playHover()}
-                      className="group relative w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#0e1018]/90 backdrop-blur-md border border-white/10 hover:border-white/60 hover:bg-white/15 flex items-center justify-center transition-all duration-300 shadow-[0_4px_16px_rgba(0,0,0,0.5)] hover:shadow-[0_8px_25px_rgba(255,255,255,0.3)] hover:-translate-y-1 hover:scale-105 active:scale-95 cursor-pointer overflow-visible relative z-50 pointer-events-auto"
+                      className="group relative w-8 h-8 xs:w-9 xs:h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-[#0e1018]/90 backdrop-blur-md border border-white/10 hover:border-white/60 hover:bg-white/15 flex items-center justify-center transition-all duration-300 shadow-[0_4px_16px_rgba(0,0,0,0.5)] hover:shadow-[0_8px_25px_rgba(255,255,255,0.3)] hover:-translate-y-1 hover:scale-105 active:scale-95 cursor-pointer overflow-visible relative z-50 pointer-events-auto"
                       aria-label="GitHub"
                     >
                       {/* Tooltip Badge */}
                       <span className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded-md bg-neutral-800 border border-white/20 text-white font-mono text-[9px] font-bold tracking-wider uppercase opacity-0 group-hover:opacity-100 group-hover:-translate-y-0.5 transition-all duration-200 shadow-md whitespace-nowrap z-30">
                         GitHub
                       </span>
-                      <div className="absolute inset-0 rounded-2xl bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.25)_0%,_transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-                      <svg viewBox="0 0 24 24" width="20" height="20" className="relative z-10 group-hover:scale-115 group-hover:-rotate-3 transition-transform duration-300">
+                      <div className="absolute inset-0 rounded-xl sm:rounded-2xl bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.25)_0%,_transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                      <svg viewBox="0 0 24 24" className="w-4 h-4 xs:w-[18px] xs:h-[18px] sm:w-5 sm:h-5 relative z-10 group-hover:scale-115 group-hover:-rotate-3 transition-transform duration-300">
                         <path
                           fill="#FFFFFF"
                           fillRule="evenodd"
@@ -1938,7 +1938,7 @@ export function IdeasIntoImpact() {
                           d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
                         />
                       </svg>
-                      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/25 to-transparent rounded-t-2xl" />
+                      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/25 to-transparent rounded-t-xl sm:rounded-t-2xl" />
                     </a>
                   </div>
 
@@ -1955,15 +1955,15 @@ export function IdeasIntoImpact() {
                         window.open("https://www.instagram.com/01env/", "_blank", "noopener,noreferrer");
                       }}
                       onMouseEnter={() => playHover()}
-                      className="group relative w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#0e1018]/90 backdrop-blur-md border border-white/10 hover:border-[#e1306c]/70 hover:bg-[#e1306c]/15 flex items-center justify-center transition-all duration-300 shadow-[0_4px_16px_rgba(0,0,0,0.5)] hover:shadow-[0_8px_25px_rgba(225,48,108,0.45)] hover:-translate-y-1 hover:scale-105 active:scale-95 cursor-pointer overflow-visible relative z-50 pointer-events-auto"
+                      className="group relative w-8 h-8 xs:w-9 xs:h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-[#0e1018]/90 backdrop-blur-md border border-white/10 hover:border-[#e1306c]/70 hover:bg-[#e1306c]/15 flex items-center justify-center transition-all duration-300 shadow-[0_4px_16px_rgba(0,0,0,0.5)] hover:shadow-[0_8px_25px_rgba(225,48,108,0.45)] hover:-translate-y-1 hover:scale-105 active:scale-95 cursor-pointer overflow-visible relative z-50 pointer-events-auto"
                       aria-label="Instagram"
                     >
                       {/* Tooltip Badge */}
                       <span className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded-md bg-gradient-to-r from-[#fd5949] to-[#d6249f] text-white font-mono text-[9px] font-bold tracking-wider uppercase opacity-0 group-hover:opacity-100 group-hover:-translate-y-0.5 transition-all duration-200 shadow-md whitespace-nowrap z-30">
                         Instagram
                       </span>
-                      <div className="absolute inset-0 rounded-2xl bg-[radial-gradient(circle_at_center,_rgba(225,48,108,0.35)_0%,_transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-                      <svg viewBox="0 0 24 24" width="20" height="20" className="relative z-10 group-hover:scale-115 group-hover:-rotate-3 transition-transform duration-300">
+                      <div className="absolute inset-0 rounded-xl sm:rounded-2xl bg-[radial-gradient(circle_at_center,_rgba(225,48,108,0.35)_0%,_transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                      <svg viewBox="0 0 24 24" className="w-4 h-4 xs:w-[18px] xs:h-[18px] sm:w-5 sm:h-5 relative z-10 group-hover:scale-115 group-hover:-rotate-3 transition-transform duration-300">
                         <defs>
                           <radialGradient id="impactIgGrad2" cx="20%" cy="105%" r="130%">
                             <stop offset="0%" stopColor="#fdf497" />
@@ -1978,7 +1978,7 @@ export function IdeasIntoImpact() {
                           d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
                         />
                       </svg>
-                      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/25 to-transparent rounded-t-2xl" />
+                      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/25 to-transparent rounded-t-xl sm:rounded-t-2xl" />
                     </a>
                   </div>
 
@@ -1993,15 +1993,15 @@ export function IdeasIntoImpact() {
                         window.location.href = "mailto:gourabs444@gmail.com";
                       }}
                       onMouseEnter={() => playHover()}
-                      className="group relative w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#0e1018]/90 backdrop-blur-md border border-white/10 hover:border-[#ea4335]/70 hover:bg-[#ea4335]/15 flex items-center justify-center transition-all duration-300 shadow-[0_4px_16px_rgba(0,0,0,0.5)] hover:shadow-[0_8px_25px_rgba(234,67,53,0.45)] hover:-translate-y-1 hover:scale-105 active:scale-95 cursor-pointer overflow-visible relative z-50 pointer-events-auto"
+                      className="group relative w-8 h-8 xs:w-9 xs:h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-[#0e1018]/90 backdrop-blur-md border border-white/10 hover:border-[#ea4335]/70 hover:bg-[#ea4335]/15 flex items-center justify-center transition-all duration-300 shadow-[0_4px_16px_rgba(0,0,0,0.5)] hover:shadow-[0_8px_25px_rgba(234,67,53,0.45)] hover:-translate-y-1 hover:scale-105 active:scale-95 cursor-pointer overflow-visible relative z-50 pointer-events-auto"
                       aria-label="Email"
                     >
                       {/* Tooltip Badge */}
                       <span className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded-md bg-[#ea4335] text-white font-mono text-[9px] font-bold tracking-wider uppercase opacity-0 group-hover:opacity-100 group-hover:-translate-y-0.5 transition-all duration-200 shadow-md whitespace-nowrap z-30">
                         Email
                       </span>
-                      <div className="absolute inset-0 rounded-2xl bg-[radial-gradient(circle_at_center,_rgba(234,67,53,0.35)_0%,_transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-                      <svg viewBox="0 0 24 24" width="20" height="20" className="relative z-10 group-hover:scale-115 group-hover:-rotate-3 transition-transform duration-300">
+                      <div className="absolute inset-0 rounded-xl sm:rounded-2xl bg-[radial-gradient(circle_at_center,_rgba(234,67,53,0.35)_0%,_transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                      <svg viewBox="0 0 24 24" className="w-4 h-4 xs:w-[18px] xs:h-[18px] sm:w-5 sm:h-5 relative z-10 group-hover:scale-115 group-hover:-rotate-3 transition-transform duration-300">
                         <path fill="#4285F4" d="M20 18h2V7.5L18.5 10v7.5c0 .83.67 1.5 1.5 1.5z" />
                         <path fill="#34A853" d="M4 19h-2V7.5L5.5 10v7.5c0 .83-.67 1.5-1.5 1.5z" />
                         <path fill="#EA4335" d="M18.5 6H5.5L12 11l6.5-5z" />
@@ -2010,7 +2010,7 @@ export function IdeasIntoImpact() {
                           d="M2 7.5V6c0-.83.67-1.5 1.5-1.5h1.5l7 5.5 7-5.5h1.5c.83 0 1.5.67 1.5 1.5v1.5L12 14 2 7.5z"
                         />
                       </svg>
-                      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/25 to-transparent rounded-t-2xl" />
+                      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/25 to-transparent rounded-t-xl sm:rounded-t-2xl" />
                     </a>
                   </div>
                 </div>
@@ -2018,21 +2018,21 @@ export function IdeasIntoImpact() {
             </div>
 
             {/* Right Column: Hero Visual with ASCENSION & Flying Portrait */}
-            <div className="w-full lg:w-[58%] relative flex items-center justify-center min-h-[420px] sm:min-h-[480px] lg:min-h-[540px] pointer-events-none">
+            <div className="w-full lg:w-[58%] relative flex items-center justify-center min-h-[170px] xs:min-h-[200px] sm:min-h-[350px] lg:min-h-[540px] flex-1 min-h-0 pointer-events-none">
               {/* Environmental Backlight Glow */}
               <div
                 ref={auraRef}
-                className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[480px] sm:w-[620px] lg:w-[760px] h-[320px] sm:h-[400px] lg:h-[500px] rounded-full blur-[70px] bg-[radial-gradient(ellipse_at_center,_rgba(168,85,247,0.42)_0%,_rgba(124,58,237,0.2)_40%,_transparent_70%)]"
+                className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] xs:w-[340px] sm:w-[540px] lg:w-[760px] h-[180px] xs:h-[220px] sm:h-[350px] lg:h-[500px] rounded-full blur-[40px] sm:blur-[70px] bg-[radial-gradient(ellipse_at_center,_rgba(168,85,247,0.42)_0%,_rgba(124,58,237,0.2)_40%,_transparent_70%)]"
                 aria-hidden="true"
               />
 
               {/* Behind-the-Head Tall Condensed Editorial Typography */}
               <div
                 ref={ascensionRef}
-                className="absolute top-[6%] sm:top-[5%] lg:top-[4%] left-[52.8%] -translate-x-1/2 select-none z-10 opacity-90 will-change-transform pointer-events-none"
+                className="absolute top-[-4%] xs:top-[0%] sm:top-[5%] lg:top-[4%] left-1/2 lg:left-[52.8%] -translate-x-1/2 select-none z-10 opacity-90 will-change-transform pointer-events-none"
                 aria-hidden="true"
               >
-                <span className="block font-display font-black text-7xl sm:text-8xl md:text-9xl lg:text-[8.8rem] xl:text-[10.2rem] tracking-[0.05em] uppercase whitespace-nowrap bg-gradient-to-b from-white/90 via-white/40 to-transparent bg-clip-text text-transparent scale-y-[1.65] origin-bottom">
+                <span className="block font-display font-black text-4xl xs:text-5xl sm:text-7xl md:text-9xl lg:text-[8.8rem] xl:text-[10.2rem] tracking-[0.05em] uppercase whitespace-nowrap bg-gradient-to-b from-white/90 via-white/40 to-transparent bg-clip-text text-transparent scale-y-[1.35] xs:scale-y-[1.45] sm:scale-y-[1.65] origin-bottom">
                   ASCENSION
                 </span>
               </div>
@@ -2040,12 +2040,12 @@ export function IdeasIntoImpact() {
               {/* Flying Portrait Image */}
               <div
                 ref={portraitRef}
-                className="relative z-20 w-full max-w-[520px] sm:max-w-[620px] lg:max-w-[720px] xl:max-w-[780px] h-[420px] sm:h-[480px] lg:h-[540px] flex items-end justify-center will-change-transform"
+                className="relative z-20 w-full max-w-[260px] xs:max-w-[300px] sm:max-w-[520px] lg:max-w-[720px] xl:max-w-[780px] h-[170px] xs:h-[200px] sm:h-[350px] lg:h-[540px] flex items-end justify-center will-change-transform"
               >
                 <img
                   src="/assets/hero-hd.png"
                   alt="Gourab Creative Developer"
-                  className="w-auto h-full max-h-[540px] object-contain object-bottom scale-[1.08] sm:scale-[1.12] lg:scale-[1.15] origin-bottom translate-y-[20px] sm:translate-y-[35px] lg:translate-y-[45px] translate-x-4 sm:translate-x-8 lg:translate-x-12 [mask-image:linear-gradient(to_bottom,black_60%,transparent_100%)] filter contrast-[1.05] brightness-[1.02]"
+                  className="w-auto h-full max-h-[170px] xs:max-h-[200px] sm:max-h-[350px] lg:max-h-[540px] object-contain object-bottom scale-[1.02] sm:scale-[1.12] lg:scale-[1.15] origin-bottom translate-y-0 sm:translate-y-[20px] lg:translate-y-[45px] translate-x-0 sm:translate-x-4 lg:translate-x-12 [mask-image:linear-gradient(to_bottom,black_60%,transparent_100%)] filter contrast-[1.05] brightness-[1.02]"
                 />
               </div>
 
@@ -2069,21 +2069,21 @@ export function IdeasIntoImpact() {
           {/* 2. SERVICES 12-CARD SHOWCASE REEL */}
           <div
             ref={cardsRef}
-            className="relative w-full overflow-hidden pb-2 sm:pb-3 mt-auto z-30 [mask-image:linear-gradient(to_right,transparent_0%,black_6%,black_94%,transparent_100%)]"
+            className="relative w-full overflow-hidden pb-1 sm:pb-3 mt-auto z-30 [mask-image:linear-gradient(to_right,transparent_0%,black_6%,black_94%,transparent_100%)]"
           >
             <div
               ref={cardsTrackRef}
-              className="flex gap-4 sm:gap-5 w-max will-change-transform py-2 items-center"
+              className="flex gap-3 sm:gap-5 w-max will-change-transform py-1 sm:py-2 items-center"
             >
               {carouselCards.map((s, idx) => (
                 <div
                   key={`${s.num}-${idx}`}
-                  className="service-card-anim flex-shrink-0 w-[285px] sm:w-[320px] lg:w-[345px] will-change-transform py-2"
+                  className="service-card-anim flex-shrink-0 w-[200px] xs:w-[230px] sm:w-[300px] lg:w-[345px] will-change-transform py-1 sm:py-2"
                 >
                   {(s as any).cardImg ? (
                     <div
                       onMouseEnter={() => playHover()}
-                      className="card-inner-spotlight group relative w-full rounded-2xl overflow-hidden shadow-[0_16px_36px_rgba(0,0,0,0.5)] cursor-default will-change-transform transform-gpu origin-center border border-white/20 hover:border-white/50 hover:shadow-[0_20px_45px_rgba(236,72,153,0.3)]"
+                      className="card-inner-spotlight group relative w-full rounded-xl sm:rounded-2xl overflow-hidden shadow-[0_16px_36px_rgba(0,0,0,0.5)] cursor-default will-change-transform transform-gpu origin-center border border-white/20 hover:border-white/50 hover:shadow-[0_20px_45px_rgba(236,72,153,0.3)]"
                       style={{
                         transition: "transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), filter 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.3s ease, box-shadow 0.4s cubic-bezier(0.25, 1, 0.5, 1)",
                       }}
@@ -2091,7 +2091,7 @@ export function IdeasIntoImpact() {
                       <img
                         src={(s as any).cardImg}
                         alt={s.title}
-                        className="w-full h-auto object-cover rounded-2xl block select-none pointer-events-none"
+                        className="w-full h-auto object-cover rounded-xl sm:rounded-2xl block select-none pointer-events-none"
                       />
                       {/* Top Laser Accent Hover Beam */}
                       <div
@@ -2101,7 +2101,7 @@ export function IdeasIntoImpact() {
                   ) : (
                     <div
                       onMouseEnter={() => playHover()}
-                      className={`card-inner-spotlight group relative flex flex-col justify-between gap-3 p-4 sm:p-5 rounded-2xl bg-gradient-to-br ${s.color.bg} border ${s.color.border} shadow-[0_16px_36px_rgba(0,0,0,0.55)] cursor-default overflow-hidden will-change-transform transform-gpu origin-center backdrop-blur-xl`}
+                      className={`card-inner-spotlight group relative flex flex-col justify-between gap-2 sm:gap-3 p-3 sm:p-5 rounded-xl sm:rounded-2xl bg-gradient-to-br ${s.color.bg} border ${s.color.border} shadow-[0_16px_36px_rgba(0,0,0,0.55)] cursor-default overflow-hidden will-change-transform transform-gpu origin-center backdrop-blur-xl`}
                       style={{
                         transition: "transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), filter 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.3s ease, box-shadow 0.4s cubic-bezier(0.25, 1, 0.5, 1)",
                       }}
@@ -2118,31 +2118,31 @@ export function IdeasIntoImpact() {
                         className={`absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r ${s.color.beam} opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10`}
                       />
 
-                      <div className="relative z-10 flex flex-col gap-2.5">
+                      <div className="relative z-10 flex flex-col gap-1.5 sm:gap-2.5">
                         {/* Header: Icon & Category Badge */}
                         <div className="flex items-center justify-between">
-                          <div className={`w-8 h-8 rounded-xl flex items-center justify-center ${s.color.iconWrap} transition-transform duration-300 group-hover:scale-110 shadow-xs backdrop-blur-md`}>
+                          <div className={`w-6 h-6 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl flex items-center justify-center ${s.color.iconWrap} transition-transform duration-300 group-hover:scale-110 shadow-xs backdrop-blur-md`}>
                             {s.icon}
                           </div>
 
-                          <span className={`text-[9px] font-mono font-bold tracking-wider px-2.5 py-0.5 rounded-full border ${s.color.badge} uppercase backdrop-blur-md`}>
+                          <span className={`text-[8px] sm:text-[9px] font-mono font-bold tracking-wider px-2 py-0.5 rounded-full border ${s.color.badge} uppercase backdrop-blur-md`}>
                             {s.category}
                           </span>
                         </div>
 
                         {/* Title */}
-                        <h3 className={`font-sans font-bold text-base sm:text-lg tracking-tight ${(s.color as any).textTitle || "text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]"}`}>
+                        <h3 className={`font-sans font-bold text-xs xs:text-sm sm:text-base lg:text-lg tracking-tight ${(s.color as any).textTitle || "text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]"}`}>
                           {s.title}
                         </h3>
 
                         {/* Description */}
-                        <p className={`font-sans text-xs sm:text-[13px] leading-relaxed line-clamp-2 ${(s.color as any).textDesc || "text-white/80"}`}>
+                        <p className={`font-sans text-[10px] xs:text-[11px] sm:text-xs lg:text-[13px] leading-relaxed line-clamp-2 ${(s.color as any).textDesc || "text-white/80"}`}>
                           {s.desc}
                         </p>
                       </div>
 
                       {/* Bottom Status Tag */}
-                      <div className={`relative z-10 pt-2 border-t flex items-center justify-between text-[10px] font-mono uppercase tracking-widest font-medium ${(s.color as any).textBottom || "border-white/10 text-white/60"}`}>
+                      <div className={`relative z-10 pt-1.5 sm:pt-2 border-t flex items-center justify-between text-[8px] sm:text-[10px] font-mono uppercase tracking-widest font-medium ${(s.color as any).textBottom || "border-white/10 text-white/60"}`}>
                         <span>{s.num} // CAPABILITY</span>
                         <span className={`w-1.5 h-1.5 rounded-full ${s.color.glowDot} opacity-75 group-hover:opacity-100 transition-opacity`} />
                       </div>
