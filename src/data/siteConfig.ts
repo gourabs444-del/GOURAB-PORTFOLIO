@@ -59,14 +59,13 @@ export const siteConfig: SiteConfig = {
     quarter: "Q3 / Q4 2026",
   },
   contact: {
-    email: "gourab@cinematic.dev",
+    email: "gourabs444@gmail.com",
   },
   socials: [
-    { name: "GitHub", url: "https://github.com", handle: "@gourab-dev" },
-    { name: "LinkedIn", url: "https://linkedin.com", handle: "in/gourab" },
-    { name: "X (Twitter)", url: "https://x.com", handle: "@gourab_x" },
-    { name: "Instagram", url: "https://instagram.com", handle: "@gourab" },
-    { name: "Email", url: "mailto:gourab@cinematic.dev", handle: "gourab@cinematic.dev" }
+    { name: "LinkedIn", url: "https://www.linkedin.com/in/gourab-maji-4964a4397/", handle: "in/gourab-maji-4964a4397" },
+    { name: "GitHub", url: "https://github.com/gourabs444-del", handle: "@gourabs444-del" },
+    { name: "Instagram", url: "https://www.instagram.com/01env/", handle: "@01env" },
+    { name: "Email", url: "mailto:gourabs444@gmail.com", handle: "gourabs444@gmail.com" }
   ],
   manifesto: {
     headline: "BRIDGING COMPUTATION, CINEMA & INTENTIONAL DESIGN.",

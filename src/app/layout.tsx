@@ -113,7 +113,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: `${siteConfig.name} — ${siteConfig.title}`,
     description: siteConfig.tagline,
-    creator: "@gourab_x",
+    creator: "@01env",
     images: ["/assets/aethel-iceberg-ui.png"],
   },
   icons: {

@@ -204,8 +204,8 @@ export function FullscreenMenu({ isOpen, onClose, onNavigate }: FullscreenMenuPr
           <Clock className="w-3.5 h-3.5 text-accent" />
           <span>STATUS: {siteConfig.availability.label}</span>
         </div>
-        <div className="flex items-center gap-4 md:justify-end">
-          {siteConfig.socials.slice(0, 3).map((soc) => (
+        <div className="flex items-center gap-4 md:justify-end flex-wrap">
+          {siteConfig.socials.map((soc) => (
             <a
               key={soc.name}
               href={soc.url}

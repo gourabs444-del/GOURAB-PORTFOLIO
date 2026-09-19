@@ -3,7 +3,7 @@
 import React, { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "@/lib/gsap";
-import { ArrowUpRight, ArrowUp, Github, Linkedin, Twitter, Instagram, Mail } from "lucide-react";
+import { ArrowUpRight, ArrowUp, Github, Linkedin, Instagram, Mail } from "lucide-react";
 import { useAudioFeedback } from "@/hooks/useAudioFeedback";
 import { VerticalCardsGridBackground } from "@/components/ambient/VerticalCardsGridBackground";
 import { GourabSignatureSvg } from "@/components/ui/GourabSignatureSvg";
@@ -1876,7 +1876,7 @@ export function IdeasIntoImpact() {
                   {/* LinkedIn */}
                   <div className="social-icon-item will-change-transform">
                     <a
-                      href="https://linkedin.com"
+                      href="https://www.linkedin.com/in/gourab-maji-4964a4397/"
                       target="_blank"
                       rel="noopener noreferrer"
                       onMouseEnter={() => playHover()}
@@ -1903,7 +1903,7 @@ export function IdeasIntoImpact() {
                   {/* GitHub */}
                   <div className="social-icon-item will-change-transform">
                     <a
-                      href="https://github.com"
+                      href="https://github.com/gourabs444-del"
                       target="_blank"
                       rel="noopener noreferrer"
                       onMouseEnter={() => playHover()}
@@ -1930,7 +1930,7 @@ export function IdeasIntoImpact() {
                   {/* Instagram */}
                   <div className="social-icon-item will-change-transform">
                     <a
-                      href="https://instagram.com"
+                      href="https://www.instagram.com/01env/"
                       target="_blank"
                       rel="noopener noreferrer"
                       onMouseEnter={() => playHover()}
@@ -2364,7 +2364,7 @@ export function IdeasIntoImpact() {
                   <Github className="w-3.5 h-3.5" />
                 </a>
                 <a
-                  href="https://linkedin.com"
+                  href="https://www.linkedin.com/in/gourab-maji-4964a4397/"
                   target="_blank"
                   rel="noopener noreferrer"
                   onMouseEnter={() => playHover()}
@@ -2374,17 +2374,7 @@ export function IdeasIntoImpact() {
                   <Linkedin className="w-3.5 h-3.5" />
                 </a>
                 <a
-                  href="https://x.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onMouseEnter={() => playHover()}
-                  className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#090714]/[0.06] hover:bg-[#090714] text-[#090714] hover:text-white flex items-center justify-center transition-all duration-300 border border-[#090714]/10 hover:scale-110"
-                  title="Twitter / X"
-                >
-                  <Twitter className="w-3.5 h-3.5" />
-                </a>
-                <a
-                  href="https://instagram.com"
+                  href="https://www.instagram.com/01env/"
                   target="_blank"
                   rel="noopener noreferrer"
                   onMouseEnter={() => playHover()}

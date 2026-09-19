@@ -19,27 +19,36 @@ export function RotatingPurpleEarth() {
 
     const landCoords: [number, number][] = earthDotsData as [number, number][];
 
+    // Pre-allocate typed arrays for fast trigonometric calculation
+    const numPoints = landCoords.length;
+    const lats = new Float32Array(numPoints);
+    const lons = new Float32Array(numPoints);
+    for (let i = 0; i < numPoints; i++) {
+      lats[i] = (landCoords[i][0] * Math.PI) / 180;
+      lons[i] = (landCoords[i][1] * Math.PI) / 180;
+    }
+
     // Subtle floating violet stardust particles
-    const numStars = 60;
+    const numStars = 50;
     const stars: { x: number; y: number; r: number; alpha: number; speed: number }[] = [];
     for (let i = 0; i < numStars; i++) {
       stars.push({
         x: Math.random(),
         y: Math.random(),
         r: Math.random() * 1.2 + 0.4,
-        alpha: Math.random() * 0.32 + 0.12,
+        alpha: Math.random() * 0.28 + 0.1,
         speed: Math.random() * 0.0004 + 0.0001,
       });
     }
 
-    // High-tech pulsed connection hubs on cities
+    // High-tech glowing city hub nodes (rendered as glowing dots, zero line strokes)
     const pulseNodes = [
-      { lat: 40.7, lon: -74.0, phase: 0 },   // New York
-      { lat: 51.5, lon: -0.1, phase: 1.5 },  // London
-      { lat: 35.6, lon: 139.6, phase: 3.0 }, // Tokyo
-      { lat: 37.7, lon: -122.4, phase: 4.2 },// San Francisco
-      { lat: 1.35, lon: 103.8, phase: 2.1 }, // Singapore
-      { lat: 47.3, lon: 8.5, phase: 5.0 },   // Zurich
+      { lat: (40.7 * Math.PI) / 180, lon: (-74.0 * Math.PI) / 180, phase: 0 },   // New York
+      { lat: (51.5 * Math.PI) / 180, lon: (-0.1 * Math.PI) / 180, phase: 1.5 },  // London
+      { lat: (35.6 * Math.PI) / 180, lon: (139.6 * Math.PI) / 180, phase: 3.0 }, // Tokyo
+      { lat: (37.7 * Math.PI) / 180, lon: (-122.4 * Math.PI) / 180, phase: 4.2 },// San Francisco
+      { lat: (1.35 * Math.PI) / 180, lon: (103.8 * Math.PI) / 180, phase: 2.1 }, // Singapore
+      { lat: (47.3 * Math.PI) / 180, lon: (8.5 * Math.PI) / 180, phase: 5.0 },   // Zurich
     ];
 
     const resize = () => {
@@ -70,17 +79,12 @@ export function RotatingPurpleEarth() {
 
       // =======================================================================
       // MASSIVE PLANETARY DOME (HALF GLOBE - BOTTOM HALF SUNK BELOW SCREEN)
-      // Matching Image 2 Reference:
-      // - cy is anchored near the bottom of the screen (height * 0.94 - 0.98)
-      // - The bottom half of the sphere is 100% below the viewport (adha niche hoga)
-      // - The top half arches majestically across the screen with top margin (~65-80px)
       // =======================================================================
       const isMobile = width < 768;
       const topMargin = isMobile ? 55 : 75;
       
-      // Anchor center at the bottom of the viewport
+      // Anchor center at bottom of viewport
       const cy = isMobile ? height * 0.90 : height * 0.94;
-      // Radius ensures apex is at topMargin, giving huge planetary scale
       const radius = cy - topMargin;
       const cx = width * 0.5;
 
@@ -89,7 +93,7 @@ export function RotatingPurpleEarth() {
         const star = stars[i];
         const currentAlpha =
           star.alpha * (0.6 + 0.4 * Math.sin(time * star.speed * 10 + i));
-        ctx.fillStyle = "rgba(147, 51, 234, " + currentAlpha.toFixed(2) + ")";
+        ctx.fillStyle = `rgba(147, 51, 234, ${currentAlpha.toFixed(2)})`;
         ctx.beginPath();
         ctx.arc(star.x * width, star.y * height, star.r, 0, Math.PI * 2);
         ctx.fill();
@@ -137,31 +141,21 @@ export function RotatingPurpleEarth() {
       // Clip inside sphere
       ctx.clip();
 
-      // 4. Subtle Orbital Latitudes Grid in Violet
-      ctx.strokeStyle = "rgba(147, 51, 234, 0.12)";
-      ctx.lineWidth = 1.1;
-      [-45, -20, 0, 20, 45, 65].forEach((latDeg) => {
-        const phi = (latDeg * Math.PI) / 180;
-        const latRadius = radius * Math.cos(phi);
-        const yOffset = -radius * Math.sin(phi) * cosTilt;
-        ctx.beginPath();
-        ctx.ellipse(
-          cx,
-          cy + yOffset,
-          latRadius,
-          latRadius * sinTilt * 0.8,
-          0,
-          0,
-          Math.PI * 2
-        );
-        ctx.stroke();
-      });
+      // ALL GRID LINES HAVE BEEN DELETED PER USER REQUEST (No latitude / longitude lines)
 
-      // 5. Render 3D Rotating Dot-Matrix Continents in Rich Violet
-      for (let i = 0; i < landCoords.length; i++) {
-        const [latDeg, lonDeg] = landCoords[i];
-        const lat = (latDeg * Math.PI) / 180;
-        const lon = (lonDeg * Math.PI) / 180 + rot;
+      // 4. High-Density 3D Rotating Dot-Matrix Continents in Rich Violet
+      // Dots are tightly packed and closer together.
+      // Batch into 4 depth/aura buckets for ultra-smooth 60FPS execution.
+      const bucket0: { px: number; py: number; r: number }[] = [];
+      const bucket1: { px: number; py: number; r: number }[] = [];
+      const bucket2: { px: number; py: number; r: number }[] = [];
+      const bucket3: { px: number; py: number; r: number }[] = [];
+
+      const bottomCutoff = height + 30;
+
+      for (let i = 0; i < numPoints; i++) {
+        const lat = lats[i];
+        const lon = lons[i] + rot;
 
         const cosLat = Math.cos(lat);
         const sinLat = Math.sin(lat);
@@ -174,46 +168,82 @@ export function RotatingPurpleEarth() {
         const z1 = y0 * sinTilt + z0 * cosTilt;
         const x1 = x0;
 
-        // Front-face culling & on-screen bounds
+        // Front hemisphere culling
         if (z1 > -radius * 0.05) {
-          const depthFactor = (z1 + radius * 0.05) / (radius * 1.05);
-          const px = cx + x1;
           const py = cy + y1;
-
-          // Only draw dots that are within or slightly above viewport bottom
-          if (py < height + 30) {
+          if (py < bottomCutoff) {
+            const px = cx + x1;
+            const depthFactor = (z1 + radius * 0.05) / (radius * 1.05);
             const topAura = Math.max(0, 1 - Math.abs(y1 + radius * 0.5) / (radius * 0.8));
-            const dotRadius = Math.max(0.85, 1.35 + depthFactor * 1.2 + topAura * 0.45);
+            
+            // Ultra-dense crisp dot size
+            const dotRadius = Math.max(0.75, 1.15 + depthFactor * 1.05 + topAura * 0.35);
 
-            // Deep, saturated violet dots for crisp visibility on white
-            let r = 109;
-            let g = 40;
-            let b = 217;
-            let alpha = Math.min(1, 0.38 + depthFactor * 0.62);
-
-            if (topAura > 0.42) {
-              r = 192;
-              g = 38;
-              b = 211;
-              alpha = Math.min(1, alpha + 0.25);
+            if (topAura > 0.45) {
+              bucket3.push({ px, py, r: dotRadius });
+            } else if (depthFactor > 0.6) {
+              bucket2.push({ px, py, r: dotRadius });
+            } else if (depthFactor > 0.25) {
+              bucket1.push({ px, py, r: dotRadius });
             } else {
-              r = Math.round(109 + 25 * (1 - depthFactor));
-              g = Math.round(40 + 35 * (1 - depthFactor));
-              b = Math.round(217 + 25 * (1 - depthFactor));
+              bucket0.push({ px, py, r: dotRadius });
             }
-
-            ctx.fillStyle = "rgba(" + r + ", " + g + ", " + b + ", " + alpha.toFixed(2) + ")";
-            ctx.beginPath();
-            ctx.arc(px, py, dotRadius, 0, Math.PI * 2);
-            ctx.fill();
           }
         }
       }
 
-      // 6. Draw Pulsing Hub Nodes on Global Centers in Violet/Magenta
+      // Draw Bucket 0: Limb / edge dots (soft violet)
+      if (bucket0.length > 0) {
+        ctx.fillStyle = "rgba(139, 92, 246, 0.45)";
+        ctx.beginPath();
+        for (let i = 0; i < bucket0.length; i++) {
+          const b = bucket0[i];
+          ctx.moveTo(b.px + b.r, b.py);
+          ctx.arc(b.px, b.py, b.r, 0, Math.PI * 2);
+        }
+        ctx.fill();
+      }
+
+      // Draw Bucket 1: Mid-depth dots (rich purple)
+      if (bucket1.length > 0) {
+        ctx.fillStyle = "rgba(124, 58, 237, 0.75)";
+        ctx.beginPath();
+        for (let i = 0; i < bucket1.length; i++) {
+          const b = bucket1[i];
+          ctx.moveTo(b.px + b.r, b.py);
+          ctx.arc(b.px, b.py, b.r, 0, Math.PI * 2);
+        }
+        ctx.fill();
+      }
+
+      // Draw Bucket 2: Front prominent dots (deep vibrant violet)
+      if (bucket2.length > 0) {
+        ctx.fillStyle = "rgba(109, 40, 217, 0.95)";
+        ctx.beginPath();
+        for (let i = 0; i < bucket2.length; i++) {
+          const b = bucket2[i];
+          ctx.moveTo(b.px + b.r, b.py);
+          ctx.arc(b.px, b.py, b.r, 0, Math.PI * 2);
+        }
+        ctx.fill();
+      }
+
+      // Draw Bucket 3: Top atmospheric crest dots (bright radiant magenta-violet)
+      if (bucket3.length > 0) {
+        ctx.fillStyle = "rgba(192, 38, 211, 0.95)";
+        ctx.beginPath();
+        for (let i = 0; i < bucket3.length; i++) {
+          const b = bucket3[i];
+          ctx.moveTo(b.px + b.r, b.py);
+          ctx.arc(b.px, b.py, b.r, 0, Math.PI * 2);
+        }
+        ctx.fill();
+      }
+
+      // 5. Glowing Hub Nodes on Global Cities (Zero lines, pure glowing dots)
       pulseNodes.forEach((node) => {
-        const lat = (node.lat * Math.PI) / 180;
-        const lon = (node.lon * Math.PI) / 180 + rot;
+        const lat = node.lat;
+        const lon = node.lon + rot;
         const cosLat = Math.cos(lat);
         const sinLat = Math.sin(lat);
 
@@ -229,18 +259,19 @@ export function RotatingPurpleEarth() {
           const px = cx + x1;
           const py = cy + y1;
 
-          if (py < height + 30) {
+          if (py < bottomCutoff) {
             const pulse = (Math.sin(time * 0.004 + node.phase) + 1) * 0.5;
 
-            ctx.strokeStyle = "rgba(168, 85, 247, " + (0.9 * (1 - pulse)).toFixed(2) + ")";
-            ctx.lineWidth = 1.5;
+            // Soft glowing outer dot
+            ctx.fillStyle = `rgba(192, 38, 211, ${(0.45 * (1 - pulse * 0.5)).toFixed(2)})`;
             ctx.beginPath();
-            ctx.arc(px, py, 2.8 + pulse * 7, 0, Math.PI * 2);
-            ctx.stroke();
+            ctx.arc(px, py, 4 + pulse * 3, 0, Math.PI * 2);
+            ctx.fill();
 
-            ctx.fillStyle = "#7c3aed";
+            // Core solid dot
+            ctx.fillStyle = "#a855f7";
             ctx.beginPath();
-            ctx.arc(px, py, 2.2, 0, Math.PI * 2);
+            ctx.arc(px, py, 2.5, 0, Math.PI * 2);
             ctx.fill();
           }
         }
@@ -249,35 +280,35 @@ export function RotatingPurpleEarth() {
       ctx.restore(); // Restore clip
 
       // =======================================================================
-      // 7. SIGNATURE ELECTRIC PURPLE ATMOSPHERIC CRESCENT HORIZON DOME
-      // Arches across the upper section like a rising planetary horizon
+      // 6. ATMOSPHERIC HORIZON GLOW DOME
+      // Soft glowing planetary crest framing the dome
       // =======================================================================
       ctx.save();
-      // Outer soft atmospheric glow
+      // Outer soft ambient glow
       ctx.beginPath();
       ctx.arc(cx, cy, radius + 2, Math.PI * 0.84, Math.PI * 2.16);
-      ctx.lineWidth = 18;
-      ctx.strokeStyle = "rgba(168, 85, 247, 0.38)";
+      ctx.lineWidth = 16;
+      ctx.strokeStyle = "rgba(168, 85, 247, 0.35)";
       ctx.shadowColor = "#a855f7";
-      ctx.shadowBlur = 40;
+      ctx.shadowBlur = 35;
       ctx.stroke();
 
-      // Sharp electric violet arc
+      // Atmospheric rim highlight
       ctx.beginPath();
-      ctx.arc(cx, cy, radius + 1, Math.PI * 0.82, Math.PI * 2.18);
-      ctx.lineWidth = 6;
-      ctx.strokeStyle = "rgba(192, 38, 211, 0.95)";
+      ctx.arc(cx, cy, radius + 1, Math.PI * 0.86, Math.PI * 2.14);
+      ctx.lineWidth = 4.5;
+      ctx.strokeStyle = "rgba(192, 38, 211, 0.85)";
       ctx.shadowColor = "#7c3aed";
-      ctx.shadowBlur = 25;
+      ctx.shadowBlur = 20;
       ctx.stroke();
 
-      // Brilliant top magenta highlight crest
+      // Delicate top apex crest
       ctx.beginPath();
-      ctx.arc(cx, cy, radius + 0.5, Math.PI * 1.05, Math.PI * 1.95);
-      ctx.lineWidth = 2.6;
-      ctx.strokeStyle = "rgba(217, 70, 239, 0.95)";
+      ctx.arc(cx, cy, radius + 0.5, Math.PI * 1.08, Math.PI * 1.92);
+      ctx.lineWidth = 2.2;
+      ctx.strokeStyle = "rgba(217, 70, 239, 0.9)";
       ctx.shadowColor = "#d946ef";
-      ctx.shadowBlur = 14;
+      ctx.shadowBlur = 12;
       ctx.stroke();
       ctx.restore();
 

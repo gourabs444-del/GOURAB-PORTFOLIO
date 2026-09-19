@@ -545,82 +545,69 @@ export function BrandIntegrationSection() {
         </div>
 
         {/* ========================================================= */}
-        {/* ACT 06 — EXPERIENCE (ULTRA-HIGH-END 3-COLUMN SHOWCASE)    */}
+        {/* ACT 06 — EXPERIENCE (CLEAN OFFICIAL BOXLESS SHOWCASE)      */}
         {/* ========================================================= */}
         <div className="act-06 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-4 sm:px-8 lg:px-12 transition-transform">
           
           {/* Subtle Top Metadata Headers */}
-          <div className="absolute top-6 left-6 hidden md:flex items-center gap-2 font-mono text-[10px] tracking-[0.25em] text-neutral-400 uppercase">
-            <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
+          <div className="absolute top-6 left-6 hidden md:flex items-center gap-2 font-mono text-[10px] tracking-[0.25em] text-neutral-500 uppercase">
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping" />
             <span>SYS // DESIGN FRAMEWORK</span>
           </div>
 
-          <div className="absolute top-6 right-6 hidden md:flex items-center gap-2 font-mono text-[10px] tracking-[0.25em] text-neutral-400 uppercase">
+          <div className="absolute top-6 right-6 hidden md:flex items-center gap-2 font-mono text-[10px] tracking-[0.25em] text-neutral-500 uppercase">
             <span>ACT.06 / EXPERIENCE</span>
           </div>
 
           <div className="exp-flow w-full max-w-7xl flex flex-col items-center my-auto">
             {/* Minimal Monospace Header */}
-            <div className="flex flex-col items-center mb-6 sm:mb-10">
-              <div className="flex items-center gap-3 text-xs font-mono font-bold tracking-[0.35em] text-white uppercase mb-1">
-                <span className="w-8 h-[1px] bg-gradient-to-r from-transparent via-amber-400 to-transparent" />
+            <div className="flex flex-col items-center mb-8 sm:mb-12">
+              <div className="flex items-center gap-3 text-xs font-mono font-bold tracking-[0.35em] text-white uppercase mb-1.5">
+                <span className="w-8 h-[1px] bg-white/20" />
                 <span>EXPERIENCE THE PROCESS</span>
-                <span className="w-8 h-[1px] bg-gradient-to-r from-transparent via-emerald-400 to-transparent" />
+                <span className="w-8 h-[1px] bg-white/20" />
               </div>
               <span className="font-mono text-[10px] tracking-[0.25em] text-neutral-400 uppercase">
                 FROM CONCEPT TO DIGITAL REALITY
               </span>
             </div>
 
-            {/* 3-Column Grid with Glowing Chevrons */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 w-full text-left relative items-stretch">
+            {/* 3-Column Clean Boxless Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 w-full text-left relative items-stretch">
               
-              {/* Chevron Connector 1 -> 2 (Desktop) */}
-              <div className="hidden md:flex absolute left-[32.5%] top-1/2 -translate-y-1/2 z-20 items-center justify-center">
-                <div className="w-8 h-8 rounded-full bg-amber-400/10 border border-amber-400/30 flex items-center justify-center text-amber-400 shadow-[0_0_15px_rgba(245,158,11,0.3)] backdrop-blur-sm">
-                  <ChevronRight className="w-5 h-5 stroke-[2.5]" />
-                </div>
-              </div>
-
-              {/* Chevron Connector 2 -> 3 (Desktop) */}
-              <div className="hidden md:flex absolute left-[65.8%] top-1/2 -translate-y-1/2 z-20 items-center justify-center">
-                <div className="w-8 h-8 rounded-full bg-emerald-400/10 border border-emerald-400/30 flex items-center justify-center text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.3)] backdrop-blur-sm">
-                  <ChevronRight className="w-5 h-5 stroke-[2.5]" />
-                </div>
-              </div>
-
-              {/* Column 01: INPUT / SPECIFICATION */}
-              <div className="flex flex-col justify-between p-5 sm:p-6 rounded-2xl bg-white/[0.015] border border-amber-500/15 hover:border-amber-400/40 hover:bg-white/[0.03] transition-all duration-500 group shadow-[0_10px_30px_rgba(0,0,0,0.4)]">
+              {/* Column 01: System Specification */}
+              <div className="flex flex-col justify-between group">
                 <div>
-                  {/* Top Header & Number */}
-                  <div className="flex items-baseline justify-between mb-3">
-                    <span className="font-bodoni italic font-normal text-4xl sm:text-5xl text-amber-400 tracking-tight drop-shadow-[0_0_12px_rgba(245,158,11,0.3)]">
+                  {/* Top Number & Tag */}
+                  <div className="flex items-center justify-between mb-3 border-b border-white/10 pb-2.5">
+                    <span className="font-mono font-bold text-base sm:text-lg text-amber-400 tracking-wider">
                       01
                     </span>
-                    <span className="font-mono text-[10px] sm:text-[11px] font-bold tracking-[0.22em] text-amber-400/90 uppercase">
+                    <span className="font-mono text-[10px] font-bold tracking-[0.2em] text-amber-400/80 uppercase">
                       INPUT // SPECIFICATION
                     </span>
                   </div>
 
-                  {/* Title & Description */}
-                  <h4 className="font-bodoni font-medium text-2xl sm:text-3xl text-white tracking-tight mb-2 group-hover:text-amber-200 transition-colors">
+                  {/* Normal Main Title */}
+                  <h4 className="font-sans font-bold text-base sm:text-lg text-white tracking-tight mb-1.5 group-hover:text-amber-200 transition-colors">
                     System Specification
                   </h4>
 
-                  <p className="font-sans text-xs text-neutral-400 font-normal leading-relaxed mb-5">
+                  {/* Micro Subtext Description */}
+                  <p className="font-sans text-[11px] sm:text-xs text-neutral-400 font-normal leading-relaxed mb-4">
                     Precise architectural vision &amp; technical specification defined from day one.
                   </p>
 
-                  {/* Feature Bullet Points */}
-                  <div className="space-y-2 mb-5 border-t border-white/5 pt-4">
+                  {/* Micro Feature Bullet Points */}
+                  <div className="space-y-1.5 mb-6 pt-3 border-t border-white/5">
                     {[
                       "Design System Blueprint",
                       "Tech Stack Architecture",
                       "Interactive Wireframes",
                       "Requirement Mapping",
                     ].map((feature, idx) => (
-                      <div key={idx} className="flex items-center gap-2.5 text-xs text-neutral-300 font-mono">
-                        <span className="w-1.5 h-1.5 rounded-full bg-amber-400/80 shadow-[0_0_6px_#f59e0b]" />
+                      <div key={idx} className="flex items-center gap-2 text-[11px] text-neutral-300 font-mono">
+                        <span className="w-1.5 h-1.5 rounded-full bg-amber-400/80" />
                         <span>{feature}</span>
                       </div>
                     ))}
@@ -628,48 +615,49 @@ export function BrandIntegrationSection() {
                 </div>
 
                 {/* 3D Gold Tablet Graphic */}
-                <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden border border-amber-400/20 bg-black/40 group-hover:border-amber-400/50 transition-all duration-500 shadow-[0_8px_25px_rgba(245,158,11,0.15)]">
+                <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden border border-white/10 bg-black/40 group-hover:border-amber-400/40 transition-all duration-500 shadow-lg">
                   <img
                     src="/assets/exp-3d-input-gold.jpg"
                     alt="01 System Specification 3D Asset"
                     className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-60" />
                 </div>
               </div>
 
-              {/* Column 02: ENGINE / PIPELINE */}
-              <div className="flex flex-col justify-between p-5 sm:p-6 rounded-2xl bg-white/[0.015] border border-sky-500/15 hover:border-sky-400/40 hover:bg-white/[0.03] transition-all duration-500 group shadow-[0_10px_30px_rgba(0,0,0,0.4)]">
+              {/* Column 02: GPU Render Pipeline */}
+              <div className="flex flex-col justify-between group">
                 <div>
-                  {/* Top Header & Number */}
-                  <div className="flex items-baseline justify-between mb-3">
-                    <span className="font-bodoni italic font-normal text-4xl sm:text-5xl text-sky-400 tracking-tight drop-shadow-[0_0_12px_rgba(56,189,248,0.3)]">
+                  {/* Top Number & Tag */}
+                  <div className="flex items-center justify-between mb-3 border-b border-white/10 pb-2.5">
+                    <span className="font-mono font-bold text-base sm:text-lg text-sky-400 tracking-wider">
                       02
                     </span>
-                    <span className="font-mono text-[10px] sm:text-[11px] font-bold tracking-[0.22em] text-sky-400/90 uppercase">
+                    <span className="font-mono text-[10px] font-bold tracking-[0.2em] text-sky-400/80 uppercase">
                       ENGINE // PIPELINE
                     </span>
                   </div>
 
-                  {/* Title & Description */}
-                  <h4 className="font-bodoni font-medium text-2xl sm:text-3xl text-white tracking-tight mb-2 group-hover:text-sky-200 transition-colors">
+                  {/* Normal Main Title */}
+                  <h4 className="font-sans font-bold text-base sm:text-lg text-white tracking-tight mb-1.5 group-hover:text-sky-200 transition-colors">
                     GPU Render Pipeline
                   </h4>
 
-                  <p className="font-sans text-xs text-neutral-400 font-normal leading-relaxed mb-5">
+                  {/* Micro Subtext Description */}
+                  <p className="font-sans text-[11px] sm:text-xs text-neutral-400 font-normal leading-relaxed mb-4">
                     High-throughput WebGL, React 19, and optimized GPU frame pipelines.
                   </p>
 
-                  {/* Feature Bullet Points */}
-                  <div className="space-y-2 mb-5 border-t border-white/5 pt-4">
+                  {/* Micro Feature Bullet Points */}
+                  <div className="space-y-1.5 mb-6 pt-3 border-t border-white/5">
                     {[
                       "Custom Shaders",
                       "WebGL Acceleration",
                       "60FPS Physics Engine",
                       "Dynamic Geometry",
                     ].map((feature, idx) => (
-                      <div key={idx} className="flex items-center gap-2.5 text-xs text-neutral-300 font-mono">
-                        <span className="w-1.5 h-1.5 rounded-full bg-sky-400/80 shadow-[0_0_6px_#38bdf8]" />
+                      <div key={idx} className="flex items-center gap-2 text-[11px] text-neutral-300 font-mono">
+                        <span className="w-1.5 h-1.5 rounded-full bg-sky-400/80" />
                         <span>{feature}</span>
                       </div>
                     ))}
@@ -677,48 +665,49 @@ export function BrandIntegrationSection() {
                 </div>
 
                 {/* 3D Cyan Stack Graphic */}
-                <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden border border-sky-400/20 bg-black/40 group-hover:border-sky-400/50 transition-all duration-500 shadow-[0_8px_25px_rgba(56,189,248,0.15)]">
+                <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden border border-white/10 bg-black/40 group-hover:border-sky-400/40 transition-all duration-500 shadow-lg">
                   <img
                     src="/assets/exp-3d-engine-blue.jpg"
                     alt="02 GPU Render Pipeline 3D Asset"
                     className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-60" />
                 </div>
               </div>
 
-              {/* Column 03: RESULT / OUTPUT */}
-              <div className="flex flex-col justify-between p-5 sm:p-6 rounded-2xl bg-white/[0.015] border border-emerald-500/15 hover:border-emerald-400/40 hover:bg-white/[0.03] transition-all duration-500 group shadow-[0_10px_30px_rgba(0,0,0,0.4)]">
+              {/* Column 03: Cinematic Output */}
+              <div className="flex flex-col justify-between group">
                 <div>
-                  {/* Top Header & Number */}
-                  <div className="flex items-baseline justify-between mb-3">
-                    <span className="font-bodoni italic font-normal text-4xl sm:text-5xl text-emerald-400 tracking-tight drop-shadow-[0_0_12px_rgba(16,185,129,0.3)]">
+                  {/* Top Number & Tag */}
+                  <div className="flex items-center justify-between mb-3 border-b border-white/10 pb-2.5">
+                    <span className="font-mono font-bold text-base sm:text-lg text-emerald-400 tracking-wider">
                       03
                     </span>
-                    <span className="font-mono text-[10px] sm:text-[11px] font-bold tracking-[0.22em] text-emerald-400/90 uppercase">
+                    <span className="font-mono text-[10px] font-bold tracking-[0.2em] text-emerald-400/80 uppercase">
                       RESULT // OUTPUT
                     </span>
                   </div>
 
-                  {/* Title & Description */}
-                  <h4 className="font-bodoni font-medium text-2xl sm:text-3xl text-white tracking-tight mb-2 group-hover:text-emerald-200 transition-colors">
+                  {/* Normal Main Title */}
+                  <h4 className="font-sans font-bold text-base sm:text-lg text-white tracking-tight mb-1.5 group-hover:text-emerald-200 transition-colors">
                     Cinematic Output
                   </h4>
 
-                  <p className="font-sans text-xs text-neutral-400 font-normal leading-relaxed mb-5">
+                  {/* Micro Subtext Description */}
+                  <p className="font-sans text-[11px] sm:text-xs text-neutral-400 font-normal leading-relaxed mb-4">
                     A flawless cinematic digital product engineered to redefine benchmarks.
                   </p>
 
-                  {/* Feature Bullet Points */}
-                  <div className="space-y-2 mb-5 border-t border-white/5 pt-4">
+                  {/* Micro Feature Bullet Points */}
+                  <div className="space-y-1.5 mb-6 pt-3 border-t border-white/5">
                     {[
                       "Pixel-Perfect Render",
                       "3D Spatial Audio",
                       "Cross-Platform Ready",
                       "Enterprise Security",
                     ].map((feature, idx) => (
-                      <div key={idx} className="flex items-center gap-2.5 text-xs text-neutral-300 font-mono">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400/80 shadow-[0_0_6px_#10b981]" />
+                      <div key={idx} className="flex items-center gap-2 text-[11px] text-neutral-300 font-mono">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400/80" />
                         <span>{feature}</span>
                       </div>
                     ))}
@@ -726,13 +715,13 @@ export function BrandIntegrationSection() {
                 </div>
 
                 {/* 3D Emerald Screen Graphic */}
-                <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden border border-emerald-400/20 bg-black/40 group-hover:border-emerald-400/50 transition-all duration-500 shadow-[0_8px_25px_rgba(16,185,129,0.15)]">
+                <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden border border-white/10 bg-black/40 group-hover:border-emerald-400/40 transition-all duration-500 shadow-lg">
                   <img
                     src="/assets/exp-3d-result-green.jpg"
                     alt="03 Cinematic Output 3D Asset"
                     className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-60" />
                 </div>
               </div>
 
@@ -744,66 +733,68 @@ export function BrandIntegrationSection() {
         {/* ACT 07 — ENGINE / ARCHITECTURE (ULTRA-CLEAN BOXLESS NODES) */}
         {/* ========================================================= */}
         <div className="act-07 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6 transition-transform">
-          <div className="flex items-center gap-2.5 text-xs font-mono font-bold tracking-[0.3em] text-neutral-400 uppercase mb-8 sm:mb-10">
-            <span className="w-6 h-[1.5px] bg-white/20" />
+          <div className="flex items-center gap-3 text-xs font-mono font-bold tracking-[0.35em] text-neutral-400 uppercase mb-12 sm:mb-16">
+            <span className="w-8 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
             <span>ENGINEERED FROM THE GROUND UP</span>
-            <span className="w-6 h-[1.5px] bg-white/20" />
+            <span className="w-8 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
           </div>
 
           <div className="engine-graph relative w-full max-w-5xl mx-auto">
-            {/* Architecture Node Grid (No outer box container, no connecting lines) */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 relative z-10">
-              {/* Node 1 */}
-              <div className="engine-node p-6 sm:p-7 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-amber-400/30 hover:bg-white/[0.04] transition-all duration-300 flex flex-col items-center text-center group">
-                <div className="w-11 h-11 rounded-xl bg-amber-400/10 border border-amber-400/20 text-amber-400 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(245,158,11,0.4)] transition-all duration-300">
-                  <Code className="w-5 h-5" />
+            {/* Ultra-Clean Boxless Grid with Minimal Dividers */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 divide-y md:divide-y-0 md:divide-x divide-white/10 relative z-10">
+              
+              {/* Node 1: NEXT.JS 15 */}
+              <div className="engine-node flex flex-col items-center text-center group pt-6 md:pt-0 md:px-6 first:pl-0">
+                <div className="w-12 h-12 rounded-2xl bg-amber-400/10 text-amber-400 flex items-center justify-center mb-5 group-hover:scale-110 group-hover:bg-amber-400/20 group-hover:shadow-[0_0_25px_rgba(245,158,11,0.4)] transition-all duration-300">
+                  <Code className="w-6 h-6 stroke-[1.75]" />
                 </div>
-                <span className="font-sans font-extrabold text-sm text-white tracking-wide uppercase mb-1 group-hover:text-amber-300 transition-colors">
+                <span className="font-sans font-extrabold text-base sm:text-lg text-white tracking-wide uppercase mb-1.5 group-hover:text-amber-300 transition-colors">
                   NEXT.JS 15
                 </span>
-                <span className="font-mono text-[10px] text-neutral-400 uppercase tracking-widest font-medium">
+                <span className="font-mono text-[10px] text-neutral-400 uppercase tracking-[0.2em] font-medium">
                   REACT 19 / TS
                 </span>
               </div>
 
-              {/* Node 2 */}
-              <div className="engine-node p-6 sm:p-7 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-sky-400/30 hover:bg-white/[0.04] transition-all duration-300 flex flex-col items-center text-center group">
-                <div className="w-11 h-11 rounded-xl bg-sky-400/10 border border-sky-400/20 text-sky-400 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(56,189,248,0.4)] transition-all duration-300">
-                  <Layers className="w-5 h-5" />
+              {/* Node 2: GSAP & WEBGLEngine */}
+              <div className="engine-node flex flex-col items-center text-center group pt-6 md:pt-0 md:px-6">
+                <div className="w-12 h-12 rounded-2xl bg-sky-400/10 text-sky-400 flex items-center justify-center mb-5 group-hover:scale-110 group-hover:bg-sky-400/20 group-hover:shadow-[0_0_25px_rgba(56,189,248,0.4)] transition-all duration-300">
+                  <Layers className="w-6 h-6 stroke-[1.75]" />
                 </div>
-                <span className="font-sans font-extrabold text-sm text-white tracking-wide uppercase mb-1 group-hover:text-sky-300 transition-colors">
+                <span className="font-sans font-extrabold text-base sm:text-lg text-white tracking-wide uppercase mb-1.5 group-hover:text-sky-300 transition-colors">
                   GSAP &amp; WEBGLEngine
                 </span>
-                <span className="font-mono text-[10px] text-neutral-400 uppercase tracking-widest font-medium">
+                <span className="font-mono text-[10px] text-neutral-400 uppercase tracking-[0.2em] font-medium">
                   60FPS SHADERS
                 </span>
               </div>
 
-              {/* Node 3 */}
-              <div className="engine-node p-6 sm:p-7 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-purple-400/30 hover:bg-white/[0.04] transition-all duration-300 flex flex-col items-center text-center group">
-                <div className="w-11 h-11 rounded-xl bg-purple-400/10 border border-purple-400/20 text-purple-400 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(192,132,252,0.4)] transition-all duration-300">
-                  <Cpu className="w-5 h-5" />
+              {/* Node 3: NODE.JS API */}
+              <div className="engine-node flex flex-col items-center text-center group pt-6 md:pt-0 md:px-6">
+                <div className="w-12 h-12 rounded-2xl bg-purple-400/10 text-purple-400 flex items-center justify-center mb-5 group-hover:scale-110 group-hover:bg-purple-400/20 group-hover:shadow-[0_0_25px_rgba(192,132,252,0.4)] transition-all duration-300">
+                  <Cpu className="w-6 h-6 stroke-[1.75]" />
                 </div>
-                <span className="font-sans font-extrabold text-sm text-white tracking-wide uppercase mb-1 group-hover:text-purple-300 transition-colors">
+                <span className="font-sans font-extrabold text-base sm:text-lg text-white tracking-wide uppercase mb-1.5 group-hover:text-purple-300 transition-colors">
                   NODE.JS API
                 </span>
-                <span className="font-mono text-[10px] text-neutral-400 uppercase tracking-widest font-medium">
+                <span className="font-mono text-[10px] text-neutral-400 uppercase tracking-[0.2em] font-medium">
                   EDGE ROUTING
                 </span>
               </div>
 
-              {/* Node 4 */}
-              <div className="engine-node p-6 sm:p-7 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-emerald-400/30 hover:bg-white/[0.04] transition-all duration-300 flex flex-col items-center text-center group">
-                <div className="w-11 h-11 rounded-xl bg-emerald-400/10 border border-emerald-400/20 text-emerald-400 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(16,185,129,0.4)] transition-all duration-300">
-                  <Database className="w-5 h-5" />
+              {/* Node 4: POSTGRES & AI */}
+              <div className="engine-node flex flex-col items-center text-center group pt-6 md:pt-0 md:px-6 last:pr-0">
+                <div className="w-12 h-12 rounded-2xl bg-emerald-400/10 text-emerald-400 flex items-center justify-center mb-5 group-hover:scale-110 group-hover:bg-emerald-400/20 group-hover:shadow-[0_0_25px_rgba(16,185,129,0.4)] transition-all duration-300">
+                  <Database className="w-6 h-6 stroke-[1.75]" />
                 </div>
-                <span className="font-sans font-extrabold text-sm text-white tracking-wide uppercase mb-1 group-hover:text-emerald-300 transition-colors">
+                <span className="font-sans font-extrabold text-base sm:text-lg text-white tracking-wide uppercase mb-1.5 group-hover:text-emerald-300 transition-colors">
                   POSTGRES &amp; AI
                 </span>
-                <span className="font-mono text-[10px] text-neutral-400 uppercase tracking-widest font-medium">
+                <span className="font-mono text-[10px] text-neutral-400 uppercase tracking-[0.2em] font-medium">
                   NEURAL VECTOR DB
                 </span>
               </div>
+
             </div>
           </div>
         </div>
