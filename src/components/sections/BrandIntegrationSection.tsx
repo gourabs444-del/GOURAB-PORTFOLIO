@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "@/lib/gsap";
 import { ArrowUpRight, Cpu, Layers, Terminal, Sparkles, Check, Database, Zap, Code, ShieldCheck, ChevronRight } from "lucide-react";
 import { useAudioFeedback } from "@/hooks/useAudioFeedback";
+import { RotatingPurpleEarth } from "./RotatingPurpleEarth";
 
 export function BrandIntegrationSection() {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -214,7 +215,7 @@ export function BrandIntegrationSection() {
         3.45
       );
       tl.to(
-        ".act-white-canvas",
+        ".act-earth-canvas",
         { opacity: 1, duration: 0.45, ease: "power2.inOut" },
         3.65
       );
@@ -222,7 +223,7 @@ export function BrandIntegrationSection() {
       tl.to(".act-04", { opacity: 0, duration: 0.2 }, 3.9);
 
       // =======================================================================
-      // 05 — PRODUCT REVEAL ON WHITE BACKGROUND (Time: 3.85 -> 5.0, Exits 4.7 -> 5.1)
+      // 05 — PRODUCT REVEAL ON CELESTIAL EARTH CANVAS (Time: 3.85 -> 5.0, Exits 4.7 -> 5.1)
       // =======================================================================
       tl.to(".act-05", { opacity: 1, pointerEvents: "auto", duration: 0.35 }, 3.85);
 
@@ -233,9 +234,9 @@ export function BrandIntegrationSection() {
         4.0
       );
 
-      // Morphing Exit into Act 06 (4.7 -> 5.1): White canvas gently returns to dark for Act 06
+      // Morphing Exit into Act 06 (4.7 -> 5.1): Earth canvas dissolves gracefully into Act 06
       tl.to(".act-05", { opacity: 0, scale: 0.94, y: -30, pointerEvents: "none", duration: 0.4, ease: "power2.inOut" }, 4.7);
-      tl.to(".act-white-canvas", { opacity: 0, duration: 0.45, ease: "power2.inOut" }, 4.75);
+      tl.to(".act-earth-canvas", { opacity: 0, duration: 0.45, ease: "power2.inOut" }, 4.75);
 
       // =======================================================================
       // 06 — EXPERIENCE (Time: 4.8 -> 6.0, Exits 5.7 -> 6.1)
@@ -364,8 +365,10 @@ export function BrandIntegrationSection() {
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] pointer-events-none" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[520px] bg-[radial-gradient(ellipse_at_center,_rgba(0,240,255,0.08)_0%,_rgba(56,189,248,0.04)_45%,_transparent_75%)] rounded-full blur-[130px] pointer-events-none" />
 
-        {/* Cinematic White Canvas Layer (Revealed when Act 04 white text zooms into camera) */}
-        <div className="act-white-canvas absolute inset-0 w-full h-full bg-[#FAF7F2] bg-gradient-to-br from-[#FFFFFF] via-[#FAF6F0] to-[#F4ECE1] opacity-0 pointer-events-none z-[5] will-change-transform" />
+        {/* Celestial Rotating Purple Earth Background Canvas (Image 2 Aesthetic) */}
+        <div className="act-earth-canvas absolute inset-0 w-full h-full opacity-0 pointer-events-none z-[5] will-change-transform">
+          <RotatingPurpleEarth />
+        </div>
 
         {/* ========================================================= */}
         {/* ACT 01 — THE INTERRUPTION                                 */}
@@ -442,42 +445,42 @@ export function BrandIntegrationSection() {
         <div className="act-05 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6 transition-transform z-10">
           <div className="relative w-full max-w-5xl mx-auto flex flex-col items-center">
             
-            {/* Ambient Multi-Color Radial Aura tuned for White Canvas */}
-            <div className="pointer-events-none absolute -top-32 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[radial-gradient(ellipse_at_center,_rgba(56,189,248,0.15)_0%,_rgba(232,121,249,0.12)_45%,_transparent_75%)] rounded-full blur-[100px]" />
+            {/* Ambient Multi-Color Radial Aura tuned for Celestial Purple Earth */}
+            <div className="pointer-events-none absolute -top-32 left-1/2 -translate-x-1/2 w-[850px] h-[450px] bg-[radial-gradient(ellipse_at_center,_rgba(168,85,247,0.25)_0%,_rgba(232,121,249,0.12)_45%,_transparent_75%)] rounded-full blur-[110px]" />
 
-            {/* 1. Cool Kinetic Typography Headline on White Background */}
+            {/* 1. Cool Kinetic Typography Headline Matching Image 2 */}
             <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-10 sm:mb-14">
-              <span className="font-mono text-xs font-extrabold tracking-[0.3em] text-[#090714] bg-black/[0.05] border border-black/10 px-3.5 py-1 rounded-full uppercase mb-3 flex items-center gap-2 shadow-xs">
-                <span className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse" />
+              <span className="font-mono text-xs font-extrabold tracking-[0.3em] text-purple-300 bg-purple-950/70 border border-purple-500/40 px-3.5 py-1 rounded-full uppercase mb-3 flex items-center gap-2 shadow-[0_0_20px_rgba(168,85,247,0.3)]">
+                <span className="w-2 h-2 rounded-full bg-fuchsia-400 animate-pulse" />
                 ALGORA ENGINE // SYSTEM ARCHITECTURE
               </span>
               
-              <h3 className="font-display font-black text-3xl sm:text-5xl md:text-6xl text-[#090714] tracking-tight leading-tight uppercase mb-4">
+              <h3 className="font-display font-black text-3xl sm:text-5xl md:text-6xl text-white tracking-tight leading-tight uppercase mb-4 drop-shadow-[0_4px_25px_rgba(0,0,0,0.8)]">
                 ENGINEERED WITH{" "}
-                <span className="font-bodoni italic font-normal bg-gradient-to-r from-cyan-600 via-fuchsia-600 to-amber-600 bg-clip-text text-transparent inline-block pr-2">
+                <span className="font-bodoni italic font-normal bg-gradient-to-r from-purple-200 via-fuchsia-300 to-cyan-300 bg-clip-text text-transparent inline-block pr-2">
                   Precision &amp; Intelligence.
                 </span>
               </h3>
 
-              <p className="font-sans text-sm sm:text-base text-neutral-600 font-normal max-w-xl leading-relaxed">
+              <p className="font-sans text-sm sm:text-base text-purple-100/80 font-normal max-w-xl leading-relaxed drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
                 Three specialized spatial nodes powering real-time WebGL rendering, neural design matrices, and zero-latency global edge deployment.
               </p>
             </div>
 
-            {/* 2. 3 Sleek Modern Visual Graphic Cards on Luxury White Surface */}
+            {/* 2. 3 Sleek Modern Visual Graphic Cards in Celestial Dark Glass Pods */}
             <div className="product-layer-fg w-full grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
               
               {/* Card 1: Architecture Engine */}
               <button
                 type="button"
                 onClick={() => handleSimulateClick("build")}
-                className={`group relative rounded-2xl transition-all duration-300 text-left cursor-pointer overflow-hidden border bg-white/80 backdrop-blur-md ${
+                className={`group relative rounded-2xl transition-all duration-300 text-left cursor-pointer overflow-hidden border bg-[#0d0819]/80 backdrop-blur-xl ${
                   activeTab === "build"
-                    ? "border-cyan-500/70 shadow-[0_20px_45px_rgba(56,189,248,0.28)] scale-[1.03] ring-2 ring-cyan-400/40"
-                    : "border-black/10 hover:border-black/25 shadow-[0_12px_35px_rgba(0,0,0,0.06)] hover:scale-[1.01]"
+                    ? "border-cyan-400/80 shadow-[0_20px_45px_rgba(56,189,248,0.35)] scale-[1.03] ring-2 ring-cyan-400/50"
+                    : "border-white/10 hover:border-purple-400/40 shadow-[0_12px_35px_rgba(0,0,0,0.6)] hover:scale-[1.01]"
                 }`}
               >
-                <div className="relative aspect-[16/10] w-full overflow-hidden bg-black/5">
+                <div className="relative aspect-[16/10] w-full overflow-hidden bg-black/40">
                   <img
                     src="/assets/card-architecture-engine.jpg"
                     alt="Architecture Engine"
@@ -486,7 +489,7 @@ export function BrandIntegrationSection() {
                 </div>
 
                 {activeTab === "build" && (
-                  <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-cyan-500 to-transparent shadow-[0_0_15px_#38bdf8]" />
+                  <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent shadow-[0_0_15px_#38bdf8]" />
                 )}
               </button>
 
@@ -494,13 +497,13 @@ export function BrandIntegrationSection() {
               <button
                 type="button"
                 onClick={() => handleSimulateClick("ai")}
-                className={`group relative rounded-2xl transition-all duration-300 text-left cursor-pointer overflow-hidden border bg-white/80 backdrop-blur-md ${
+                className={`group relative rounded-2xl transition-all duration-300 text-left cursor-pointer overflow-hidden border bg-[#0d0819]/80 backdrop-blur-xl ${
                   activeTab === "ai"
-                    ? "border-fuchsia-500/70 shadow-[0_20px_45px_rgba(232,121,249,0.28)] scale-[1.03] ring-2 ring-fuchsia-400/40"
-                    : "border-black/10 hover:border-black/25 shadow-[0_12px_35px_rgba(0,0,0,0.06)] hover:scale-[1.01]"
+                    ? "border-fuchsia-400/80 shadow-[0_20px_45px_rgba(232,121,249,0.35)] scale-[1.03] ring-2 ring-fuchsia-400/50"
+                    : "border-white/10 hover:border-purple-400/40 shadow-[0_12px_35px_rgba(0,0,0,0.6)] hover:scale-[1.01]"
                 }`}
               >
-                <div className="relative aspect-[16/10] w-full overflow-hidden bg-black/5">
+                <div className="relative aspect-[16/10] w-full overflow-hidden bg-black/40">
                   <img
                     src="/assets/card-neural-matrix.png"
                     alt="Neural Design Matrix"
@@ -509,7 +512,7 @@ export function BrandIntegrationSection() {
                 </div>
 
                 {activeTab === "ai" && (
-                  <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-fuchsia-500 to-transparent shadow-[0_0_15px_#e879f9]" />
+                  <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-fuchsia-400 to-transparent shadow-[0_0_15px_#e879f9]" />
                 )}
               </button>
 
@@ -517,13 +520,13 @@ export function BrandIntegrationSection() {
               <button
                 type="button"
                 onClick={() => handleSimulateClick("deploy")}
-                className={`group relative rounded-2xl transition-all duration-300 text-left cursor-pointer overflow-hidden border bg-white/80 backdrop-blur-md ${
+                className={`group relative rounded-2xl transition-all duration-300 text-left cursor-pointer overflow-hidden border bg-[#0d0819]/80 backdrop-blur-xl ${
                   activeTab === "deploy"
-                    ? "border-amber-500/70 shadow-[0_20px_45px_rgba(245,158,11,0.28)] scale-[1.03] ring-2 ring-amber-400/40"
-                    : "border-black/10 hover:border-black/25 shadow-[0_12px_35px_rgba(0,0,0,0.06)] hover:scale-[1.01]"
+                    ? "border-purple-400/80 shadow-[0_20px_45px_rgba(168,85,247,0.35)] scale-[1.03] ring-2 ring-purple-400/50"
+                    : "border-white/10 hover:border-purple-400/40 shadow-[0_12px_35px_rgba(0,0,0,0.6)] hover:scale-[1.01]"
                 }`}
               >
-                <div className="relative aspect-[16/10] w-full overflow-hidden bg-black/5">
+                <div className="relative aspect-[16/10] w-full overflow-hidden bg-black/40">
                   <img
                     src="/assets/card-edge-deployment.jpg"
                     alt="Edge Deployment"
@@ -532,7 +535,7 @@ export function BrandIntegrationSection() {
                 </div>
 
                 {activeTab === "deploy" && (
-                  <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-amber-500 to-transparent shadow-[0_0_15px_#f59e0b]" />
+                  <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-purple-400 to-transparent shadow-[0_0_15px_#c084fc]" />
                 )}
               </button>
 
