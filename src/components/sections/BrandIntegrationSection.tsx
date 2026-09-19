@@ -519,20 +519,15 @@ export function BrandIntegrationSection() {
             <div className="pointer-events-none absolute -top-32 left-1/2 -translate-x-1/2 w-[850px] h-[450px] bg-[radial-gradient(ellipse_at_center,_rgba(59,130,246,0.12)_0%,_rgba(99,102,241,0.05)_45%,_transparent_75%)] rounded-full blur-[110px]" />
 
             {/* 1. Cool Kinetic Typography Headline on White Background with Blue Accents & Solid Black Text */}
-            <div className="relative z-20 flex flex-col items-center text-center max-w-3xl mx-auto mb-6 sm:mb-8 md:mb-10">
-              <span className="font-mono text-xs font-extrabold tracking-[0.3em] text-blue-900 bg-blue-50/95 border border-blue-200/90 px-3.5 py-1 rounded-full uppercase mb-3.5 flex items-center gap-2 shadow-xs">
-                <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse" />
-                ALGORA ENGINE // SYSTEM ARCHITECTURE
-              </span>
-              
-              <h3 className="font-display font-black text-3xl sm:text-5xl md:text-6xl text-black tracking-tight leading-tight uppercase mb-4">
+            <div className="relative z-20 flex flex-col items-center text-center max-w-3xl mx-auto mb-4 sm:mb-6">
+              <h3 className="font-display font-black text-3xl sm:text-5xl md:text-6xl text-black tracking-tight leading-tight uppercase mb-3">
                 ENGINEERED WITH{" "}
                 <span className="font-bodoni italic font-normal bg-gradient-to-r from-blue-700 via-blue-600 to-indigo-600 bg-clip-text text-transparent inline-block pr-2">
                   Precision &amp; Intelligence.
                 </span>
               </h3>
 
-              <p className="font-sans text-sm sm:text-base text-neutral-800 font-medium max-w-xl leading-relaxed">
+              <p className="font-sans text-[11px] sm:text-xs text-neutral-600 font-normal max-w-xl leading-relaxed">
                 Three specialized spatial nodes powering real-time WebGL rendering, neural design matrices, and zero-latency global edge deployment.
               </p>
             </div>
