@@ -384,9 +384,9 @@ export function BrandIntegrationSection() {
         {/* ACT 02 & 03 — BRAND REVEAL & LOGO DRAW                    */}
         {/* ========================================================= */}
         <div className="act-02 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6 transition-transform z-10">
-          {/* SVG Vector Logo Drawing & Lift-Up Container */}
-          <div className="logo-svg-wrapper w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 flex items-center justify-center transition-transform">
-            <svg viewBox="315 85 394 450" className="w-full h-full text-white overflow-visible">
+          {/* SVG Vector Logo Drawing & Lift-Up Container - Large, prominent circular logo matching reference */}
+          <div className="logo-svg-wrapper w-32 h-32 sm:w-44 sm:h-44 md:w-56 md:h-56 lg:w-64 lg:h-64 flex items-center justify-center transition-transform">
+            <svg viewBox="315 85 394 450" className="w-full h-full text-white overflow-visible drop-shadow-[0_0_35px_rgba(255,255,255,0.25)]">
               <circle
                 className="svg-circle"
                 cx="512"
@@ -415,8 +415,8 @@ export function BrandIntegrationSection() {
             </svg>
           </div>
 
-          {/* Clean Typography Title Matching Image 3 */}
-          <h2 className="brand-name font-sans font-extrabold text-4xl sm:text-6xl md:text-7xl tracking-[0.32em] text-white uppercase mt-6 opacity-0">
+          {/* Clean Geometric Typography Title Matching Image 2 Reference */}
+          <h2 className="brand-name font-sans font-semibold text-2xl sm:text-3xl md:text-4xl lg:text-[2.6rem] tracking-[0.55em] sm:tracking-[0.65em] pl-[0.55em] sm:pl-[0.65em] text-white uppercase mt-7 sm:mt-8 opacity-0">
             ALGORA
           </h2>
         </div>
@@ -867,22 +867,22 @@ export function BrandIntegrationSection() {
         {/* ACT 10 — FINAL BRAND LOCKUP (OPEN MINIMAL EDITORIAL)     */}
         {/* ========================================================= */}
         <div className="act-10 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6 transition-transform">
-          {/* Open Vector Emblem */}
-          <div className="act-10-logo mb-6 w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center">
-            <svg viewBox="315 85 394 450" className="w-full h-full text-white overflow-visible drop-shadow-[0_0_25px_rgba(255,255,255,0.3)]">
+          {/* Open Vector Emblem - Large prominent circular logo matching reference */}
+          <div className="act-10-logo mb-7 sm:mb-9 w-32 h-32 sm:w-44 sm:h-44 md:w-56 md:h-56 lg:w-64 lg:h-64 flex items-center justify-center transition-transform">
+            <svg viewBox="315 85 394 450" className="w-full h-full text-white overflow-visible drop-shadow-[0_0_35px_rgba(255,255,255,0.25)]">
               <circle cx="512" cy="284.5" r="175" fill="none" stroke="currentColor" strokeWidth="20" />
               <polygon points="512,197 483,243.5 550,368 604,368" fill="white" stroke="none" />
               <path d="M 408.00 368.00 C 411.41 362.36, 433.32 326.42, 437.03 320.96 C 443.94 310.78, 453.24 304.05, 464.86 300.83 C 469.89 299.43, 474.99 299.00, 486.33 299.00 L 500.00 299.00 C 484.32 328.00, 470.51 351.92, 455.50 363.06 C 452.20 364.68, 446.35 366.68, 442.50 367.49 L 408.00 368.00 Z" fill="white" stroke="none" />
             </svg>
           </div>
 
-          {/* Open Brand Title */}
-          <h2 className="act-10-name font-sans font-black text-5xl sm:text-7xl md:text-8xl tracking-[0.35em] text-white uppercase mb-4 leading-none">
+          {/* Original Clean Geometric Brand Title Matching Image 2 Reference */}
+          <h2 className="act-10-name font-sans font-semibold text-2xl sm:text-3xl md:text-4xl lg:text-[2.6rem] tracking-[0.55em] sm:tracking-[0.65em] pl-[0.55em] sm:pl-[0.65em] text-white uppercase mb-5 leading-none">
             ALGORA
           </h2>
 
           {/* Open Founder Credit */}
-          <span className="act-10-founder font-mono text-xs sm:text-sm font-semibold text-neutral-400 uppercase tracking-[0.3em] mb-10 block">
+          <span className="act-10-founder font-mono text-xs sm:text-sm font-medium text-neutral-400 uppercase tracking-[0.3em] pl-[0.3em] mb-8 sm:mb-10 block">
             FOUNDED &amp; BUILT BY GOURAB
           </span>
 
