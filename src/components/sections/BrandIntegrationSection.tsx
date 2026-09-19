@@ -445,39 +445,39 @@ export function BrandIntegrationSection() {
         <div className="act-05 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6 transition-transform z-10">
           <div className="relative w-full max-w-5xl mx-auto flex flex-col items-center">
             
-            {/* Ambient Violet Radial Aura tuned for White Canvas */}
-            <div className="pointer-events-none absolute -top-32 left-1/2 -translate-x-1/2 w-[850px] h-[450px] bg-[radial-gradient(ellipse_at_center,_rgba(168,85,247,0.14)_0%,_rgba(232,121,249,0.06)_45%,_transparent_75%)] rounded-full blur-[110px]" />
+            {/* Ambient Blue-Violet Radial Aura tuned for White Canvas */}
+            <div className="pointer-events-none absolute -top-32 left-1/2 -translate-x-1/2 w-[850px] h-[450px] bg-[radial-gradient(ellipse_at_center,_rgba(59,130,246,0.12)_0%,_rgba(99,102,241,0.05)_45%,_transparent_75%)] rounded-full blur-[110px]" />
 
-            {/* 1. Cool Kinetic Typography Headline on White Background with Violet Accents */}
-            <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-10 sm:mb-14">
-              <span className="font-mono text-xs font-extrabold tracking-[0.3em] text-purple-900 bg-purple-100/90 border border-purple-300/60 px-3.5 py-1 rounded-full uppercase mb-3 flex items-center gap-2 shadow-xs">
-                <span className="w-2 h-2 rounded-full bg-purple-600 animate-pulse" />
+            {/* 1. Cool Kinetic Typography Headline on White Background with Blue Accents & Solid Black Text */}
+            <div className="relative z-20 flex flex-col items-center text-center max-w-3xl mx-auto mb-6 sm:mb-8 md:mb-10">
+              <span className="font-mono text-xs font-extrabold tracking-[0.3em] text-blue-900 bg-blue-50/95 border border-blue-200/90 px-3.5 py-1 rounded-full uppercase mb-3.5 flex items-center gap-2 shadow-xs">
+                <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse" />
                 ALGORA ENGINE // SYSTEM ARCHITECTURE
               </span>
               
-              <h3 className="font-display font-black text-3xl sm:text-5xl md:text-6xl text-[#090714] tracking-tight leading-tight uppercase mb-4">
+              <h3 className="font-display font-black text-3xl sm:text-5xl md:text-6xl text-black tracking-tight leading-tight uppercase mb-4">
                 ENGINEERED WITH{" "}
-                <span className="font-bodoni italic font-normal bg-gradient-to-r from-purple-700 via-fuchsia-600 to-indigo-600 bg-clip-text text-transparent inline-block pr-2">
+                <span className="font-bodoni italic font-normal bg-gradient-to-r from-blue-700 via-blue-600 to-indigo-600 bg-clip-text text-transparent inline-block pr-2">
                   Precision &amp; Intelligence.
                 </span>
               </h3>
 
-              <p className="font-sans text-sm sm:text-base text-neutral-600 font-normal max-w-xl leading-relaxed">
+              <p className="font-sans text-sm sm:text-base text-neutral-800 font-medium max-w-xl leading-relaxed">
                 Three specialized spatial nodes powering real-time WebGL rendering, neural design matrices, and zero-latency global edge deployment.
               </p>
             </div>
 
-            {/* 2. 3 Sleek Modern Visual Graphic Cards on White Canvas with Violet Accents */}
-            <div className="product-layer-fg w-full grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+            {/* 2. 3 Sleek Modern Visual Graphic Cards - Shifted Lower Down with Clear Breathing Room */}
+            <div className="product-layer-fg w-full grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 text-left mt-4 sm:mt-8 md:mt-12 translate-y-3 sm:translate-y-6 md:translate-y-8">
               
               {/* Card 1: Architecture Engine */}
               <button
                 type="button"
                 onClick={() => handleSimulateClick("build")}
-                className={`group relative rounded-2xl transition-all duration-300 text-left cursor-pointer overflow-hidden border bg-white/85 backdrop-blur-xl ${
+                className={`group relative rounded-2xl transition-all duration-300 text-left cursor-pointer overflow-hidden border bg-white/90 backdrop-blur-xl ${
                   activeTab === "build"
                     ? "border-cyan-500/80 shadow-[0_20px_45px_rgba(56,189,248,0.25)] scale-[1.03] ring-2 ring-cyan-400/40"
-                    : "border-purple-200/70 hover:border-purple-400/60 shadow-[0_15px_35px_rgba(124,58,237,0.08)] hover:scale-[1.01]"
+                    : "border-neutral-200/80 hover:border-blue-400/60 shadow-[0_15px_35px_rgba(37,99,235,0.06)] hover:scale-[1.01]"
                 }`}
               >
                 <div className="relative aspect-[16/10] w-full overflow-hidden bg-black/5">
@@ -497,10 +497,10 @@ export function BrandIntegrationSection() {
               <button
                 type="button"
                 onClick={() => handleSimulateClick("ai")}
-                className={`group relative rounded-2xl transition-all duration-300 text-left cursor-pointer overflow-hidden border bg-white/85 backdrop-blur-xl ${
+                className={`group relative rounded-2xl transition-all duration-300 text-left cursor-pointer overflow-hidden border bg-white/90 backdrop-blur-xl ${
                   activeTab === "ai"
-                    ? "border-fuchsia-500/80 shadow-[0_20px_45px_rgba(232,121,249,0.25)] scale-[1.03] ring-2 ring-fuchsia-400/40"
-                    : "border-purple-200/70 hover:border-purple-400/60 shadow-[0_15px_35px_rgba(124,58,237,0.08)] hover:scale-[1.01]"
+                    ? "border-blue-500/80 shadow-[0_20px_45px_rgba(59,130,246,0.25)] scale-[1.03] ring-2 ring-blue-400/40"
+                    : "border-neutral-200/80 hover:border-blue-400/60 shadow-[0_15px_35px_rgba(37,99,235,0.06)] hover:scale-[1.01]"
                 }`}
               >
                 <div className="relative aspect-[16/10] w-full overflow-hidden bg-black/5">
@@ -512,7 +512,7 @@ export function BrandIntegrationSection() {
                 </div>
 
                 {activeTab === "ai" && (
-                  <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-fuchsia-500 to-transparent shadow-[0_0_15px_#e879f9]" />
+                  <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-blue-500 to-transparent shadow-[0_0_15px_#3b82f6]" />
                 )}
               </button>
 
@@ -520,10 +520,10 @@ export function BrandIntegrationSection() {
               <button
                 type="button"
                 onClick={() => handleSimulateClick("deploy")}
-                className={`group relative rounded-2xl transition-all duration-300 text-left cursor-pointer overflow-hidden border bg-white/85 backdrop-blur-xl ${
+                className={`group relative rounded-2xl transition-all duration-300 text-left cursor-pointer overflow-hidden border bg-white/90 backdrop-blur-xl ${
                   activeTab === "deploy"
-                    ? "border-purple-500/80 shadow-[0_20px_45px_rgba(168,85,247,0.25)] scale-[1.03] ring-2 ring-purple-400/40"
-                    : "border-purple-200/70 hover:border-purple-400/60 shadow-[0_15px_35px_rgba(124,58,237,0.08)] hover:scale-[1.01]"
+                    ? "border-indigo-500/80 shadow-[0_20px_45px_rgba(99,102,241,0.25)] scale-[1.03] ring-2 ring-indigo-400/40"
+                    : "border-neutral-200/80 hover:border-blue-400/60 shadow-[0_15px_35px_rgba(37,99,235,0.06)] hover:scale-[1.01]"
                 }`}
               >
                 <div className="relative aspect-[16/10] w-full overflow-hidden bg-black/5">
@@ -535,7 +535,7 @@ export function BrandIntegrationSection() {
                 </div>
 
                 {activeTab === "deploy" && (
-                  <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-purple-500 to-transparent shadow-[0_0_15px_#c084fc]" />
+                  <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-indigo-500 to-transparent shadow-[0_0_15px_#6366f1]" />
                 )}
               </button>
 

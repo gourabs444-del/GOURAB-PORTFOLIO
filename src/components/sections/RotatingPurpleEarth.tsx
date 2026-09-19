@@ -88,18 +88,18 @@ export function RotatingPurpleEarth() {
       const radius = cy - topMargin;
       const cx = width * 0.5;
 
-      // 1. Subtle Floating Violet Dust Particles
+      // 1. Subtle Floating Blue Dust Particles
       for (let i = 0; i < stars.length; i++) {
         const star = stars[i];
         const currentAlpha =
           star.alpha * (0.6 + 0.4 * Math.sin(time * star.speed * 10 + i));
-        ctx.fillStyle = `rgba(147, 51, 234, ${currentAlpha.toFixed(2)})`;
+        ctx.fillStyle = `rgba(59, 130, 246, ${currentAlpha.toFixed(2)})`;
         ctx.beginPath();
         ctx.arc(star.x * width, star.y * height, star.r, 0, Math.PI * 2);
         ctx.fill();
       }
 
-      // 2. Radiant Violet Ambient Aura radiating above the dome horizon
+      // 2. Radiant Blue Ambient Aura radiating above the dome horizon
       const ambientGlow = ctx.createRadialGradient(
         cx,
         cy - radius * 0.95,
@@ -108,9 +108,9 @@ export function RotatingPurpleEarth() {
         cy - radius * 0.5,
         radius * 1.05
       );
-      ambientGlow.addColorStop(0, "rgba(168, 85, 247, 0.22)");
-      ambientGlow.addColorStop(0.35, "rgba(192, 132, 252, 0.12)");
-      ambientGlow.addColorStop(0.7, "rgba(232, 121, 249, 0.03)");
+      ambientGlow.addColorStop(0, "rgba(59, 130, 246, 0.15)");
+      ambientGlow.addColorStop(0.35, "rgba(99, 102, 241, 0.08)");
+      ambientGlow.addColorStop(0.7, "rgba(147, 197, 253, 0.02)");
       ambientGlow.addColorStop(1, "transparent");
 
       ctx.fillStyle = ambientGlow;
@@ -118,7 +118,7 @@ export function RotatingPurpleEarth() {
       ctx.arc(cx, cy, radius * 1.25, 0, Math.PI * 2);
       ctx.fill();
 
-      // 3. Translucent Holographic Base Sphere (Frosted Violet Dome on White Canvas)
+      // 3. Translucent Holographic Base Sphere (Frosted Blue Dome on White Canvas)
       const sphereGrad = ctx.createRadialGradient(
         cx,
         cy - radius * 0.85,
@@ -127,10 +127,10 @@ export function RotatingPurpleEarth() {
         cy,
         radius
       );
-      sphereGrad.addColorStop(0, "rgba(243, 232, 255, 0.78)");
-      sphereGrad.addColorStop(0.4, "rgba(238, 224, 255, 0.42)");
-      sphereGrad.addColorStop(0.75, "rgba(224, 204, 250, 0.18)");
-      sphereGrad.addColorStop(1, "rgba(216, 180, 254, 0.03)");
+      sphereGrad.addColorStop(0, "rgba(238, 242, 255, 0.65)");
+      sphereGrad.addColorStop(0.4, "rgba(224, 231, 255, 0.30)");
+      sphereGrad.addColorStop(0.75, "rgba(219, 234, 254, 0.10)");
+      sphereGrad.addColorStop(1, "rgba(191, 219, 254, 0.02)");
 
       ctx.save();
       ctx.beginPath();
@@ -143,9 +143,8 @@ export function RotatingPurpleEarth() {
 
       // ALL GRID LINES HAVE BEEN DELETED PER USER REQUEST (No latitude / longitude lines)
 
-      // 4. High-Density 3D Rotating Dot-Matrix Continents in Rich Violet
-      // Dots are tightly packed and closer together.
-      // Batch into 4 depth/aura buckets for ultra-smooth 60FPS execution.
+      // 4. High-Density 3D Rotating Dot-Matrix Continents in Sophisticated Blue
+      // Opacity is gently subdued so dots form a graceful texture without mixing with foreground text.
       const bucket0: { px: number; py: number; r: number }[] = [];
       const bucket1: { px: number; py: number; r: number }[] = [];
       const bucket2: { px: number; py: number; r: number }[] = [];
@@ -176,8 +175,8 @@ export function RotatingPurpleEarth() {
             const depthFactor = (z1 + radius * 0.05) / (radius * 1.05);
             const topAura = Math.max(0, 1 - Math.abs(y1 + radius * 0.5) / (radius * 0.8));
             
-            // Ultra-dense crisp dot size
-            const dotRadius = Math.max(0.75, 1.15 + depthFactor * 1.05 + topAura * 0.35);
+            // Refined dot size for crisp elegance
+            const dotRadius = Math.max(0.65, 0.95 + depthFactor * 0.85 + topAura * 0.25);
 
             if (topAura > 0.45) {
               bucket3.push({ px, py, r: dotRadius });
@@ -192,9 +191,9 @@ export function RotatingPurpleEarth() {
         }
       }
 
-      // Draw Bucket 0: Limb / edge dots (soft violet)
+      // Draw Bucket 0: Limb / edge dots (soft translucent indigo)
       if (bucket0.length > 0) {
-        ctx.fillStyle = "rgba(139, 92, 246, 0.45)";
+        ctx.fillStyle = "rgba(99, 102, 241, 0.14)";
         ctx.beginPath();
         for (let i = 0; i < bucket0.length; i++) {
           const b = bucket0[i];
@@ -204,9 +203,9 @@ export function RotatingPurpleEarth() {
         ctx.fill();
       }
 
-      // Draw Bucket 1: Mid-depth dots (rich purple)
+      // Draw Bucket 1: Mid-depth dots (gentle cobalt blue)
       if (bucket1.length > 0) {
-        ctx.fillStyle = "rgba(124, 58, 237, 0.75)";
+        ctx.fillStyle = "rgba(59, 130, 246, 0.24)";
         ctx.beginPath();
         for (let i = 0; i < bucket1.length; i++) {
           const b = bucket1[i];
@@ -216,9 +215,9 @@ export function RotatingPurpleEarth() {
         ctx.fill();
       }
 
-      // Draw Bucket 2: Front prominent dots (deep vibrant violet)
+      // Draw Bucket 2: Front prominent dots (vibrant sapphire blue with gentle transparency)
       if (bucket2.length > 0) {
-        ctx.fillStyle = "rgba(109, 40, 217, 0.95)";
+        ctx.fillStyle = "rgba(37, 99, 235, 0.35)";
         ctx.beginPath();
         for (let i = 0; i < bucket2.length; i++) {
           const b = bucket2[i];
@@ -228,9 +227,9 @@ export function RotatingPurpleEarth() {
         ctx.fill();
       }
 
-      // Draw Bucket 3: Top atmospheric crest dots (bright radiant magenta-violet)
+      // Draw Bucket 3: Top atmospheric crest dots (clean radiant cyan-blue)
       if (bucket3.length > 0) {
-        ctx.fillStyle = "rgba(192, 38, 211, 0.95)";
+        ctx.fillStyle = "rgba(14, 165, 233, 0.42)";
         ctx.beginPath();
         for (let i = 0; i < bucket3.length; i++) {
           const b = bucket3[i];
@@ -240,7 +239,7 @@ export function RotatingPurpleEarth() {
         ctx.fill();
       }
 
-      // 5. Glowing Hub Nodes on Global Cities (Zero lines, pure glowing dots)
+      // 5. Glowing Hub Nodes on Global Cities (Blue glow, zero lines)
       pulseNodes.forEach((node) => {
         const lat = node.lat;
         const lon = node.lon + rot;
@@ -263,13 +262,13 @@ export function RotatingPurpleEarth() {
             const pulse = (Math.sin(time * 0.004 + node.phase) + 1) * 0.5;
 
             // Soft glowing outer dot
-            ctx.fillStyle = `rgba(192, 38, 211, ${(0.45 * (1 - pulse * 0.5)).toFixed(2)})`;
+            ctx.fillStyle = `rgba(56, 189, 248, ${(0.35 * (1 - pulse * 0.5)).toFixed(2)})`;
             ctx.beginPath();
             ctx.arc(px, py, 4 + pulse * 3, 0, Math.PI * 2);
             ctx.fill();
 
             // Core solid dot
-            ctx.fillStyle = "#a855f7";
+            ctx.fillStyle = "#2563eb";
             ctx.beginPath();
             ctx.arc(px, py, 2.5, 0, Math.PI * 2);
             ctx.fill();
@@ -280,34 +279,34 @@ export function RotatingPurpleEarth() {
       ctx.restore(); // Restore clip
 
       // =======================================================================
-      // 6. ATMOSPHERIC HORIZON GLOW DOME
-      // Soft glowing planetary crest framing the dome
+      // 6. ATMOSPHERIC HORIZON GLOW DOME IN BLUE
+      // Soft glowing sapphire & cyan planetary crest framing the dome
       // =======================================================================
       ctx.save();
       // Outer soft ambient glow
       ctx.beginPath();
       ctx.arc(cx, cy, radius + 2, Math.PI * 0.84, Math.PI * 2.16);
       ctx.lineWidth = 16;
-      ctx.strokeStyle = "rgba(168, 85, 247, 0.35)";
-      ctx.shadowColor = "#a855f7";
-      ctx.shadowBlur = 35;
+      ctx.strokeStyle = "rgba(59, 130, 246, 0.25)";
+      ctx.shadowColor = "#3b82f6";
+      ctx.shadowBlur = 30;
       ctx.stroke();
 
       // Atmospheric rim highlight
       ctx.beginPath();
       ctx.arc(cx, cy, radius + 1, Math.PI * 0.86, Math.PI * 2.14);
-      ctx.lineWidth = 4.5;
-      ctx.strokeStyle = "rgba(192, 38, 211, 0.85)";
-      ctx.shadowColor = "#7c3aed";
-      ctx.shadowBlur = 20;
+      ctx.lineWidth = 4.0;
+      ctx.strokeStyle = "rgba(37, 99, 235, 0.70)";
+      ctx.shadowColor = "#2563eb";
+      ctx.shadowBlur = 18;
       ctx.stroke();
 
-      // Delicate top apex crest
+      // Delicate top apex crest in bright sky blue
       ctx.beginPath();
       ctx.arc(cx, cy, radius + 0.5, Math.PI * 1.08, Math.PI * 1.92);
-      ctx.lineWidth = 2.2;
-      ctx.strokeStyle = "rgba(217, 70, 239, 0.9)";
-      ctx.shadowColor = "#d946ef";
+      ctx.lineWidth = 2.0;
+      ctx.strokeStyle = "rgba(56, 189, 248, 0.85)";
+      ctx.shadowColor = "#38bdf8";
       ctx.shadowBlur = 12;
       ctx.stroke();
       ctx.restore();
