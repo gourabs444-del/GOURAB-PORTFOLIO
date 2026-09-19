@@ -68,57 +68,89 @@ export function BrandIntegrationSection() {
       });
 
       // =======================================================================
-      // 01 — THE INTERRUPTION (Time: 0.0 -> 1.0, Exits 0.7 -> 1.1)
+      // 01 — THE INTERRUPTION (Time: 0.0 -> 1.0, Exits 0.8 -> 1.15)
       // =======================================================================
       tl.to(".act-01", { opacity: 1, duration: 0.2 }, 0.0);
 
+      // Text enters spaced out ("abhi itne dur rhne do")
       tl.fromTo(
         ".act-01-text",
-        { opacity: 0, filter: "blur(14px)", y: 35 },
-        { opacity: 1, filter: "blur(0px)", y: 0, duration: 0.5, ease: "power2.out" },
+        { opacity: 0, filter: "blur(14px)", y: 35, letterSpacing: "0.14em", wordSpacing: "0.28em" },
+        { opacity: 1, filter: "blur(0px)", y: 0, duration: 0.35, ease: "power2.out" },
         0.05
       );
 
       tl.fromTo(
         ".act-01-emph",
-        { opacity: 0.7, scale: 0.96 },
-        { opacity: 1, scale: 1.04, duration: 0.35, ease: "power1.out" },
-        0.4
+        { opacity: 0.7, scale: 0.96, letterSpacing: "0.14em" },
+        { opacity: 1, scale: 1.02, duration: 0.35, ease: "power1.out" },
+        0.05
       );
 
-      // Morphing Exit into Act 02 (0.7 -> 1.1)
+      // Kinetic inward compression: letters & words pull together ("animte krke nazdik ajayega")
+      tl.to(
+        [".act-01-text", ".act-01-emph"],
+        {
+          letterSpacing: "0.01em",
+          duration: 0.45,
+          ease: "power2.inOut",
+        },
+        0.35
+      );
+
       tl.to(
         ".act-01-text",
-        { opacity: 0, filter: "blur(10px)", y: -45, scale: 0.95, duration: 0.4, ease: "power2.in" },
-        0.7
+        {
+          wordSpacing: "0.06em",
+          duration: 0.45,
+          ease: "power2.inOut",
+        },
+        0.35
       );
-      tl.to(".act-01", { opacity: 0, duration: 0.3 }, 0.85);
+
+      tl.to(
+        ".act-01-emph",
+        {
+          marginLeft: "0.35rem",
+          duration: 0.45,
+          ease: "power2.inOut",
+        },
+        0.35
+      );
+
+      // Morphing Exit into Act 02 (0.8 -> 1.15)
+      tl.to(
+        ".act-01-text",
+        { opacity: 0, filter: "blur(10px)", y: -45, scale: 0.95, duration: 0.35, ease: "power2.in" },
+        0.8
+      );
+      tl.to(".act-01", { opacity: 0, duration: 0.25 }, 0.9);
 
       // =======================================================================
-      // 02 & 03 — BRAND REVEAL & LOGO DRAW (Time: 0.8 -> 3.0, Exits 2.7 -> 3.2)
+      // 02 & 03 — BRAND REVEAL & LOGO DRAW (Time: 0.9 -> 3.0, Exits 2.7 -> 3.2)
       // =======================================================================
-      tl.to(".act-02", { opacity: 1, duration: 0.4, ease: "power2.out" }, 0.8);
+      tl.to(".act-02", { opacity: 1, duration: 0.4, ease: "power2.out" }, 0.9);
 
       // Smooth, natural vector SVG stroke drawing
       tl.fromTo(
         ".svg-circle",
         { strokeDasharray: 1100, strokeDashoffset: 1100, opacity: 0 },
         { strokeDashoffset: 0, opacity: 1, duration: 0.65, ease: "power2.out" },
-        0.85
+        0.95
       );
 
       tl.fromTo(
         [".svg-poly", ".svg-path"],
         { strokeDasharray: 600, strokeDashoffset: 600, opacity: 0 },
         { strokeDashoffset: 0, opacity: 1, duration: 0.65, ease: "power2.out", stagger: 0.1 },
-        1.0
+        1.1
       );
 
       // Soft, seamless white fill transition for inner emblem
       tl.to(
         [".svg-poly", ".svg-path"],
         { fill: "#ffffff", duration: 0.6, ease: "power2.inOut" },
-        1.45
+        1.55
       );
 
       // Ultra-smooth ALGORA title fade-up directly beneath emblem
@@ -126,7 +158,7 @@ export function BrandIntegrationSection() {
         ".brand-name",
         { opacity: 0, y: 16, filter: "blur(6px)" },
         { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.65, ease: "power2.out" },
-        1.5
+        1.6
       );
 
       // Soft, elegant morphing exit into Act 04 (2.7 -> 3.2)
@@ -339,9 +371,9 @@ export function BrandIntegrationSection() {
         {/* ACT 01 — THE INTERRUPTION                                 */}
         {/* ========================================================= */}
         <div className="act-01 absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center px-6 transition-transform z-10">
-          <p className="act-01-text font-display font-medium text-2xl sm:text-4xl md:text-5xl lg:text-6xl text-white/95 tracking-[0.06em] sm:tracking-[0.08em] [word-spacing:0.2em] sm:[word-spacing:0.3em] leading-snug max-w-5xl">
+          <p className="act-01-text font-display font-medium text-2xl sm:text-4xl md:text-5xl lg:text-6xl text-white/95 tracking-[0.14em] [word-spacing:0.28em] leading-snug max-w-5xl will-change-transform">
             AN IDEA IS ONLY THE
-            <span className="act-01-emph font-display font-extrabold tracking-[0.06em] sm:tracking-[0.08em] ml-3 sm:ml-4 bg-gradient-to-r from-cyan-200 via-[#00F0FF] to-teal-300 bg-clip-text text-transparent inline-block drop-shadow-[0_0_35px_rgba(0,240,255,0.65)]">
+            <span className="act-01-emph font-display font-extrabold tracking-[0.14em] ml-3 sm:ml-4 bg-gradient-to-r from-cyan-200 via-[#00F0FF] to-teal-300 bg-clip-text text-transparent inline-block drop-shadow-[0_0_35px_rgba(0,240,255,0.65)] will-change-transform">
               BEGINNING.
             </span>
           </p>
